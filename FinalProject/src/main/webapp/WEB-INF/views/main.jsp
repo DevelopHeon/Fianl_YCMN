@@ -165,7 +165,7 @@
       </div>
       <div class="top-menu">
         <ul class="nav pull-right top-menu">
-          <li><a class="logout" href="views/login.html">Logout</a></li>
+          <li><a class="logout" href="logout.do">Logout</a></li>
         </ul>
       </div>
     </header>
@@ -293,6 +293,14 @@
       </div>
     </aside>
     <!--sidebar end-->
+  </section>
+  <!-- 가운데 내용 start -->
+  <section id="main-content">
+  <section class="wrapper">
+  </section>
+  	<div class="row">
+  		내용작성 잘되는지 확인
+  	</div>
   </section>
   
   <!-- js placed at the end of the document so the pages load faster -->
