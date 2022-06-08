@@ -216,7 +216,7 @@
               <span>메일</span>
               </a>
             <ul class="sub">
-              <li><a href="#">메일 작성</a></li>
+              <li><a href="writeMail.do">메일 작성</a></li>
               <li><a href="#">받은 메일함</a></li>
               <li><a href="#">보낸 메일함</a></li>
               <li><a href="#">휴지통</a></li>
