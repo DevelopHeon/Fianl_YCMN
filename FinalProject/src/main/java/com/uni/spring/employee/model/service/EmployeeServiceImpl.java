@@ -1,7 +1,6 @@
 package com.uni.spring.employee.model.service;
 
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -9,18 +8,15 @@ import com.uni.spring.common.CommException;
 import com.uni.spring.employee.model.dao.EmployeeDao;
 import com.uni.spring.employee.model.dto.Employee;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 
 	private final EmployeeDao employeeDao;
 	private final SqlSessionTemplate sqlSession;
 	
-	@Autowired
-	public EmployeeServiceImpl(EmployeeDao employeeDao, SqlSessionTemplate sqlSession) {
-		this.employeeDao = employeeDao;
-		this.sqlSession = sqlSession;
-	}
-
 	@Override
 	public void insertEmployee(Employee emp) throws Exception {
 		int result = employeeDao.insertEmployee(sqlSession, emp);

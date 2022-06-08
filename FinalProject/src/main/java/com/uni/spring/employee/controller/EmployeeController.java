@@ -1,6 +1,5 @@
 package com.uni.spring.employee.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,18 +12,15 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.service.EmployeeService;
 
+import lombok.RequiredArgsConstructor;
+
 @SessionAttributes("loginUser")
+@RequiredArgsConstructor
 @Controller
 public class EmployeeController {
 	
 	private final EmployeeService employeeService;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
-	
-	@Autowired
-	public EmployeeController(EmployeeService employeeService, BCryptPasswordEncoder bCryptPasswordEncoder) {
-		this.employeeService = employeeService;
-		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-	}
 	
 	@RequestMapping("main.do")
 	public String main() {

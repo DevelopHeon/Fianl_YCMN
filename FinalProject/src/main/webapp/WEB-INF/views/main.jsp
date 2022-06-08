@@ -385,14 +385,6 @@
     </aside>
     <!--sidebar end-->
   </section>
-  <!-- 가운데 내용 start -->
-  <section id="main-content">
-  <section class="wrapper">
-  </section>
-  	<div class="row">
-  		내용작성 잘되는지 확인
-  	</div>
-  </section>
   
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="resources/lib/jquery/jquery.min.js"></script>
