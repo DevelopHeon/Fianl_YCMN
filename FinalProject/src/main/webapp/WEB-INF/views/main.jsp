@@ -223,21 +223,11 @@
             </ul>
           </li>
           <li class="sub-menu">
-            <a href="views/javascript:;">
+            <a href="schedule.do">
               <i class="fa fa-book"></i>
               <span>일정</span>
-              </a>
-            <ul class="sub">
-              <li><a href="views/blank.html">Blank Page</a></li>
-              <li><a href="views/login.html">Login</a></li>
-              <li><a href="views/lock_screen.html">Lock Screen</a></li>
-              <li><a href="views/profile.html">Profile</a></li>
-              <li><a href="views/invoice.html">Invoice</a></li>
-              <li><a href="views/pricing_table.html">Pricing Table</a></li>
-              <li><a href="views/faq.html">FAQ</a></li>
-              <li><a href="views/404.html">404 Error</a></li>
-              <li><a href="views/500.html">500 Error</a></li>
-            </ul>
+            </a>
+         
           </li>
           <li class="sub-menu">
             <a href="views/javascript:;">
