@@ -67,10 +67,12 @@
                     <div class="form-group hidden">
                       <label for="cc" class="">참조:</label>
                       <input type="text" tabindex="2" id="cc" class="form-control">
+                      <a class="btn-primary" data-toggle="modal" data-target="#exampleModa2" style="font-size:30px">+</a>
                     </div>
                     <div class="form-group hidden">
                       <label for="bcc" class="">비밀참조:</label>
                       <input type="text" tabindex="2" id="bcc" class="form-control">
+                      <a class="btn-primary" data-toggle="modal" data-target="#exampleModa3" style="font-size:30px">+</a>
                     </div>
 
                     <div class="compose-editor">
@@ -96,17 +98,25 @@
     </section>
     <!-- /MAIN CONTENT -->
     <!--main content end-->
+    <!-- 수신 모달 -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   	<div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">수신</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+         <form action="#">
+            <div class="input-append">
+              <input type="text" class="form-control " placeholder="Search">
+            </div>
+         </form>
+         <div>
+         <input type="text" name="searchTo">
+         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -117,9 +127,6 @@
 </div>
     
    <script>
-   	$(function(){
-   		$("#toMail").click
-   	})
    
    	$(function(){
    		
@@ -135,7 +142,6 @@
    
    
    </script>
-  </section>
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="lib/jquery/jquery.min.js"></script>
   <script src="lib/bootstrap/js/bootstrap.min.js"></script>
