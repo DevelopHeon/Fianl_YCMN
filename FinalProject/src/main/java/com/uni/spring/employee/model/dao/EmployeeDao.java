@@ -19,5 +19,9 @@ public class EmployeeDao {
 	public int idCheck(SqlSessionTemplate sqlSession, String empId) {
 		return sqlSession.selectOne("employeeMapper.idCheck", empId);
 	}
+	//사원정보 수정
+	public int updateEmp(SqlSessionTemplate sqlSession, Employee emp) {
+		return sqlSession.update("employeeMapper.updateEmp", emp);
+	}
 
 }

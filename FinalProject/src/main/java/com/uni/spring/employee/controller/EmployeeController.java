@@ -66,4 +66,17 @@ public class EmployeeController {
 		int result = employeeService.idCheck(empId);
 		return String.valueOf(result);
 	}
+	
+	@RequestMapping("myPage.do")
+	public String myPage() {
+		return "employee/myPage";
+	}
+	
+	//수정하기(사원정보)
+	@RequestMapping("updateEmp.do")
+	public String updateEmp(@ModelAttribute Employee emp, Model model) throws Exception {
+		Employee empInfo = employeeService.updateEmp(emp);
+		model.addAttribute("loginUser",empInfo);
+		return "employee/myPage";
+	}
 }
