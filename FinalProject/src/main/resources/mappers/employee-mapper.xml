@@ -21,6 +21,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(EMP_ID)
 		FROM EMPLOYEE
 		WHERE EMP_ID = #{empId}
-		AND STATUS = 'Y'
 	</select>
 </mapper>
