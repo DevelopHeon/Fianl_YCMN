@@ -288,6 +288,97 @@
               <span>Google Maps </span>
               </a>
           </li>
+          <li class="sub-menu">
+            <a href="views/javascript:;">
+              <i class="fa fa-book"></i>
+              <span>인사관리</span>
+              </a>
+            <ul class="sub">
+              <li><a href="#">근무통계</a></li>
+              <li><a href="#">직위/직무관리</a></li>
+              <li><a href="#">조직도</a></li>
+              <li><a href="#">임직원 관리</a></li>
+            </ul>
+          </li>
+          <li class="sub-menu">
+            <a href="views/javascript:;">
+              <i class="fa fa-book"></i>
+              <span>결재</span>
+              </a>
+            <ul class="sub">
+              <li><a href="views/blank.html">Blank Page</a></li>
+              <li><a href="views/login.html">Login</a></li>
+              <li><a href="views/lock_screen.html">Lock Screen</a></li>
+              <li><a href="views/profile.html">Profile</a></li>
+              <li><a href="views/invoice.html">Invoice</a></li>
+              <li><a href="views/pricing_table.html">Pricing Table</a></li>
+              <li><a href="views/faq.html">FAQ</a></li>
+              <li><a href="views/404.html">404 Error</a></li>
+              <li><a href="views/500.html">500 Error</a></li>
+            </ul>
+          </li>
+          <li class="sub-menu">
+            <a href="views/javascript:;">
+              <i class="fa fa-book"></i>
+              <span>메일</span>
+              </a>
+            <ul class="sub">
+              <li><a href="views/blank.html">메일 작성</a></li>
+              <li><a href="views/login.html">받은 메일함</a></li>
+              <li><a href="views/lock_screen.html">보낸 메일함</a></li>
+              <li><a href="views/profile.html">휴지통</a></li>
+            </ul>
+          </li>
+          <li class="sub-menu">
+            <a href="views/javascript:;">
+              <i class="fa fa-book"></i>
+              <span>일정</span>
+              </a>
+            <ul class="sub">
+              <li><a href="views/blank.html">Blank Page</a></li>
+              <li><a href="views/login.html">Login</a></li>
+              <li><a href="views/lock_screen.html">Lock Screen</a></li>
+              <li><a href="views/profile.html">Profile</a></li>
+              <li><a href="views/invoice.html">Invoice</a></li>
+              <li><a href="views/pricing_table.html">Pricing Table</a></li>
+              <li><a href="views/faq.html">FAQ</a></li>
+              <li><a href="views/404.html">404 Error</a></li>
+              <li><a href="views/500.html">500 Error</a></li>
+            </ul>
+          </li>
+          <li class="sub-menu">
+            <a href="views/javascript:;">
+              <i class="fa fa-book"></i>
+              <span>게시판</span>
+              </a>
+            <ul class="sub">
+              <li><a href="#">공지사항</a></li>
+              <li><a href="#">익명게시판</a></li>
+            </ul>
+          </li>
+          <li class="sub-menu">
+            <a href="views/javascript:;">
+              <i class="fa fa-book"></i>
+              <span>예약</span>
+              </a>
+            <ul class="sub">
+              <li><a href="#">내 예약 현황</a></li>
+              <li><a href="#">회의실/비품 예약</a></li>
+              <li><a href="#">회의실/비품 관리</a></li>
+            </ul>
+          </li>
+          <li class="sub-menu">
+            <a href="views/javascript:;">
+              <i class="fa fa-book"></i>
+              <span>인사/근태</span>
+              </a>
+            <ul class="sub">
+              <li><a href="#">인사 정보</a></li>
+              <li><a href="#">근태 정보</a></li>
+              <li><a href="#">연차 현황</a></li>
+              <li><a href="#">주소록</a></li>
+            </ul>
+          </li>
         </ul>
         <!-- sidebar menu end-->
       </div>
