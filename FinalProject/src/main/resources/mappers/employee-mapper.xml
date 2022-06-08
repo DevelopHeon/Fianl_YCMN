@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="employeeMapper">
-	
+
 	<select id="loginEmployee" parameterType="Employee" resultType="Employee">
 		SELECT *
 		FROM EMPLOYEE
@@ -22,4 +22,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM EMPLOYEE
 		WHERE EMP_ID = #{empId}
 	</select>
+	
+	<update id="updateEmp" parameterType="Employee">
+		UPDATE EMPLOYEE SET EMP_EMAIL = #{email}, OFFICE_TEL = #{officeTel}, EMP_PHONE = #{phone}, EMP_LOC = #{empLoc} WHERE EMP_ID = #{empId}
+	</update>
 </mapper>

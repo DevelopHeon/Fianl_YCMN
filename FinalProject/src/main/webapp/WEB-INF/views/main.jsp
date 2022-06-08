@@ -266,7 +266,7 @@
               <span>인사/근태</span>
               </a>
             <ul class="sub">
-              <li><a href="#">인사 정보</a></li>
+              <li><a href="myPage.do">인사 정보</a></li>
               <li><a href="#">근태 정보</a></li>
               <li><a href="#">연차 현황</a></li>
               <li><a href="#">주소록</a></li>
