@@ -24,13 +24,14 @@ public class Employee {
    private String empOnoff;
    private int posNo;
    private int depNo;
+   private String posName;
+   private String depName;
    
 	@Override
 	public String toString() {
 		return "Employee [empNo=" + empNo + ", empName=" + empName + ", empId=" + empId + ", empPwd=" + empPwd
 				+ ", empEmail=" + empEmail + ", officeTel=" + officeTel + ", empPhone=" + empPhone + ", empLoc=" + empLoc
 				+ ", empPfe=" + empPfe + ", category=" + category + ", status=" + status + ", empOnoff=" + empOnoff
-				+ ", posNo=" + posNo + ", depNo=" + depNo + "]";
+				+ ", posNo=" + posNo + ", depNo=" + depNo + ", posName=" + posName + ", depName=" + depName + "]";
 	}
-   
 }

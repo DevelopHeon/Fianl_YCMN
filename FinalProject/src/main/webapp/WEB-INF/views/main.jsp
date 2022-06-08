@@ -190,7 +190,7 @@
               <li><a href="#">근무통계</a></li>
               <li><a href="#">직위/직무관리</a></li>
               <li><a href="#">조직도</a></li>
-              <li><a href="#">임직원 관리</a></li>
+              <li><a href="listEmp.do">임직원 관리</a></li>
             </ul>
           </li>
           <li class="sub-menu">
