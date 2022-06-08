@@ -31,8 +31,7 @@
 		          <input type="password" name="empPwd" id="empPwd" class="form-control" placeholder="비밀번호">
 		            <a href="enrollForm.do">회원가입</a> |
 		            <a href="#" data-toggle="modal" data-target="#myModal">비밀번호 찾기</a>
-		          <button id="login" class="btn btn-primary btn-b
-		          lock" type="submit"><i class="fa fa-lock"></i> 로그인 </button>
+		          <button id="login" class="btn btn-primary btn-block" type="submit"><i class="fa fa-lock"></i> 로그인 </button>
 		          <hr>
 		        </div>
 		      </form>
