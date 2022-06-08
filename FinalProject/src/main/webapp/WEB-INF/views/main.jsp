@@ -179,7 +179,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
           <p class="centered"><a href="views/profile.html"><img src="resources/img/ui-sam.jpg" class="img-circle" width="80"></a></p>
-          <h5 class="centered">Sam Soffes</h5>
+          <h5 class="centered">${ sessionScope.loginUser.empName }</h5>
           
           <li class="sub-menu">
             <a href="views/javascript:;">
@@ -212,14 +212,14 @@
           </li>
           <li class="sub-menu">
             <a href="views/javascript:;">
-              <i class="fa fa-book"></i>
+              <i class="fa fa-envelope"></i>
               <span>메일</span>
               </a>
             <ul class="sub">
-              <li><a href="views/blank.html">메일 작성</a></li>
-              <li><a href="views/login.html">받은 메일함</a></li>
-              <li><a href="views/lock_screen.html">보낸 메일함</a></li>
-              <li><a href="views/profile.html">휴지통</a></li>
+              <li><a href="#">메일 작성</a></li>
+              <li><a href="#">받은 메일함</a></li>
+              <li><a href="#">보낸 메일함</a></li>
+              <li><a href="#">휴지통</a></li>
             </ul>
           </li>
           <li class="sub-menu">
