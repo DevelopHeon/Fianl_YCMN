@@ -53,7 +53,7 @@
                		<p><img src="resources/img/user.png" class="img-circle"></p>
                 </c:if>
                  <c:if test="${ sessionScope.loginUser.empPfe ne null}">
-                	<p><img src="/resources/board_upfiles/${loginUser.empPfe}" class="img-circle"></p>
+                	<p><img src="/resources/img/${loginUser.empPfe}" class="img-circle"></p>
                 </c:if>
                   <p>
                     <button class="btn btn-theme"><i class="fa fa-check"></i>변경하기</button>

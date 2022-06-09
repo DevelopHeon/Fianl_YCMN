@@ -187,7 +187,7 @@
         <ul class="sidebar-menu" id="nav-accordion">
           <p class="centered"><a href="views/profile.html"><img src="resources/img/ui-sam.jpg" class="img-circle" width="80"></a></p>
           <h5 class="centered">${ sessionScope.loginUser.empName }</h5>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#workcheck">출퇴근 확인</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#workcheck" onclick="checkTime()" >출퇴근 확인</button>
           <li class="sub-menu">
             <a href="views/javascript:;">
               <i class="fa fa-book"></i>
@@ -287,6 +287,8 @@
       </div>
       <div class="modal-body">
         <p>현재 날짜와 시간은 <%= format.format(currentTime) %></p>
+        <h4 id="todate" class="card-title mb-3 font-weight-bold"></h4>
+        <p id="clock" style="font-size:40px"></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -371,6 +373,37 @@
       var to = $("#" + id).data("to");
       console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
     }
+    
+  //출퇴근
+  function checkTime() {
+    
+	    var clock = document.getElementById("clock");	// 출력할 장소 선택
+	    var todate = document.getElementById("todate");
+	    var currentDate = new Date();	// 현재시간
+	    var day = new Array('일', '월', '화', '수', '목', '금', '토')
+	    var today = day[currentDate.getDay()];
+	    var calendar = currentDate.getFullYear() + "-" + (currentDate.getMonth()+1) + "-" + currentDate.getDate() + " (" + today + ")"// 현재 날짜
+	    var currentHours = addZeros(currentDate.getHours(),2); 
+	    var currentMinute = addZeros(currentDate.getMinutes() ,2);
+	    var currentSeconds =  addZeros(currentDate.getSeconds(),2);
+	    
+	    clock.innerHTML = currentHours+":"+currentMinute+":"+currentSeconds; //날짜를 출력해 줌
+	    todate.innerHTML = calendar; //날짜를 출력해 줌
+	    
+	    setTimeout("checkTime()",1000);         // 1초마다 printClock() 함수 호출
+	    
+	    
+	    function addZeros(num, digit) { // 자릿수 맞춰주기
+		  	var zero = '';
+		  	num = num.toString();
+		  	if (num.length < digit) {
+			  	for (i = 0; i < digit - num.length; i++) {
+			  		zero += '0';
+			  	}
+		  	}
+		  	return zero + num;
+		}
+	}
   </script>
 </body>
 
