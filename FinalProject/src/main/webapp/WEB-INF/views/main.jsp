@@ -269,7 +269,7 @@
               <li><a href="myPage.do">인사 정보</a></li>
               <li><a href="workingInfo.do">근태 정보</a></li>
               <li><a href="#">연차 현황</a></li>
-              <li><a href="#">주소록</a></li>
+              <li><a href="empAddress.do">주소록</a></li>
             </ul>
           </li>
         </ul>
@@ -295,6 +295,14 @@
         	<h4 id="today" name="today" value="today" class="card-title mb-3 font-weight-bold"></h4>
         	<p id="clock" name="clock" value="clock" style="font-size:40px"></p>
       </div>
+      <div class="d-flex" style="font-size: 16px; ">
+		<p class="col-6" style="padding:0px;">출근시간</p>
+		<p class="col-6 text-right" id="start"></p>
+	  </div>
+	  <div class="d-flex" style="font-size: 16px">
+		<p class="col-6" style="padding:0px;">퇴근시간</p>
+		<p class="col-6 text-right" id="finish"></p>
+	  </div>
       <div class="modal-footer">
       		<button type="submit" name="status" value="s" id="startBtn" class="btn btn-primary">출근</button>
       		<button type="submit" name="status" value="f" id="finishBtn" class="btn btn-primary">퇴근</button>
@@ -421,6 +429,7 @@
       }
   }
   
+
   //출근 한번 누르면 disabled
   /* $(function(){
 	  $("#startBtn").click(function(){

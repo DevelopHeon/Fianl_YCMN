@@ -1,11 +1,14 @@
 package com.uni.spring.employee.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.uni.spring.common.CommException;
 import com.uni.spring.employee.model.dao.EmployeeDao;
+import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.WorkingDay;
 
@@ -71,6 +74,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 			throw new CommException("출근 등록 실패");
 		}
 		
+	}
+
+	@Override
+	public ArrayList<Employee> selectEmpAddress() {
+		
+		return employeeDao.selectEmpAddress(sqlSession);
 	}
 }
 
