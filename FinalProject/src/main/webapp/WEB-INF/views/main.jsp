@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%
+	Date currentTime = new Date();
+	SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -279,7 +286,7 @@
         </button>
       </div>
       <div class="modal-body">
-        ...
+        <p>현재 날짜와 시간은 <%= format.format(currentTime) %></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
