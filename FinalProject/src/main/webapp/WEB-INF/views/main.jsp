@@ -33,12 +33,13 @@
   <link href="resources/css/style-responsive.css" rel="stylesheet">
   <script src="resources/lib/chart-master/Chart.js"></script>
 
-  <!-- =======================================================
-    Template Name: Dashio
-    Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
-    Author: TemplateMag.com
-    License: https://templatemag.com/license/
-  ======================================================= -->
+  <style>
+	#main-content{
+		color:black;
+		background-color:white;
+		height:976px;
+	}
+</style>
 </head>
 
 <body>
@@ -52,7 +53,7 @@
         <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
       </div>
       <!--logo start-->
-      <a href="views/index.html" class="logo"><b>DASH<span>IO</span></b></a>
+      <a href="main.do" class="logo"><b>개발웍스</b></a>
       <!--logo end-->
       <div class="nav notify-row" id="top_menu">
         <!--  notification start -->
@@ -206,15 +207,10 @@
               <span>결재</span>
               </a>
             <ul class="sub">
-              <li><a href="views/blank.html">Blank Page</a></li>
-              <li><a href="views/login.html">Login</a></li>
-              <li><a href="views/lock_screen.html">Lock Screen</a></li>
-              <li><a href="views/profile.html">Profile</a></li>
-              <li><a href="views/invoice.html">Invoice</a></li>
-              <li><a href="views/pricing_table.html">Pricing Table</a></li>
-              <li><a href="views/faq.html">FAQ</a></li>
-              <li><a href="views/404.html">404 Error</a></li>
-              <li><a href="views/500.html">500 Error</a></li>
+              <li><a href="approvalList.do">결재 신청</a></li>
+              <li><a href="#">결재 상신함</a></li>
+              <li><a href="#">결재 수신함</a></li>
+              <li><a href="#">결재 반려함</a></li>
             </ul>
           </li>
           <li class="sub-menu">
