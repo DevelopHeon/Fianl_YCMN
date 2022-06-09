@@ -1,5 +1,10 @@
 package com.uni.spring.employee.controller;
 
+import java.sql.Date;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.uni.spring.employee.model.dto.Employee;
+import com.uni.spring.employee.model.dto.WorkingDay;
 import com.uni.spring.employee.model.service.EmployeeService;
 
 import lombok.RequiredArgsConstructor;
@@ -78,5 +85,33 @@ public class EmployeeController {
 		Employee empInfo = employeeService.updateEmp(emp);
 		model.addAttribute("loginUser",empInfo);
 		return "employee/myPage";
+	}
+	
+	@RequestMapping("workingInfo.do")
+	public String workingInfo() {
+		return "employee/workingInfo";
+	}
+	
+	@RequestMapping("workingCheck.do")
+	public String workingCheck(@ModelAttribute WorkingDay w,
+							   HttpSession session, 
+							   HttpServletRequest request) {
+		Employee loginUser = (Employee)session.getAttribute("loginUser");
+		int empNo = loginUser.getEmpNo();
+		w.setEmpNo(empNo);
+		System.out.println("controller 들어옴?~??????????????");
+		System.out.println(empNo);
+		//name이 status인 파라미터를 가져옴
+		String status = (String)request.getParameter("status");
+		String clock = (String)request.getParameter("clock");
+		String today = (String)request.getParameter("today");
+
+		
+		if(status == "s") {
+			w.setStart(clock);
+			employeeService.insertStart(w);
+			System.out.println(w.getStart());
+		}
+		return "main";
 	}
 }

@@ -3,6 +3,7 @@ package com.uni.spring.employee.model.service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.uni.spring.employee.model.dto.Employee;
+import com.uni.spring.employee.model.dto.WorkingDay;
 
 public interface EmployeeService {
 
@@ -13,5 +14,7 @@ public interface EmployeeService {
 	int idCheck(String userId);
 
 	Employee updateEmp(Employee emp)throws Exception;
+
+	void insertStart(WorkingDay w);
 
 }

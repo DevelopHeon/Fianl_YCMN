@@ -20,12 +20,6 @@
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
 
-  <!-- =======================================================
-    Template Name: Dashio
-    Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
-    Author: TemplateMag.com
-    License: https://templatemag.com/license/
-  ======================================================= -->
 <style>
 
  #update {
