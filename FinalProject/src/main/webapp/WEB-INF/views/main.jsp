@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%
+	Date currentTime = new Date();
+	SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -181,7 +188,7 @@
         <ul class="sidebar-menu" id="nav-accordion">
           <p class="centered"><a href="views/profile.html"><img src="resources/img/ui-sam.jpg" class="img-circle" width="80"></a></p>
           <h5 class="centered">${ sessionScope.loginUser.empName }</h5>
-          
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#workcheck">출퇴근 확인</button>
           <li class="sub-menu">
             <a href="views/javascript:;">
               <i class="fa fa-book"></i>
@@ -191,7 +198,7 @@
               <li><a href="#">근무통계</a></li>
               <li><a href="#">직위/직무관리</a></li>
               <li><a href="#">조직도</a></li>
-              <li><a href="#">임직원 관리</a></li>
+              <li><a href="listEmp.do">임직원 관리</a></li>
             </ul>
           </li>
           <li class="sub-menu">
@@ -212,28 +219,18 @@
               <span>메일</span>
               </a>
             <ul class="sub">
-              <li><a href="#">메일 작성</a></li>
+              <li><a href="writeMail.do">메일 작성</a></li>
               <li><a href="#">받은 메일함</a></li>
               <li><a href="#">보낸 메일함</a></li>
               <li><a href="#">휴지통</a></li>
             </ul>
           </li>
           <li class="sub-menu">
-            <a href="views/javascript:;">
+            <a href="schedule.do">
               <i class="fa fa-book"></i>
               <span>일정</span>
-              </a>
-            <ul class="sub">
-              <li><a href="views/blank.html">Blank Page</a></li>
-              <li><a href="views/login.html">Login</a></li>
-              <li><a href="views/lock_screen.html">Lock Screen</a></li>
-              <li><a href="views/profile.html">Profile</a></li>
-              <li><a href="views/invoice.html">Invoice</a></li>
-              <li><a href="views/pricing_table.html">Pricing Table</a></li>
-              <li><a href="views/faq.html">FAQ</a></li>
-              <li><a href="views/404.html">404 Error</a></li>
-              <li><a href="views/500.html">500 Error</a></li>
-            </ul>
+            </a>
+         
           </li>
           <li class="sub-menu">
             <a href="views/javascript:;">
@@ -262,7 +259,7 @@
               <span>인사/근태</span>
               </a>
             <ul class="sub">
-              <li><a href="#">인사 정보</a></li>
+              <li><a href="myPage.do">인사 정보</a></li>
               <li><a href="#">근태 정보</a></li>
               <li><a href="#">연차 현황</a></li>
               <li><a href="#">주소록</a></li>
@@ -275,6 +272,25 @@
     <!--sidebar end-->
   </section>
   
+  <div class="modal fade" id="workcheck" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>현재 날짜와 시간은 <%= format.format(currentTime) %></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="resources/lib/jquery/jquery.min.js"></script>
 

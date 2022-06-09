@@ -12,4 +12,6 @@ public interface EmployeeService {
 
 	int idCheck(String userId);
 
+	Employee updateEmp(Employee emp)throws Exception;
+
 }

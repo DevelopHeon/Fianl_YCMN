@@ -47,5 +47,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		return result;
 	}
+
+	@Override
+	public Employee updateEmp(Employee emp) {
+		
+		int result = employeeDao.updateEmp(sqlSession, emp);
+		
+		if(result > 0) {
+			Employee loginUser = employeeDao.loginEmployee(sqlSession, emp);
+			return loginUser;
+		}else {
+			throw new CommException("사원 정보 수정 실패");
+		}
+	}
 }
 

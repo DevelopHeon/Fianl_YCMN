@@ -14,25 +14,24 @@ public class Employee {
    private String empName;
    private String empId;
    private String empPwd;
-   private String email;
+   private String empEmail;
    private String officeTel;
-   private String phone;
+   private String empPhone;
    private String empLoc;
    private String empPfe;
    private int category;
    private String status;
-   private String onoff;
-   private int positionNo;
-   private int departmentNo;
-   private String depName;
+   private String empOnoff;
+   private int posNo;
+   private int depNo;
    private String posName;
+   private String depName;
    
 	@Override
 	public String toString() {
-		return "Employee [empNo=" + empNo + ", empName=" + empName + ", empId=" + empId + ", empPwd=" + empPwd + ", email="
-				+ email + ", officeTel=" + officeTel + ", phone=" + phone + ", empLoc=" + empLoc + ", empPfe=" + empPfe
-				+ ", category=" + category + ", status=" + status + ", onoff=" + onoff + ", positionNo=" + positionNo
-				+ ", departmentNo=" + departmentNo + "]";
+		return "Employee [empNo=" + empNo + ", empName=" + empName + ", empId=" + empId + ", empPwd=" + empPwd
+				+ ", empEmail=" + empEmail + ", officeTel=" + officeTel + ", empPhone=" + empPhone + ", empLoc=" + empLoc
+				+ ", empPfe=" + empPfe + ", category=" + category + ", status=" + status + ", empOnoff=" + empOnoff
+				+ ", posNo=" + posNo + ", depNo=" + depNo + ", posName=" + posName + ", depName=" + depName + "]";
 	}
-   
 }
