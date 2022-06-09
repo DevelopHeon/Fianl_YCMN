@@ -12,9 +12,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="insertEmployee" parameterType="Employee">
-		INSERT INTO EMPLOYEE
-   (EMP_NO, EMP_NAME, EMP_ID, EMP_PWD, EMP_EMAIL, EMP_PHONE, CATEGORY, STATUS)
-   VALUES(SEQ_EMP.NEXTVAL, #{empName}, #{empId}, #{empPwd}, #{email}, #{phone}, DEFAULT, DEFAULT)
+		INSERT ALL 
+		INTO EMPLOYEE(EMP_NO, EMP_NAME, EMP_ID, EMP_PWD, EMP_EMAIL, EMP_PHONE, CATEGORY, STATUS)
+   		VALUES(SEQ_EMP.NEXTVAL, #{empName}, #{empId}, #{empPwd}, #{empEmail}, #{empPhone}, DEFAULT, DEFAULT)
+   		INTO PERSONNEL_CHART(EMP_NO, HIRE_DATE)
+		VALUES(SEQ_EMP.CURRVAL, SYSDATE)
+        SELECT * FROM DUAL
 	</insert>
 	
 	<select id="idCheck" parameterType="string" resultType="_int">
