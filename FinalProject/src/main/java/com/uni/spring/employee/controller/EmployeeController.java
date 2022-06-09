@@ -1,6 +1,6 @@
 package com.uni.spring.employee.controller;
 
-import java.sql.Date;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.WorkingDay;
 import com.uni.spring.employee.model.service.EmployeeService;
@@ -105,7 +105,7 @@ public class EmployeeController {
 		String status = (String)request.getParameter("status");
 		String clock = (String)request.getParameter("clock");
 		String today = (String)request.getParameter("today");
-
+		System.out.println(clock);
 		
 		if(status == "s") {
 			w.setStart(clock);
@@ -113,5 +113,15 @@ public class EmployeeController {
 			System.out.println(w.getStart());
 		}
 		return "main";
+	}
+	
+	@RequestMapping("empAddress.do")
+	public String empAddress(Model model) {
+		
+		ArrayList<Employee> list = employeeService.selectEmpAddress();
+		
+		model.addAttribute("list", list);
+		
+		return "employee/empAddress";
 	}
 }

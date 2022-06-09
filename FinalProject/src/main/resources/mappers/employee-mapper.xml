@@ -47,4 +47,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(WORK_NO, EMP_NO, TODAY, START)
 		VALUES(SEQ.WORK.NEXTVAL, #{empNo}, #{today}, #{start})
 	</insert>
+	
+	<select id="selectEmpAddress" parameterType="Employee" resultType="Employee" >
+		SELECT A.EMP_NAME, A.EMP_ID, B.POS_NAME, C.DEP_NAME
+		FROM EMPLOYEE A
+		LEFT JOIN JOB_POSITION B ON A.POS_NO = B.POS_NO
+		LEFT JOIN DEPARTMENT C ON A.DEP_NO = C.DEP_NO
+		<![CDATA[WHERE A.STATUS = 'Y' AND A.EMP_ID != 'admin']]>
+	</select>
+	
 </mapper>
