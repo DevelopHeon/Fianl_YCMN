@@ -24,6 +24,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<update id="updateEmp" parameterType="Employee">
-		UPDATE EMPLOYEE SET EMP_EMAIL = #{email}, OFFICE_TEL = #{officeTel}, EMP_PHONE = #{phone}, EMP_LOC = #{empLoc} WHERE EMP_ID = #{empId}
+		UPDATE EMPLOYEE SET EMP_EMAIL = #{empEmail},
+								OFFICE_TEL = #{officeTel}, 
+								EMP_PHONE = #{empPhone}, 
+								EMP_LOC = #{empLoc} 
+								WHERE EMP_ID = #{empId}
 	</update>
 </mapper>
