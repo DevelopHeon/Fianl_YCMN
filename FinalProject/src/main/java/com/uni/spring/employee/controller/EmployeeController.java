@@ -24,7 +24,7 @@ public class EmployeeController {
 	
 	@RequestMapping("main.do")
 	public String main() {
-		return "redirect:/";
+		return "main";
 	}
 	
 	@RequestMapping("enrollForm.do")

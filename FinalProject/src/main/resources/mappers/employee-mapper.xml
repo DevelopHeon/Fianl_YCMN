@@ -5,10 +5,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="employeeMapper">
 	
 	<select id="loginEmployee" parameterType="Employee" resultType="Employee">
-		SELECT *
-		FROM EMPLOYEE
-		WHERE EMP_ID = #{empId}
-		AND STATUS = 'Y'
+		SELECT A.*,
+		       B.DEP_NAME,
+		       C.POS_NAME
+		FROM EMPLOYEE A
+		LEFT OUTER JOIN DEPARTMENT B
+		    ON A.DEP_NO = B.DEP_NO
+		LEFT OUTER JOIN JOB_POSITION C
+		    ON A.POS_NO = C.POS_NO
+		WHERE A.EMP_ID = #{empId}
+		AND A.STATUS = 'Y'
 	</select>
 	
 	<insert id="insertEmployee" parameterType="Employee">

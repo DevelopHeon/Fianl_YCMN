@@ -24,6 +24,8 @@ public class Employee {
    private String onoff;
    private int positionNo;
    private int departmentNo;
+   private String depName;
+   private String posName;
    
 	@Override
 	public String toString() {
