@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%
@@ -43,6 +44,12 @@
 </head>
 
 <body>
+	<c:if test = "${ !empty msg }">
+		<script>
+			alert("${msg}");
+		</script>
+		<c:remove var="msg" scope="session"/>
+	</c:if>
   <section id="container">
     <!-- **********************************************************************************************************************************************************
         TOP BAR CONTENT & NOTIFICATIONS
@@ -188,7 +195,7 @@
         <ul class="sidebar-menu" id="nav-accordion">
           <p class="centered"><a href="views/profile.html"><img src="resources/img/ui-sam.jpg" class="img-circle" width="80"></a></p>
           <h5 class="centered">${ sessionScope.loginUser.empName }</h5>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#workcheck">출퇴근 확인</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#workcheck" onclick="checkTime()" >출퇴근 확인</button>
           <li class="sub-menu">
             <a href="views/javascript:;">
               <i class="fa fa-book"></i>
@@ -260,7 +267,7 @@
               </a>
             <ul class="sub">
               <li><a href="myPage.do">인사 정보</a></li>
-              <li><a href="#">근태 정보</a></li>
+              <li><a href="workingInfo.do">근태 정보</a></li>
               <li><a href="#">연차 현황</a></li>
               <li><a href="#">주소록</a></li>
             </ul>
@@ -272,25 +279,32 @@
     <!--sidebar end-->
   </section>
   
+  <form action="workingCheck.do" method="get">
   <div class="modal fade" id="workcheck" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">근태 확인</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      
       <div class="modal-body">
-        <p>현재 날짜와 시간은 <%= format.format(currentTime) %></p>
+        	<p>현재 날짜와 시간은 <%= format.format(currentTime) %></p>
+        	<h4 id="today" name="today" value="today" class="card-title mb-3 font-weight-bold"></h4>
+        	<p id="clock" name="clock" value="clock" style="font-size:40px"></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+      		<button type="submit" name="status" value="s" id="startBtn" class="btn btn-primary">출근</button>
+      		<button type="submit" name="status" value="f" id="finishBtn" class="btn btn-primary">퇴근</button>
+        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
+      
     </div>
   </div>
 </div>
+</form>
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="resources/lib/jquery/jquery.min.js"></script>
 
@@ -367,6 +381,54 @@
       var to = $("#" + id).data("to");
       console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
     }
+    
+  //출퇴근
+  function checkTime() {
+      //현재시간
+      var currentDate = new Date();
+
+      var clock = document.getElementById("clock");
+      var today = document.getElementById("today");
+
+      //요일
+      //getDay() : 요일 0~6 일~토요일
+      var week = new Array('일', '월', '화', '수', '목', '금', '토');
+      var todayWeek = week[currentDate.getDay()];
+      //oooo년oo월oo일(요일)
+      var calendar = currentDate.getFullYear()+"년 " + (currentDate.getMonth()+1) + "월 " + currentDate.getDate() + "일" + " ("+ todayWeek + ") "
+      
+      var hours = add(currentDate.getHours(), 2);
+      var minutes = add(currentDate.getMinutes(), 2);
+      var seconds = add(currentDate.getSeconds(), 2);
+
+      clock.innerHTML = hours + ":" + minutes + ":" + seconds;
+      today.innerHTML = calendar;
+      
+      //1초마다 리셋
+      setTimeout("checkTime()", 1000);
+
+      //시,분,초 자리 수 없거나 한자리일때 0붙이기
+      //add(currentDate.gethours(), 2) -> 일의자리가 되거나 없을때(00) 앞에 0을 붙여주게 return값 재정의
+      function add(time, digit) {
+          var zero ="";
+          time = time.toString(); //숫자를 문자형으로 바꿔주기
+          if(time.length < digit) {
+              for(i = 0; i < digit - time.length; i++){
+                  zero += '0';
+              }
+          }
+          return zero + time;
+      }
+  }
+  
+  //출근 한번 누르면 disabled
+  /* $(function(){
+	  $("#startBtn").click(function(){
+		  $("#startBtn").attr('disabled', true)
+		  alert("출근 완료")
+	  })
+  }) */
+  
   </script>
 </body>
 

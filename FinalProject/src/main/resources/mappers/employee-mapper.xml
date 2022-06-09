@@ -39,4 +39,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 								EMP_LOC = #{empLoc} 
 								WHERE EMP_ID = #{empId}
 	</update>
+	
+	
+	
+	<insert id="insertStart" parameterType="WorkingDay">
+		INSERT INTO WORKINGDAY
+		(WORK_NO, EMP_NO, TODAY, START)
+		VALUES(SEQ.WORK.NEXTVAL, #{empNo}, #{today}, #{start})
+	</insert>
 </mapper>
