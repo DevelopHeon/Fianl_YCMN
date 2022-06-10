@@ -41,12 +41,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	
-	
+	<!-- 출근체크 -->
 	<insert id="insertStart" parameterType="WorkingDay">
 		INSERT INTO WORKINGDAY
 		(WORK_NO, EMP_NO, TODAY, START_TIME, STATUS)
 		VALUES(SEQ_WORK.NEXTVAL, #{empNo}, SYSDATE, #{startTime}, 'Y')
 	</insert>
+	
+	<!-- 퇴근체크 -->
+	<update id="updateFinish" parameterType="WorkingDay">
+		UPDATE WORKINGDAY SET FINISH_TIME = #{finishTime}
+		WHERE TODAY = #{today} AND START_TIME IS NOT NULL
+	
+	</update>
+	
 	
 	<select id="selectEmpAddress" parameterType="Employee" resultType="Employee" >
 		SELECT A.EMP_NAME, A.EMP_ID, B.POS_NAME, C.DEP_NAME

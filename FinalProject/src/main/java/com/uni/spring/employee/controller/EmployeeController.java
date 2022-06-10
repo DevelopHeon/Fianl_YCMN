@@ -1,10 +1,9 @@
 package com.uni.spring.employee.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -92,6 +91,8 @@ public class EmployeeController {
 		return "employee/workingInfo";
 	}
 	
+	//근태-출근체크
+	@ResponseBody
 	@RequestMapping("workingCheck.do")
 	public String workingCheck(@ModelAttribute WorkingDay w,
 							   @RequestParam("startTime") String startTime,
@@ -109,8 +110,29 @@ public class EmployeeController {
 		
 		model.addAttribute("working", working);
 		
-		return "employee/wokringInfo";
+		return "main";
 	}
+	
+	
+	//근태-퇴근체크
+		@ResponseBody
+		@RequestMapping("leaveCheck.do")
+		public String leaveCheck(@ModelAttribute WorkingDay w,
+								 @RequestParam("finishTime") String finishTime,
+								 @RequestParam("today") Date today,
+								 @RequestParam("empNo") int empNo,
+								 Model model) {
+			
+			w.setStartTime(finishTime);
+			w.setEmpNo(empNo);			
+			w.setToday(today);
+			System.out.println(today);
+			WorkingDay working = employeeService.updateFinish(w);
+			
+			model.addAttribute("working", working);
+			
+			return "main";
+		}
 	
 	@RequestMapping("empAddress.do")
 	public String empAddress(Model model) {
