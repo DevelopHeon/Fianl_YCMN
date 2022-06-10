@@ -328,7 +328,8 @@
   <script src="resources/lib/sparkline-chart.js"></script>
   <script src="resources/lib/zabuto_calendar.js"></script>
   <script type="text/javascript">
-    $(document).ready(function() {
+  <!-- 밑에 아저씨 얼굴 나오는 부분 -->
+/*     $(document).ready(function() {
       var unique_id = $.gritter.add({
         // (string | mandatory) the heading of the notification
         title: 'Welcome to Dashio!',
@@ -345,7 +346,7 @@
       });
 
       return false;
-    });
+    }); */
   </script>
   <script type="application/javascript">
     $(document).ready(function() {

@@ -50,7 +50,7 @@
 		$(".table>tbody>tr").click(function(){
 			var ano = $(this).children().eq(0).text();
 			console.log(ano);
-			location.href = "approvalWrite.do?ano=" + ano;
+			location.href = "enrollFormApproval.do?ano=" + ano;
 		})
 	})
 	
