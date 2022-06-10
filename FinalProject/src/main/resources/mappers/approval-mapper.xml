@@ -8,8 +8,19 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		(APP_NO, APP_WRITER_NO, APP_TITLE, APP_CREATE_DATE, APP_KINDS, APP_STATUS, STATUS)
 		VALUES(SEQ_APP.NEXTVAL, #{appWriterNo}, #{appTitle}, #{appCreateDate}, #{appKinds}, DEFAULT, DEFAULT)
 	</insert>
-	<insert id="insertapperAccount" parameterType="com.uni.spring.approval.model.dto.ApperAccount">
+	<insert id="insertApperAccount" parameterType="com.uni.spring.approval.model.dto.ApperAccount">
 		INSERT INTO APPER_ACCOUNT
 		VALUES(SEQ_APP.CURRVAL, #{erAccountHolder}, #{bankName}, #{accountNumber}, #{erAmount})
+	</insert>
+	<insert id="insertApprovalErs" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
+		INTO APP_ER(APP_NO, ER_CLASS, ER_DATE, ER_DETAIL, ER_USE, ER_PAYMENT, CATEGORY)
+		VALUES
+		(SEQ_APP.CURRVAL, #{item.erClass}, #{item.erDate}, #{item.erDetail}, #{item.erUse}, #{item.erPayment}, DEFAULT)
+	</foreach>
+	</insert>
+	<insert id="insertAttachment" parameterType="Attachment">
+		INSERT INTO ATTACHMENT
+		VALUES(SEQ_ANO.NEXTVAL, #{empNo}, SEQ_APP.CURRVAL, 2, #{originName}, #{changeName}, #{filePath}, DEFAULT, DEFAULT)
 	</insert>
 </mapper>
