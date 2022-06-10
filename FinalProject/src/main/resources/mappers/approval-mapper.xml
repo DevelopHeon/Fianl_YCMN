@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="approvalMapper">
+	<insert id="insertApproval" parameterType="Approval">
+		INSERT INTO APPROVAL
+		(APP_NO, APP_WRITER_NO, APP_TITLE, APP_CREATE_DATE, APP_KINDS, APP_STATUS, STATUS)
+		VALUES(SEQ_APP.NEXTVAL, #{appWriterNo}, #{appTitle}, #{appCreateDate}, #{appKinds}, DEFAULT, DEFAULT)
+	</insert>
+	<insert id="insertapperAccount" parameterType="com.uni.spring.approval.model.dto.ApperAccount">
+		INSERT INTO APPER_ACCOUNT
+		VALUES(SEQ_APP.CURRVAL, #{erAccountHolder}, #{bankName}, #{accountNumber}, #{erAmount})
+	</insert>
+</mapper>

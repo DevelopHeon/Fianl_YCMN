@@ -10,8 +10,10 @@
 	</settings>
 	<typeAliases>
 		<typeAlias type="com.uni.spring.employee.model.dto.Employee" alias="Employee"/>
+		<typeAlias type="com.uni.spring.approval.model.dto.Approval" alias="Approval"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="/mappers/employee-mapper.xml"/>
+		<mapper resource="/mappers/approval-mapper.xml"/>
 	</mappers>
 </configuration>
