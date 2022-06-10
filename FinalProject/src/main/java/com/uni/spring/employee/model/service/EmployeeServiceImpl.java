@@ -64,16 +64,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 			throw new CommException("사원 정보 수정 실패");
 		}
 	}
-
+	
 	@Override
-	public void insertStart(WorkingDay w) {
+	public WorkingDay insertStart(WorkingDay w) {
 		
-		int result = employeeDao.insertStart(sqlSession,w);
+		int result = employeeDao.insertStart(sqlSession, w);
 		
-		if(result < 0) {
+		if(result > 0) {
+			
+			return w;
+		} else {
 			throw new CommException("출근 등록 실패");
 		}
-		
 	}
 
 	@Override
@@ -81,5 +83,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		return employeeDao.selectEmpAddress(sqlSession);
 	}
+
+	
 }
 

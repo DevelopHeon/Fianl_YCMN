@@ -19,13 +19,7 @@
   <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
-
-  <!-- =======================================================
-    Template Name: Dashio
-    Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
-    Author: TemplateMag.com
-    License: https://templatemag.com/license/
-  ======================================================= -->
+  
 <style>
 
  #update {
@@ -36,17 +30,17 @@
 
 <body onload="checkMonth()">
 	<jsp:include page="../main.jsp"/>
-	<script>
-		function checkMonth() {
-			var currentDate = new Date();
-			
-			var month = document.getElementById("month");
-			
-			var calendar = currentDate.getFullYear() + "년 " + (currentDate.getMonth()+1) +"월"
-			month.innerHTML = calendar;
-		}
+<script>
+function checkMonth() {
+	var currentDate = new Date();
 	
-	</script>
+	var month = document.getElementById("month");
+	
+	var calendar = currentDate.getFullYear() + "년 " + (currentDate.getMonth()+1) +"월"
+	month.innerHTML = calendar;
+}
+
+</script>
     <!-- **********************************************************************************************************************************************************
         MAIN CONTENT
         *********************************************************************************************************************************************************** -->
@@ -58,9 +52,14 @@
             <div class="row content-panel">
             <!-- /col-md-4 -->
              <div><h2 id="month"></h2></div>
-
-
-
+             <c:forEach items="${working}" var="w">
+				<div>
+					<input type="text" id="start">${w.startTime }
+				</div>
+				<div>
+					<input type="text" id="finish">
+				</div>
+			</c:forEach>
 
             </div> 
             <!-- /row -->

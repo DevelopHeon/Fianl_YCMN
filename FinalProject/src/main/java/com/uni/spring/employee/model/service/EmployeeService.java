@@ -18,7 +18,7 @@ public interface EmployeeService {
 
 	Employee updateEmp(Employee emp)throws Exception;
 
-	void insertStart(WorkingDay w);
+	WorkingDay insertStart(WorkingDay w);
 
 	ArrayList<Employee> selectEmpAddress();
 
