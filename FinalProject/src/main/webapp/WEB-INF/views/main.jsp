@@ -278,10 +278,9 @@
     </aside>
     <!--sidebar end-->
   </section>
-  
-  <form action="workingCheck.do" method="get">
   <div class="modal fade" id="workcheck" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
+
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">근태 확인</h5>
@@ -297,22 +296,22 @@
       </div>
       <div class="d-flex" style="font-size: 16px; ">
 		<p class="col-6" style="padding:0px;">출근시간</p>
-		<p class="col-6 text-right" id="start"></p>
+		<p class="col-6 text-right" name="start" id="start"></p>
 	  </div>
 	  <div class="d-flex" style="font-size: 16px">
 		<p class="col-6" style="padding:0px;">퇴근시간</p>
-		<p class="col-6 text-right" id="finish"></p>
+		<p class="col-6 text-right" name="finish" id="finish"></p>
 	  </div>
       <div class="modal-footer">
       		<button type="submit" name="status" value="s" id="startBtn" class="btn btn-primary">출근</button>
-      		<button type="submit" name="status" value="f" id="finishBtn" class="btn btn-primary">퇴근</button>
+      		<button type="submit" name="status" value="f" id="finishBtn" class="btn btn-primary" disabled>퇴근</button>
         	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
-      
     </div>
+
   </div>
 </div>
-</form>
+
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="resources/lib/jquery/jquery.min.js"></script>
 
@@ -390,7 +389,9 @@
       console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
     }
     
-  //출퇴근
+  /*******출퇴근*******/
+  //서버시간 출력
+  var date;
   function checkTime() {
       //현재시간
       var currentDate = new Date();
@@ -413,7 +414,7 @@
       today.innerHTML = calendar;
       
       //1초마다 리셋
-      setTimeout("checkTime()", 1000);
+      date = setTimeout("checkTime()", 1000);
 
       //시,분,초 자리 수 없거나 한자리일때 0붙이기
       //add(currentDate.gethours(), 2) -> 일의자리가 되거나 없을때(00) 앞에 0을 붙여주게 return값 재정의
@@ -429,14 +430,68 @@
       }
   }
   
+  //출,퇴근 시간 체킹
+  var start = document.getElementById("start");
+  var finish = document.getElementById("finish");
+  var now = document.getElementById("clock");
+  //출근
+   $(function(){
 
-  //출근 한번 누르면 disabled
-  /* $(function(){
 	  $("#startBtn").click(function(){
+		  //출근 시간 체크!
+			clearInterval(date);
+		  //체크한 시간 출근시간 p태그에 반영!
+			start.innerHTML = now.innerHTML;
+		  	console.log(now);
+		  //서버시간 재가동!
+			checkTime();
+		  
 		  $("#startBtn").attr('disabled', true)
-		  alert("출근 완료")
+		  alert("출근 완료");
+		  $("#finishBtn").attr('disabled', false)
+		  
+		  var startTime = now.innerHTML;
+		  $.ajax({
+			  url:"workingCheck.do",
+			  type:"get",
+			  data:{startTime:startTime,
+				  	empNo:${loginUser.empNo}
+			  },
+			  success:function(){
+				  console.log("성공")
+			  },
+			  error:function(){
+				  console.log("실패")
+			  }
+		  })
+
 	  })
-  }) */
+	  
+	  
+  })
+  
+//퇴근
+  $(function(){
+
+	  $("#finishBtn").click(function(){
+		  var reCheck = confirm("퇴근 하시겠습니까?");
+		  if(reCheck){
+		  //퇴근 시간 체크!
+			clearInterval(date);
+		  //체크한 시간 출근시간 p태그에 반영!
+			finishTime.innerHTML = now.innerHTML;
+		  	console.log(now);
+		  //서버시간 재가동!
+			checkTime();
+		  /* 
+			alert("퇴근 완료");
+			$("#finishBtn").attr('disabled', true) */
+		  }
+		 
+	  })
+	  
+	  
+ }) 
   
   </script>
 </body>

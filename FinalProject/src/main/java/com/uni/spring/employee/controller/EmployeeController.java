@@ -10,11 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.WorkingDay;
 import com.uni.spring.employee.model.service.EmployeeService;
@@ -94,25 +94,22 @@ public class EmployeeController {
 	
 	@RequestMapping("workingCheck.do")
 	public String workingCheck(@ModelAttribute WorkingDay w,
-							   HttpSession session, 
-							   HttpServletRequest request) {
-		Employee loginUser = (Employee)session.getAttribute("loginUser");
-		int empNo = loginUser.getEmpNo();
+							   @RequestParam("startTime") String startTime,
+							   @RequestParam("empNo") int empNo,
+							   Model model) {
+//		Employee loginUser = (Employee)session.getAttribute("loginUser");
+//		int empNo = loginUser.getEmpNo();
+//		w.setEmpNo(empNo);
+		w.setStartTime(startTime);
 		w.setEmpNo(empNo);
-		System.out.println("controller 들어옴?~??????????????");
 		System.out.println(empNo);
-		//name이 status인 파라미터를 가져옴
-		String status = (String)request.getParameter("status");
-		String clock = (String)request.getParameter("clock");
-		String today = (String)request.getParameter("today");
-		System.out.println(clock);
+		System.out.println(startTime);
 		
-		if(status == "s") {
-			w.setStart(clock);
-			employeeService.insertStart(w);
-			System.out.println(w.getStart());
-		}
-		return "main";
+		WorkingDay working = employeeService.insertStart(w);
+		
+		model.addAttribute("working", working);
+		
+		return "employee/wokringInfo";
 	}
 	
 	@RequestMapping("empAddress.do")

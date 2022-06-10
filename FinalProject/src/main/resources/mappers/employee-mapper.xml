@@ -44,8 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insertStart" parameterType="WorkingDay">
 		INSERT INTO WORKINGDAY
-		(WORK_NO, EMP_NO, TODAY, START)
-		VALUES(SEQ.WORK.NEXTVAL, #{empNo}, #{today}, #{start})
+		(WORK_NO, EMP_NO, TODAY, START_TIME, STATUS)
+		VALUES(SEQ_WORK.NEXTVAL, #{empNo}, SYSDATE, #{startTime}, 'Y')
 	</insert>
 	
 	<select id="selectEmpAddress" parameterType="Employee" resultType="Employee" >
