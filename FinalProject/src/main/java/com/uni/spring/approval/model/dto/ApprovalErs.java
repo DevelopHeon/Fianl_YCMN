@@ -14,7 +14,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ApprovalEr {
+public class ApprovalErs {
 	
 	private int apperNo; // 지출결의서 고유번호 (PK)
 	private int erAppNo; // 전자결재번호(FK)
@@ -24,6 +24,5 @@ public class ApprovalEr {
 	private String erUse; // 사용처
 	private String erPayment; // 결재수단 (M:현금, PC:개인카드, BC:법인카드)
 	private int category; // 분류번호
-	
-	private List<ApprovalEr> approvalErs; // 중첩 커맨드 객체를 받기위해 생성
+	private List<ApprovalErs> approvalErs;
 }

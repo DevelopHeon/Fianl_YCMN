@@ -107,7 +107,6 @@
 												<th>* 지출내용</th>
 												<th>* 사용처</th>
 												<th>* 결제수단</th>
-												<th style="width:10%;">* 증빙</th>
 												<th>* 삭제</th>
 											</tr>
 										</thead>
@@ -141,15 +140,16 @@
 													</select>
 												</td>
 												<td>
-													<input type="file" id="uploadFile" name="uploadFile" multiple>
-												</td>
-												<td>
 													<button type="button" id="rowRemoveBtn" class="btn btn-danger" disabled>삭제</button>
 												</td>
 											</tr>
 										</tbody>
 									</table>
 									<button type="button" id="rowAddBtn" class="btn btn-primary">추가</button>
+									<div class="addFile" style="margin-top:2%;">
+										<b>* 증빙서류 첨부</b><br>
+										<input type="file" id="uploadFile" name="uploadFile" class="form-control" style="width:50%; height:3%;" required>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -171,7 +171,7 @@
 			console.log(count);
 			var insertTr = "";
 			if(trCnt < 6){
-				insertTr += '<tr><td><input type="text" class="form-control" list="listOptions" id="approvalErs['+count+'].erClass" name="erClass" placeholder="과목입력">'
+				insertTr += '<tr><td><input type="text" class="form-control" list="listOptions" id="erClass" name="approvalErs['+count+'].erClass" placeholder="과목입력">'
 					 + '<datalist id="listOptions">'
 					 + '<option value="교육훈련비">'
 					 + '<option value="도서인쇄비">'
@@ -188,7 +188,6 @@
 					 + '<option value="M">현금</option>'
 					 + '<option value="PC">개인카드</option>'
 					 + '<option value="BC">법인카드</option></select></td>'
-					 + '<td><input type="file" id="uploadFile" name="uploadFile" multiple></td>'
 					 + '<td><button type="button" id="rowRemoveBtn" onclick="goDelete(this);" class="btn btn-danger">삭제</button></td></tr>'
 					 
 					 console.log(insertTr);
@@ -200,7 +199,7 @@
 		});
 		</script>
 		<script>
-		// 증빙 항목 작성 row 삭제하기
+		// 지출항목 작성 row 삭제하기
 		function goDelete(obj){
 			$(obj).closest('tr').remove();
 			count--;
