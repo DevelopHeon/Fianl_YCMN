@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 public class Attachment {
 	private int fileNo; // 파일 고유 번호
-	private int empNo; // 사원번호
+	private String empNo; // 사원번호
 	private int refNo;			// 참조하고 있는 게시글 번호
 	private int category;		// 분류번호
 	private String originName;	// 파일 원본명

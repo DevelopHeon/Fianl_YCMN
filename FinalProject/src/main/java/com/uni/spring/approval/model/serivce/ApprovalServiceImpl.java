@@ -1,13 +1,16 @@
 package com.uni.spring.approval.model.serivce;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import com.uni.spring.approval.model.dao.ApprovalDao;
 import com.uni.spring.approval.model.dto.ApperAccount;
 import com.uni.spring.approval.model.dto.Approval;
-import com.uni.spring.approval.model.dto.ApprovalEr;
+import com.uni.spring.approval.model.dto.ApprovalErs;
 import com.uni.spring.common.CommException;
+import com.uni.spring.common.dto.Attachment;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,25 +22,19 @@ public class ApprovalServiceImpl implements ApprovalService {
 	private final SqlSessionTemplate sqlSession;
 	
 	@Override
-	public void insertErApproval(Approval approval, ApprovalEr approvalErs, ApperAccount apperAccount) {
+	public void insertErApproval(Approval approval, ApperAccount apperAccount, ArrayList<ApprovalErs> appers,  Attachment attachment) {
 		
 		int result1 = approvalDao.insertApproval(sqlSession, approval);
-		int result2 = 0;
-		int result3 = 0;
+		int result2 = approvalDao.insertApperAccount(sqlSession, apperAccount);
+		int result3 = approvalDao.insertApprovalErs(sqlSession, appers);
+		int result4 = approvalDao.insertAttachment(sqlSession, attachment);
 		
 		//전자 결재테이블에 추가가 되지 않으면
-		if(result1 < 0) {
-			throw new CommException("insertApproval 실패");
+		if(result1 * result2 * result3 * result4 < 0) {
+			throw new CommException("지출결의서 등록 실패");
 		}
 		else {
-			result2 = approvalDao.insertapperAccount(sqlSession, apperAccount);
+			System.out.println("지출 결의서 추가 성공");
 		}
-		if(result1 * result2 > 0) {
-			
-			
-		}
-		System.out.println("전자결재 추가 성공");
-		System.out.println("계좌정보 추가 성공");
 	}
-
 }
