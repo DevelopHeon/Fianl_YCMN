@@ -45,7 +45,7 @@
 	#main-content{
 		color:black;
 		background-color:white;
-		height:976px;
+		height:1200px;
 	}
 </style>
 </head>

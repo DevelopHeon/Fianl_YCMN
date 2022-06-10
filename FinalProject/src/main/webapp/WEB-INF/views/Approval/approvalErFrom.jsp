@@ -33,7 +33,7 @@
 						<form action="insertErApproval.do" method="post" class="form-inline" enctype="multipart/form-data">
 							<div class="form-group" style="line-height:2em;">
 								<label for="depName">부서명 : </label>
-									<input type="text" class="form-control" id="depName" name="depName" value="${ sessionScope.loginUser.depName }" readonly>
+									<input type="text" style="margin-left:3%;" class="form-control" id="depName" name="depName" value="${ sessionScope.loginUser.depName }" readonly>
 									<br>
 									<table class="table table-bordered" style="width:300px; float:right; margin-right:5%; text-align:center;">
 										<tbody>
@@ -70,13 +70,13 @@
 										</tbody>
 									</table>
 								<label for="posName"> 직위/직책 :</label> 
-									<input type="text" class="form-control" id="posName" name="posName" value="${ sessionScope.loginUser.posName }" readonly>
+									<input type="text" class="form-control" style="margin-left:1.3%;" id="posName" name="posName" value="${ sessionScope.loginUser.posName }" readonly>
 									<br>
 								<label for="empName"> 기안자명 :</label>
-									<input type="text" class="form-control" id="empName" name="empName" value="${ sessionScope.loginUser.empName }" readonly>
+									<input type="text" class="form-control"style="margin-left:1.8%;" id="empName" name="empName" value="${ sessionScope.loginUser.empName }" readonly>
 									<br>
 								<label for="appCreateDate"> 기안일 :</label>
-									<input type="text" class="form-control" id="appCreateDate" name="appCreateDate" readonly>
+									<input type="text" class="form-control" style="margin-left:3%;" id="appCreateDate" name="appCreateDate" readonly>
 								<br>
 								<!-- 전자결재 데이터에 필요한 문서 제목, 작성자 사번, 결재양식 hidden 값으로 전달 -->
 								<div class="hiddenInfo">
@@ -88,7 +88,7 @@
 							<hr>
 							<div class="erInfo">
 								<label for="bankName">은행명 : </label>
-								<input type="text" class="form-control" id="bankName" name="bankName" placeholder="은행명을 입력하세요." required>
+								<input type="text" class="form-control" id="bankName" name="bankName" style="margin-left:3.2%;" placeholder="은행명을 입력하세요." required>
 								<label for="erAccountHolder" style="margin-left:20%;">예금주 : </label>
 								<input type="text" class="form-control" id="erAccountHolder" name="erAccountHolder" placeholder="예금주명" required>
 								<br>
