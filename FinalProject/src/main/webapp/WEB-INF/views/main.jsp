@@ -1,9 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.uni.spring.employee.model.dto.WorkingDay"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%
+	WorkingDay w = new WorkingDay();
+	String sTime = w.getStartTime();
+	String fTime = w.getFinishTime();
+	
+	session.setAttribute("sTime", sTime);
+	session.setAttribute("fTime", fTime);
+	
 	Date currentTime = new Date();
 	SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 	
@@ -296,7 +303,7 @@
       </div>
       <div class="d-flex" style="font-size: 16px; ">
 		<p class="col-6" style="padding:0px;">출근시간</p>
-		<p class="col-6 text-right" name="start" id="start"></p>
+		<p class="col-6 text-right" name="start" id="start" ></p>
 	  </div>
 	  <div class="d-flex" style="font-size: 16px">
 		<p class="col-6" style="padding:0px;">퇴근시간</p>
@@ -435,6 +442,7 @@
   var start = document.getElementById("start");
   var finish = document.getElementById("finish");
   var now = document.getElementById("clock");
+  var cal = document.getElementById("today");
   //출근
    $(function(){
 
@@ -458,7 +466,8 @@
 			  data:{startTime:startTime,
 				  	empNo:${loginUser.empNo}
 			  },
-			  success:function(){
+			  success:function(result){
+				  console.log(result),
 				  console.log("성공")
 			  },
 			  error:function(){
@@ -476,18 +485,37 @@
 
 	  $("#finishBtn").click(function(){
 		  var reCheck = confirm("퇴근 하시겠습니까?");
+		  
 		  if(reCheck){
 		  //퇴근 시간 체크!
 			clearInterval(date);
 		  //체크한 시간 출근시간 p태그에 반영!
-			finishTime.innerHTML = now.innerHTML;
+			finish.innerHTML = now.innerHTML;
 		  	console.log(now);
 		  //서버시간 재가동!
-			checkTime();
-		  /* 
+			checkTime(); 
 			alert("퇴근 완료");
-			$("#finishBtn").attr('disabled', true) */
+			$("#finishBtn").attr('disabled', true) 
 		  }
+		  
+		  var finishTime = now.innerHTML;
+		  var today = cal.innerHTML;
+		  console.log(today);
+		  $.ajax({
+			  url:"leaveCheck.do",
+			  type:"get",
+			  data:{finishTime:finishTime,
+				  	today:today,
+				  	empNo:${loginUser.empNo}
+			  },
+			  success:function(result){
+				  console.log(result),
+				  console.log("성공")
+			  },
+			  error:function(){
+				  console.log("실패")
+			  }
+		  })
 		 
 	  })
 	  

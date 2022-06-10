@@ -65,24 +65,41 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	}
 	
+	//근태-출근체크
 	@Override
 	public WorkingDay insertStart(WorkingDay w) {
 		
 		int result = employeeDao.insertStart(sqlSession, w);
 		
+		//출근 체킹 완
 		if(result > 0) {
-			
 			return w;
 		} else {
 			throw new CommException("출근 등록 실패");
 		}
 	}
 
+	//근태-퇴근체크
+	@Override
+	public WorkingDay updateFinish(WorkingDay w) {
+		int result = employeeDao.updateFinish(sqlSession, w);
+		
+		//퇴근 체킹 완
+		if(result > 0) {
+			return w;
+		} else {
+			throw new CommException("퇴근 등록 실패");
+		}
+	}
+	
+	
 	@Override
 	public ArrayList<Employee> selectEmpAddress() {
 		
 		return employeeDao.selectEmpAddress(sqlSession);
 	}
+
+	
 
 	
 }

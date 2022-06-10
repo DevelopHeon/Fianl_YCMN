@@ -30,15 +30,20 @@ public class EmployeeDao {
 
 	
 	//출근체크
-	public int insertStart(SqlSessionTemplate sqlSession, WorkingDay w) {
-		
+	public int insertStart(SqlSessionTemplate sqlSession, WorkingDay w) {	
 		return sqlSession.insert("employeeMapper.insertStart", w);
 	}
 
-	public ArrayList<Employee> selectEmpAddress(SqlSessionTemplate sqlSession) {
-		
+	//퇴근체크
+	public int updateFinish(SqlSessionTemplate sqlSession, WorkingDay w) {	
+		return sqlSession.insert("employeeMapper.updateFinish", w);
+	}
+	
+	public ArrayList<Employee> selectEmpAddress(SqlSessionTemplate sqlSession) {	
 		return (ArrayList)sqlSession.selectList("employeeMapper.selectEmpAddress");
 	}
+
+
 
 
 
