@@ -1,8 +1,12 @@
 package com.uni.spring.employee.model.service;
 
+import java.util.ArrayList;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
+import com.uni.spring.employee.model.dto.WorkingDay;
 
 public interface EmployeeService {
 
@@ -13,5 +17,9 @@ public interface EmployeeService {
 	int idCheck(String userId);
 
 	Employee updateEmp(Employee emp)throws Exception;
+
+	void insertStart(WorkingDay w);
+
+	ArrayList<Employee> selectEmpAddress();
 
 }

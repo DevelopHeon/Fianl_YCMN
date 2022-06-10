@@ -11,6 +11,7 @@
 	<typeAliases>
 		<typeAlias type="com.uni.spring.employee.model.dto.Employee" alias="Employee"/>
 		<typeAlias type="com.uni.spring.approval.model.dto.Approval" alias="Approval"/>
+		<typeAlias type="com.uni.spring.employee.model.dto.WorkingDay" alias="WorkingDay"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="/mappers/employee-mapper.xml"/>

@@ -20,12 +20,6 @@
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
 
-  <!-- =======================================================
-    Template Name: Dashio
-    Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
-    Author: TemplateMag.com
-    License: https://templatemag.com/license/
-  ======================================================= -->
 <style>
 
  #update {
@@ -53,7 +47,7 @@
                		<p><img src="resources/img/user.png" class="img-circle"></p>
                 </c:if>
                  <c:if test="${ sessionScope.loginUser.empPfe ne null}">
-                	<p><img src="/resources/board_upfiles/${loginUser.empPfe}" class="img-circle"></p>
+                	<p><img src="/resources/img/${loginUser.empPfe}" class="img-circle"></p>
                 </c:if>
                   <p>
                     <button class="btn btn-theme"><i class="fa fa-check"></i>변경하기</button>

@@ -14,6 +14,11 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+<style>
+    .innerOuter{
+        margin:5% 20% 5% 20%;
+    }
+</style>
 </head>
 <body>
     <div class="content">
@@ -38,11 +43,11 @@
                     <label for="empName">* Name :</label>
                     <input type="text" class="form-control" id="empName" name="empName" placeholder="Please Enter Name" required><br>
                     
-                    <label for="email"> &nbsp; Email :</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Please Enter Email"><br>
+                    <label for="empEmail">* Email :</label>
+                    <input type="email" class="form-control" id="empEmail" name="empEmail" placeholder="Please Enter Email"><br>
                     
-                    <label for="phone"> &nbsp; Phone :</label>
-                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Please Enter Phone (-없이)"><br>
+                    <label for="empPhone">* Phone :</label>
+                    <input type="tel" class="form-control" id="empPhone" name="empPhone" placeholder="Please Enter Phone (-없이)"><br>
                     
                 <div class="btns" align="center">
                     <button type="submit" id="enrollBtn" class="btn btn-primary" disabled>회원가입</button><!-- disabled  중복처리하고나서-->
