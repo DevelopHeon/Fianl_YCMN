@@ -12,14 +12,17 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.GsonBuilder;
 import com.uni.spring.approval.model.dto.ApperAccount;
 import com.uni.spring.approval.model.dto.Approval;
 import com.uni.spring.approval.model.dto.ApprovalErs;
 import com.uni.spring.approval.model.serivce.ApprovalService;
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.dto.Attachment;
+import com.uni.spring.employee.model.dto.Employee;
 
 import lombok.RequiredArgsConstructor;
 
@@ -76,6 +79,15 @@ public class ApprovalController {
 		approvalService.insertErApproval(approval, apperAccount, appers, attachment);
 		session.setAttribute("msg", "지출결의서 작성 완료.");
 		return "redirect:approvalList.do";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="selectApprover.do", produces="application/json; charset=utf-8")
+	public String selectApproverList() {
+		
+		ArrayList<Employee> list = approvalService.selectApproverList();
+		
+		return new GsonBuilder().create().toJson(list);
 	}
 
 	// 파일 저장시 사용하는 메소드

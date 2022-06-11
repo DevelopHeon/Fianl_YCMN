@@ -9,6 +9,7 @@ import com.uni.spring.approval.model.dto.ApperAccount;
 import com.uni.spring.approval.model.dto.Approval;
 import com.uni.spring.approval.model.dto.ApprovalErs;
 import com.uni.spring.common.dto.Attachment;
+import com.uni.spring.employee.model.dto.Employee;
 
 @Repository
 public class ApprovalDao {
@@ -27,6 +28,10 @@ public class ApprovalDao {
 
 	public int insertAttachment(SqlSessionTemplate sqlSession, Attachment attachment) {
 		return sqlSession.insert("approvalMapper.insertAttachment", attachment);
+	}
+
+	public ArrayList<Employee> selectApproverList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectApproverList");
 	}
 
 }
