@@ -202,7 +202,7 @@
         <ul class="sidebar-menu" id="nav-accordion">
           <p class="centered"><a href="views/profile.html"><img src="resources/img/ui-sam.jpg" class="img-circle" width="80"></a></p>
           <h5 class="centered">${ sessionScope.loginUser.empName }</h5>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#workcheck" onclick="checkTime()" >출퇴근 확인</button>
+          <button type="button" id="workcheck" class="btn btn-primary" data-toggle="modal" data-target="#workcheck" onclick="checkTime()" >출퇴근 확인</button>
           <li class="sub-menu">
             <a href="views/javascript:;">
               <i class="fa fa-book"></i>
@@ -411,8 +411,15 @@
       //getDay() : 요일 0~6 일~토요일
       var week = new Array('일', '월', '화', '수', '목', '금', '토');
       var todayWeek = week[currentDate.getDay()];
+      //월
+      //퇴근시간 체크시 oracle date는 1~9월 앞에 0이 붙음,,이것 때문에 쿼리문에서 에러 오지게남 *퇴근체크
+      //모두 String으로 바꾸고 1~9월일 경우 앞에 0을 붙여줌
+      function getMonth(){
+    	  var month = currentDate.getMonth()+1;
+    	  return month < 10 ? '0' + month : '' + month;
+      }
       //oooo년oo월oo일(요일)
-      var calendar = currentDate.getFullYear()+"년 " + (currentDate.getMonth()+1) + "월 " + currentDate.getDate() + "일" + " ("+ todayWeek + ") "
+      var calendar = currentDate.getFullYear()+"년 " + getMonth() + "월 " + currentDate.getDate() + "일" + " ("+ todayWeek + ")"
       
       var hours = add(currentDate.getHours(), 2);
       var minutes = add(currentDate.getMinutes(), 2);
@@ -499,6 +506,7 @@
 		  }
 		  
 		  var finishTime = now.innerHTML;
+		  console.log(finishTime);
 		  var today = cal.innerHTML;
 		  console.log(today);
 		  $.ajax({

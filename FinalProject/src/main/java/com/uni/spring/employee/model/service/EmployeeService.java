@@ -24,4 +24,6 @@ public interface EmployeeService {
 
 	ArrayList<Employee> selectEmpAddress();
 
+	ArrayList<WorkingDay> selectWorkingInfo(int empNo);
+
 }

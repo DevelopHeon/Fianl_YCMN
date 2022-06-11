@@ -1,9 +1,9 @@
 package com.uni.spring.employee.controller;
 
-import java.sql.Date;
 import java.util.ArrayList;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -87,7 +87,13 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping("workingInfo.do")
-	public String workingInfo() {
+	public String workingInfo(WorkingDay w, HttpSession session, Model model) {
+		Employee loginUser = (Employee)session.getAttribute("loginUser");
+		int empNo = loginUser.getEmpNo();
+		
+		ArrayList<WorkingDay> working = employeeService.selectWorkingInfo(empNo);
+		
+		model.addAttribute("working", working);
 		return "employee/workingInfo";
 	}
 	
@@ -110,30 +116,31 @@ public class EmployeeController {
 		
 		model.addAttribute("working", working);
 		
-		return "main";
+		return "employee/workingInfo";
 	}
 	
 	
 	//근태-퇴근체크
-		@ResponseBody
-		@RequestMapping("leaveCheck.do")
-		public String leaveCheck(@ModelAttribute WorkingDay w,
-								 @RequestParam("finishTime") String finishTime,
-								 @RequestParam("today") Date today,
-								 @RequestParam("empNo") int empNo,
-								 Model model) {
-			
-			w.setStartTime(finishTime);
-			w.setEmpNo(empNo);			
-			w.setToday(today);
-			System.out.println(today);
-			WorkingDay working = employeeService.updateFinish(w);
-			
-			model.addAttribute("working", working);
-			
-			return "main";
-		}
-	
+	@ResponseBody
+	@RequestMapping("leaveCheck.do")
+	public String leaveCheck(@ModelAttribute WorkingDay w,
+							 @RequestParam("finishTime") String finishTime,
+							 @RequestParam("today") String today,
+							 @RequestParam("empNo") int empNo,
+							 Model model) {
+		
+		w.setFinishTime(finishTime);
+		w.setEmpNo(empNo);			
+		w.setToday(today);
+		System.out.println(today);
+		WorkingDay working = employeeService.updateFinish(w);
+		
+		model.addAttribute("working", working);
+		
+		return "employee/workingInfo";
+	}
+
+		
 	@RequestMapping("empAddress.do")
 	public String empAddress(Model model) {
 		

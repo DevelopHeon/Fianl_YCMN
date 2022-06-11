@@ -65,6 +65,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	}
 	
+	//근태정보
+	@Override
+	public ArrayList<WorkingDay> selectWorkingInfo(int empNo) {
+
+		return employeeDao.selectWorkingInfo(sqlSession, empNo);
+	}
+	
 	//근태-출근체크
 	@Override
 	public WorkingDay insertStart(WorkingDay w) {
@@ -83,7 +90,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public WorkingDay updateFinish(WorkingDay w) {
 		int result = employeeDao.updateFinish(sqlSession, w);
-		
+		System.out.println(result);
 		//퇴근 체킹 완
 		if(result > 0) {
 			return w;
@@ -98,6 +105,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		return employeeDao.selectEmpAddress(sqlSession);
 	}
+
+	
 
 	
 
