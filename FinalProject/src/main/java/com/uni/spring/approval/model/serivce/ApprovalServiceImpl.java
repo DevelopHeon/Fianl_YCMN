@@ -11,6 +11,7 @@ import com.uni.spring.approval.model.dto.Approval;
 import com.uni.spring.approval.model.dto.ApprovalErs;
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.dto.Attachment;
+import com.uni.spring.employee.model.dto.Employee;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,5 +37,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 		else {
 			System.out.println("지출 결의서 추가 성공");
 		}
+	}
+
+	@Override
+	public ArrayList<Employee> selectApproverList() {
+		
+		return approvalDao.selectApproverList(sqlSession);
 	}
 }

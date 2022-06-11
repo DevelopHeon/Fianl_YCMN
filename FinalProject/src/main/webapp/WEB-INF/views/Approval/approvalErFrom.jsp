@@ -18,6 +18,7 @@
 		font-size:1.5rem;
 		padding:20px 10px 10px 0px; /*위 오른쪽 아래 왼쪽*/
 	}
+	h4{ font-weight:bold;}
 </style>
 </head>
 <body>
@@ -33,12 +34,12 @@
 						<form action="insertErApproval.do" method="post" class="form-inline" enctype="multipart/form-data">
 							<div class="form-group" style="line-height:2em;">
 								<label for="depName">부서명 : </label>
-									<input type="text" class="form-control" id="depName" name="depName" value="${ sessionScope.loginUser.depName }" readonly>
+									<input type="text" style="margin-left:3%;" class="form-control" id="depName" name="depName" value="${ sessionScope.loginUser.depName }" readonly>
 									<br>
 									<table class="table table-bordered" style="width:300px; float:right; margin-right:5%; text-align:center;">
 										<tbody>
 											<tr style="background:lightgray; font-weight:bold;">
-												<td rowspan="6" style="vertical-align:middle; width:30%;">결재</td>
+												<td rowspan="5" style="vertical-align:middle; width:30%;">결재</td>
 												<td>최초승인자</td>
 												<td>최종승인자</td>
 											</tr>
@@ -58,25 +59,44 @@
 												<td></td>
 											</tr>
 											<tr>
-												<!-- <td></td> -->
-												<td></td>
-												<td></td>
-											</tr>
-											<tr>
-												<!-- <td></td> -->
-												<td><button class="btn-sm btn-primary" type="button">결재자 추가</button></td>
+												<!-- <td></td> --> <!-- onclick="selectApprover()" -->
+												<td><button class="btn-sm btn-primary" onclick="selectApprover()" type="button" data-toggle="modal" data-target="#firstModal">결재자 추가</button></td>
 												<td><button class="btn-sm btn-primary" type="button">결재자 추가</button></td>
 											</tr>
 										</tbody>
 									</table>
+									<!-- 결재자 추가 클릭 시 뜨는 모달 -->
+									<div class="modal fade" id="firstModal" style="height:60%;">
+										<div class="modal-dialog modal-sm">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h3 class="modal-title">결재자 등록</h3>
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+												<div class="modal-body">
+													<div id="dept"></div>
+													<h4>총무부서 &nbsp;<a data-toggle="collapse" data-target="#dept1"><i class="bi bi-arrow-down"></i></a></h4>
+													<div id="dept1" class="collapse"></div>
+													<h4>인사부서&nbsp;<a data-toggle="collapse" data-target="#dept2"><i class="bi bi-arrow-down"></i></a></h4>
+													<div id="dept2" class="collapse"></div>
+													<h4>개발부서&nbsp;<a data-toggle="collapse" data-target="#dept3"><i class="bi bi-arrow-down"></i></a></h4>
+													<div id="dept3" class="collapse"></div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-primary">추가</button>
+													<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+												</div>
+											</div>
+										</div>
+									</div>
 								<label for="posName"> 직위/직책 :</label> 
-									<input type="text" class="form-control" id="posName" name="posName" value="${ sessionScope.loginUser.posName }" readonly>
+									<input type="text" class="form-control" style="margin-left:1.3%;" id="posName" name="posName" value="${ sessionScope.loginUser.posName }" readonly>
 									<br>
 								<label for="empName"> 기안자명 :</label>
-									<input type="text" class="form-control" id="empName" name="empName" value="${ sessionScope.loginUser.empName }" readonly>
+									<input type="text" class="form-control"style="margin-left:1.8%;" id="empName" name="empName" value="${ sessionScope.loginUser.empName }" readonly>
 									<br>
 								<label for="appCreateDate"> 기안일 :</label>
-									<input type="text" class="form-control" id="appCreateDate" name="appCreateDate" readonly>
+									<input type="text" class="form-control" style="margin-left:3%;" id="appCreateDate" name="appCreateDate" readonly>
 								<br>
 								<!-- 전자결재 데이터에 필요한 문서 제목, 작성자 사번, 결재양식 hidden 값으로 전달 -->
 								<div class="hiddenInfo">
@@ -88,7 +108,7 @@
 							<hr>
 							<div class="erInfo">
 								<label for="bankName">은행명 : </label>
-								<input type="text" class="form-control" id="bankName" name="bankName" placeholder="은행명을 입력하세요." required>
+								<input type="text" class="form-control" id="bankName" name="bankName" style="margin-left:3.2%;" placeholder="은행명을 입력하세요." required>
 								<label for="erAccountHolder" style="margin-left:20%;">예금주 : </label>
 								<input type="text" class="form-control" id="erAccountHolder" name="erAccountHolder" placeholder="예금주명" required>
 								<br>
@@ -162,6 +182,48 @@
 				</div>
 			</section>
 		</section>
+		<script>
+			// 결재자 조회 ajax
+			function selectApprover(){
+				$.ajax({
+					url:"selectApprover.do",
+					type:"get",
+					success:function(list){
+						var value1 = "";
+						var value2 = "";
+						var value3 = "";
+						var value4 = "";
+						$.each(list, function(i, obj){
+							
+							if(obj.depName == '총무'){
+								value1 += "<p><input type='radio' name='chk_approver' value="+ obj.empName +">&nbsp;&nbsp;"
+								  +   obj.empName + "/"+ obj.posName +"</p>"
+								  +   "<input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'>";
+							}else if(obj.depName == '인사'){
+								value2 += "<p><input type='radio' name='chk_approver' value="+ obj.empName +">&nbsp;&nbsp;"
+								  +   obj.empName + "/"+ obj.posName +"</p>"
+								  +   "<input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'>";
+							}else if(obj.depName == '개발'){
+								value3 += "<p><input type='radio' name='chk_approver' value="+ obj.empName +">&nbsp;&nbsp;"
+								  +   obj.empName + "/"+ obj.posName +"</p>"
+								  +   "<input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'>";
+							}else{
+								value4 += "<p><input type='radio' name='chk_approver' value="+ obj.empName +">&nbsp;&nbsp;"
+								  +   obj.empName + "/"+ obj.posName +"</p>"
+								  +   "<input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'>";
+							}
+								   
+						});
+						$("#dept1").html(value1);
+						$("#dept2").html(value2);
+						$("#dept3").html(value3);
+						$("#dept").html(value4);
+					},error:function(){
+						console.log("결재자 조회용 ajax 통신 실패")
+					}
+				});
+			}
+		</script>
 		<script>
 		// 추가하기 버튼 클릭시 지출내용 작성 row 추가하기
 		var count = 0;
