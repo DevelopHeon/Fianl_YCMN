@@ -1,6 +1,6 @@
 package com.uni.spring.employee.model.dto;
 
-import java.sql.Date;
+
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,10 +16,7 @@ import lombok.Setter;
 public class WorkingDay {
 	private int workNo; //근태번호
 	private int empNo; //사원번호
-	
-	@DateTimeFormat(pattern="yy/MM/dd")
-	private Date today; //날짜
-	
+	private String today; //날짜
 	private String startTime; //출근시간
 	private String finishTime; //퇴근시간
 	private String status; //근태관리 L지각, N결근, Y정상, E조퇴

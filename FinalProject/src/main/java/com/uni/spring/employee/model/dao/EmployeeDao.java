@@ -36,11 +36,16 @@ public class EmployeeDao {
 
 	//퇴근체크
 	public int updateFinish(SqlSessionTemplate sqlSession, WorkingDay w) {	
-		return sqlSession.insert("employeeMapper.updateFinish", w);
+		return sqlSession.update("employeeMapper.updateFinish", w);
 	}
 	
 	public ArrayList<Employee> selectEmpAddress(SqlSessionTemplate sqlSession) {	
 		return (ArrayList)sqlSession.selectList("employeeMapper.selectEmpAddress");
+	}
+
+	public ArrayList<WorkingDay> selectWorkingInfo(SqlSessionTemplate sqlSession, int empNo) {
+
+		return  (ArrayList)sqlSession.selectList("employeeMapper.selectWorkingInfo", empNo);
 	}
 
 
