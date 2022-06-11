@@ -23,4 +23,12 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		INSERT INTO ATTACHMENT
 		VALUES(SEQ_ANO.NEXTVAL, #{empNo}, SEQ_APP.CURRVAL, 2, #{originName}, #{changeName}, #{filePath}, DEFAULT, DEFAULT)
 	</insert>
+	
+	<select id="selectApproverList" resultType="Employee">
+		SELECT A.EMP_NO, A.EMP_NAME, A.POS_NO, B.POS_NAME, C.DEP_NAME
+		FROM EMPLOYEE A
+		LEFT JOIN JOB_POSITION B ON A.POS_NO = B.POS_NO
+		LEFT JOIN DEPARTMENT C ON A.DEP_NO = C.DEP_NO
+		ORDER BY A.POS_NO
+	</select>
 </mapper>

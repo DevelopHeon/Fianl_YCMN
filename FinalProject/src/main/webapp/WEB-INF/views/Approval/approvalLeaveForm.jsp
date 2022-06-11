@@ -38,14 +38,9 @@
 									<table class="table table-bordered" style="width:300px; float:right; margin-right:5%; text-align:center;">
 										<tbody>
 											<tr style="background:lightgray; font-weight:bold;">
-												<td rowspan="6" style="vertical-align:middle; width:30%;">결재</td>
+												<td rowspan="5" style="vertical-align:middle; width:30%;">결재</td>
 												<td>최초승인자</td>
 												<td>최종승인자</td>
-											</tr>
-											<tr>
-												<!-- <td>결재</td> -->
-												<td></td>
-												<td></td>
 											</tr>
 											<tr>
 												<!-- <td></td> -->
