@@ -1,7 +1,12 @@
 package com.uni.spring.employee.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,7 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.uni.spring.common.CommException;
+import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.WorkingDay;
 import com.uni.spring.employee.model.service.EmployeeService;
@@ -127,12 +136,15 @@ public class EmployeeController {
 							 @RequestParam("finishTime") String finishTime,
 							 @RequestParam("today") String today,
 							 @RequestParam("empNo") int empNo,
+							 @RequestParam("startTime") String startTime,							 
 							 Model model) {
 		
 		w.setFinishTime(finishTime);
 		w.setEmpNo(empNo);			
 		w.setToday(today);
 		System.out.println(today);
+		System.out.println(startTime);
+		//퇴근 찍기
 		WorkingDay working = employeeService.updateFinish(w);
 		
 		model.addAttribute("working", working);
@@ -140,7 +152,7 @@ public class EmployeeController {
 		return "employee/workingInfo";
 	}
 
-		
+	//주소록
 	@RequestMapping("empAddress.do")
 	public String empAddress(Model model) {
 		
@@ -149,5 +161,70 @@ public class EmployeeController {
 		model.addAttribute("list", list);
 		
 		return "employee/empAddress";
+	}
+	
+	//프로필변경
+	@ResponseBody
+	@RequestMapping("updateImg.do")
+	public String updateImg(HttpSession session,
+							HttpServletRequest request,
+							@RequestParam("empNo")String empNo,
+							@RequestParam(name="file", required=false) MultipartFile file) {
+		
+		System.out.println(empNo);
+		System.out.println(file.getOriginalFilename());
+
+		Attachment attachment = null;
+		
+		attachment = saveFile(file, request);
+		attachment.setEmpNo(empNo);
+		
+		employeeService.updateImg(attachment);
+		System.out.println(attachment.getOriginName());
+		request.getSession().setAttribute("msg", "변경 완. 재로그인 바람");
+		return attachment.getOriginName();
+	}
+	
+	//첨부파일(프로필) 저장
+	private Attachment saveFile(MultipartFile file, HttpServletRequest request) {
+		
+		Attachment attachment = new Attachment();
+		
+		String resources = request.getSession().getServletContext().getRealPath("resources");
+		System.out.println("resources : " + resources);
+		
+		String savePath = resources + "\\empUpload_files\\";
+		
+		String originName = file.getOriginalFilename();
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		String ext = originName.substring(originName.lastIndexOf("."));//ex)meta.jpg -> .jpg
+		
+		String changeName = currentTime + ext;
+		System.out.println("changeName : " + changeName);
+		
+		attachment.setFilePath(savePath);
+		attachment.setOriginName(originName);
+		attachment.setChangeName(changeName);
+		try {
+			
+			file.transferTo(new File(savePath + originName));
+			
+		} catch (IllegalStateException | IOException e) {
+			
+			e.printStackTrace();
+			throw new CommException("파일 업로드 실패");
+		}
+		return attachment;
+	}
+	
+	//첨부파일 삭제
+	private void deleteFile(String originName, HttpServletRequest request) {
+		String resources = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = resources + "\\upload_files\\";
+		//경로지정
+		
+		File deleteFile = new File(savePath + originName);
+		
+		deleteFile.delete();
 	}
 }

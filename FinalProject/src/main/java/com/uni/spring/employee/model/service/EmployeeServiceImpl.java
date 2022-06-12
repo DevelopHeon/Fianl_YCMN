@@ -7,8 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.uni.spring.common.CommException;
+import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.employee.model.dao.EmployeeDao;
-import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.WorkingDay;
 
@@ -92,7 +92,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		int result = employeeDao.updateFinish(sqlSession, w);
 		System.out.println(result);
 		//퇴근 체킹 완
-		if(result > 0) {
+		if(result > 0) {	
 			return w;
 		} else {
 			throw new CommException("퇴근 등록 실패");
@@ -104,6 +104,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public ArrayList<Employee> selectEmpAddress() {
 		
 		return employeeDao.selectEmpAddress(sqlSession);
+	}
+
+	//프로필 변경
+	@Override
+	public Attachment updateImg(Attachment attachment) {
+		int result = employeeDao.updateImg(sqlSession, attachment);
+		//트리거 insert실패시 쿼리짜기
+		//int resultEmp = employeeDao.updateImg(sqlSession, emp);
+		
+		if(result > 0) {
+			
+			return attachment;
+		}else {
+			throw new CommException("프로필 변경 실패");
+		}
 	}
 
 	

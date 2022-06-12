@@ -201,9 +201,16 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="views/profile.html"><img src="resources/img/ui-sam.jpg" class="img-circle" width="80"></a></p>
+          <p class="centered"><a href="views/profile.html">
+          	<c:if test="${ loginUser.empPfe eq null}">
+               	<p class="centered"><img src="resources/img/user.png" class="img-circle" width="80">
+            </c:if>
+            <c:if test="${ !empty loginUser.empPfe }">
+                <p class="centered"><img src="resources/empUpload_files/${loginUser.empPfe}" class="img-circle" width="80"></p>
+            </c:if></a>
+            </p>
           <h5 class="centered">${ sessionScope.loginUser.empName }</h5>
-          <button type="button" id="workcheck" class="btn btn-primary" data-toggle="modal" data-target="#workcheck" onclick="checkTime()" >출퇴근 확인</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#workcheck" onclick="checkTime()" >출퇴근 확인</button>
           <li class="sub-menu">
             <a href="views/javascript:;">
               <i class="fa fa-book"></i>
@@ -510,10 +517,14 @@
 		  console.log(finishTime);
 		  var today = cal.innerHTML;
 		  console.log(today);
+		  var startTime = start.innerHTML;
+		  
+		  console.log(startTime);
 		  $.ajax({
 			  url:"leaveCheck.do",
 			  type:"get",
 			  data:{finishTime:finishTime,
+				  	startTime:startTime,
 				  	today:today,
 				  	empNo:${loginUser.empNo}
 			  },
