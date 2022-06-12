@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.WorkingDay;
@@ -25,5 +26,7 @@ public interface EmployeeService {
 	ArrayList<Employee> selectEmpAddress();
 
 	ArrayList<WorkingDay> selectWorkingInfo(int empNo);
+
+	Attachment updateImg(Attachment attachment);
 
 }

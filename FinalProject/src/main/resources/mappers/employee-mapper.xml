@@ -50,13 +50,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 퇴근체크 -->
 	<update id="updateFinish" parameterType="WorkingDay">
-		UPDATE WORKINGDAY SET FINISH_TIME = #{finishTime} WHERE TO_CHAR(TO_DATE(TODAY, 'YY/MM/DD'), 'YYYY"년 "MM"월 "DD"일 ("DY")"') = #{today} AND EMP_NO = #{empNo}
+		UPDATE WORKINGDAY SET FINISH_TIME = #{finishTime},
+							  WORK_HOUR = TO_TIMESTAMP(#{finishTime},'HH24:MI:SS') - TO_TIMESTAMP(#{startTime},'HH24:MI:SS') WHERE TO_CHAR(TO_DATE(TODAY, 'YY/MM/DD'), 'YYYY"년 "MM"월 "DD"일 ("DY")"') = #{today} AND EMP_NO = #{empNo}
 	</update>
-	
+	<!-- 근태정보 -->
 	<select id="selectWorkingInfo" parameterType="WorkingDay" resultType="WorkingDay">
 		SELECT * FROM WORKINGDAY WHERE EMP_NO = #{empNo} ORDER BY TODAY
 	</select>
-	
+	<!-- 주소록 -->
 	<select id="selectEmpAddress" parameterType="Employee" resultType="Employee" >
 		SELECT A.EMP_NAME, A.EMP_ID, B.POS_NAME, C.DEP_NAME
 		FROM EMPLOYEE A
@@ -65,4 +66,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<![CDATA[WHERE A.STATUS = 'Y' AND A.EMP_ID != 'admin']]>
 	</select>
 	
+	<insert id="updateImg" parameterType="Attachment">
+		INSERT INTO ATTACHMENT
+		VALUES(SEQ_ANO.NEXTVAL, #{empNo}, NULL, 1, #{originName}, #{changeName}, #{filePath}, DEFAULT, DEFAULT)
+	</insert>
 </mapper>

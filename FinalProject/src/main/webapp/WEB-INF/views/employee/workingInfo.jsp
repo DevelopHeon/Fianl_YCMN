@@ -59,6 +59,9 @@ function checkMonth() {
 				<div>
 					<input type="text" id="finish">${w.finishTime }
 				</div>
+				<div>
+					<input type="text" id="finish">${w.workHour }
+				</div>
 			</c:forEach>
 
             </div> 
