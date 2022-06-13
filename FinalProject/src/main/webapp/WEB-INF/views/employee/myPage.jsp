@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.uni.spring.employee.model.dto.Employee"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
@@ -29,12 +29,6 @@
 </head>
 
 <body>
-	<c:if test = "${ !empty msg }">
-		<script>
-			alert("${msg}");
-		</script>
-		<c:remove var="msg" scope="session"/>
-	</c:if>
 	<jsp:include page="../main.jsp"/>
 	
     <!-- **********************************************************************************************************************************************************
@@ -98,8 +92,7 @@
     		
     	function changeESTJ(){
     			var image = document.getElementById("empImg");
-    			image.src = "resources/img/user.png"
-    			//$("#empImg").attr("src", "resources/img/user.png")
+    			//image.src = "resources/img/user.png" 
     		}
     		/*$("#deleteBtn").click(function(){
     			var form = $("#updateImg")[0];

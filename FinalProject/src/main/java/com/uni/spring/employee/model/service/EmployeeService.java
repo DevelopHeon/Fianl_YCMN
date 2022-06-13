@@ -29,4 +29,6 @@ public interface EmployeeService {
 
 	Attachment updateImg(Attachment attachment);
 
+	int updateWorkHour(WorkingDay w);
+
 }

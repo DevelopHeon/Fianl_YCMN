@@ -211,6 +211,7 @@
             </p>
           <h5 class="centered">${ sessionScope.loginUser.empName }</h5>
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#workcheck" onclick="checkTime()" >출퇴근 확인</button>
+
           <li class="sub-menu">
             <a href="views/javascript:;">
               <i class="fa fa-book"></i>
@@ -242,9 +243,9 @@
               </a>
             <ul class="sub">
               <li><a href="writeMail.do">메일 작성</a></li>
-              <li><a href="#">받은 메일함</a></li>
-              <li><a href="#">보낸 메일함</a></li>
-              <li><a href="#">휴지통</a></li>
+              <li><a href="receiveMail.do">받은 메일함</a></li>
+              <li><a href="sendMail.do">보낸 메일함</a></li>
+              <li><a href="deleteMail.do">휴지통</a></li>
             </ul>
           </li>
           <li class="sub-menu">
@@ -310,8 +311,9 @@
         	<p id="clock" name="clock" value="clock" style="font-size:40px"></p>
       </div>
       <div class="d-flex" style="font-size: 16px; ">
-		<p class="col-6" style="padding:0px;">출근시간</p>
-		<p class="col-6 text-right" name="start" id="start" ></p>
+		<p class="col-6" style="padding:0px;">출근시간</p>	
+		<p class="col-6 text-right" name="start" id="start"></p>
+
 	  </div>
 	  <div class="d-flex" style="font-size: 16px">
 		<p class="col-6" style="padding:0px;">퇴근시간</p>
@@ -319,7 +321,7 @@
 	  </div>
       <div class="modal-footer">
       		<button type="submit" name="status" value="s" id="startBtn" class="btn btn-primary">출근</button>
-      		<button type="submit" name="status" value="f" id="finishBtn" class="btn btn-primary" disabled>퇴근</button>
+      		<button type="submit" name="status" value="f" id="finishBtn" class="btn btn-primary">퇴근</button>
         	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -451,6 +453,9 @@
           }
           return zero + time;
       }
+      
+      
+      
   }
   
   //출,퇴근 시간 체킹
@@ -475,9 +480,11 @@
 		  $("#finishBtn").attr('disabled', false)
 		  
 		  var startTime = now.innerHTML;
+		  localStorage.setItem("startTime", startTime)
 		  $.ajax({
 			  url:"workingCheck.do",
 			  type:"get",
+			  async: false,
 			  data:{startTime:startTime,
 				  	empNo:${loginUser.empNo}
 			  },
@@ -499,6 +506,8 @@
   $(function(){
 
 	  $("#finishBtn").click(function(){
+		  console.log(startTime);
+		  
 		  var reCheck = confirm("퇴근 하시겠습니까?");
 		  
 		  if(reCheck){
@@ -510,7 +519,7 @@
 		  //서버시간 재가동!
 			checkTime(); 
 			alert("퇴근 완료");
-			$("#finishBtn").attr('disabled', true) 
+			
 		  }
 		  
 		  var finishTime = now.innerHTML;
@@ -523,6 +532,7 @@
 		  $.ajax({
 			  url:"leaveCheck.do",
 			  type:"get",
+			  async: false,
 			  data:{finishTime:finishTime,
 				  	startTime:startTime,
 				  	today:today,

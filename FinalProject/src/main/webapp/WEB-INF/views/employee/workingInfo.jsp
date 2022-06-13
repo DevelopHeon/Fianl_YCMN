@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.uni.spring.employee.model.dto.WorkingDay"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%
+	WorkingDay w = new WorkingDay();
+	Date currentTime = new Date();
+	SimpleDateFormat format = new SimpleDateFormat("MM/dd");
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,16 +60,20 @@ function checkMonth() {
             <!-- /col-md-4 -->
              <div><h2 id="month"></h2></div>
              <c:forEach items="${working}" var="w">
+             	<div>
+					<p>${w.today }</p>
+				</div>
 				<div>
 					<input type="text">${w.startTime }
 				</div>
 				<div>
 					<input type="text" id="finish">${w.finishTime }
 				</div>
+				
 				<div>
-					<input type="text" id="finish">${w.workHour }
+					<p>${w.workHour}</p>
 				</div>
-			</c:forEach>
+				</c:forEach>
 
             </div> 
             <!-- /row -->

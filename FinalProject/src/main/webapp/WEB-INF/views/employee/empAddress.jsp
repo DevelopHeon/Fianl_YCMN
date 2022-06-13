@@ -17,13 +17,11 @@
   <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
-  
-  <!-- =======================================================
-    Template Name: Dashio
-    Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
-    Author: TemplateMag.com
-    License: https://templatemag.com/license/
-  ======================================================= -->
+<style>
+	.content-panel{
+		margin-left: 50px;
+	}
+</style>
 </head>
 
 <body>
@@ -35,17 +33,17 @@
     <!--main content start-->
     <section id="main-content">
       <section class="wrapper">
-      <c:forEach items="${ list }" var="e">
         <h3><i class="fa fa-angle-right"></i> Basic Table Examples</h3>
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-11">
             <div class="content-panel">
-            
-              <h4><i class="fa fa-angle-right"></i>  ${ e.depName}</h4>
+              <h4><i class="fa fa-angle-right"></i>즐겨찾기</h4>
               <hr>
-              <table class="table">
+              	<div class="table-inbox-wrap ">
+                <table class="table table-inbox table-hover">
                 <thead>
                   <tr>
+                  	<th></th>
                     <th>이름</th>
                     <th>아이디</th>
                     <th>직위</th>
@@ -53,6 +51,7 @@
                 </thead>
                 <tbody>
                   <tr>
+                  <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
                      <td>${ e.empName }</td>
                      <td>${ e.empId}</td>
                      <td>${ e.posName}</td>
@@ -60,15 +59,41 @@
                   </tr>
                 </tbody>
               </table>
+              <c:forEach items="${ list }" var="e">
+              <h4><i class="fa fa-angle-right"></i>  ${ e.depName}</h4>
+              <hr>
+              	<div class="table-inbox-wrap ">
+                <table class="table table-inbox table-hover">
+                <thead>
+                  <tr>
+                  	<th></th>
+                    <th>이름</th>
+                    <th>아이디</th>
+                    <th>직위</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                  <!-- <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>  -->
+                  <td class="inbox-small-cells"><i class="fa fa-star "></i></td>
+                     <td>${ e.empName }</td>
+                     <td>${ e.empId}</td>
+                     <td>${ e.posName}</td>
+                     <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+              </c:forEach>
             </div>
           </div>
-          
+          </div>
         </div>
         <!-- row -->
         <div class="row mt">
           
         </div>
-        </c:forEach>
+        
         <!-- /row -->
       </section>
     </section>
