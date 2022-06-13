@@ -8,17 +8,20 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.GsonBuilder;
-import com.uni.spring.approval.model.dto.ApperAccount;
 import com.uni.spring.approval.model.dto.Approval;
 import com.uni.spring.approval.model.dto.ApprovalErs;
+import com.uni.spring.approval.model.dto.ApprovalLeave;
 import com.uni.spring.approval.model.serivce.ApprovalService;
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.dto.Attachment;
@@ -40,16 +43,16 @@ public class ApprovalController {
 	}
 	
 	// 결재 작성 화면 이동
+	// 화면에서 검증 실패시에도 값 유지하기 위해 approval 객체 전달해준다.
 	@RequestMapping("enrollFormApproval.do")
-	public String enrollFormApproval(int ano) {
+	public String enrollFormApproval(int ano, @ModelAttribute Approval approval) {
 		
 		String approvalForm= "";
-		
 		// 화면에서 번호를 받아 각 번호에 맞는 양식 화면으로 이동
 		if(ano == 1) {
 			approvalForm = "approvalLeaveForm";
 		}else if(ano == 2) {
-			approvalForm = "approvalErFrom";
+			approvalForm = "approvalErForm";
 		}else {
 			approvalForm = "approvalReport";
 		}
@@ -57,10 +60,18 @@ public class ApprovalController {
 		return "Approval/"+approvalForm;
 	}
 	
-	// 지출결의서 작성메소드
+	/*
+	 * 지출결의서 작성메소드 유효성 검사를 위해 @Valid를 추가 error나 BindingResult는 바인딩 받는 객체 바로 다음 선언해
+	 * 주어야 한다. 몰라서 쌩쑈함
+	 */
 	@RequestMapping("insertErApproval.do")
-	public String insertErApproval(Approval approval, ApprovalErs approvalErs, ApperAccount apperAccount, 
-			HttpServletRequest request, @RequestParam(name="uploadFile") MultipartFile file, HttpSession session) {
+	public String insertErApproval(@Valid Approval approval, BindingResult result, 
+			ApprovalErs approvalErs, HttpServletRequest request, 
+			@RequestParam(name="uploadFile") MultipartFile file, HttpSession session) {
+		
+		if(result.hasErrors()) {
+			return "Approval/approvalErForm";
+		}
 		
 		ArrayList<ApprovalErs> appers = new ArrayList<>();
 		
@@ -76,18 +87,35 @@ public class ApprovalController {
 		if(attachment != null) {
 			attachment.setEmpNo(approval.getAppWriterNo());
 		}
-		approvalService.insertErApproval(approval, apperAccount, appers, attachment);
+		approvalService.insertErApproval(approval, appers, attachment);
 		session.setAttribute("msg", "지출결의서 작성 완료.");
 		return "redirect:approvalList.do";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="selectApprover.do", produces="application/json; charset=utf-8")
-	public String selectApproverList() {
+	// 휴가 신청서는 첨부파일 선택 required=false 조건 걸어준다.
+	@RequestMapping("insertLeaveApproval.do")
+	public String insertLeaveApproval(@Valid Approval approval, BindingResult result, HttpServletRequest request,
+			@RequestParam(name="uploadFile", required=false) MultipartFile file, HttpSession session) {
+
+		if(result.hasErrors()) {
+			return "Approval/approvalLeaveForm";
+		}
+		ApprovalLeave approvalLeave = approval.getApprovalLeave();
 		
-		ArrayList<Employee> list = approvalService.selectApproverList();
+		Attachment attachment = null;
+		// 파일 첨부 하지 않을경우 빈 문자열로 값이 넘어옴
+		if(!file.getOriginalFilename().equals("")) {
+			attachment = saveFile(file, request);
+			
+			if(attachment != null) {
+				attachment.setEmpNo(approval.getAppWriterNo());
+			}
+		}
 		
-		return new GsonBuilder().create().toJson(list);
+		approvalService.insertLeaveApproval(approval, approvalLeave, attachment);
+		
+		session.setAttribute("msg", "휴가신청서 작성 완료");
+		return "redirect:approvalList.do";
 	}
 
 	// 파일 저장시 사용하는 메소드
@@ -119,5 +147,17 @@ public class ApprovalController {
 			throw new CommException("파일 업로드 에러");
 		}
 		return at;
+	}
+
+	@ResponseBody
+	@RequestMapping(value="selectApprover.do", produces="application/json; charset=utf-8")
+	public String selectApproverList(int empNo) {
+		
+		ArrayList<Employee> list = approvalService.selectApproverList(empNo);
+		
+		for(Employee e : list) {
+			System.out.println(e);
+		}
+		return new GsonBuilder().create().toJson(list);
 	}
 }

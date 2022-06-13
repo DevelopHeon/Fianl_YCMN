@@ -48,6 +48,9 @@
 		background-color:white;
 		height:1200px;
 	}
+	#approverTable>tbody>tr>td{
+		height:35px;
+	}
 </style>
 </head>
 

@@ -5,8 +5,8 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 <mapper namespace="approvalMapper">
 	<insert id="insertApproval" parameterType="Approval">
 		INSERT INTO APPROVAL
-		(APP_NO, APP_WRITER_NO, APP_TITLE, APP_CREATE_DATE, APP_KINDS, APP_STATUS, STATUS)
-		VALUES(SEQ_APP.NEXTVAL, #{appWriterNo}, #{appTitle}, #{appCreateDate}, #{appKinds}, DEFAULT, DEFAULT)
+		(APP_NO, APP_WRITER_NO, APP_TITLE, APP_CREATE_DATE, FIRST_APPROVER, LAST_APPROVER, APP_KINDS, APP_STATUS, STATUS)
+		VALUES(SEQ_APP.NEXTVAL, #{appWriterNo}, #{appTitle}, #{appCreateDate}, #{firstApprover}, #{lastApprover}, #{appKinds}, DEFAULT, DEFAULT)
 	</insert>
 	<insert id="insertApperAccount" parameterType="com.uni.spring.approval.model.dto.ApperAccount">
 		INSERT INTO APPER_ACCOUNT
@@ -23,12 +23,16 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		INSERT INTO ATTACHMENT
 		VALUES(SEQ_ANO.NEXTVAL, #{empNo}, SEQ_APP.CURRVAL, 2, #{originName}, #{changeName}, #{filePath}, DEFAULT, DEFAULT)
 	</insert>
-	
-	<select id="selectApproverList" resultType="Employee">
+	<insert id="insertApprovalLeave" parameterType="com.uni.spring.approval.model.dto.ApprovalLeave">
+	INSERT INTO APP_LEAVE
+	VALUES(SEQ_APP.CURRVAL, #{leaveStart}, #{leaveFinish}, #{leaveReason}, #{leaveTotalDate}, #{leaveCategory}, DEFAULT)
+	</insert>
+	<select id="selectApproverList" parameterType="_int" resultType="Employee">
 		SELECT A.EMP_NO, A.EMP_NAME, A.POS_NO, B.POS_NAME, C.DEP_NAME
 		FROM EMPLOYEE A
 		LEFT JOIN JOB_POSITION B ON A.POS_NO = B.POS_NO
 		LEFT JOIN DEPARTMENT C ON A.DEP_NO = C.DEP_NO
+		<![CDATA[WHERE A.EMP_NO <> #{empNo}]]>
 		ORDER BY A.POS_NO
 	</select>
 </mapper>

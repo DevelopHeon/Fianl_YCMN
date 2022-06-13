@@ -9,6 +9,7 @@ import com.uni.spring.approval.model.dao.ApprovalDao;
 import com.uni.spring.approval.model.dto.ApperAccount;
 import com.uni.spring.approval.model.dto.Approval;
 import com.uni.spring.approval.model.dto.ApprovalErs;
+import com.uni.spring.approval.model.dto.ApprovalLeave;
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.employee.model.dto.Employee;
@@ -23,10 +24,10 @@ public class ApprovalServiceImpl implements ApprovalService {
 	private final SqlSessionTemplate sqlSession;
 	
 	@Override
-	public void insertErApproval(Approval approval, ApperAccount apperAccount, ArrayList<ApprovalErs> appers,  Attachment attachment) {
+	public void insertErApproval(Approval approval, ArrayList<ApprovalErs> appers,  Attachment attachment) {
 		
 		int result1 = approvalDao.insertApproval(sqlSession, approval);
-		int result2 = approvalDao.insertApperAccount(sqlSession, apperAccount);
+		int result2 = approvalDao.insertApperAccount(sqlSession, approval.getApperAccount());
 		int result3 = approvalDao.insertApprovalErs(sqlSession, appers);
 		int result4 = approvalDao.insertAttachment(sqlSession, attachment);
 		
@@ -40,8 +41,25 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public ArrayList<Employee> selectApproverList() {
+	public ArrayList<Employee> selectApproverList(int empNo) {
 		
-		return approvalDao.selectApproverList(sqlSession);
+		return approvalDao.selectApproverList(empNo, sqlSession);
+	}
+
+	@Override
+	public void insertLeaveApproval(Approval approval, ApprovalLeave approvalLeave, Attachment attachment) {
+
+		int result1 = 1;
+		
+		if(attachment != null) {
+			result1 = approvalDao.insertAttachment(sqlSession, attachment);
+		}
+		int result2 = approvalDao.insertApproval(sqlSession, approval);
+		int result3 = approvalDao.insertApprovalLeave(sqlSession, approvalLeave);
+		
+		
+		if(result1 * result2 * result3 < 0) {
+			throw new CommException("휴가신청서 등록 실패");
+		}
 	}
 }

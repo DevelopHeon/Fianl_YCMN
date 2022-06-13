@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.uni.spring.approval.model.dto.ApperAccount;
 import com.uni.spring.approval.model.dto.Approval;
 import com.uni.spring.approval.model.dto.ApprovalErs;
+import com.uni.spring.approval.model.dto.ApprovalLeave;
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.employee.model.dto.Employee;
 
@@ -30,8 +31,12 @@ public class ApprovalDao {
 		return sqlSession.insert("approvalMapper.insertAttachment", attachment);
 	}
 
-	public ArrayList<Employee> selectApproverList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("approvalMapper.selectApproverList");
+	public ArrayList<Employee> selectApproverList(int empNo, SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectApproverList", empNo);
+	}
+
+	public int insertApprovalLeave(SqlSessionTemplate sqlSession, ApprovalLeave approvalLeave) {
+		return sqlSession.insert("approvalMapper.insertApprovalLeave", approvalLeave);
 	}
 
 }
