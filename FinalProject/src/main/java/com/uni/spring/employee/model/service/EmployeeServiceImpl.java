@@ -90,12 +90,24 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public WorkingDay updateFinish(WorkingDay w) {
 		int result = employeeDao.updateFinish(sqlSession, w);
+		
 		System.out.println(result);
 		//퇴근 체킹 완
 		if(result > 0) {	
 			return w;
 		} else {
 			throw new CommException("퇴근 등록 실패");
+		}
+	}
+	
+	@Override
+	public int updateWorkHour(WorkingDay w) {
+		int result = employeeDao.updateWorkHour(sqlSession, w);
+		if(result > 0) {
+			return result;
+
+		}else {
+			throw new CommException("근태 기록 실패");
 		}
 	}
 	
@@ -120,6 +132,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 			throw new CommException("프로필 변경 실패");
 		}
 	}
+
+
 
 	
 

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.uni.spring.employee.model.dto.Employee"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
@@ -29,12 +29,6 @@
 </head>
 
 <body>
-	<c:if test = "${ !empty msg }">
-		<script>
-			alert("${msg}");
-		</script>
-		<c:remove var="msg" scope="session"/>
-	</c:if>
 	<jsp:include page="../main.jsp"/>
 	
     <!-- **********************************************************************************************************************************************************
@@ -50,7 +44,7 @@
             <form id="updateImg" method="post" enctype="multipart/form-data">
               <div class="col-md-4 profile-text mt mb centered right-divider">
                 <div class="profile-pic">
-                <c:if test="${ loginUser.empPfe eq null}">
+                <c:if test="${ empty loginUser.empPfe}">
                		<p><img src="resources/img/user.png" class="img-circle"></p>
                 </c:if>
                  <c:if test="${ !empty loginUser.empPfe }">
@@ -62,7 +56,7 @@
                   	<input type="text" name="empNo" value= "${loginUser.empNo}" style="display:none">
                     <button type="button" onclick="onclick=document.all.file.click()" class="btn btn-theme"><i class="fa fa-check"></i>변경하기</button>
                     <button type="submit" id="updateBtn" class="btn btn-theme"><i class="fa fa-check"></i>저장하기</button>
-                    <button type="submit" id="deleteBtn" class="btn btn-theme02">삭제하기</button>
+                    <button type="button" onclick="changeESTJ()" id="deleteBtn" class="btn btn-theme02">삭제하기</button>
                   </p>
                 </div>
               </div>
@@ -96,7 +90,11 @@
     			
     		})
     		
-    		$("#deleteBtn").click(function(){
+    	function changeESTJ(){
+    			var image = document.getElementById("empImg");
+    			//image.src = "resources/img/user.png" 
+    		}
+    		/*$("#deleteBtn").click(function(){
     			var form = $("#updateImg")[0];
     			var data = new FormData(form);
     			
@@ -118,7 +116,7 @@
     				}
     			})
     			
-    		})
+    		})*/
     		
     	})
     
@@ -222,16 +220,5 @@
   <!--script for this page-->
   <!-- MAP SCRIPT - ALL CONFIGURATION IS PLACED HERE - VIEW OUR DOCUMENTATION FOR FURTHER INFORMATION -->
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASm3CwaK9qtcZEWYa-iQwHaGi3gcosAJc&sensor=false"></script>
-  <script>
-    function changeImg(){
-    	
-    	$.ajax({
-    		url:"changeImg.do",
-    		type:"get",
-    		data:{}
-    	})
-    }
-  </script>
-
 </body>
 </html>

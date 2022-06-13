@@ -10,5 +10,20 @@ public class MailController {
 	public String writeMail() {
 		return "mail/writeMail";
 	}
+	//받은메일함
+	@RequestMapping("receiveMail.do")
+	public String receiveMail() {
+		return "mail/receiveMail";
+	}
+	//보낸메일함
+	@RequestMapping("sendMail.do")
+	public String sendMail() {
+		return "mail/sendMail";
+	}
+	//휴지통
+	@RequestMapping("deleteMail.do")
+	public String deleteMail() {
+		return "mail/deleteMail";
+	}
 
 }

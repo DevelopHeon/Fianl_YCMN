@@ -54,6 +54,10 @@ public class EmployeeDao {
 		return sqlSession.insert("employeeMapper.updateImg", attachment);
 	}
 
+	public int updateWorkHour(SqlSessionTemplate sqlSession, WorkingDay w) {
+		return sqlSession.update("employeeMapper.updateWorkHour", w);
+	}
+
 
 
 

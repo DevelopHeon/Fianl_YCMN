@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.dto.Attachment;
@@ -118,14 +117,12 @@ public class EmployeeController {
 //		w.setEmpNo(empNo);
 		w.setStartTime(startTime);
 		w.setEmpNo(empNo);
-		System.out.println(empNo);
-		System.out.println(startTime);
 		
 		WorkingDay working = employeeService.insertStart(w);
 		
 		model.addAttribute("working", working);
 		
-		return "employee/workingInfo";
+		return "main";
 	}
 	
 	
@@ -135,21 +132,23 @@ public class EmployeeController {
 	public String leaveCheck(@ModelAttribute WorkingDay w,
 							 @RequestParam("finishTime") String finishTime,
 							 @RequestParam("today") String today,
-							 @RequestParam("empNo") int empNo,
-							 @RequestParam("startTime") String startTime,							 
+							 @RequestParam("empNo") int empNo,							 
 							 Model model) {
 		
 		w.setFinishTime(finishTime);
 		w.setEmpNo(empNo);			
 		w.setToday(today);
 		System.out.println(today);
-		System.out.println(startTime);
+
 		//퇴근 찍기
 		WorkingDay working = employeeService.updateFinish(w);
 		
-		model.addAttribute("working", working);
+		int workHour = employeeService.updateWorkHour(w);
 		
-		return "employee/workingInfo";
+		model.addAttribute("working", working);
+		model.addAttribute("workHour", workHour);
+		
+		return "main";
 	}
 
 	//주소록
@@ -220,9 +219,8 @@ public class EmployeeController {
 	//첨부파일 삭제
 	private void deleteFile(String originName, HttpServletRequest request) {
 		String resources = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = resources + "\\upload_files\\";
+		String savePath = resources + "\\empUpload_files\\";
 		//경로지정
-		
 		File deleteFile = new File(savePath + originName);
 		
 		deleteFile.delete();
