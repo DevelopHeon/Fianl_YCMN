@@ -81,7 +81,8 @@
     					console.log(result);
     					alert("하");
 						$("#empImg").empty();
-						$("#empImg").attr("src", "resources/empUpload_files/"+result)
+						$("#empImg").attr("src", "resources/empUpload_files/"+result);
+						document.location.href = document.location.href;
     				},
     				error:function(e){
     					console.log(e);

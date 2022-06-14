@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.uni.spring.employee.model.dto.WorkingDay"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+
 <%
-	WorkingDay w = new WorkingDay();
+
 	Date currentTime = new Date();
 	SimpleDateFormat format = new SimpleDateFormat("MM/dd");
 	
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,10 +44,14 @@
 function checkMonth() {
 	var currentDate = new Date();
 	
-	var month = document.getElementById("month");
+	var month = document.getElementsByClassName("month");
 	
 	var calendar = currentDate.getFullYear() + "년 " + (currentDate.getMonth()+1) +"월"
-	month.innerHTML = calendar;
+	//class month가 여러개일때
+	for(var i = 0; i < month.length; i++){
+		month[i].innerHTML = calendar;
+	}
+	
 }
 
 </script>
@@ -58,23 +65,30 @@ function checkMonth() {
           <div class="col-lg-12">
             <div class="row content-panel">
             <!-- /col-md-4 -->
-             <div><h2 id="month"></h2></div>
+             <div><h2 class="month"></h2></div>
+             <table>
+             	<tr>
+             	  <td width="300"><label class="month"></label> 누적 근무</td>
+             	  <td width="300"><label class="month"></label> 잔여 근무</td>
+             	  <td width="300"><label class="month"></label> 연장 근무</td>
+             	</tr>
+             </table>
              <c:forEach items="${working}" var="w">
              	<div>
 					<p>${w.today }</p>
 				</div>
 				<div>
-					<input type="text">${w.startTime }
+					<p>${w.startTime }
 				</div>
 				<div>
-					<input type="text" id="finish">${w.finishTime }
+					<p>${w.finishTime }</p>
 				</div>
 				
 				<div>
 					<p>${w.workHour}</p>
+					<p>${w.thisWeek}</p>
 				</div>
 				</c:forEach>
-
             </div> 
             <!-- /row -->
           </div>
@@ -83,7 +97,8 @@ function checkMonth() {
           <div class="col-lg-12 mt">
             <div class="row content-panel">
               <div class="panel-heading">
-                <ul class="nav nav-tabs nav-justified">
+              
+                <ul class="nav nav-tabs nav-justified">           
                   <li class="active">
                     <a data-toggle="tab" href="#1week">1주차</a>
                   </li>
@@ -100,57 +115,141 @@ function checkMonth() {
                     <a data-toggle="tab" href="#5week">5주차</a>
                   </li>
                 </ul>
+                
               </div>
               <!-- /panel-heading -->
-              <div class="panel-body">
-                <div class="tab-content">
-                  <div id="1week" class="tab-pane active">
-                    <div class="row">
-                      <div class="col-md-6">
-                          <div><p>1</p></div>
 
-                      </div>
-                      <!-- /col-md-6 -->
-
-                    </div>
-                    <!-- /OVERVIEW -->
-                  </div>
-                  <!-- /tab-pane -->
-                  <div id="2week" class="tab-pane">
-                    <div class="row">
-                       	<div><p>2</p></div>
-                    </div>
-                    <!-- /row -->
-                  </div>
-                  <!-- /tab-pane -->
-                  <div id="3week" class="tab-pane">
-                    <div class="row">
- 						<div><p>3</p></div>
-                      <!-- /col-lg-8 -->
-                    </div>
-                    <!-- /row -->
-                  </div>
-                  <!-- /tab-pane -->
-                  <div id="4week" class="tab-pane">
-                    <div class="row">
- 						<div><p>4</p></div>
-                      <!-- /col-lg-8 -->
-                    </div>
-                    <!-- /row -->
-                  </div>
-                  <!-- /tab-pane -->
-                  <div id="5week" class="tab-pane">
-                    <div class="row">
- 						<div><p>5</p></div>
-                      <!-- /col-lg-8 -->
-                    </div>
-                    <!-- /row -->
-                  </div>
-                  <!-- /tab-pane -->
                 </div>
                 <!-- /tab-content -->
               </div>
               <!-- /panel-body -->
+              <div class="panel-body">
+                <div class="tab-content">
+                <c:forEach items="${working}" var="w">
+                	<c:if test= "${w.thisWeek eq 1}">
+                  	<div id="1week" class="tab-pane active">
+                    <div class="row">
+                      <div class="col-md-6">
+                          <div><p>1</p></div>
+			             	<c:forEach items="${working}" var="w">
+			             	<table>
+			             		<tr>
+			             			<td>날짜</td>
+			             			<td>출근시간</td>
+			             			<td>퇴근시간</td>
+			             			<td>총 근무시간</td>
+			             		</tr>
+			             		<tr>
+			             			<td>${w.today }</td>
+			             			<td>${w.startTime }</td>
+			             			<td>${w.finishTime }</td>
+			             			<td>${w.workHour }</td>
+			             		</tr>
+			             	</table>
+						</c:forEach>
+                      </div>
+                    </div>
+                  	</div>
+                  	</c:if>
+                  </c:forEach>
+                  
+                 <c:forEach items="${working}" var="w">
+                    <c:if test="${w.thisWeek eq 2}">
+                  	<div id="2week" class="tab-pane">
+                    <div class="row">
+                       	<div><p>2</p></div>
+		             	<table>
+		             		<tr>
+		             			<td width="80">날짜</td>
+		             			<td width="150">출근시간</td>
+		             			<td width="150">퇴근시간</td>
+		             			<td width="150">총 근무시간</td>
+		             		</tr>
+		             		<c:forEach items="${working}" var="w">
+		             		<tr>
+		             			<td>${w.today }</td>
+		             			<td>${w.startTime }</td>
+		             			<td>${w.finishTime }</td>
+		             			<td>${w.workHour }</td>
+		             		</tr>
+		             		</c:forEach> 
+		             	</table>
+                    </div>
+                  	</div>
+                  	</c:if>
+                  </c:forEach>
+                  <c:forEach items="${working}" var="w">
+                    <c:if test="${w.thisWeek eq 3}">
+                  	<div id="3week" class="tab-pane">
+                    <div class="row">
+                       	<div><p>3</p></div>
+			             <c:forEach items="${working}" var="w">
+			             	<div>
+								<p>${w.today }</p>
+							</div>
+							<div>
+								<p>${w.startTime }
+							</div>
+							<div>
+								<p>${w.finishTime }</p>
+							</div>
+							
+							<div>
+								<p>${w.workHour}</p>						
+							</div>
+						</c:forEach>
+                    </div>
+                  	</div>
+                  	</c:if>
+                  </c:forEach>
+                  <c:forEach items="${working}" var="w">
+                    <c:if test="${w.thisWeek eq 4}">
+                  	<div id="4week" class="tab-pane">
+                    <div class="row">
+                       	<div><p>4</p></div>
+			             	<c:forEach items="${working}" var="w">
+			             	<div>
+								<p>${w.today }</p>
+							</div>
+							<div>
+								<p>${w.startTime }
+							</div>
+							<div>
+								<p>${w.finishTime }</p>
+							</div>
+							
+							<div>
+								<p>${w.workHour}</p>						
+							</div>
+						</c:forEach>
+                    </div>
+                  	</div>
+                  	</c:if>
+                  </c:forEach>
+                  <c:forEach items="${working}" var="w">
+                    <c:if test="${w.thisWeek eq 5}">
+                  	<div id="5week" class="tab-pane">
+                    <div class="row">
+                       	<div><p>5</p></div>
+			             <c:forEach items="${working}" var="w">
+			             	<div>
+								<p>${w.today }</p>
+							</div>
+							<div>
+								<p>${w.startTime }
+							</div>
+							<div>
+								<p>${w.finishTime }</p>
+							</div>
+							
+							<div>
+								<p>${w.workHour}</p>						
+							</div>
+						</c:forEach>
+                    </div>
+                  	</div>
+                  	</c:if>
+                  </c:forEach>
             </div>
             <!-- /col-lg-12 -->
           </div>

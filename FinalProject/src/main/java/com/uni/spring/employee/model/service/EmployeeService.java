@@ -31,4 +31,11 @@ public interface EmployeeService {
 
 	int updateWorkHour(WorkingDay w);
 
+	Employee selectLikedAddress(String empId);
+
+	int selectStartCheck(int empNo);
+	
+	int selectFinishCheck(int empNo);
+
+
 }

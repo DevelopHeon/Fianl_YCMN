@@ -48,6 +48,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(SEQ_WORK.NEXTVAL, #{empNo}, SYSDATE, #{startTime}, 'Y')
 	</insert>
 	
+	<!-- 오늘은 이 달의 몇주차? -->
+	<update id="updateThisWeek" parameterType="WorkingDay">
+		UPDATE WORKINGDAY
+		SET THIS_WEEK = TO_CHAR(TO_DATE(TODAY, 'YY/MM/DD'), 'w')
+		WHERE TODAY = TO_CHAR(SYSDATE, 'YY/MM/DD') AND EMP_NO = #{empNo}
+	</update>
+	
 	<!-- 퇴근체크 -->
 	<update id="updateFinish" parameterType="WorkingDay">
 		UPDATE WORKINGDAY SET FINISH_TIME = #{finishTime} WHERE TO_CHAR(TO_DATE(TODAY, 'YY/MM/DD'), 'YYYY"년 "MM"월 "DD"일 ("DY")"') = #{today} AND EMP_NO = #{empNo}
@@ -55,14 +62,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 근태시간  -->
 	<update id="updateWorkHour" parameterType="WorkingDay">
-		UPDATE WORKINGDAY SET WORK_HOUR = SUBSTR(TO_TIMESTAMP(#{finishTime},'HH24:MI:SS') - TO_TIMESTAMP(START_TIME,'HH24:MI:SS'), 12, 8) WHERE TO_CHAR(TO_DATE(TODAY, 'YY/MM/DD'), 'YYYY"년 "MM"월 "DD"일 ("DY")"') = #{today} AND EMP_NO = #{empNo}
+		UPDATE WORKINGDAY SET WORK_HOUR = SUBSTR(TO_TIMESTAMP(#{finishTime},'HH24:MI:SS') - TO_TIMESTAMP(START_TIME,'HH24:MI:SS'), 12, 8)
+		WHERE TO_CHAR(TO_DATE(TODAY, 'YY/MM/DD'), 'YYYY"년 "MM"월 "DD"일 ("DY")"') = #{today} AND EMP_NO = #{empNo}
 	</update>
-	
 	
 	<!-- 근태정보 -->
 	<select id="selectWorkingInfo" parameterType="WorkingDay" resultType="WorkingDay">
-		SELECT * FROM WORKINGDAY WHERE EMP_NO = #{empNo} ORDER BY TODAY
+		SELECT * FROM WORKINGDAY
+		WHERE EMP_NO = #{empNo}
+		ORDER BY TODAY
 	</select>
+	
+	<!-- 출근 여부 -->
+	<select id="selectStartCheck" parameterType="WorkingDay" resultType="_int">
+		SELECT COUNT(*) FROM WORKINGDAY
+		WHERE TODAY = TO_CHAR(SYSDATE, 'YY/MM/DD') 
+		AND START_TIME IS NOT NULL AND EMP_NO = #{empNo}
+	</select>
+	
+	<!-- 퇴근 여부 -->
+	<select id="selectFinishCheck" parameterType="WorkingDay" resultType="_int">
+		SELECT COUNT(*) FROM WORKINGDAY
+		WHERE TODAY = TO_CHAR(SYSDATE, 'YY/MM/DD')
+		AND FINISH_TIME IS NOT NULL AND EMP_NO = #{empNo}
+	</select>
+	
 	<!-- 주소록 -->
 	<select id="selectEmpAddress" parameterType="Employee" resultType="Employee" >
 		SELECT A.EMP_NAME, A.EMP_ID, B.POS_NAME, C.DEP_NAME
@@ -72,8 +96,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<![CDATA[WHERE A.STATUS = 'Y' AND A.EMP_ID != 'admin']]>
 	</select>
 	
+	<!-- 프로필 변경 -->
 	<insert id="updateImg" parameterType="Attachment">
 		INSERT INTO ATTACHMENT
 		VALUES(SEQ_ANO.NEXTVAL, #{empNo}, NULL, 1, #{originName}, #{changeName}, #{filePath}, DEFAULT, DEFAULT)
 	</insert>
+	
+	<!-- 주소록-즐겨찾기 -->
+	<select id="selectLikedAddress" parameterType="Employee" resultType="Employee">
+		SELECT * FROM EMPLOYEE WHERE EMP_ID = #{empId}
+	</select>
 </mapper>

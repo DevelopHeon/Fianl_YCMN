@@ -210,7 +210,7 @@
             </c:if></a>
             </p>
           <h5 class="centered">${ sessionScope.loginUser.empName }</h5>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#workcheck" onclick="checkTime()" >출퇴근 확인</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#workcheck" onclick="checkTime(); todayCheck();" >출퇴근 확인</button>
 
           <li class="sub-menu">
             <a href="views/javascript:;">
@@ -305,8 +305,8 @@
         </button>
       </div>
       
-      <div class="modal-body">
-        	<p>현재 날짜와 시간은 <%= format.format(currentTime) %></p>
+      <div class="modal-body centered">
+        	<!-- <p>현재 날짜와 시간은 <%= format.format(currentTime) %></p> -->
         	<h4 id="today" name="today" value="today" class="card-title mb-3 font-weight-bold"></h4>
         	<p id="clock" name="clock" value="clock" style="font-size:40px"></p>
       </div>
@@ -321,7 +321,7 @@
 	  </div>
       <div class="modal-footer">
       		<button type="submit" name="status" value="s" id="startBtn" class="btn btn-primary">출근</button>
-      		<button type="submit" name="status" value="f" id="finishBtn" class="btn btn-primary">퇴근</button>
+      		<button type="submit" name="status" value="f" id="finishBtn" class="btn btn-primary" disabled>퇴근</button>
         	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -407,9 +407,11 @@
       console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
     }
     
+  
   /*******출퇴근*******/
   //서버시간 출력
   var date;
+	  
   function checkTime() {
       //현재시간
       var currentDate = new Date();
@@ -453,11 +455,44 @@
           }
           return zero + time;
       }
-      
-      
-      
+
   }
   
+  //모달창 새로고침시 출근시간 값이 보이지 않음, 금일 출,퇴근이 체킹되었는지 확인하는 함수
+  function todayCheck() {
+		 $.ajax({
+			  url:"startCheck.do",
+			  type:"get",
+			  async: false,
+			  data:{empNo:${loginUser.empNo}},
+			  success:function(result){
+				  if(result != "0"){
+					  start.innerHTML = "금일 출근이 체크되었습니다.";
+					  $("#startBtn").attr('disabled', true);
+					  $("#finishBtn").attr('disabled', false);
+				  }
+			  },
+			  error:function(){
+				  console.log("실패")
+			  }
+		  });
+		 
+		 $.ajax({
+			  url:"finishCheck.do",
+			  type:"get",
+			  async: false,
+			  data:{empNo:${loginUser.empNo}},
+			  success:function(result){
+				  if(result != "0"){
+					  finish.innerHTML = "금일 퇴근이 체크되었습니다.";
+					  $("#finishBtn").attr('disabled', true);
+				  }
+			  },
+			  error:function(){
+			  }
+		  })
+	}
+
   //출,퇴근 시간 체킹
   var start = document.getElementById("start");
   var finish = document.getElementById("finish");
@@ -489,11 +524,8 @@
 				  	empNo:${loginUser.empNo}
 			  },
 			  success:function(result){
-				  console.log(result),
-				  console.log("성공")
 			  },
 			  error:function(){
-				  console.log("실패")
 			  }
 		  })
 
@@ -539,11 +571,8 @@
 				  	empNo:${loginUser.empNo}
 			  },
 			  success:function(result){
-				  console.log(result),
-				  console.log("성공")
 			  },
 			  error:function(){
-				  console.log("실패")
 			  }
 		  })
 		 
