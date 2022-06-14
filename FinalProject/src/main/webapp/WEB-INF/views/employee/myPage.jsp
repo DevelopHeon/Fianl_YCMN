@@ -51,12 +51,11 @@
                 	<p><img src="resources/empUpload_files/${loginUser.empPfe}" id="empImg" class="img-circle"></p>
                 </c:if>
                   <p>
-                  	<input type="file" name="file" style="display:none">
-                  	
+                  	<input type="file" name="file" style="display:none">                 	
                   	<input type="text" name="empNo" value= "${loginUser.empNo}" style="display:none">
-                    <button type="button" onclick="onclick=document.all.file.click()" class="btn btn-theme"><i class="fa fa-check"></i>변경하기</button>
+                    <button type="button" onclick="onclick=document.all.file.click()" class="btn btn-theme"><i class="fa fa-check"></i>사진등록</button>
                     <button type="submit" id="updateBtn" class="btn btn-theme"><i class="fa fa-check"></i>저장하기</button>
-                    <button type="button" onclick="changeESTJ()" id="deleteBtn" class="btn btn-theme02">삭제하기</button>
+                    <button type="button" onclick="changeESTJ();" id="deleteBtn" class="btn btn-theme02">삭제하기</button>
                   </p>
                 </div>
               </div>
@@ -65,36 +64,33 @@
     	$(function(){
     		
     		$("#updateBtn").click(function(){
-    			var form = $("#updateImg")[0];
-    			var data = new FormData(form);
-    			
-    			$.ajax({
-    				type:"post",
-    				enctype:'multipart/form-data',
-    				url:"updateImg.do",
-    				data:data,
-    				async: false,
-    				processData:false,
-    				contentType:false,
-    				cache:false,
-    				success:function(result){
-    					console.log(result);
-    					alert("하");
-						$("#empImg").empty();
-						$("#empImg").attr("src", "resources/empUpload_files/"+result);
-						document.location.href = document.location.href;
-    				},
-    				error:function(e){
-    					console.log(e);
-    				}
-    			})
-    			
+    				
+   				var form = $("#updateImg")[0];
+       			var data = new FormData(form);
+       			
+       			$.ajax({
+       				type:"post",
+       				enctype:'multipart/form-data',
+       				url:"updateImg.do",
+       				data:data,
+       				async: false,
+       				processData:false,
+       				contentType:false,
+       				cache:false,
+       				success:function(result){
+       					console.log(result);
+       					alert("하");
+   						$("#empImg").empty();
+   						$("#empImg").attr("src", "resources/empUpload_files/"+result);
+   						document.location.href = document.location.href;
+       				},
+       				error:function(e){
+       					console.log(e);
+       				}
+       			})
     		})
     		
-    	function changeESTJ(){
-    			var image = document.getElementById("empImg");
-    			//image.src = "resources/img/user.png" 
-    		}
+    	
     		/*$("#deleteBtn").click(function(){
     			var form = $("#updateImg")[0];
     			var data = new FormData(form);
@@ -120,20 +116,32 @@
     		})*/
     		
     	})
-    
+    function changeESTJ(){
+
+ 			//image.src = "resources/img/user.png"
+ 			var form = $("#updateImg")[0];
+ 			var data = new FormData(form);
+ 			$.ajax({
+ 				type:"post",
+ 				enctype:'multipart/form-data',
+ 				url:"deleteImg.do",
+ 				data:data,
+ 				async: false,
+ 				processData:false,
+ 				contentType:false,
+ 				cache:false,
+ 				success:function(result){
+ 					console.log(result);
+ 					alert("호");
+ 				},
+ 				error:function(e){
+ 					console.log(e);
+ 				}
+ 			})
+    	}
     
     </script>
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
+   
               <!-- /col-md-4 -->
               <form action="updateEmp.do" method="post">
                <div class="col-md-4 profile-text">

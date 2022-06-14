@@ -131,7 +131,7 @@ function checkMonth() {
                     <div class="row">
                       <div class="col-md-6">
                           <div><p>1</p></div>
-			             	<c:forEach items="${working}" var="w">
+			             	
 			             	<table>
 			             		<tr>
 			             			<td>날짜</td>
@@ -146,7 +146,7 @@ function checkMonth() {
 			             			<td>${w.workHour }</td>
 			             		</tr>
 			             	</table>
-						</c:forEach>
+						
                       </div>
                     </div>
                   	</div>
@@ -165,14 +165,14 @@ function checkMonth() {
 		             			<td width="150">퇴근시간</td>
 		             			<td width="150">총 근무시간</td>
 		             		</tr>
-		             		<c:forEach items="${working}" var="w">
+		             		
 		             		<tr>
 		             			<td>${w.today }</td>
 		             			<td>${w.startTime }</td>
 		             			<td>${w.finishTime }</td>
 		             			<td>${w.workHour }</td>
 		             		</tr>
-		             		</c:forEach> 
+		             		 
 		             	</table>
                     </div>
                   	</div>
@@ -183,21 +183,22 @@ function checkMonth() {
                   	<div id="3week" class="tab-pane">
                     <div class="row">
                        	<div><p>3</p></div>
-			             <c:forEach items="${working}" var="w">
-			             	<div>
-								<p>${w.today }</p>
-							</div>
-							<div>
-								<p>${w.startTime }
-							</div>
-							<div>
-								<p>${w.finishTime }</p>
-							</div>
-							
-							<div>
-								<p>${w.workHour}</p>						
-							</div>
-						</c:forEach>
+			             <table>
+		             		<tr>
+		             			<td width="80">날짜</td>
+		             			<td width="150">출근시간</td>
+		             			<td width="150">퇴근시간</td>
+		             			<td width="150">총 근무시간</td>
+		             		</tr>
+		             		
+		             		<tr>
+		             			<td>${w.today }</td>
+		             			<td>${w.startTime }</td>
+		             			<td>${w.finishTime }</td>
+		             			<td>${w.workHour }</td>
+		             		</tr>
+		             		 
+		             	</table>
                     </div>
                   	</div>
                   	</c:if>
@@ -207,21 +208,22 @@ function checkMonth() {
                   	<div id="4week" class="tab-pane">
                     <div class="row">
                        	<div><p>4</p></div>
-			             	<c:forEach items="${working}" var="w">
-			             	<div>
-								<p>${w.today }</p>
-							</div>
-							<div>
-								<p>${w.startTime }
-							</div>
-							<div>
-								<p>${w.finishTime }</p>
-							</div>
-							
-							<div>
-								<p>${w.workHour}</p>						
-							</div>
-						</c:forEach>
+			            <table>
+		             		<tr>
+		             			<td width="80">날짜</td>
+		             			<td width="150">출근시간</td>
+		             			<td width="150">퇴근시간</td>
+		             			<td width="150">총 근무시간</td>
+		             		</tr>
+		             		
+		             		<tr>
+		             			<td>${w.today }</td>
+		             			<td>${w.startTime }</td>
+		             			<td>${w.finishTime }</td>
+		             			<td>${w.workHour }</td>
+		             		</tr>
+		             		
+		             	</table>
                     </div>
                   	</div>
                   	</c:if>
@@ -231,21 +233,22 @@ function checkMonth() {
                   	<div id="5week" class="tab-pane">
                     <div class="row">
                        	<div><p>5</p></div>
-			             <c:forEach items="${working}" var="w">
-			             	<div>
-								<p>${w.today }</p>
-							</div>
-							<div>
-								<p>${w.startTime }
-							</div>
-							<div>
-								<p>${w.finishTime }</p>
-							</div>
-							
-							<div>
-								<p>${w.workHour}</p>						
-							</div>
-						</c:forEach>
+			            <table>
+		             		<tr>
+		             			<td width="80">날짜</td>
+		             			<td width="150">출근시간</td>
+		             			<td width="150">퇴근시간</td>
+		             			<td width="150">총 근무시간</td>
+		             		</tr>
+		             		
+		             		<tr>
+		             			<td>${w.today }</td>
+		             			<td>${w.startTime }</td>
+		             			<td>${w.finishTime }</td>
+		             			<td>${w.workHour }</td>
+		             		</tr>
+		             		
+		             	</table>
                     </div>
                   	</div>
                   	</c:if>

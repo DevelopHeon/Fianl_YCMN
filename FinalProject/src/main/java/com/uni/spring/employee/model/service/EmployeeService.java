@@ -37,5 +37,7 @@ public interface EmployeeService {
 	
 	int selectFinishCheck(int empNo);
 
+	void deleteImg(String empNo);
+
 
 }

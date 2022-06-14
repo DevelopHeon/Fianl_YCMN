@@ -51,8 +51,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 오늘은 이 달의 몇주차? -->
 	<update id="updateThisWeek" parameterType="WorkingDay">
 		UPDATE WORKINGDAY
-		SET THIS_WEEK = TO_CHAR(TO_DATE(TODAY, 'YY/MM/DD'), 'w')
-		WHERE TODAY = TO_CHAR(SYSDATE, 'YY/MM/DD') AND EMP_NO = #{empNo}
+		SET THIS_WEEK = CEIL((TO_DATE(TODAY,'YY/MM/DD') - TRUNC(TRUNC(TO_DATE(TODAY,'YY/MM/DD'), 'MM'), 'IW') + 1) / 7)
+		WHERE TODAY = TO_CHAR(SYSDATE, 'YY/MM/DD')
 	</update>
 	
 	<!-- 퇴근체크 -->
@@ -101,6 +101,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO ATTACHMENT
 		VALUES(SEQ_ANO.NEXTVAL, #{empNo}, NULL, 1, #{originName}, #{changeName}, #{filePath}, DEFAULT, DEFAULT)
 	</insert>
+	
+	<!-- 프로필 삭제 -->
+	<delete id="deleteImg" parameterType="Attachment">
+		DELETE FROM ATTACHMENT WHERE CATEGORY = 1 AND EMP_NO = #{empNo}
+	</delete>
 	
 	<!-- 주소록-즐겨찾기 -->
 	<select id="selectLikedAddress" parameterType="Employee" resultType="Employee">

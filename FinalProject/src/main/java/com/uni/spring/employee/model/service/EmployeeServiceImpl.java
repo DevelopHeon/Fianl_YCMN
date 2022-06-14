@@ -163,6 +163,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeDao.selectLikedAddress(sqlSession, empId);
 	}
 
+	@Override
+	public void deleteImg(String empNo) {
+		int result = employeeDao.deleteImg(sqlSession, empNo);
+		
+		if(result < 0) {
+			throw new CommException("프로필 변경 실패");		
+		}
+		
+	}
+
 
 
 

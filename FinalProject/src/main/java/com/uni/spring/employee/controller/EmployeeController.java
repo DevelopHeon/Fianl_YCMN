@@ -219,6 +219,23 @@ public class EmployeeController {
 		return attachment.getOriginName();
 	}
 	
+	//프로필변경
+	@ResponseBody
+	@RequestMapping("deleteImg.do")
+	public String deleteImg(HttpSession session,
+							HttpServletRequest request,
+							@RequestParam("empNo")String empNo,
+							@RequestParam(name="file", required=false) MultipartFile file) {
+
+		
+		deleteFile(file.getOriginalFilename(), request);
+		
+		employeeService.deleteImg(empNo);
+
+		request.getSession().setAttribute("msg", "변경 완. 재로그인 바람");
+		return "employee/myPage";
+	}
+	
 	//첨부파일(프로필) 저장
 	private Attachment saveFile(MultipartFile file, HttpServletRequest request) {
 		

@@ -77,6 +77,10 @@ public class EmployeeDao {
 		return sqlSession.selectOne("employeeMapper.selectLikedAddress", empId);
 	}
 
+	public int deleteImg(SqlSessionTemplate sqlSession, String empNo) {
+		return sqlSession.delete("employeeMapper.deleteImg", empNo);
+	}
+
 
 
 
