@@ -80,6 +80,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		//출근 체킹 완
 		if(result > 0) {
+			int thisWeek = employeeDao.updateThisWeek(sqlSession, w);
 			return w;
 		} else {
 			throw new CommException("출근 등록 실패");
@@ -99,7 +100,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			throw new CommException("퇴근 등록 실패");
 		}
 	}
-	
+	//오늘 근태시간
 	@Override
 	public int updateWorkHour(WorkingDay w) {
 		int result = employeeDao.updateWorkHour(sqlSession, w);
@@ -110,8 +111,31 @@ public class EmployeeServiceImpl implements EmployeeService {
 			throw new CommException("근태 기록 실패");
 		}
 	}
+	//출근 여부
+	@Override
+	public int selectStartCheck(int empNo) {
+		int result = employeeDao.selectStartCheck(sqlSession, empNo);
+		
+		if(result < 0) {
+			throw new CommException("출근확인 여부 실패");
+		}
+		
+		return result;
+	}
 	
+	//퇴근 여부
+	@Override
+	public int selectFinishCheck(int empNo) {
+		int result = employeeDao.selectFinishCheck(sqlSession, empNo);
+		
+		if(result < 0) {
+			throw new CommException("퇴근확인 여부 실패");
+		}
+		
+		return result;
+	}
 	
+	//주소록
 	@Override
 	public ArrayList<Employee> selectEmpAddress() {
 		
@@ -133,12 +157,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	}
 
+	@Override
+	public Employee selectLikedAddress(String empId) {
+		// TODO Auto-generated method stub
+		return employeeDao.selectLikedAddress(sqlSession, empId);
+	}
 
 
-	
 
-	
 
-	
 }
 

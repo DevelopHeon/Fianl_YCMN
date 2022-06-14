@@ -102,6 +102,7 @@ public class EmployeeController {
 		ArrayList<WorkingDay> working = employeeService.selectWorkingInfo(empNo);
 		
 		model.addAttribute("working", working);
+
 		return "employee/workingInfo";
 	}
 	
@@ -136,13 +137,15 @@ public class EmployeeController {
 							 Model model) {
 		
 		w.setFinishTime(finishTime);
-		w.setEmpNo(empNo);			
+		w.setEmpNo(empNo);
+		//오늘의 퇴근날짜를 찍기위해 가져감
 		w.setToday(today);
 		System.out.println(today);
 
 		//퇴근 찍기
 		WorkingDay working = employeeService.updateFinish(w);
 		
+		//오늘 근태시간 구하기
 		int workHour = employeeService.updateWorkHour(w);
 		
 		model.addAttribute("working", working);
@@ -150,7 +153,27 @@ public class EmployeeController {
 		
 		return "main";
 	}
+	
+	//출근체킹 여부
+	@ResponseBody
+	@RequestMapping("startCheck.do")
+	public String startCheck(@RequestParam("empNo") int empNo) {
+		
+		int startCheck = employeeService.selectStartCheck(empNo);
 
+		return String.valueOf(startCheck);
+	}
+
+	//퇴근체킹 여부
+	@ResponseBody
+	@RequestMapping("finishCheck.do")
+	public String finishCheck(@RequestParam("empNo") int empNo) {
+		
+		int finishCheck = employeeService.selectFinishCheck(empNo);
+
+		return String.valueOf(finishCheck);
+	}
+	
 	//주소록
 	@RequestMapping("empAddress.do")
 	public String empAddress(Model model) {
@@ -158,6 +181,18 @@ public class EmployeeController {
 		ArrayList<Employee> list = employeeService.selectEmpAddress();
 		
 		model.addAttribute("list", list);
+		
+		return "employee/empAddress";
+	}
+	
+	//주소록-즐겨찾기
+	@ResponseBody
+	@RequestMapping("likedAddress.do")
+	public String likedAddress(@RequestParam("addressEmpId")String empId, Model model) {
+		
+		Employee empLiked = employeeService.selectLikedAddress(empId);
+		
+		model.addAttribute("empLiked", empLiked);
 		
 		return "employee/empAddress";
 	}

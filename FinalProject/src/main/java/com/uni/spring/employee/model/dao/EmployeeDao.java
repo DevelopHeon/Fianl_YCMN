@@ -38,10 +38,25 @@ public class EmployeeDao {
 	public int insertStart(SqlSessionTemplate sqlSession, WorkingDay w) {	
 		return sqlSession.insert("employeeMapper.insertStart", w);
 	}
+	//몇주차?
+	public int updateThisWeek(SqlSessionTemplate sqlSession, WorkingDay w) {
+		
+		return sqlSession.update("employeeMapper.updateThisWeek");
+		
+	}
 
 	//퇴근체크
 	public int updateFinish(SqlSessionTemplate sqlSession, WorkingDay w) {	
 		return sqlSession.update("employeeMapper.updateFinish", w);
+	}
+	//출근 여부
+	public int selectStartCheck(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("employeeMapper.selectStartCheck", empNo);
+	}
+	
+	//퇴근 여부
+	public int selectFinishCheck(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("employeeMapper.selectFinishCheck", empNo);
 	}
 	
 	//주소록
@@ -53,10 +68,18 @@ public class EmployeeDao {
 	public int updateImg(SqlSessionTemplate sqlSession, Attachment attachment) {
 		return sqlSession.insert("employeeMapper.updateImg", attachment);
 	}
-
+	//오늘 근무시간
 	public int updateWorkHour(SqlSessionTemplate sqlSession, WorkingDay w) {
 		return sqlSession.update("employeeMapper.updateWorkHour", w);
 	}
+	//주소록-즐겨찾기
+	public Employee selectLikedAddress(SqlSessionTemplate sqlSession, String empId) {
+		return sqlSession.selectOne("employeeMapper.selectLikedAddress", empId);
+	}
+
+
+
+
 
 
 

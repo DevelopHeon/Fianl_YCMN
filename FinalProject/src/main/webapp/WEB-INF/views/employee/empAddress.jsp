@@ -40,6 +40,7 @@
               <h4><i class="fa fa-angle-right"></i>즐겨찾기</h4>
               <hr>
               	<div class="table-inbox-wrap ">
+              	<c:forEach items="${ empLiked }" var="eL">
                 <table class="table table-inbox table-hover">
                 <thead>
                   <tr>
@@ -52,18 +53,19 @@
                 <tbody>
                   <tr>
                   <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
-                     <td>${ e.empName }</td>
-                     <td>${ e.empId}</td>
-                     <td>${ e.posName}</td>
+                     <td>${ eL.empName }</td>
+                     <td>${ eL.empId}</td>
+                     <td>${ eL.posName}</td>
                      <td></td>
                   </tr>
                 </tbody>
               </table>
+              </c:forEach>
               <c:forEach items="${ list }" var="e">
               <h4><i class="fa fa-angle-right"></i>  ${ e.depName}</h4>
               <hr>
               	<div class="table-inbox-wrap ">
-                <table class="table table-inbox table-hover">
+                <table id="address" class="table table-inbox table-hover">
                 <thead>
                   <tr>
                   	<th></th>
@@ -75,9 +77,9 @@
                 <tbody>
                   <tr>
                   <!-- <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>  -->
-                  <td class="inbox-small-cells"><i class="fa fa-star "></i></td>
+                  <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
                      <td>${ e.empName }</td>
-                     <td>${ e.empId}</td>
+                     <td id="addressEmpId">${ e.empId}</td>
                      <td>${ e.posName}</td>
                      <td></td>
                   </tr>
@@ -91,14 +93,43 @@
         </div>
         <!-- row -->
         <div class="row mt">
-          
-        </div>
-        
+        </div>        
         <!-- /row -->
       </section>
     </section>
     <!-- /MAIN CONTENT -->
     <!--main content end-->
+    <script>
+    	$(function(){
+    		var addressEmpId = document.getElementById("addressEmpId").innerHTML;
+    
+   			$("#address>tbody>tr>td:first-child>.fa").click(function(){
+   				if($(this).hasClass("fa-star inbox-started")){
+   					$(this).removeClass("inbox-started");
+   					
+   				}else{
+   					$(this).addClass("inbox-started");
+   					console.log(addressEmpId); //user01
+   					
+   					$.ajax({
+   					  url:"likedAddress.do",
+   					  type:"get",
+   					  data:{addressEmpId:addressEmpId},
+   					  success:function(result){
+   						  console.log(result),
+   						  console.log("성공"),
+   						  console.log(empLiked)
+   					  },
+   					  error:function(){
+   						  console.log("실패")
+   					  }
+   				  })
+   				}
+       		});
+
+    	})
+    	
+    </script>
     <!--footer start-->
     <footer class="site-footer">
       <div class="text-center">

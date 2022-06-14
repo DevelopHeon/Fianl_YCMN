@@ -21,4 +21,6 @@ public class WorkingDay {
 	private String finishTime; //퇴근시간
 	private String status; //근태관리 L지각, N결근, Y정상, E조퇴
 	private String workHour; //근무시간
+	private String thisWeek; //몇주차?
+
 }
