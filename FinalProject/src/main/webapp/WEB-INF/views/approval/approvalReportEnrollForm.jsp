@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +34,8 @@
 					<hr>
 					<div class="row">
 						<!-- 전자결재 양식 시작 -->
-						<form action="insertLeaveApproval.do" method="post" class="form-inline" enctype="multipart/form-data">
+						<form:form action="insertReportApproval.do" method="post"
+						 modelAttribute="approval" class="form-inline" enctype="multipart/form-data">
 							<div class="form-group" style="line-height:2em;">
 								<label for="depName">부서명 : </label>
 									<input type="text" style="margin-left:3.7%;" class="form-control" id="depName" name="depName" value="${ sessionScope.loginUser.depName }" readonly>
@@ -67,25 +71,7 @@
 									</table>
 									<!-- 결재자 추가 클릭 시 뜨는 모달 -->
 									<div class="modal fade" id="firstModal" style="height:60%;">
-										<div class="modal-dialog modal-sm">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h3 class="modal-title">결재자 등록</h3>
-													<button type="button" class="close" data-dismiss="modal">&times;</button>
-												</div>
-												<div class="modal-body">
-													<div id="dept"></div>
-													<h4>총무부서 &nbsp;<a data-toggle="collapse" data-target="#dept1"><i class="bi bi-arrow-down"></i></a></h4>
-													<div id="dept1" class="collapse"></div>
-													<h4>인사부서&nbsp;<a data-toggle="collapse" data-target="#dept2"><i class="bi bi-arrow-down"></i></a></h4>
-													<div id="dept2" class="collapse"></div>
-													<h4>개발부서&nbsp;<a data-toggle="collapse" data-target="#dept3"><i class="bi bi-arrow-down"></i></a></h4>
-													<div id="dept3" class="collapse"></div>
-												</div>
-												<div class="modal-footer" id="modalBtn">
-												</div>
-											</div>
-										</div>
+										<jsp:include page="approverModal.jsp"/>
 									</div>
 								<label for="posName"> 직위/직책 :</label> 
 									<input type="text" class="form-control" id="posName" name="posName" value="${ sessionScope.loginUser.posName }" readonly>
@@ -99,25 +85,30 @@
 								<!-- 전자결재 데이터에 필요한 문서 제목, 작성자 사번, 결재양식 hidden 값으로 전달 -->
 								<div class="hiddenInfo">
 									<input type="hidden" class="form-control" id="appWriterNo" name="appWriterNo" value="${ sessionScope.loginUser.empNo }">
-									<input type=hidden class="form-control" id="appKinds" name="appKinds" value="3">
+									<input type=hidden class="form-control" id="appKinds" name="appKinds" value="4">
 								</div>
-								<hr>
+								<hr style="width:100%;">
 								<label for="appTitle">제목 : </label>
-									<input type="text" class="form-control" id="appTitle" name="appTitle" style="margin-left:5%; width:35%" placeholder="업무보고서 제목">
+									<form:input type="text" class="form-control" path="appTitle" id="appTitle" name="appTitle" style="margin-left:5%; width:35%" placeholder="업무보고서 제목" required="required" />
 								<br>
 								<label for="reportContent">업무 내용 : </label>
-								<textarea class="form-control" required name="reportContent" id="reportContent" rows="8" cols="52" style="resize:none; margin-left:2.3%; margin-top:1%;"></textarea>
+								<form:textarea class="form-control" path="approvalReport.reportContent" name="approvalReport.reportContent" id="reportContent" rows="8" cols="52" style="resize:none; margin-left:2.3%; margin-top:1%;" required="required"></form:textarea>
 								<br>
 								<label for="reportIssue">특이사항 : </label>
-								<textarea class="form-control" required name="reportIssue" id="reportIssue" rows="8" cols="52" style="resize:none; margin-left:2.5%; margin-top:2%;"></textarea>
-								<br><br><b>* 보고서 서류 첨부 (첨부할 파일이 있는경우에만 추가)</b><br>
+								<form:textarea class="form-control" path="approvalReport.reportIssue" name="approvalReport.reportIssue" id="reportIssue" rows="8" cols="52" style="resize:none; margin-left:2.5%; margin-top:2%;"></form:textarea>
+								<br><br>
+								<div class="errorCode" style="margin-left:5%;">
+									<h3 style="color:red;"><form:errors path="firstApprover" /></h3>
+									<h3 style="color:red;"><form:errors path="lastApprover" /></h3>
+								</div>
+								<b>* 보고서 서류 첨부 (첨부할 파일이 있는경우에만 추가)</b><br>
 								<input type="file" id="uploadFile" name="uploadFile" class="form-control" style="width:50%; height:3%;">
 							</div>
 							<div class="btns" align="center" style="margin-top:5%;">
 								<button type="submit" id="erAppBtn" class="btn btn-primary btn-lg">결재요청</button>
 								<button type="button" id="close" class="btn btn-danger btn-lg">취소하기</button>
 							</div>
-						</form>
+						</form:form>
 					</div>
 				</div>
 			</section>

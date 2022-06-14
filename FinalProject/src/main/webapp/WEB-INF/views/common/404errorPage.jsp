@@ -25,7 +25,7 @@
         <h1>404!!</h1>
         <br>
         <h5 class="mt">Hey, maybe you will be interested in these pages:</h5>
-        <p><a href="index.jsp">Index</a> | <a href="#">Sitemap</a> | <a href="contact.html"> Contact</a></p>
+        <p><a href="main.do">메인으로 돌아가기</a></p>
       </div>
     </div>
   </div>

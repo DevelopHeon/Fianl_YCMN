@@ -72,27 +72,9 @@
 											</tr>
 										</tbody>
 									</table>
-									<!-- 결재자 추가 클릭 시 뜨는 모달 -->
+									<!-- 결재자 추가 클릭 시 뜨는 모달 공통으로 사용하므로 jsp 페이지로 따로 빼서 구현-->
 									<div class="modal fade" id="firstModal" style="height:60%;">
-										<div class="modal-dialog modal-sm">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h3 class="modal-title">결재자 등록</h3>
-													<button type="button" class="close" data-dismiss="modal">&times;</button>
-												</div>
-												<div class="modal-body">
-													<div id="dept"></div>
-													<h4>총무부서 &nbsp;<a data-toggle="collapse" data-target="#dept1"><i class="bi bi-arrow-down"></i></a></h4>
-													<div id="dept1" class="collapse"></div>
-													<h4>인사부서&nbsp;<a data-toggle="collapse" data-target="#dept2"><i class="bi bi-arrow-down"></i></a></h4>
-													<div id="dept2" class="collapse"></div>
-													<h4>개발부서&nbsp;<a data-toggle="collapse" data-target="#dept3"><i class="bi bi-arrow-down"></i></a></h4>
-													<div id="dept3" class="collapse"></div>
-												</div>
-												<div class="modal-footer" id="modalBtn">
-												</div>
-											</div>
-										</div>
+										<jsp:include page="approverModal.jsp"/>
 									</div>
 								<label for="posName"> 직위/직책 :</label> 
 									<input type="text" class="form-control" style="margin-left:1.3%;" id="posName" name="posName" value="${ sessionScope.loginUser.posName }" readonly>
