@@ -116,8 +116,8 @@
    					  type:"get",
    					  data:{addressEmpId:addressEmpId},
    					  success:function(result){
-   						  console.log(result),
-   						  console.log("성공"),
+   						  console.log(result)
+   						  console.log("성공")
    						  console.log(empLiked)
    					  },
    					  error:function(){
