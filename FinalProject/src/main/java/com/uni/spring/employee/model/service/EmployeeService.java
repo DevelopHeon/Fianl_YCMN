@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
+import com.uni.spring.employee.model.dto.TimeOff;
 import com.uni.spring.employee.model.dto.WorkingDay;
 
 public interface EmployeeService {
@@ -40,6 +41,8 @@ public interface EmployeeService {
 	Employee detailEmp(int empNo);
 
 	ArrayList<Employee> selectSearchEmp(String empName);
+
+	TimeOff selectTimeOff(int empNo);
 
 
 }

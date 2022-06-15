@@ -130,8 +130,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM ATTACHMENT WHERE CATEGORY = 1 AND EMP_NO = #{empNo}
 	</delete>
 	
-	<!-- 주소록-즐겨찾기 -->
-	<select id="selectLikedAddress" parameterType="Employee" resultType="Employee">
-		SELECT * FROM EMPLOYEE WHERE EMP_ID = #{empId}
+	<!-- 내 연차 조회 -->
+	<select id="selectTimeOff" parameterType="TimeOff" resultType="TimeOff">
+		SELECT * FROM TIMEOFF WHERE EMP_NO = #{empNo}
 	</select>
 </mapper>

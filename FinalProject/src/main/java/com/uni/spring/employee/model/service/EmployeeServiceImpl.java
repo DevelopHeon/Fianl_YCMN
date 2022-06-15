@@ -10,6 +10,7 @@ import com.uni.spring.common.CommException;
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.employee.model.dao.EmployeeDao;
 import com.uni.spring.employee.model.dto.Employee;
+import com.uni.spring.employee.model.dto.TimeOff;
 import com.uni.spring.employee.model.dto.WorkingDay;
 
 import lombok.RequiredArgsConstructor;
@@ -179,6 +180,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public ArrayList<Employee> selectSearchEmp(String empName) {
 		
 		return employeeDao.selectSearchEmp(sqlSession, empName);
+	}
+	
+	//내 연차 조회
+	@Override
+	public TimeOff selectTimeOff(int empNo) {
+		
+		return employeeDao.selectTimeOff(sqlSession, empNo);
 	}
 
 

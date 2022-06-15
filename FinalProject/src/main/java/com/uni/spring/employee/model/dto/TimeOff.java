@@ -9,8 +9,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Department {
-	private int depNo;
-	private String depName;
-	private String status;
+public class TimeOff {
+	private int empNo; //사원번호
+	private int totalNum; //총 연차개수
+	private int useNum; //사용개수
+	private int remainNum; //남은개수
 }

@@ -15,6 +15,7 @@
 		<typeAlias type="com.uni.spring.common.dto.Attachment" alias="Attachment"/>
 		<typeAlias type="com.uni.spring.schedule.model.dto.Schedule" alias="Schedule"/>
 		<typeAlias type="com.uni.spring.schedule.model.dto.ScheduleDTO" alias="ScheduleDTO"/>
+		<typeAlias type="com.uni.spring.employee.model.dto.TimeOff" alias="TimeOff"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="/mappers/employee-mapper.xml"/>

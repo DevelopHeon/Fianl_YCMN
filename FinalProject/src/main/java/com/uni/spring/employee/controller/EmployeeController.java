@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.employee.model.dto.Employee;
+import com.uni.spring.employee.model.dto.TimeOff;
 import com.uni.spring.employee.model.dto.WorkingDay;
 import com.uni.spring.employee.model.service.EmployeeService;
 
@@ -287,7 +288,16 @@ public class EmployeeController {
 		deleteFile.delete();
 	}
 	
-
+	//내 연차조회
+	@RequestMapping("timeOff.do")
+	public String timeOff(HttpSession session, Model model) {
+		Employee loginUser = (Employee)session.getAttribute("loginUser");
+		int empNo = loginUser.getEmpNo();
+		
+		TimeOff timeOff = employeeService.selectTimeOff(empNo);
+		model.addAttribute("timeOff", timeOff);
+		return "employee/empTimeOff";
+	}
 	
 	
 }
