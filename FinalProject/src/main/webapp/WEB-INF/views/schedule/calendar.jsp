@@ -12,220 +12,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script>
-	// toastr 설정
-	toastr.options = {
-		"closeButton" : true,
-		"debug" : false,
-		"newestOnTop" : true,
-		"progressBar" : true,
-		"positionClass" : "toast-top-right",
-		"preventDuplicates" : false,
-		"onclick" : null,
-		"showDuration" : "300",
-		"hideDuration" : "1000",
-		"timeOut" : "1000",
-		"extendedTimeOut" : "1000",
-		"showEasing" : "swing",
-		"hideEasing" : "linear",
-		"showMethod" : "fadeIn",
-		"hideMethod" : "fadeOut"
-	}
-	// Sweet Alert 설정
-	var alert = function(msg, type) {
-		swal({
-			title : '',
-			text : msg,
-			type : type,
-			timer : 1500,
-			customClass : 'sweet-size',
-			showConfirmButton : false
-		});
-	}
-	var confirm = function(msg, title, resvNum) {
-		swal({
-			title : title,
-			text : msg,
-			type : "warning",
-			showCancelButton : true,
-			confirmButtonClass : "btn-danger",
-			confirmButtonText : "예",
-			cancelButtonText : "아니오",
-			closeOnConfirm : false,
-			closeOnCancel : true
-		}, function(isConfirm) {
-			if (isConfirm) {
-				location.href = "LogoutProc.do";
-			}
-		});
-	}
-	var cancelConfirm = function(msg, title, param) {
-		swal(
-				{
-					title : title,
-					text : msg,
-					html : true,
-					type : "warning",
-					showCancelButton : true,
-					confirmButtonClass : "btn-danger",
-					confirmButtonText : "예",
-					cancelButtonText : "아니오",
-					closeOnConfirm : false,
-					closeOnCancel : true
-				}, function(isConfirm) {
-					if (isConfirm) {
-						deleteEvent(param);
-					}
-				});
-	}
-	function Alert(msg) {
-		alert(msg, 'success');
-	}
-	function Confirm(msg) {
-		confirm('', msg);
-	}
-	function CancelConfirm(msg, param) {
-		cancelConfirm('', msg, param);
-	}
-
-		
-		//페이지 로딩과 동시에 함수 호출
-		$(function(){
-			getEventsList();
-		});
-		
-		// 일정 데이터 가져오기
-		function getEventsList() {
-			$.ajax({
-				type : "post",
-				url : "GetScheduleList.do",
-				success : function(data) {
-					
-					var list = data;
-					console.log(list);
-					var events = list.map(function(item) {
-						return {
-							id : item.scheduleNo,
-							title : item.scheduleTitle,
-							start : item.scheduleStart,
-							end : item.scheduleEnd
-						}
-					});
-					getCalendar(events);
-				},
-				error : function(data) {
-					alert("시스템 에러 발생!");
-				}
-			});
-		}
-		
-		// fullcalendar 불러오기
-		function getCalendar(events) {
-			var calendarEl = document.getElementById('calendar');
-			var calendar = new FullCalendar.Calendar(calendarEl, {
-				initialView : 'dayGridMonth',// 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
-				// 해더에 표시할 툴바       
-				headerToolbar : {
-					left : 'prev,next today',
-					center : 'title',
-					right : 'dayGridMonth,timeGridWeek,timeGridDay'
-				},
-				locale : 'ko', //사용 언어
-				dayMaxEvents : true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
-				height : 930,
-				editable : true,// 수정 가능?   
-				dayMaxEventRows : true,
-				eventDidMount: function(info) {
-		            tippy(info.el, {
-		                content:  info.event.extendedProps.description,//이벤트 디스크립션을 툴팁으로 가져온다 
-		            });
-		        },
-				events : events,
-				eventTimeFormat : { // '14:30:00' 형태로 만들기
-					hour : '2-digit',
-					minute : '2-digit',
-					hour12 : false
-				},
-				eventClick : function(info) {
-					CancelConfirm("일정을 삭제하시겠습니까?", info);
-				}
-			});
-			calendar.render();
-		}
-		// 종료일 input 최소값(시작일) 속성 변경
-		function setEndMin() {
-			var startdate = $("#scStart").val();
-			$("#scEnd").attr("min", startdate);
-		}
-		// 일정 등록하기
-		function whatTime(empId) {
-			// 시작일 + 시간 형태 설정
-			var startTime = $("#scStart").val();
-			if ($(".timer").val() != "" && $(".timer").val() != null) {
-				startTime = $("#scStart").val() + "T" + $(".timer").val()
-						+ ":00";
-			}
-			var schInfo = {
-				sc_title : $("#scTitle").val(),
-				sc_start : startTime,
-				sc_end : $("#scEnd").val(),
-				emp_id : empId
-			}
-			if (startTime == "" || startTime == null) {
-				toastr.warning("시작일을 입력해주세요");
-				$("#scStart").focus();
-				return false;
-			} else if ($("#scTitle").val() == "" || $("#scTitle").val() == null) {
-				toastr.warning("일정내용을 입력해주세요");
-				$("#scTitle").focus();
-				return false;
-			} else {
-				$.ajax({
-					type : "post",
-					url : "InsertSchedule.do",
-					data : JSON.stringify(schInfo),
-					contentType : "application/json; charset=utf-8",
-					dataType : "json",
-					success : function(data) {
-						if (data.result > 0) {
-							window.location.reload();
-						} else {
-							toastr.warning("일정을 추가할 수 없습니다");
-						}
-					},
-					error : function(data) {
-						alert("시스템 에러 발생!");
-					}
-				});
-			}
-		}
-		
-		// 일정 삭제하기
-		function deleteEvent(info) {
-			info.event.remove(); // 캘린더상에서 이벤트 삭제하기
-			
-			var schInfo = {sc_id : info.event.id}
-			
-			$.ajax({
-				type : "post",
-				url : "DeleteSchedule.do",
-				data : JSON.stringify(schInfo),
-				contentType : "application/json; charset=utf-8",
-				dataType : "json",
-				success : function(data) {
-					if (data.result > 0) {
-						window.location.reload();
-					} else {
-						toastr.warning("일정을 삭제할 수 없습니다");
-					}
-				},
-				error : function(data) {
-					alert("시스템 에러 발생!");
-				}
-			});
-		}
-
-    </script>
+	
     <style>
   body {
     margin: 40px 10px;
@@ -371,11 +158,229 @@
 
     
    <script>
-   
-   	
-   
-   
+
+	// toastr 설정
+	toastr.options = {
+		"closeButton" : true,
+		"debug" : false,
+		"newestOnTop" : true,
+		"progressBar" : true,
+		"positionClass" : "toast-top-right",
+		"preventDuplicates" : false,
+		"onclick" : null,
+		"showDuration" : "300",
+		"hideDuration" : "1000",
+		"timeOut" : "1000",
+		"extendedTimeOut" : "1000",
+		"showEasing" : "swing",
+		"hideEasing" : "linear",
+		"showMethod" : "fadeIn",
+		"hideMethod" : "fadeOut"
+	}
+	// Sweet Alert 설정
+	var alert = function(msg, type) {
+		swal({
+			title : '',
+			text : msg,
+			type : type,
+			timer : 1500,
+			customClass : 'sweet-size',
+			showConfirmButton : false
+		});
+	}
+	var confirm = function(msg, title, resvNum) {
+		swal({
+			title : title,
+			text : msg,
+			type : "warning",
+			showCancelButton : true,
+			confirmButtonClass : "btn-danger",
+			confirmButtonText : "예",
+			cancelButtonText : "아니오",
+			closeOnConfirm : false,
+			closeOnCancel : true
+		}, function(isConfirm) {
+			if (isConfirm) {
+				location.href = "LogoutProc.do";
+			}
+		});
+	}
+	var cancelConfirm = function(msg, title, param) {
+		swal(
+				{
+					title : title,
+					text : msg,
+					html : true,
+					type : "warning",
+					showCancelButton : true,
+					confirmButtonClass : "btn-danger",
+					confirmButtonText : "예",
+					cancelButtonText : "아니오",
+					closeOnConfirm : false,
+					closeOnCancel : true
+				}, function(isConfirm) {
+					if (isConfirm) {
+						deleteEvent(param);
+					}
+				});
+	}
+	function Alert(msg) {
+		alert(msg, 'success');
+	}
+	function Confirm(msg) {
+		confirm('', msg);
+	}
+	function CancelConfirm(msg, param) {
+		cancelConfirm('', msg, param);
+	}
+
+		
+		//페이지 로딩과 동시에 함수 호출
+		$(function(){
+			getEventsList();
+		});
+		
+		// 일정 데이터 가져오기
+		function getEventsList() {
+			$.ajax({
+				type : "post",
+				url : "GetScheduleList.do",
+				success : function(data) {
+					// 색상목록
+					var colorArr = [ 'DodgerBlue', 'BlueViolet', 'Coral',
+							'Crimson', 'DeepPink', 'DarkTurquoise', 'Gold',
+							'Chartreuse', 'HotPink', 'MediumBlue', 'OrangeRed',
+							'RoyalBlue', 'Tomato', 'LawnGreen' ];
+					var list = data;
+					console.log(list);
+					var events = list.map(function(item) {
+						return {
+							id : item.sc_id,
+							title : item.sc_title,
+							start : item.sc_start,
+							end : item.sc_end,
+							color : colorArr[Math.floor(Math.random()
+									* colorArr.length)]
+						}
+					});
+					getCalendar(events);
+				},
+				error : function(data) {
+					alert("시스템 에러 발생!");
+				}
+			});
+		}
+		
+		// fullcalendar 불러오기
+		function getCalendar(events) {
+			var calendarEl = document.getElementById('calendar');
+			var calendar = new FullCalendar.Calendar(calendarEl, {
+				initialView : 'dayGridMonth',// 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
+				// 해더에 표시할 툴바       
+				headerToolbar : {
+					left : 'prev,next today',
+					center : 'title',
+					right : 'dayGridMonth,timeGridWeek,timeGridDay'
+				},
+				locale : 'ko', //사용 언어
+				dayMaxEvents : true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
+				height : 930,
+				editable : true,// 수정 가능?   
+				dayMaxEventRows : true,
+				eventDidMount: function(info) {
+		            tippy(info.el, {
+		                content:  info.event.extendedProps.description,//이벤트 디스크립션을 툴팁으로 가져온다 
+		            });
+		        },
+				events : events,
+				eventTimeFormat : { // '14:30:00' 형태로 만들기
+					hour : '2-digit',
+					minute : '2-digit',
+					hour12 : false
+				},
+				eventClick : function(info) {
+					CancelConfirm("일정을 삭제하시겠습니까?", info);
+				}
+			});
+			calendar.render();
+		}
+		// 종료일 input 최소값(시작일) 속성 변경
+		function setEndMin() {
+			var startdate = $("#scStart").val();
+			$("#scEnd").attr("min", startdate);
+		}
+		// 일정 등록하기
+		function whatTime(empId) {
+			// 시작일 + 시간 형태 설정
+			var startTime = $("#scStart").val();
+			if ($(".timer").val() != "" && $(".timer").val() != null) {
+				startTime = $("#scStart").val() + "T" + $(".timer").val()
+						+ ":00";
+			}
+			var schInfo = {
+				sc_title : $("#scTitle").val(),
+				sc_start : startTime,
+				sc_end : $("#scEnd").val(),
+				emp_id : empId
+			}
+			if (startTime == "" || startTime == null) {
+				toastr.warning("시작일을 입력해주세요");
+				$("#scStart").focus();
+				return false;
+			} else if ($("#scTitle").val() == "" || $("#scTitle").val() == null) {
+				toastr.warning("일정내용을 입력해주세요");
+				$("#scTitle").focus();
+				return false;
+			} else {
+				$.ajax({
+					type : "post",
+					url : "InsertSchedule.do",
+					data : JSON.stringify(schInfo),
+					contentType : "application/json; charset=utf-8",
+					dataType : "json",
+					success : function(data) {
+						if (data.result > 0) {
+							window.location.reload();
+						} else {
+							toastr.warning("일정을 추가할 수 없습니다");
+						}
+					},
+					error : function(data) {
+						alert("시스템 에러 발생!");
+					}
+				});
+			}
+		}
+		
+		// 일정 삭제하기
+		function deleteEvent(info) {
+			info.event.remove(); // 캘린더상에서 이벤트 삭제하기
+			
+			var schInfo = {sc_id : info.event.id}
+			
+			$.ajax({
+				type : "post",
+				url : "DeleteSchedule.do",
+				data : JSON.stringify(schInfo),
+				contentType : "application/json; charset=utf-8",
+				dataType : "json",
+				success : function(data) {
+					if (data.result > 0) {
+						window.location.reload();
+					} else {
+						toastr.warning("일정을 삭제할 수 없습니다");
+					}
+				},
+				error : function(data) {
+					alert("시스템 에러 발생!");
+				}
+			});
+		}
+
    </script>
+   
+   
+  
   
   <!-- fullcalendar CDN -->  
   <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet' />  
