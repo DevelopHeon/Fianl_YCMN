@@ -7,6 +7,10 @@ import com.uni.spring.schedule.model.dto.Schedule;
 
 public interface ScheduleService {
 
-	List<Schedule> getschedule() throws Exception;
+	List<Schedule> getScheduleList();
+
+	Integer insertSchedule(Schedule schedule);
+
+	Integer deleteSchedule(int scheduleNo);
 
 }

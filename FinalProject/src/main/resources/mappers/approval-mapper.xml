@@ -23,9 +23,13 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		INSERT INTO ATTACHMENT
 		VALUES(SEQ_ANO.NEXTVAL, #{empNo}, SEQ_APP.CURRVAL, 2, #{originName}, #{changeName}, #{filePath}, DEFAULT, DEFAULT)
 	</insert>
-	<insert id="insertApprovalLeave" parameterType="com.uni.spring.approval.model.dto.ApprovalLeave">
+	<insert id="insertLeaveApproval" parameterType="com.uni.spring.approval.model.dto.ApprovalLeave">
 	INSERT INTO APP_LEAVE
 	VALUES(SEQ_APP.CURRVAL, #{leaveStart}, #{leaveFinish}, #{leaveReason}, #{leaveTotalDate}, #{leaveCategory}, DEFAULT)
+	</insert>
+	<insert id="insertReportApproval" parameterType="com.uni.spring.approval.model.dto.ApprovalReport">
+	INSERT INTO APP_REPORT
+	VALUES(SEQ_APP.CURRVAL, #{reportContent}, #{reportIssue}, DEFAULT)
 	</insert>
 	<select id="selectApproverList" parameterType="_int" resultType="Employee">
 		SELECT A.EMP_NO, A.EMP_NAME, A.POS_NO, B.POS_NAME, C.DEP_NAME
@@ -33,6 +37,49 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		LEFT JOIN JOB_POSITION B ON A.POS_NO = B.POS_NO
 		LEFT JOIN DEPARTMENT C ON A.DEP_NO = C.DEP_NO
 		<![CDATA[WHERE A.EMP_NO <> #{empNo}]]>
+		AND A.STATUS = 'Y'
 		ORDER BY A.POS_NO
+	</select>
+	<select id="selectMyApprovalListCnt" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM APPROVAL
+		WHERE STATUS = 'Y'
+		AND APP_WRITER_NO = #{userNo}
+	</select>
+	<select id="selectMyApprovalList" parameterType="_int" resultType="Approval">
+	SELECT DISTINCT A.APP_NO, B.EMP_NAME APP_WRITER_NO, A.APP_TITLE,
+        A.APP_CREATE_DATE, A.REJECTER, A.REJECT_REASON,
+        A.FIRST_APPROVER, A.LAST_APPROVER,
+        A.FIRST_APPROVAL_DATE, A.LAST_APPROVAL_DATE,
+        A.APP_KINDS, A.APP_STATUS
+	FROM APPROVAL A
+	     JOIN EMPLOYEE B ON (A.APP_WRITER_NO = B.EMP_NO)
+	WHERE A.STATUS = 'Y'
+	AND A.APP_WRITER_NO = #{userNo}
+	ORDER BY APP_NO DESC
+	</select>
+	<select id="selectBoxListCnt" parameterType="Approval" resultType="_int">
+		SELECT COUNT(*)
+		FROM APPROVAL
+		WHERE STATUS = 'Y'
+		AND APP_WRITER_NO = #{appWriterNo}
+	<if test='appStatus.equals("I") or appStatus.equals("W") or appStatus.equals("C")'>
+		AND	APP_STATUS = #{appStatus}
+	</if>
+	</select>
+	<select id="selectBoxList" parameterType="Approval" resultType="Approval">
+	SELECT DISTINCT A.APP_NO, B.EMP_NAME APP_WRITER_NO, A.APP_TITLE,
+    A.APP_CREATE_DATE, A.REJECTER, A.REJECT_REASON,
+    A.FIRST_APPROVER, A.LAST_APPROVER,
+    A.FIRST_APPROVAL_DATE, A.LAST_APPROVAL_DATE,
+    A.APP_KINDS, A.APP_STATUS
+	FROM APPROVAL A
+    JOIN EMPLOYEE B ON (A.APP_WRITER_NO = B.EMP_NO)
+	WHERE A.STATUS = 'Y'
+	AND A.APP_WRITER_NO = #{appWriterNo}
+	<if test='appStatus.equals("I") or appStatus.equals("W") or appStatus.equals("C")'>
+		AND	A.APP_STATUS = #{appStatus}
+	</if>
+	ORDER BY APP_NO DESC
 	</select>
 </mapper>

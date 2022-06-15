@@ -10,8 +10,10 @@ import com.uni.spring.approval.model.dto.ApperAccount;
 import com.uni.spring.approval.model.dto.Approval;
 import com.uni.spring.approval.model.dto.ApprovalErs;
 import com.uni.spring.approval.model.dto.ApprovalLeave;
+import com.uni.spring.approval.model.dto.ApprovalReport;
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.dto.Attachment;
+import com.uni.spring.common.dto.PageInfo;
 import com.uni.spring.employee.model.dto.Employee;
 
 import lombok.RequiredArgsConstructor;
@@ -55,11 +57,51 @@ public class ApprovalServiceImpl implements ApprovalService {
 			result1 = approvalDao.insertAttachment(sqlSession, attachment);
 		}
 		int result2 = approvalDao.insertApproval(sqlSession, approval);
-		int result3 = approvalDao.insertApprovalLeave(sqlSession, approvalLeave);
+		int result3 = approvalDao.insertLeaveApproval(sqlSession, approvalLeave);
 		
 		
 		if(result1 * result2 * result3 < 0) {
 			throw new CommException("휴가신청서 등록 실패");
 		}
+	}
+
+	@Override
+	public void insertReportApproval(Approval approval, ApprovalReport approvalReport, Attachment attachment) {
+		
+		int result1 = 1;
+		
+		if(attachment != null) {
+			result1 = approvalDao.insertAttachment(sqlSession, attachment);
+		}
+		int result2 = approvalDao.insertApproval(sqlSession, approval);
+		int result3 = approvalDao.insertReportApproval(sqlSession, approvalReport);
+		
+		if(result1 * result2 * result3 < 0) {
+			throw new CommException("업무 보고서 등록 실패");
+		}
+	}
+
+	// 내가 작성한 결재 문서 count 조회
+	@Override
+	public int selectMyApprovalListCnt(int userNo) {
+		return approvalDao.selectMyApprovalListCnt(sqlSession, userNo);
+	}
+
+	// 내가 작성한 결재 문서 목록 조회
+	@Override
+	public ArrayList<Approval> selectMyApprovalList(PageInfo pi, int userNo) {
+		return approvalDao.selectMyApprovalList(sqlSession, userNo, pi);
+	}
+
+	// select 값에 따른 결재 문서 count 조회
+	@Override
+	public int selectBoxListCnt(Approval approval) {
+		return approvalDao.selectBoxListCnt(sqlSession, approval);
+	}
+
+	// select 값에 따른 결재 문서 목록 조회
+	@Override
+	public ArrayList<Approval> selectBoxList(Approval approval, PageInfo pi) {
+		return approvalDao.selectBoxList(sqlSession, approval, pi);
 	}
 }
