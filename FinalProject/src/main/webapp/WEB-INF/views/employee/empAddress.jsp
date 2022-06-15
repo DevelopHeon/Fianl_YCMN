@@ -169,41 +169,12 @@
     <!-- /MAIN CONTENT -->
     <!--main content end-->
     <script>
-    	$(function(){
-    		var addressEmpId = document.getElementById("addressEmpId").innerHTML;
-    
-   			$(".address>tbody>tr>td:first-child>.fa").click(function(){
-   				if($(this).hasClass("fa-star inbox-started")){
-   					$(this).removeClass("inbox-started");
-   					
-   				}else{
-   					$(this).addClass("inbox-started");
-   					console.log(addressEmpId); //user01
-   					
-   					$.ajax({
-   					  url:"likedAddress.do",
-   					  type:"get",
-   					  data:{addressEmpId:addressEmpId},
-   					  success:function(result){
-   						  console.log(result)
-   						  console.log("성공")
-   						  console.log(empLiked)
-   					  },
-   					  error:function(){
-   						  console.log("실패")
-   					  }
-   				  })
-   				}
-       		});
-		
-    	})
-    	
     	
     	$(function(){
     		$(".address>tbody>tr").click(function(){
-    			var eno = $(this).children().eq(1).text();
+    			var eno = $(this).children().eq(0).text();
     			console.log(eno); //http://localhost:8099/spring/
-    			window.open("http://localhost:8099/spring/detailEmp.do?eno="+eno, "사원 정보", "width=700, height=300")
+    			window.open("http://localhost:8099/spring/detailEmp.do?eno="+eno, "사원 정보", "width=550, height=300")
     		})
     	})
     

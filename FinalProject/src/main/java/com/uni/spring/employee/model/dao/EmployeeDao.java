@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
+import com.uni.spring.employee.model.dto.TimeOff;
 import com.uni.spring.employee.model.dto.WorkingDay;
 
 @Repository
@@ -72,11 +73,7 @@ public class EmployeeDao {
 	public int updateWorkHour(SqlSessionTemplate sqlSession, WorkingDay w) {
 		return sqlSession.update("employeeMapper.updateWorkHour", w);
 	}
-	//주소록-즐겨찾기
-	public Employee selectLikedAddress(SqlSessionTemplate sqlSession, String empId) {
-		return sqlSession.selectOne("employeeMapper.selectLikedAddress", empId);
-	}
-
+	//프로필 삭제
 	public int deleteImg(SqlSessionTemplate sqlSession, String empNo) {
 		return sqlSession.delete("employeeMapper.deleteImg", empNo);
 	}
@@ -88,6 +85,10 @@ public class EmployeeDao {
 	//주소록_사원검색
 	public ArrayList<Employee> selectSearchEmp(SqlSessionTemplate sqlSession, String empName) {
 		return (ArrayList)sqlSession.selectList("employeeMapper.selectSearchEmp", empName);
+	}
+
+	public TimeOff selectTimeOff(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("employeeMapper.selectTimeOff", empNo);
 	}
 
 

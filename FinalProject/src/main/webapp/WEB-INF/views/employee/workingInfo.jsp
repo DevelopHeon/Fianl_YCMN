@@ -109,42 +109,38 @@ function checkMonth() {
               </div>
               <!-- /panel-heading -->
 
-                </div>
-                <!-- /tab-content -->
-              </div>
+             </div>
+             <!-- /tab-content -->
+           	</div>
               <!-- /panel-body -->
               <div class="panel-body">
                 <div class="tab-content">
-                <c:forEach items="${working}" var="w">
-                	<c:if test= "${w.thisWeek eq 1}">
-                  	<div id="1week" class="tab-pane active">
+                  <div id="1week" class="tab-pane active">
                     <div class="row">
                       <div class="col-md-6">
-                          <div><p>1</p></div>
-			             	
-			             	<table>
-			             		<tr>
-			             			<td>날짜</td>
-			             			<td>출근시간</td>
-			             			<td>퇴근시간</td>
-			             			<td>총 근무시간</td>
-			             		</tr>
-			             		<tr>
-			             			<td>${w.today }</td>
-			             			<td>${w.startTime }</td>
-			             			<td>${w.finishTime }</td>
-			             			<td>${w.workHour }</td>
-			             		</tr>
-			             	</table>
-						
+                        <div><p>1</p></div>
+		             	<table>
+		             		<tr>
+	             				<td width="80">날짜</td>
+	             				<td width="150">출근시간</td>
+	             				<td width="150">퇴근시간</td>
+	             				<td width="150">총 근무시간</td>
+		             		</tr>
+			        <c:forEach items="${working}" var="w">
+                	<c:if test= "${w.thisWeek eq 1}">
+		             		<tr>
+		             			<td>${w.today }</td>
+		             			<td>${w.startTime }</td>
+		             			<td>${w.finishTime }</td>
+		             			<td>${w.workHour }</td>
+		             		</tr>
+		            </c:if>
+                  	</c:forEach>
+			             </table>
                       </div>
-                    </div>
-                  	</div>
-                  	</c:if>
-                  </c:forEach>
-                  
-                 <c:forEach items="${working}" var="w">
-                    <c:if test="${w.thisWeek eq 2}">
+                     </div>
+                  	</div> 
+                 
                   	<div id="2week" class="tab-pane">
                     <div class="row">
                        	<div><p>2</p></div>
@@ -155,21 +151,21 @@ function checkMonth() {
 		             			<td width="150">퇴근시간</td>
 		             			<td width="150">총 근무시간</td>
 		             		</tr>
-		             		
+		            <c:forEach items="${working}" var="w">
+                    <c:if test="${w.thisWeek eq 2}">
 		             		<tr>
 		             			<td>${w.today }</td>
 		             			<td>${w.startTime }</td>
 		             			<td>${w.finishTime }</td>
 		             			<td>${w.workHour }</td>
 		             		</tr>
-		             		 
+		             </c:if>
+                  	</c:forEach> 
 		             	</table>
                     </div>
                   	</div>
-                  	</c:if>
-                  </c:forEach>
-                  <c:forEach items="${working}" var="w">
-                    <c:if test="${w.thisWeek eq 3}">
+
+
                   	<div id="3week" class="tab-pane">
                     <div class="row">
                        	<div><p>3</p></div>
@@ -180,21 +176,20 @@ function checkMonth() {
 		             			<td width="150">퇴근시간</td>
 		             			<td width="150">총 근무시간</td>
 		             		</tr>
-		             		
+		            <c:forEach items="${working}" var="w">
+                    <c:if test="${w.thisWeek eq 3}">
 		             		<tr>
 		             			<td>${w.today }</td>
 		             			<td>${w.startTime }</td>
 		             			<td>${w.finishTime }</td>
 		             			<td>${w.workHour }</td>
 		             		</tr>
-		             		 
+		           	</c:if>
+                  	</c:forEach>
 		             	</table>
                     </div>
                   	</div>
-                  	</c:if>
-                  </c:forEach>
-                  <c:forEach items="${working}" var="w">
-                    <c:if test="${w.thisWeek eq 4}">
+                  	
                   	<div id="4week" class="tab-pane">
                     <div class="row">
                        	<div><p>4</p></div>
@@ -205,21 +200,20 @@ function checkMonth() {
 		             			<td width="150">퇴근시간</td>
 		             			<td width="150">총 근무시간</td>
 		             		</tr>
-		             		
+		            <c:forEach items="${working}" var="w">
+                    <c:if test="${w.thisWeek eq 4}">
 		             		<tr>
 		             			<td>${w.today }</td>
 		             			<td>${w.startTime }</td>
 		             			<td>${w.finishTime }</td>
 		             			<td>${w.workHour }</td>
 		             		</tr>
-		             		
+		             </c:if>
+                  	 </c:forEach>		
 		             	</table>
                     </div>
                   	</div>
-                  	</c:if>
-                  </c:forEach>
-                  <c:forEach items="${working}" var="w">
-                    <c:if test="${w.thisWeek eq 5}">
+
                   	<div id="5week" class="tab-pane">
                     <div class="row">
                        	<div><p>5</p></div>
@@ -230,19 +224,19 @@ function checkMonth() {
 		             			<td width="150">퇴근시간</td>
 		             			<td width="150">총 근무시간</td>
 		             		</tr>
-		             		
+		            <c:forEach items="${working}" var="w">
+                    <c:if test="${w.thisWeek eq 5}">
 		             		<tr>
 		             			<td>${w.today }</td>
 		             			<td>${w.startTime }</td>
 		             			<td>${w.finishTime }</td>
 		             			<td>${w.workHour }</td>
 		             		</tr>
-		             		
+		            </c:if>
+                  	</c:forEach>
 		             	</table>
                     </div>
                   	</div>
-                  	</c:if>
-                  </c:forEach>
             </div>
             <!-- /col-lg-12 -->
           </div>
