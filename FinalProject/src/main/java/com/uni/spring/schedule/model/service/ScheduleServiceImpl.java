@@ -16,10 +16,23 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	private final ScheduleDao scheduleDao;
 	private final SqlSessionTemplate sqlSession;
-	
+
 	@Override
-	public List<Schedule> getschedule() throws Exception{
-		return scheduleDao.getschedule(sqlSession);
+	public List<Schedule> getScheduleList() {
+		// TODO Auto-generated method stub
+		return scheduleDao.getScheduleList(sqlSession);
+	}
+
+	@Override
+	public Integer insertSchedule(Schedule schedule) {
+		// TODO Auto-generated method stub
+		return scheduleDao.insertSchedule(sqlSession,schedule);
+	}
+
+	@Override
+	public Integer deleteSchedule(int scheduleNo) {
+		// TODO Auto-generated method stub
+		return scheduleDao.deleteSchedule(sqlSession,scheduleNo);
 	}
 
 }
