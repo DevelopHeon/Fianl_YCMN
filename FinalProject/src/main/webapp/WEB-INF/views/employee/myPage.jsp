@@ -41,6 +41,7 @@
           <div class="col-lg-12">
             <div class="row content-panel">
             <!-- /col-md-4 -->
+            <!-- 프로필 사진 -->
             <form id="updateImg" method="post" enctype="multipart/form-data">
               <div class="col-md-4 profile-text mt mb centered right-divider">
                 <div class="profile-pic">
@@ -60,6 +61,7 @@
                 </div>
               </div>
              </form>
+             <!-- 프로필 사진 -->
     <script>
     	$(function(){
     		
@@ -117,7 +119,6 @@
     		
     	})
     function changeESTJ(){
-
  			//image.src = "resources/img/user.png"
  			var form = $("#updateImg")[0];
  			var data = new FormData(form);

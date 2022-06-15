@@ -5,11 +5,6 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%
 	WorkingDay w = new WorkingDay();
-	String sTime = w.getStartTime();
-	String fTime = w.getFinishTime();
-	
-	session.setAttribute("sTime", sTime);
-	session.setAttribute("fTime", fTime);
 	
 	Date currentTime = new Date();
 	SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
