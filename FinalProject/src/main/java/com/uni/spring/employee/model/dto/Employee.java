@@ -2,6 +2,8 @@ package com.uni.spring.employee.model.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.uni.spring.hr.model.dto.Hr;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +30,10 @@ public class Employee {
    private int depNo;
    private String posName;
    private String depName;
+   
+   private Hr hr;
+   private Department department;
+   private JobPosition jobPosition;
    
 	@Override
 	public String toString() {
