@@ -2,17 +2,15 @@ package com.uni.spring.schedule.controller;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.uni.spring.schedule.model.dto.Schedule;
+import com.uni.spring.schedule.model.dto.ScheduleDTO;
 import com.uni.spring.schedule.model.service.ScheduleService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,10 +28,18 @@ public class ScheduleController {
 		return "schedule/calendar";
 	}
 
-	@RequestMapping("GetScheduleList.do")
+	/*@RequestMapping("GetScheduleList.do")
 	@ResponseBody
 	public List<Schedule> getScheduleList() {
 		List<Schedule> list = service.getScheduleList();
+		return list;
+	}*/
+	
+	@RequestMapping("GetScheduleList.do")
+	@ResponseBody
+	public List<ScheduleDTO> getScheduleList() {
+		List<ScheduleDTO> list = service.getScheduleList();
+		System.out.println("controller//////////////////"+list+"///////////");
 		return list;
 	}
 

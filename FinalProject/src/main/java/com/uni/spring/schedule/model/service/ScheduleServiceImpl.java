@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.uni.spring.schedule.model.dao.ScheduleDao;
 import com.uni.spring.schedule.model.dto.Schedule;
+import com.uni.spring.schedule.model.dto.ScheduleDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,8 +18,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 	private final ScheduleDao scheduleDao;
 	private final SqlSessionTemplate sqlSession;
 
-	@Override
+	/*@Override
 	public List<Schedule> getScheduleList() {
+		// TODO Auto-generated method stub
+		return scheduleDao.getScheduleList(sqlSession);
+	}*/
+	
+	@Override
+	public List<ScheduleDTO> getScheduleList() {
 		// TODO Auto-generated method stub
 		return scheduleDao.getScheduleList(sqlSession);
 	}
