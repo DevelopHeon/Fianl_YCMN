@@ -80,6 +80,15 @@ public class EmployeeDao {
 	public int deleteImg(SqlSessionTemplate sqlSession, String empNo) {
 		return sqlSession.delete("employeeMapper.deleteImg", empNo);
 	}
+	//주소록_사원정보
+	public Employee selectDetailEmp(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("employeeMapper.selectDetailEmp", empNo);
+	}
+
+	//주소록_사원검색
+	public ArrayList<Employee> selectSearchEmp(SqlSessionTemplate sqlSession, String empName) {
+		return (ArrayList)sqlSession.selectList("employeeMapper.selectSearchEmp", empName);
+	}
 
 
 

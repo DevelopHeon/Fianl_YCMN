@@ -21,6 +21,12 @@
 	.content-panel{
 		margin-left: 50px;
 	}
+	#searchBtn{
+		display: block;
+	}
+	.address{
+		margin-left:30px;
+	}
 </style>
 </head>
 
@@ -33,61 +39,124 @@
     <!--main content start-->
     <section id="main-content">
       <section class="wrapper">
-        <h3><i class="fa fa-angle-right"></i> Basic Table Examples</h3>
+        <h3><i class="fa fa-angle-right"></i> 주소록</h3>
         <div class="row">
-          <div class="col-md-11">
-            <div class="content-panel">
-              <h4><i class="fa fa-angle-right"></i>즐겨찾기</h4>
+          <div class="col-md-10">
+            <div class="">
+				<form action="searchEmp.do" class="pull-left">
+                      <div class="input-append">
+                        <input type="text" name="search" class="form-control " placeholder="사원 이름 검색">
+                        <button id="searchBtn" type="submit" class="btn btn-theme02">검색</button>
+                      </div>
+                      
+                </form>
+              <br><br><br><br><br>
+              <h4><i class="fa fa-angle-right"></i>개발</h4>
               <hr>
               	<div class="table-inbox-wrap ">
-              	<c:forEach items="${ empLiked }" var="eL">
-                <table class="table table-inbox table-hover">
+                <table class="address table table-border table-hover">
                 <thead>
                   <tr>
-                  	<th></th>
+                  	<th style="display:none"></th>
                     <th>이름</th>
                     <th>아이디</th>
                     <th>직위</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                  <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
-                     <td>${ eL.empName }</td>
-                     <td>${ eL.empId}</td>
-                     <td>${ eL.posName}</td>
-                     <td></td>
-                  </tr>
-                </tbody>
-              </table>
-              </c:forEach>
               <c:forEach items="${ list }" var="e">
-              <h4><i class="fa fa-angle-right"></i>  ${ e.depName}</h4>
-              <hr>
-              	<div class="table-inbox-wrap ">
-                <table id="address" class="table table-inbox table-hover">
-                <thead>
-                  <tr>
-                  	<th></th>
-                    <th>이름</th>
-                    <th>아이디</th>
-                    <th>직위</th>
-                  </tr>
-                </thead>
+              <c:if test="${e.depName eq '개발'}"> 
                 <tbody>
                   <tr>
-                  <!-- <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>  -->
-                  <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
+	                 <td style="display:none">${e.empNo }</td>
                      <td>${ e.empName }</td>
                      <td id="addressEmpId">${ e.empId}</td>
                      <td>${ e.posName}</td>
-                     <td></td>
                   </tr>
                 </tbody>
+              </c:if>
+              </c:forEach>
               </table>
               </div>
+              <h4><i class="fa fa-angle-right"></i>총무</h4>
+              <hr>
+              	<div class="table-inbox-wrap ">
+                <table class="address table table-border table-hover">
+                <thead>
+                  <tr>
+                  	<th style="display:none"></th>
+                    <th>이름</th>
+                    <th>아이디</th>
+                    <th>직위</th>
+                  </tr>
+                </thead>
+              <c:forEach items="${ list }" var="e">
+              <c:if test="${e.depName eq '총무'}"> 
+                <tbody>
+                  <tr>
+	                 <td style="display:none">${e.empNo }</td>
+                     <td>${ e.empName }</td>
+                     <td id="addressEmpId">${ e.empId}</td>
+                     <td>${ e.posName}</td>
+                  </tr>
+                </tbody>
+              </c:if>
               </c:forEach>
-            </div>
+              </table>
+              </div>
+              
+              <h4><i class="fa fa-angle-right"></i>인사</h4>
+              <hr>
+              	<div class="table-inbox-wrap ">
+                <table class="address table table-border table-hover">
+                <thead>
+                  <tr>
+                  	<th style="display:none"></th>
+                    <th>이름</th>
+                    <th>아이디</th>
+                    <th>직위</th>
+                  </tr>
+                </thead>
+              <c:forEach items="${ list }" var="e">
+              <c:if test="${e.depName eq '인사'}"> 
+                <tbody>
+                  <tr>
+	                 <td style="display:none">${e.empNo }</td>
+                     <td>${ e.empName }</td>
+                     <td id="addressEmpId">${ e.empId}</td>
+                     <td>${ e.posName}</td>
+                  </tr>
+                </tbody>
+              </c:if>
+              </c:forEach>
+              </table>
+              </div>
+
+              <h4><i class="fa fa-angle-right"></i>연수중</h4>
+              <hr>
+              	<div class="table-inbox-wrap ">
+                <table class="address table table-border table-hover">
+                <thead>
+                  <tr>
+                  	<th style="display:none"></th>
+                    <th>이름</th>
+                    <th>아이디</th>
+                    <th>직위</th>
+                  </tr>
+                </thead>
+              <c:forEach items="${ list }" var="e">
+              <c:if test="${e.depName eq '연수중'}"> 
+                <tbody>
+                  <tr>
+	                 <td style="display:none">${e.empNo }</td>
+                     <td>${ e.empName }</td>
+                     <td id="addressEmpId">${ e.empId}</td>
+                     <td>${ e.posName}</td>
+                  </tr>
+                </tbody>
+              </c:if>
+              </c:forEach>
+              </table>
+              </div>
           </div>
           </div>
         </div>
@@ -103,7 +172,7 @@
     	$(function(){
     		var addressEmpId = document.getElementById("addressEmpId").innerHTML;
     
-   			$("#address>tbody>tr>td:first-child>.fa").click(function(){
+   			$(".address>tbody>tr>td:first-child>.fa").click(function(){
    				if($(this).hasClass("fa-star inbox-started")){
    					$(this).removeClass("inbox-started");
    					
@@ -126,9 +195,18 @@
    				  })
    				}
        		});
-
+		
     	})
     	
+    	
+    	$(function(){
+    		$(".address>tbody>tr").click(function(){
+    			var eno = $(this).children().eq(1).text();
+    			console.log(eno); //http://localhost:8099/spring/
+    			window.open("http://localhost:8099/spring/detailEmp.do?eno="+eno, "사원 정보", "width=700, height=300")
+    		})
+    	})
+    
     </script>
     <!--footer start-->
     <footer class="site-footer">

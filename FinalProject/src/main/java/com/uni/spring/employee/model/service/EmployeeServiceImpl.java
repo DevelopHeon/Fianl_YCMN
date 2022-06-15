@@ -156,13 +156,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 			throw new CommException("프로필 변경 실패");
 		}
 	}
-
-	@Override
-	public Employee selectLikedAddress(String empId) {
-		// TODO Auto-generated method stub
-		return employeeDao.selectLikedAddress(sqlSession, empId);
-	}
-
+	
+	//프로필 삭제
 	@Override
 	public void deleteImg(String empNo) {
 		int result = employeeDao.deleteImg(sqlSession, empNo);
@@ -171,6 +166,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 			throw new CommException("프로필 변경 실패");		
 		}
 		
+	}
+	//주소록_사원정보
+	@Override
+	public Employee detailEmp(int empNo) {
+
+		return employeeDao.selectDetailEmp(sqlSession, empNo);
+	}
+
+	//주소록_사원검색
+	@Override
+	public ArrayList<Employee> selectSearchEmp(String empName) {
+		
+		return employeeDao.selectSearchEmp(sqlSession, empName);
 	}
 
 

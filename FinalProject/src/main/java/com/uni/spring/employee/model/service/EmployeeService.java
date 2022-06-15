@@ -31,13 +31,15 @@ public interface EmployeeService {
 
 	int updateWorkHour(WorkingDay w);
 
-	Employee selectLikedAddress(String empId);
-
 	int selectStartCheck(int empNo);
 	
 	int selectFinishCheck(int empNo);
 
 	void deleteImg(String empNo);
+
+	Employee detailEmp(int empNo);
+
+	ArrayList<Employee> selectSearchEmp(String empName);
 
 
 }
