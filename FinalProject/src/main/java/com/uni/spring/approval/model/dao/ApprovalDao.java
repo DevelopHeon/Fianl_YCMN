@@ -11,6 +11,7 @@ import com.uni.spring.approval.model.dto.Approval;
 import com.uni.spring.approval.model.dto.ApprovalErs;
 import com.uni.spring.approval.model.dto.ApprovalLeave;
 import com.uni.spring.approval.model.dto.ApprovalReport;
+import com.uni.spring.approval.model.dto.mapDto.ApprovalMap;
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.common.dto.PageInfo;
 import com.uni.spring.employee.model.dto.Employee;
@@ -67,6 +68,14 @@ public class ApprovalDao {
 
 	public int selectBoxListCnt(SqlSessionTemplate sqlSession, Approval approval) {
 		return sqlSession.selectOne("approvalMapper.selectBoxListCnt", approval);
+	}
+
+	public ApprovalMap selectApprovalLv(SqlSessionTemplate sqlSession, int appNo) {
+		return sqlSession.selectOne("approvalMapper.selectApprovalLv", appNo);
+	}
+
+	public Attachment selectAppAttachment(SqlSessionTemplate sqlSession, int appNo) {
+		return sqlSession.selectOne("approvalMapper.selectAppAttachment", appNo);
 	}
 
 }
