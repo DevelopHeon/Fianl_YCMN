@@ -53,9 +53,40 @@
 	   			<th>현재 연차</th>
 	   			<th>사용 연차</th>
 	   			<th>잔여 연차</th>
+	   			<th>상태</th>
 	   		</tr>
 	   	</thead>
-	   </table>        
+	   	<tbody>
+		   	<c:if test="${ !empty timeOffList }">
+		   	<c:forEach items="${timeOffList }" var="list">
+		   		<tr>
+		   			<td>${list.today }</td>
+		   			<c:if test="${ list.timeoffType eq 'L' }">
+		   			<td>연차</td>
+		   			</c:if>
+				   	<c:if test="${ list.timeoffType eq 'H' }">
+		   			<td>반차</td>
+		   			</c:if>
+		   			<td>${list.timeoffContent }</td>
+		   			<td>${list.totalNum }</td>
+		   			<td>${list.useNum }</td>
+		   			<td>${list.remainNum }</td>
+		   			<c:if test="${ list.appStatus eq 'W' }">
+		   			<td>미승인</td>
+		   			</c:if>
+		   			<c:if test="${ list.appStatus eq 'C' }">
+		   			<td>승인</td>
+		   			</c:if>
+		   		</tr>
+		   	</c:forEach>
+		   	</c:if>
+		   	<c:if test="${ empty timeOffList }">
+		   		<tr>
+		   			<td>사용 연차 내역이 없습니다.</td>
+		   		</tr>
+		   	</c:if>
+	   	</tbody>
+	   </table>         
         
       </section>
     </section>

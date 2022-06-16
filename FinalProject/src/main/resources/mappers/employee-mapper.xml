@@ -130,8 +130,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM ATTACHMENT WHERE CATEGORY = 1 AND EMP_NO = #{empNo}
 	</delete>
 	
-	<!-- 내 연차 조회 -->
+	<!-- 내 연차개수 조회 -->
 	<select id="selectTimeOff" parameterType="TimeOff" resultType="TimeOff">
 		SELECT * FROM TIMEOFF WHERE EMP_NO = #{empNo}
+	</select>
+	
+	<!-- 결재완료 후 연차내역 업데이트 -->
+	<update id="updateTimeOffContent" parameterType="TimeOffContent">
+		UPDATE TIMEOFFCONTENT A
+		SET
+		(A.TIMEOFF_TYPE, A.TIMEOFF_CONTENT, A.USE_NUM) = (SELECT B.LEAVE_CATEGORY, B.LEAVE_REASON, B.LEAVE_TOTALDATE FROM APP_LEAVE B WHERE A.APP_NO = B.APP_NO)
+		, (A.TOTAL_NUM) = (SELECT C.REMAIN_NUM FROM TIMEOFF C WHERE A.EMP_NO = C.EMP_NO)
+		WHERE A.APP_STATUS = 'C'
+		AND (A.TODAY, A.EMP_NO) = (SELECT B.APP_CREATE_DATE, B.APP_WRITER_NO FROM APPROVAL B WHERE A.APP_NO = B.APP_NO)
+	</update>
+	
+	<!-- 연차내역 조회 -->
+	<select id="selectTimeOffContent" parameterType="TimeOffContent" resultType="TimeOffContent">
+		SELECT * FROM TIMEOFFCONTENT WHERE EMP_NO = #{empNo}
 	</select>
 </mapper>

@@ -16,6 +16,7 @@
 		<typeAlias type="com.uni.spring.schedule.model.dto.Schedule" alias="Schedule"/>
 		<typeAlias type="com.uni.spring.schedule.model.dto.ScheduleDTO" alias="ScheduleDTO"/>
 		<typeAlias type="com.uni.spring.employee.model.dto.TimeOff" alias="TimeOff"/>
+		<typeAlias type="com.uni.spring.employee.model.dto.TimeOffContent" alias="TimeOffContent"/>
 		<typeAlias type="com.uni.spring.hr.model.dto.Hr" alias="Hr"/>
 		<typeAlias type="com.uni.spring.employee.model.dto.Department" alias="Department"/>
 	</typeAliases>

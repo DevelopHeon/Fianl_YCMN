@@ -25,6 +25,7 @@ import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.TimeOff;
 import com.uni.spring.employee.model.dto.WorkingDay;
+import com.uni.spring.employee.model.dto.TimeOffContent;
 import com.uni.spring.employee.model.service.EmployeeService;
 
 import lombok.RequiredArgsConstructor;
@@ -295,9 +296,17 @@ public class EmployeeController {
 		int empNo = loginUser.getEmpNo();
 		
 		TimeOff timeOff = employeeService.selectTimeOff(empNo);
-		model.addAttribute("timeOff", timeOff);
+		
+		//내 연차내역 조회
+		//연차내역 조회하면서 승인된 결재가 있으면 쿼리(update)
+		ArrayList<TimeOffContent> timeOffList = employeeService.updateTimeOffContent(empNo);
+		
+		model.addAttribute("timeOff", timeOff); //연차개수
+		model.addAttribute("timeOffList", timeOffList);//연차내역
+		
 		return "employee/empTimeOff";
 	}
+	
 	
 	
 }
