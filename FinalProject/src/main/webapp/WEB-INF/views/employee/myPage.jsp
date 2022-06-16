@@ -23,7 +23,11 @@
 <style>
 
  #update {
-	margin : 100px; 
+	margin-top: 300px;
+	margin-right: 300px;
+ }
+ .detail{
+ 	width: 800px;
  }
 </style>
 </head>
@@ -41,6 +45,7 @@
           <div class="col-lg-12">
             <div class="row content-panel">
             <!-- /col-md-4 -->
+            <!-- 프로필 사진 -->
             <form id="updateImg" method="post" enctype="multipart/form-data">
               <div class="col-md-4 profile-text mt mb centered right-divider">
                 <div class="profile-pic">
@@ -60,6 +65,7 @@
                 </div>
               </div>
              </form>
+             <!-- 프로필 사진 -->
     <script>
     	$(function(){
     		
@@ -117,7 +123,6 @@
     		
     	})
     function changeESTJ(){
-
  			//image.src = "resources/img/user.png"
  			var form = $("#updateImg")[0];
  			var data = new FormData(form);
@@ -146,34 +151,35 @@
               <form action="updateEmp.do" method="post">
                <div class="col-md-4 profile-text">
                <label>내 정보</label>
-               <table class="detail" align="center">
+               <table class="detail table" align="center">
 				<tr>
-					<td width="100px">이름 : </td>
-					<td colspan="5"><input type="text"  name="empName" value="${ loginUser.empName }"><br></td>
-					<td width="100px">사번 : </td>
-					<td><input type="text"  name="empNo" value="${ loginUser.empNo }" readonly><br></td>
-					<td width="100px">아이디 : </td>
-					<td><input type="text"  name="empId" value="${ loginUser.empId }" readonly><br></td>
+					<th>이름 : </th>
+					<td><input type="text"  name="empName" value="${ loginUser.empName }"></td>
+					<th>사번 : </th>
+					<td><input type="text"  name="empNo" value="${ loginUser.empNo }" readonly></td>
+					<th>아이디 : </th>
+					<td><input type="text"  name="empId" value="${ loginUser.empId }" readonly></td>
 				</tr>
 				<tr>
-					<td width="100px">부서 : </td>
-					<td colspan="5"><input type="text"  name="depName" value="${ loginUser.depName }" readonly><br></td>
-					<td width="100px">직위 : </td>
-					<td><input type="text"  name="posName" value="${ loginUser.posName }" readonly><br></td>
-					<td width="100px">이메일 : </td>
-					<td><input type="email"  name="empEmail" value="${ loginUser.empEmail }" style="width:180px"><br></td>
+					<th>부서 : </th>
+					<td><input type="text"  name="depName" value="${ loginUser.depName }" readonly></td>
+					<th>직위 : </th>
+					<td><input type="text"  name="posName" value="${ loginUser.posName }" readonly></td>
+					<th>이메일 : </th>
+					<td><input type="email"  name="empEmail" value="${ loginUser.empEmail }" style="width:180px"></td>
 				</tr>
 				<tr>
-					<td width="100px">위치 : </td>
-					<td colspan="5"><input type="text"  name="empLoc" value="${ loginUser.empLoc }"><br></td>
-					<td width="100px">내선번호 : </td>
-					<td><input type="text"  name="officeTel" value="${ loginUser.officeTel }"><br></td>
-					<td width="100px">휴대번호 : </td>
-					<td><input type="tel"  name="empPhone" value="${ loginUser.empPhone }"><br></td>
+					<th>위치 : </th>
+					<td><input type="text"  name="empLoc" value="${ loginUser.empLoc }"></td>
+					<th>내선번호 : </th>
+					<td><input type="text"  name="officeTel" value="${ loginUser.officeTel }"></td>
+					<th>휴대번호 : </th>
+					<td><input type="tel"  name="empPhone" value="${ loginUser.empPhone }"></td>
 				</tr>		
 			   </table>
                </div>
-               <button id="update" type="submit" class="btn btn-primary">수정하기</button>
+               <div>
+               <button id="update" type="submit" class="btn btn-primary">수정하기</button></div>
               </form>
               <!-- /col-md-4 -->
             </div> 

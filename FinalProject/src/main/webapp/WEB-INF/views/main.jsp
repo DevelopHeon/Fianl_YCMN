@@ -5,11 +5,6 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%
 	WorkingDay w = new WorkingDay();
-	String sTime = w.getStartTime();
-	String fTime = w.getFinishTime();
-	
-	session.setAttribute("sTime", sTime);
-	session.setAttribute("fTime", fTime);
 	
 	Date currentTime = new Date();
 	SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
@@ -50,6 +45,9 @@
 	}
 	#approverTable>tbody>tr>td{
 		height:35px;
+	}
+	.workCheck{
+		margin-left:60px;
 	}
 </style>
 </head>
@@ -204,7 +202,6 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="views/profile.html">
           	<c:if test="${ loginUser.empPfe eq null}">
                	<p class="centered"><img src="resources/img/user.png" class="img-circle" width="80">
             </c:if>
@@ -213,7 +210,7 @@
             </c:if></a>
             </p>
           <h5 class="centered">${ sessionScope.loginUser.empName }</h5>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#workcheck" onclick="checkTime(); todayCheck();" >출퇴근 확인</button>
+          <button type="button" class="workCheck btn btn-primary" data-toggle="modal" data-target="#workcheck" onclick="checkTime(); todayCheck();" >출퇴근 확인</button>
 
           <li class="sub-menu">
             <a href="views/javascript:;">
@@ -287,7 +284,7 @@
             <ul class="sub">
               <li><a href="myPage.do">인사 정보</a></li>
               <li><a href="workingInfo.do">근태 정보</a></li>
-              <li><a href="#">연차 현황</a></li>
+              <li><a href="timeOff.do">연차 현황</a></li>
               <li><a href="empAddress.do">주소록</a></li>
             </ul>
           </li>
