@@ -44,10 +44,10 @@
 		
 	   <hr>
 	   
-	   <table class="table">
+	   <table class="table centered">
 	   	<thead>
 	   		<tr>
-	   			<th>날짜</th>
+	   			<th>상신일</th>
 	   			<th>종류</th>
 	   			<th>사유</th>
 	   			<th>현재 연차</th>
@@ -66,6 +66,9 @@
 		   			</c:if>
 				   	<c:if test="${ list.timeoffType eq 'H' }">
 		   			<td>반차</td>
+		   			</c:if>
+		   			<c:if test="${ empty list.timeoffType }">
+		   			<td>미승인</td>
 		   			</c:if>
 		   			<td>${list.timeoffContent }</td>
 		   			<td>${list.totalNum }</td>
