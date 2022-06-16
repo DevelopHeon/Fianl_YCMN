@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.GsonBuilder;
 import com.uni.spring.approval.model.dto.Approval;
 import com.uni.spring.approval.model.dto.ApprovalErs;
 import com.uni.spring.approval.model.dto.ApprovalLeave;
 import com.uni.spring.approval.model.dto.ApprovalReport;
+import com.uni.spring.approval.model.dto.mapDto.ApprovalMap;
 import com.uni.spring.approval.model.serivce.ApprovalService;
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.Pagination;
@@ -130,7 +130,6 @@ public class ApprovalController {
 		if(result.hasErrors()) {
 			return "approval/approvalReportEnrollForm";
 		}
-		
 		ApprovalReport approvalReport = approval.getApprovalReport();
 		
 		Attachment attachment = null;
@@ -243,24 +242,27 @@ public class ApprovalController {
 		
 		System.out.println("전자결재번호: " + appNo + "종류 : " + appKinds);
 		
-		Approval approval = new Approval();
-		approval.setAppNo(appNo);
-		approval.setAppKinds(appKinds);
+		ApprovalMap appMap = new ApprovalMap();
+//		appMap.getApproval().setAppNo(appNo);
+//		appMap.getApproval().setAppKinds(appKinds);
 		
 		String viewName = "";
 		
 		if(appKinds.equals("2")) {
-//			approval = approvalService.selectApprovalEr(approval);
+//			approval = approvalService.selectApprovalEr();
 			viewName = "/approvalErDetailView";
 		}else if(appKinds.equals("3")) {
-//			approval = approvalService.selectApprovalLv(approval);
+			appMap = approvalService.selectApprovalLv(appNo);
 			viewName = "/approvalLvDetailView";
 		}else if(appKinds.equals("4")) {
 //			approval = approvalService.selectApprovalRp(approval);
 			viewName = "/approvalRpDetailView";
 		}
 		
-//		model.addAttribute("approval", approval);
+		System.out.println("조회내용" + appMap.getApprovalLeave().toString());
+		Attachment at = approvalService.selectAppAttachment(appNo);
+		appMap.setAttachment(at);
+		model.addAttribute("appMap", appMap); 
 		
 		return "approval"+viewName;
 	}

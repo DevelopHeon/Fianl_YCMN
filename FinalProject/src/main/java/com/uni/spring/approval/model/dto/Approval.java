@@ -5,6 +5,9 @@ import java.sql.Date;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.uni.spring.common.dto.Attachment;
+import com.uni.spring.employee.model.dto.Employee;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

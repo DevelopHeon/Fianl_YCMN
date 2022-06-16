@@ -3,6 +3,48 @@
 PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="approvalMapper">
+	<resultMap id="approvalMap" type="Approval">
+		<id property="appNo" column="APP_NO"/>
+		<result property="appWriterNo" column="APP_WRITER_NO"/>
+		<result property="appTitle" column="APP_TITLE"/>
+		<result property="appCreateDate" column="APP_CREATE_DATE"/>
+		<result property="rejecter" column="REJECTER"/>
+		<result property="rejectReason" column="REJECT_REASON"/>
+		<result property="firstApprover" column="FIRST_APPROVER"/>
+		<result property="lastApprover" column="LAST_APPROVER"/>
+		<result property="firstApprovalDate" column="FIRST_APPROVAL_DATE"/>
+		<result property="lastApprovalDate" column="LAST_APPROVAL_DATE"/>
+		<result property="appKinds" column="APP_KINDS"/>
+		<result property="appStatus" column="APP_STATUS"/>
+		<result property="status" column="STATUS"/>
+	</resultMap>
+	<resultMap id="approvalLvMap" type="com.uni.spring.approval.model.dto.ApprovalLeave">
+		<id property="appNo" column="APP_NO"/>
+		<result property="leaveStart" column="LEAVE_START"/>
+		<result property="leaveFinish" column="LEAVE_FINISH"/>
+		<result property="leaveReason" column="LEAVE_REASON"/>
+		<result property="leaveTotalDate" column="LEAVE_TOTALDATE"/>
+		<result property="leaveCategory" column="LEAVE_CATEGORY"/>
+		<result property="category" column="CATEGORY"/>
+	</resultMap>
+	<resultMap id="employeeMap" type="Employee">
+		<id property="empNo" column="EMP_NO"/>
+		<result property="empName" column="EMP_NAME" />
+		<result property="depName" column="DEP_NAME" />
+		<result property="posName" column="POS_NAME" />
+	</resultMap>
+	<resultMap id="attachmentMap" type="com.uni.spring.common.dto.Attachment">
+		<id property="fileNo" column="FILE_NO"/>
+		<result property="originName" column="ORIGIN_NAME"/>
+		<result property="changeName" column="CHANGE_NAME"/>
+	</resultMap>
+	<resultMap type="com.uni.spring.approval.model.dto.mapDto.ApprovalMap" id="approvalLvResultMap">
+		<collection property="approval" resultMap="approvalMap" />
+		<collection property="approvalLeave" resultMap="approvalLvMap" />
+		<collection property="employee" resultMap="employeeMap" />
+		<collection property="attachment" resultMap="attachmentMap" />
+	</resultMap>
+	
 	<insert id="insertApproval" parameterType="Approval">
 		INSERT INTO APPROVAL
 		(APP_NO, APP_WRITER_NO, APP_TITLE, APP_CREATE_DATE, FIRST_APPROVER, LAST_APPROVER, APP_KINDS, APP_STATUS, STATUS)
@@ -81,5 +123,29 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		AND	A.APP_STATUS = #{appStatus}
 	</if>
 	ORDER BY APP_NO DESC
+	</select>
+	<select id="selectApprovalLv" parameterType="_int" resultMap="approvalLvResultMap">
+	   SELECT DISTINCT B.EMP_NO, A.APP_NO, B.EMP_NAME APP_WRITER_NO, D.DEP_NAME, E.POS_NAME,
+	        A.APP_CREATE_DATE, F.EMP_NAME FIRST_APPROVER, G.EMP_NAME LAST_APPROVER, A.APP_STATUS,
+	        A.FIRST_APPROVAL_DATE, A.LAST_APPROVAL_DATE,
+	        A.REJECTER, A.REJECT_REASON, C.LEAVE_START, C.LEAVE_FINISH, 
+	        A.APP_TITLE, C.LEAVE_CATEGORY, C.LEAVE_TOTALDATE, C.LEAVE_REASON
+	   FROM APPROVAL A
+	        JOIN EMPLOYEE B ON (A.APP_WRITER_NO = B.EMP_NO)
+	        JOIN APP_LEAVE C ON (A.APP_NO = C.APP_NO)
+	        JOIN DEPARTMENT D ON (B.DEP_NO = D.DEP_NO)
+	        JOIN JOB_POSITION E ON (B.POS_NO = E.POS_NO),
+	        (SELECT A.EMP_NAME, B.FIRST_APPROVER FROM EMPLOYEE A JOIN APPROVAL B ON A.EMP_NO = B.FIRST_APPROVER) F,
+	        (SELECT A.EMP_NAME, B.LAST_APPROVER FROM EMPLOYEE A JOIN APPROVAL B ON A.EMP_NO = B.LAST_APPROVER) G
+	   WHERE A.STATUS = 'Y'
+		   AND A.APP_NO = #{appNo}
+		   AND A.FIRST_APPROVER = F.FIRST_APPROVER
+		   AND A.LAST_APPROVER = G.LAST_APPROVER
+	</select>
+	<select id="selectAppAttachment" parameterType="_int" resultType="com.uni.spring.common.dto.Attachment">
+		SELECT A.ORIGIN_NAME, A.CHANGE_NAME
+		FROM ATTACHMENT A
+		WHERE A.REF_NO = #{appNo}
+		AND A.CATEGORY = 2
 	</select>
 </mapper>
