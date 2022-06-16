@@ -95,10 +95,20 @@ public class EmployeeDao {
 	public int updateTimeOffContent(SqlSessionTemplate sqlSession) {
 		return sqlSession.update("employeeMapper.updateTimeOffContent");
 	}
+	//잔여연차 업데이트
+	public int updateRemainNum(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.update("employeeMapper.updateRemainNum", empNo);
+		
+	}
 	//연차내역조회
 	public ArrayList<TimeOffContent> selectTimeOffContent(SqlSessionTemplate sqlSession, int empNo) {
 		return (ArrayList)sqlSession.selectList("employeeMapper.selectTimeOffContent", empNo);
 	}
+	//잔여연차 업데이트 후 연차개수 차감
+	public int updateTimeOffNum(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.update("employeeMapper.updateTimeOffNum", empNo);
+	}
+
 
 
 

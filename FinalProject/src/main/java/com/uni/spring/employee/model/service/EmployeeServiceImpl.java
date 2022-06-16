@@ -186,6 +186,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	//내 연차 조회
 	@Override
 	public TimeOff selectTimeOff(int empNo) {
+		//employeeDao.updateTimeOffNum(sqlSession, empNo);
 		
 		return employeeDao.selectTimeOff(sqlSession, empNo);
 	}
@@ -194,10 +195,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public  ArrayList<TimeOffContent> updateTimeOffContent(int empNo) {
 		
 		//update해줌 -> 승인되었을때 (결재완료:C) 연차내역테이블 업데이트
-		employeeDao.updateTimeOffContent(sqlSession);
+		int result = employeeDao.updateTimeOffContent(sqlSession);
+		if(result > 0) {
+			//잔여연차 계산
+			employeeDao.updateRemainNum(sqlSession, empNo);
+			//연차 개수 업데이트
+			employeeDao.updateTimeOffNum(sqlSession, empNo);
+			
+		}
 
 		return employeeDao.selectTimeOffContent(sqlSession, empNo);
 	}
+
+
 
 
 
