@@ -108,12 +108,29 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public ApprovalMap selectApprovalLv(int appNo) {
-		return approvalDao.selectApprovalLv(sqlSession, appNo);
-	}
-
-	@Override
 	public Attachment selectAppAttachment(int appNo) {
 		return approvalDao.selectAppAttachment(sqlSession, appNo);
 	}
+
+	@Override
+	public ApprovalMap selectApproval(int appNo, String appKinds) {
+		
+		ApprovalMap appMap = new ApprovalMap();
+		// appKinds에 따라 조회쿼리가 다르기때문에 if문으로 구분
+		if(appKinds.equals("2")) {
+			appMap = approvalDao.selectApprovalEr(sqlSession, appNo);
+		}else if(appKinds.equals("3")) {
+			appMap = approvalDao.selectApprovalLv(sqlSession, appNo);
+		}else if(appKinds.equals("4")) {
+			appMap = approvalDao.selectApprovalRp(sqlSession, appNo);
+		}
+		
+		return appMap;
+	}
+
+	@Override
+	public ArrayList<ApprovalErs> selectAppErs(int appNo) {
+		return approvalDao.selectAppErs(sqlSession, appNo);
+	}
+
 }

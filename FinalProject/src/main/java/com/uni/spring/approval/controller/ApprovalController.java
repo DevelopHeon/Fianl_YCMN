@@ -240,28 +240,24 @@ public class ApprovalController {
 	@RequestMapping("detailApproval.do")
 	public String selectApproval(int appNo, String appKinds, Model model) {
 		
-		System.out.println("전자결재번호: " + appNo + "종류 : " + appKinds);
-		
-		ApprovalMap appMap = new ApprovalMap();
-//		appMap.getApproval().setAppNo(appNo);
-//		appMap.getApproval().setAppKinds(appKinds);
-		
+		ApprovalMap appMap = approvalService.selectApproval(appNo, appKinds);
+		// 지출증빙 내역은 여러개일 수도 있으므로 list타입으로 반환해준다.
 		String viewName = "";
-		
-		if(appKinds.equals("2")) {
-//			approval = approvalService.selectApprovalEr();
-			viewName = "/approvalErDetailView";
-		}else if(appKinds.equals("3")) {
-			appMap = approvalService.selectApprovalLv(appNo);
-			viewName = "/approvalLvDetailView";
-		}else if(appKinds.equals("4")) {
-//			approval = approvalService.selectApprovalRp(approval);
-			viewName = "/approvalRpDetailView";
-		}
-		
-		System.out.println("조회내용" + appMap.getApprovalLeave().toString());
+		// 첨부파일 조회 따로, 같이 join 해주려 했는데 실패함..
 		Attachment at = approvalService.selectAppAttachment(appNo);
 		appMap.setAttachment(at);
+		
+		if(appKinds.equals("2")) {
+			// 여러개의 증빙내역 배열로 받아서 model 객체에 담아준다.
+			ArrayList<ApprovalErs> appErs = approvalService.selectAppErs(appNo);
+			model.addAttribute("list", appErs);
+			viewName = "/approvalErDetailView";
+		}else if(appKinds.equals("3")) {
+			viewName = "/approvalLvDetailView";
+		}else if(appKinds.equals("4")) {
+			viewName = "/approvalRpDetailView";
+		}
+//		System.out.println("조회내용" + appMap.getApprovalReport().toString());
 		model.addAttribute("appMap", appMap); 
 		
 		return "approval"+viewName;
