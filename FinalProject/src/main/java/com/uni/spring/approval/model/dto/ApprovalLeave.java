@@ -30,7 +30,7 @@ public class ApprovalLeave {
 	private String leaveReason; //휴가 사용 이유
 	
 	@NotBlank(message="휴가 일수는 필수 입력 값입니다.")
-	private String leaveTotalDate; // 휴가 일수 (반차의 경우 0.5일 값 받기때문에 String)
+	private double leaveTotalDate; // 휴가 일수
 	
 	@NotBlank(message="휴가 종류 선택은 필수입니다.")
 	private String leaveCategory; // 종류 L: 연차, AH:오전반차, PH:오후반차, FE: 경조사

@@ -78,4 +78,16 @@ public class ApprovalDao {
 		return sqlSession.selectOne("approvalMapper.selectAppAttachment", appNo);
 	}
 
+	public ApprovalMap selectApprovalRp(SqlSessionTemplate sqlSession, int appNo) {
+		return sqlSession.selectOne("approvalMapper.selectApprovalRp", appNo);
+	}
+
+	public ApprovalMap selectApprovalEr(SqlSessionTemplate sqlSession, int appNo) {
+		return sqlSession.selectOne("approvalMapper.selectApprovalEr", appNo);
+	}
+
+	public ArrayList<ApprovalErs> selectAppErs(SqlSessionTemplate sqlSession, int appNo) {
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectAppErs", appNo);
+	}
+
 }

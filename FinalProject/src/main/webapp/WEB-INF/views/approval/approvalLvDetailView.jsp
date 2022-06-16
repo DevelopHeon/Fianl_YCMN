@@ -119,9 +119,9 @@
 								</tr>
 							</tbody>
 						</table>
-							
 							<br>
 							<hr>
+							<br>
 							<table class="__se_tbl" style="width: 800px; margin-top : 0px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic,dotum,arial,tahoma;">
 							<tbody>
 								<tr>	

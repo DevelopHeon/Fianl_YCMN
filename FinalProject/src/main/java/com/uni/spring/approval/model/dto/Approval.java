@@ -21,6 +21,7 @@ import lombok.ToString;
 @ToString
 public class Approval {
 	
+	private int rownum; // 정렬된 글 번호
 	private int appNo; // 전자결재DB 고유번호
 	private String appWriterNo; // 기안자 성명 (or 사번)
 	

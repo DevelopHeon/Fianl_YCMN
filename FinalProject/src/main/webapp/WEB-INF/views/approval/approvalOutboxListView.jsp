@@ -44,7 +44,7 @@
 					<tbody id="listTable">
 						<c:forEach items="${ list }" var="app">
 							<tr>
-								<td>${ app.appNo }</td>
+								<td><input type="hidden" class="number" value="${ app.appNo }" />${ app.rownum }</td>
 								<td>${ app.appTitle }</td>
 								<c:choose>
 									<c:when test="${ app.appKinds eq 3 }">
@@ -148,7 +148,11 @@
 		$("#myAppList tbody tr").click(function(){
 			<%-- 현재 선택한 tr의 결재 양식 값 담기 양식마다 상세조회 페이지가 다르기때문에 --%>
 			var appKinds = $(this).children().eq(2).text();
-			var appNo = $(this).children().eq(0).text();
+			<%-- hidden으로 숨겨놓은 클릭한 문서의 고유 번호 --%>			
+			var thisRow = $(this).closest('tr');
+			var appNo = thisRow.find('td:eq(0)').find('input').val();
+			console.log(appNo);
+			
 			console.log(appNo);
 			if(appKinds == '지출결의서'){
 				appKinds = 2;
