@@ -18,6 +18,13 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		<result property="appStatus" column="APP_STATUS"/>
 		<result property="status" column="STATUS"/>
 	</resultMap>
+	<resultMap type="com.uni.spring.approval.model.dto.ApperAccount" id="apperAccountMap">
+		<id property="appNo" column="APP_NO"/>
+		<result property="erAccountHolder" column="ER_ACCOUNT_HOLDER"/>
+		<result property="bankName" column="BANK_NAME"/>
+		<result property="accountNumber" column="ACCOUNT_NUMBER"/>
+		<result property="erAmount" column="ER_AMOUNT"/>
+	</resultMap>
 	<resultMap id="approvalLvMap" type="com.uni.spring.approval.model.dto.ApprovalLeave">
 		<id property="appNo" column="APP_NO"/>
 		<result property="leaveStart" column="LEAVE_START"/>
@@ -26,6 +33,11 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		<result property="leaveTotalDate" column="LEAVE_TOTALDATE"/>
 		<result property="leaveCategory" column="LEAVE_CATEGORY"/>
 		<result property="category" column="CATEGORY"/>
+	</resultMap>
+	<resultMap id="approvalRpMap" type="com.uni.spring.approval.model.dto.ApprovalReport">
+		<id property="appNo" column="APP_NO"/>
+		<result property="reportContent" column="REPORT_CONTENT"/>
+		<result property="reportIssue" column="REPORT_ISSUE"/>
 	</resultMap>
 	<resultMap id="employeeMap" type="Employee">
 		<id property="empNo" column="EMP_NO"/>
@@ -38,9 +50,11 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		<result property="originName" column="ORIGIN_NAME"/>
 		<result property="changeName" column="CHANGE_NAME"/>
 	</resultMap>
-	<resultMap type="com.uni.spring.approval.model.dto.mapDto.ApprovalMap" id="approvalLvResultMap">
+	<resultMap type="com.uni.spring.approval.model.dto.mapDto.ApprovalMap" id="approvalResultMap">
 		<collection property="approval" resultMap="approvalMap" />
+		<collection property="apperAccount" resultMap="apperAccountMap" />
 		<collection property="approvalLeave" resultMap="approvalLvMap" />
+		<collection property="approvalReport" resultMap="approvalRpMap" />
 		<collection property="employee" resultMap="employeeMap" />
 		<collection property="attachment" resultMap="attachmentMap" />
 	</resultMap>
@@ -89,7 +103,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		AND APP_WRITER_NO = #{userNo}
 	</select>
 	<select id="selectMyApprovalList" parameterType="_int" resultType="Approval">
-	SELECT DISTINCT A.APP_NO, B.EMP_NAME APP_WRITER_NO, A.APP_TITLE,
+	SELECT ROWNUM, A.APP_NO, B.EMP_NAME APP_WRITER_NO, A.APP_TITLE,
         A.APP_CREATE_DATE, A.REJECTER, A.REJECT_REASON,
         A.FIRST_APPROVER, A.LAST_APPROVER,
         A.FIRST_APPROVAL_DATE, A.LAST_APPROVAL_DATE,
@@ -110,21 +124,44 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</if>
 	</select>
 	<select id="selectBoxList" parameterType="Approval" resultType="Approval">
-	SELECT DISTINCT A.APP_NO, B.EMP_NAME APP_WRITER_NO, A.APP_TITLE,
-    A.APP_CREATE_DATE, A.REJECTER, A.REJECT_REASON,
-    A.FIRST_APPROVER, A.LAST_APPROVER,
-    A.FIRST_APPROVAL_DATE, A.LAST_APPROVAL_DATE,
-    A.APP_KINDS, A.APP_STATUS
-	FROM APPROVAL A
-    JOIN EMPLOYEE B ON (A.APP_WRITER_NO = B.EMP_NO)
-	WHERE A.STATUS = 'Y'
-	AND A.APP_WRITER_NO = #{appWriterNo}
-	<if test='appStatus.equals("I") or appStatus.equals("W") or appStatus.equals("C")'>
-		AND	A.APP_STATUS = #{appStatus}
-	</if>
+		SELECT ROWNUM, A.APP_NO, B.EMP_NAME APP_WRITER_NO, A.APP_TITLE,
+		    A.APP_CREATE_DATE, A.REJECTER, A.REJECT_REASON,
+		    A.FIRST_APPROVER, A.LAST_APPROVER,
+		    A.FIRST_APPROVAL_DATE, A.LAST_APPROVAL_DATE,
+		    A.APP_KINDS, A.APP_STATUS
+		FROM APPROVAL A
+	    	JOIN EMPLOYEE B ON (A.APP_WRITER_NO = B.EMP_NO)
+		WHERE A.STATUS = 'Y'
+			AND A.APP_WRITER_NO = #{appWriterNo}
+		<if test='appStatus.equals("I") or appStatus.equals("W") or appStatus.equals("C")'>
+			AND	A.APP_STATUS = #{appStatus}
+		</if>
 	ORDER BY APP_NO DESC
 	</select>
-	<select id="selectApprovalLv" parameterType="_int" resultMap="approvalLvResultMap">
+	<select id="selectApprovalEr" parameterType="_int" resultMap="approvalResultMap">
+       SELECT DISTINCT B.EMP_NO, A.APP_NO, B.EMP_NAME APP_WRITER_NO, D.DEP_NAME, E.POS_NAME,
+	        A.APP_CREATE_DATE, F.EMP_NAME FIRST_APPROVER, G.EMP_NAME LAST_APPROVER, A.APP_STATUS,
+	        A.FIRST_APPROVAL_DATE, A.LAST_APPROVAL_DATE,
+	        A.REJECTER, A.REJECT_REASON, C.ER_ACCOUNT_HOLDER, C.BANK_NAME,
+            C.ACCOUNT_NUMBER, C.ER_AMOUNT, A.APP_TITLE
+	   FROM APPROVAL A
+	        JOIN EMPLOYEE B ON (A.APP_WRITER_NO = B.EMP_NO)
+	        JOIN APPER_ACCOUNT C ON (A.APP_NO = C.APP_NO)
+	        JOIN DEPARTMENT D ON (B.DEP_NO = D.DEP_NO)
+	        JOIN JOB_POSITION E ON (B.POS_NO = E.POS_NO),
+	        (SELECT A.EMP_NAME, B.FIRST_APPROVER FROM EMPLOYEE A JOIN APPROVAL B ON A.EMP_NO = B.FIRST_APPROVER) F,
+	        (SELECT A.EMP_NAME, B.LAST_APPROVER FROM EMPLOYEE A JOIN APPROVAL B ON A.EMP_NO = B.LAST_APPROVER) G
+	   WHERE A.STATUS = 'Y'
+		   AND A.APP_NO = #{appNo}
+		   AND A.FIRST_APPROVER = F.FIRST_APPROVER
+		   AND A.LAST_APPROVER = G.LAST_APPROVER
+	</select>
+	<select id="selectAppErs" parameterType="_int" resultType="com.uni.spring.approval.model.dto.ApprovalErs">
+		SELECT *
+		FROM APP_ER
+		WHERE APP_NO = #{appNo}
+	</select>
+	<select id="selectApprovalLv" parameterType="_int" resultMap="approvalResultMap">
 	   SELECT DISTINCT B.EMP_NO, A.APP_NO, B.EMP_NAME APP_WRITER_NO, D.DEP_NAME, E.POS_NAME,
 	        A.APP_CREATE_DATE, F.EMP_NAME FIRST_APPROVER, G.EMP_NAME LAST_APPROVER, A.APP_STATUS,
 	        A.FIRST_APPROVAL_DATE, A.LAST_APPROVAL_DATE,
@@ -133,6 +170,23 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	   FROM APPROVAL A
 	        JOIN EMPLOYEE B ON (A.APP_WRITER_NO = B.EMP_NO)
 	        JOIN APP_LEAVE C ON (A.APP_NO = C.APP_NO)
+	        JOIN DEPARTMENT D ON (B.DEP_NO = D.DEP_NO)
+	        JOIN JOB_POSITION E ON (B.POS_NO = E.POS_NO),
+	        (SELECT A.EMP_NAME, B.FIRST_APPROVER FROM EMPLOYEE A JOIN APPROVAL B ON A.EMP_NO = B.FIRST_APPROVER) F,
+	        (SELECT A.EMP_NAME, B.LAST_APPROVER FROM EMPLOYEE A JOIN APPROVAL B ON A.EMP_NO = B.LAST_APPROVER) G
+	   WHERE A.STATUS = 'Y'
+		   AND A.APP_NO = #{appNo}
+		   AND A.FIRST_APPROVER = F.FIRST_APPROVER
+		   AND A.LAST_APPROVER = G.LAST_APPROVER
+	</select>
+	<select id="selectApprovalRp" parameterType="_int" resultMap="approvalResultMap">
+       SELECT DISTINCT B.EMP_NO, A.APP_NO, B.EMP_NAME APP_WRITER_NO, D.DEP_NAME, E.POS_NAME,
+	        A.APP_CREATE_DATE, F.EMP_NAME FIRST_APPROVER, G.EMP_NAME LAST_APPROVER, A.APP_STATUS,
+	        A.FIRST_APPROVAL_DATE, A.LAST_APPROVAL_DATE,
+	        A.REJECTER, A.REJECT_REASON, C.REPORT_CONTENT, C.REPORT_ISSUE, A.APP_TITLE
+	   FROM APPROVAL A
+	        JOIN EMPLOYEE B ON (A.APP_WRITER_NO = B.EMP_NO)
+	        JOIN APP_REPORT C ON (A.APP_NO = C.APP_NO)
 	        JOIN DEPARTMENT D ON (B.DEP_NO = D.DEP_NO)
 	        JOIN JOB_POSITION E ON (B.POS_NO = E.POS_NO),
 	        (SELECT A.EMP_NAME, B.FIRST_APPROVER FROM EMPLOYEE A JOIN APPROVAL B ON A.EMP_NO = B.FIRST_APPROVER) F,

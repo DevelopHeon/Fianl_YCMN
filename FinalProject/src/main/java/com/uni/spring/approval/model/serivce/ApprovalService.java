@@ -29,8 +29,11 @@ public interface ApprovalService {
 
 	ArrayList<Approval> selectBoxList(Approval approval, PageInfo pi);
 
-	ApprovalMap selectApprovalLv(int appNo);
+	ApprovalMap selectApproval(int appNo, String appKinds);
 
 	Attachment selectAppAttachment(int appNo);
+
+	ArrayList<ApprovalErs> selectAppErs(int appNo);
+
 
 }
