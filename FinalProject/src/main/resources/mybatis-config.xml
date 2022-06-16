@@ -16,12 +16,9 @@
 		<typeAlias type="com.uni.spring.schedule.model.dto.Schedule" alias="Schedule"/>
 		<typeAlias type="com.uni.spring.schedule.model.dto.ScheduleDTO" alias="ScheduleDTO"/>
 		<typeAlias type="com.uni.spring.employee.model.dto.TimeOff" alias="TimeOff"/>
-<<<<<<< HEAD
 		<typeAlias type="com.uni.spring.employee.model.dto.TimeOffContent" alias="TimeOffContent"/>
-=======
 		<typeAlias type="com.uni.spring.hr.model.dto.Hr" alias="Hr"/>
 		<typeAlias type="com.uni.spring.employee.model.dto.Department" alias="Department"/>
->>>>>>> refs/heads/master
 	</typeAliases>
 	<mappers>
 		<mapper resource="/mappers/employee-mapper.xml"/>
