@@ -101,7 +101,7 @@
 									<h3 style="color:red;"><form:errors path="firstApprover" /></h3>
 									<h3 style="color:red;"><form:errors path="lastApprover" /></h3>
 								</div>
-								<b>* 보고서 서류 첨부 (첨부할 파일이 있는경우에만 추가)</b><br>
+								<b>* 보고서 서류 첨부 (첨부할 파일이 있는경우에만 추가)</b><br><br>
 								<input type="file" id="uploadFile" name="uploadFile" class="form-control" style="width:50%; height:3%;">
 							</div>
 							<div class="btns" align="center" style="margin-top:5%;">

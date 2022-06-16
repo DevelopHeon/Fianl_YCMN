@@ -18,10 +18,11 @@
 					<h3 style="margin-top:8%;">결재 상신함</h3>
 					<hr>
 					<c:if test="${ empty list }">
-						<h4>작성한 결재문서가 없습니다.</h4>
+						<h4>조회된 결재문서가 없습니다.</h4>
 					</c:if>
 					<select id="appStatusBox" onchange="changeKinds()" class="form-control" style="width:10%; float:right; margin-bottom:2%;">
-						<option>전체</option>
+						<option>선택</option>
+						<option value="A">전체</option>
 						<option value="W">결재 대기</option>
 						<option value="I">결재중</option>
 						<option value="C">결재 완료</option>
@@ -46,10 +47,10 @@
 								<td>${ app.appNo }</td>
 								<td>${ app.appTitle }</td>
 								<c:choose>
-									<c:when test="${ app.appKinds eq 2 }">
+									<c:when test="${ app.appKinds eq 3 }">
 										<td>휴가신청서</td>
 									</c:when>
-									<c:when test="${ app.appKinds eq 3 }">
+									<c:when test="${ app.appKinds eq 2 }">
 										<td>지출결의서</td>
 									</c:when>
 									<c:otherwise>

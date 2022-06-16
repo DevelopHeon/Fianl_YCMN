@@ -90,6 +90,7 @@
 								</div>
 								<br>
 							<hr>
+							<p style="color:red;">* 반차의 경우 기간 및 일시는 같은 날로 체크하세요.</p>
 							<span style="font-size:1.5rem;">휴가 종류 :</span>
 							<form:select path="approvalLeave.leaveCategory" name="approvalLeave.leaveCategory" class="form-control" style="margin-left:2.8%;" required="required">
 								<option value="L">연차</option>
@@ -119,7 +120,7 @@
 							<h3 style="color:red;"><form:errors path="lastApprover" /></h3>
 						</div>
 						<div class="addFile" style="margin-top:2%;">
-							<b>서류 첨부 (선택)</b><br>
+							<b>서류 첨부 (선택)</b><br><br>
 							<input type="file" id="uploadFile" name="uploadFile" class="form-control" style="width:50%; height:3%;">
 						</div>
 						<div class="btns" align="center" style="margin-top:5%;">

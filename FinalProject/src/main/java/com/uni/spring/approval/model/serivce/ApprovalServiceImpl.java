@@ -6,11 +6,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import com.uni.spring.approval.model.dao.ApprovalDao;
-import com.uni.spring.approval.model.dto.ApperAccount;
 import com.uni.spring.approval.model.dto.Approval;
 import com.uni.spring.approval.model.dto.ApprovalErs;
 import com.uni.spring.approval.model.dto.ApprovalLeave;
 import com.uni.spring.approval.model.dto.ApprovalReport;
+import com.uni.spring.approval.model.dto.mapDto.ApprovalMap;
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.common.dto.PageInfo;
@@ -53,11 +53,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 
 		int result1 = 1;
 		
+		int result2 = approvalDao.insertApproval(sqlSession, approval);
+		int result3 = approvalDao.insertLeaveApproval(sqlSession, approvalLeave);
+		// 시퀀스의 currval을 사용하기 위해서는 첨부파일 마지막에 수행되도록 위치 설정
 		if(attachment != null) {
 			result1 = approvalDao.insertAttachment(sqlSession, attachment);
 		}
-		int result2 = approvalDao.insertApproval(sqlSession, approval);
-		int result3 = approvalDao.insertLeaveApproval(sqlSession, approvalLeave);
 		
 		
 		if(result1 * result2 * result3 < 0) {
@@ -70,11 +71,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 		
 		int result1 = 1;
 		
+		int result2 = approvalDao.insertApproval(sqlSession, approval);
+		int result3 = approvalDao.insertReportApproval(sqlSession, approvalReport);
+		
 		if(attachment != null) {
 			result1 = approvalDao.insertAttachment(sqlSession, attachment);
 		}
-		int result2 = approvalDao.insertApproval(sqlSession, approval);
-		int result3 = approvalDao.insertReportApproval(sqlSession, approvalReport);
 		
 		if(result1 * result2 * result3 < 0) {
 			throw new CommException("업무 보고서 등록 실패");
@@ -103,5 +105,15 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public ArrayList<Approval> selectBoxList(Approval approval, PageInfo pi) {
 		return approvalDao.selectBoxList(sqlSession, approval, pi);
+	}
+
+	@Override
+	public ApprovalMap selectApprovalLv(int appNo) {
+		return approvalDao.selectApprovalLv(sqlSession, appNo);
+	}
+
+	@Override
+	public Attachment selectAppAttachment(int appNo) {
+		return approvalDao.selectAppAttachment(sqlSession, appNo);
 	}
 }

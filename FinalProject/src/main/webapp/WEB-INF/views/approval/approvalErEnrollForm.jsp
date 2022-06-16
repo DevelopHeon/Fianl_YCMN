@@ -162,8 +162,8 @@
 									</table>
 									<button type="button" id="rowAddBtn" class="btn btn-primary">추가</button>
 									<div class="addFile" style="margin-top:2%;">
-										<b>* 증빙서류 첨부</b><br>
-										<input type="file" id="uploadFile" name="uploadFile" class="form-control" style="width:50%; height:3%;" required>
+										<b>* 증빙 서류 첨부</b><br><br>
+										<input type="file" id="uploadFile" name="uploadFile" class="form-control" style="width:50%; height:3%;">
 									</div>
 								</div>
 							</div>
