@@ -18,8 +18,8 @@ public class TimeOffContent {
 	private Date today;
 	private String timeoffType;
 	private String timeoffContent;
-	private int totalNum;
-	private int useNum;
-	private int remainNum;
+	private double totalNum;
+	private double useNum;
+	private double remainNum;
 	private String appStatus;
 }
