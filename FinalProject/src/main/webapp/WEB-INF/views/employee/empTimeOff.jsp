@@ -60,20 +60,27 @@
 		   	<c:if test="${ !empty timeOffList }">
 		   	<c:forEach items="${timeOffList }" var="list">
 		   		<tr>
+		   			<!-- 상신일 -->
 		   			<td>${list.today }</td>
+		   			<!-- 연차종류 -->
 		   			<c:if test="${ list.timeoffType eq 'L' }">
 		   			<td>연차</td>
 		   			</c:if>
-				   	<c:if test="${ list.timeoffType eq 'H' }">
-		   			<td>반차</td>
+				   	<c:if test="${ list.timeoffType eq 'AH' }">
+		   			<td>오전반차</td>
+		   			</c:if>
+		   			<c:if test="${ list.timeoffType eq 'PH' }">
+		   			<td>오후반차</td>
 		   			</c:if>
 		   			<c:if test="${ empty list.timeoffType }">
 		   			<td>미승인</td>
 		   			</c:if>
+		   			<!-- 연차사유 -->
 		   			<td>${list.timeoffContent }</td>
-		   			<td>${list.totalNum }</td>
-		   			<td>${list.useNum }</td>
-		   			<td>${list.remainNum }</td>
+		   			<td>${list.totalNum }일</td>
+		   			<td>${list.useNum }일</td>
+		   			<td>${list.remainNum }일</td>
+		   			<!-- 연차승인여부 -->
 		   			<c:if test="${ list.appStatus eq 'W' }">
 		   			<td>미승인</td>
 		   			</c:if>

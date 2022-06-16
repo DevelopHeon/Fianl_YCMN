@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class TimeOff {
 	private int empNo; //사원번호
-	private int totalNum; //총 연차개수
-	private int useNum; //사용개수
-	private int remainNum; //남은개수
+	private double totalNum; //총 연차개수
+	private double useNum; //사용개수
+	private double remainNum; //남은개수
 }
