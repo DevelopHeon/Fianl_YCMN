@@ -11,6 +11,7 @@ import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.employee.model.dao.EmployeeDao;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.TimeOff;
+import com.uni.spring.employee.model.dto.TimeOffContent;
 import com.uni.spring.employee.model.dto.WorkingDay;
 
 import lombok.RequiredArgsConstructor;
@@ -187,6 +188,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public TimeOff selectTimeOff(int empNo) {
 		
 		return employeeDao.selectTimeOff(sqlSession, empNo);
+	}
+
+	@Override
+	public  ArrayList<TimeOffContent> updateTimeOffContent(int empNo) {
+		
+		//update해줌 -> 승인되었을때 (결재완료:C) 연차내역테이블 업데이트
+		employeeDao.updateTimeOffContent(sqlSession);
+
+		return employeeDao.selectTimeOffContent(sqlSession, empNo);
 	}
 
 

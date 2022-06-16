@@ -9,6 +9,7 @@ import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.TimeOff;
+import com.uni.spring.employee.model.dto.TimeOffContent;
 import com.uni.spring.employee.model.dto.WorkingDay;
 
 @Repository
@@ -86,9 +87,17 @@ public class EmployeeDao {
 	public ArrayList<Employee> selectSearchEmp(SqlSessionTemplate sqlSession, String empName) {
 		return (ArrayList)sqlSession.selectList("employeeMapper.selectSearchEmp", empName);
 	}
-
+	//연차개수조회
 	public TimeOff selectTimeOff(SqlSessionTemplate sqlSession, int empNo) {
 		return sqlSession.selectOne("employeeMapper.selectTimeOff", empNo);
+	}
+	//연차내역 업데이트
+	public int updateTimeOffContent(SqlSessionTemplate sqlSession) {
+		return sqlSession.update("employeeMapper.updateTimeOffContent");
+	}
+	//연차내역조회
+	public ArrayList<TimeOffContent> selectTimeOffContent(SqlSessionTemplate sqlSession, int empNo) {
+		return (ArrayList)sqlSession.selectList("employeeMapper.selectTimeOffContent", empNo);
 	}
 
 
