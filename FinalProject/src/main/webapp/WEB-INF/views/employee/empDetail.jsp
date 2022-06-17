@@ -49,7 +49,7 @@
                 </c:if>
              <!-- 프로필 사진 -->
               <!-- /col-md-4 -->
-               <table class="detail">
+               <table class="table table-inbox">
 				<tr>
 					<td>${ detailEmp.empName }</td>
 					<td>${ detailEmp.empOnoff }</td>

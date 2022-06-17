@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.dto.Attachment;
+import com.uni.spring.common.dto.PageInfo;
 import com.uni.spring.employee.model.dao.EmployeeDao;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.TimeOff;
@@ -70,19 +71,24 @@ public class EmployeeServiceImpl implements EmployeeService {
 	//근태정보
 	@Override
 	public ArrayList<WorkingDay> selectWorkingInfo(int empNo) {
+		
 
+		
 		return employeeDao.selectWorkingInfo(sqlSession, empNo);
 	}
 	
 	//근태-출근체크
 	@Override
-	public WorkingDay insertStart(WorkingDay w) {
+	public WorkingDay insertStart(WorkingDay w, int empNo) {
 		
 		int result = employeeDao.insertStart(sqlSession, w);
 		
 		//출근 체킹 완
 		if(result > 0) {
-			int thisWeek = employeeDao.updateThisWeek(sqlSession, w);
+			//오늘은 이달의 몇주차?
+			employeeDao.updateThisWeek(sqlSession, w);
+			//근무상태(정상,지각)
+			employeeDao.updateWorkStatus(sqlSession, empNo);
 			return w;
 		} else {
 			throw new CommException("출근 등록 실패");
@@ -186,13 +192,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	//내 연차 조회
 	@Override
 	public TimeOff selectTimeOff(int empNo) {
-		//employeeDao.updateTimeOffNum(sqlSession, empNo);
 		
 		return employeeDao.selectTimeOff(sqlSession, empNo);
 	}
 
 	@Override
-	public  ArrayList<TimeOffContent> updateTimeOffContent(int empNo) {
+	public  ArrayList<TimeOffContent> selectTimeOffContent(int empNo, PageInfo pi) {
 		
 		//update해줌 -> 승인되었을때 (결재완료:C) 연차내역테이블 업데이트
 		int result = employeeDao.updateTimeOffContent(sqlSession);
@@ -204,7 +209,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 			
 		}
 
-		return employeeDao.selectTimeOffContent(sqlSession, empNo);
+		return employeeDao.selectTimeOffContent(sqlSession, empNo, pi);
+	}
+
+	//현재 연차 페이지 수?
+	@Override
+	public int selectListCount(int empNo) {
+		return employeeDao.selectListCount(sqlSession, empNo);
 	}
 
 

@@ -27,6 +27,10 @@
 	.address{
 		margin-left:30px;
 	}
+	.updown{
+		display:none;
+	}
+	.on { visibility: visible; }
 </style>
 </head>
 
@@ -51,10 +55,10 @@
                       
                 </form>
               <br><br><br><br><br>
-              <h4><i class="fa fa-angle-right"></i>개발</h4>
+              <h4 class="depName1"><i class="fa fa-angle-right"></i>개발</h4>
               <hr>
-              	<div class="table-inbox-wrap ">
-                <table class="address table table-border table-hover">
+              	<div class="updown table-inbox-wrap1">
+                <table class="address table table-border table-hover centered">
                 <thead>
                   <tr>
                   	<th style="display:none"></th>
@@ -77,10 +81,10 @@
               </c:forEach>
               </table>
               </div>
-              <h4><i class="fa fa-angle-right"></i>총무</h4>
+              <h4 class="depName2"><i class="fa fa-angle-right"></i>총무</h4>
               <hr>
-              	<div class="table-inbox-wrap ">
-                <table class="address table table-border table-hover">
+              	<div class="updown table-inbox-wrap2">
+                <table class="address table table-border table-hover centered">
                 <thead>
                   <tr>
                   	<th style="display:none"></th>
@@ -104,10 +108,10 @@
               </table>
               </div>
               
-              <h4><i class="fa fa-angle-right"></i>인사</h4>
+              <h4 class="depName3"><i class="fa fa-angle-right"></i>인사</h4>
               <hr>
-              	<div class="table-inbox-wrap ">
-                <table class="address table table-border table-hover">
+              	<div class="updown table-inbox-wrap3">
+                <table class="address table table-border table-hover centered">
                 <thead>
                   <tr>
                   	<th style="display:none"></th>
@@ -131,10 +135,10 @@
               </table>
               </div>
 
-              <h4><i class="fa fa-angle-right"></i>연수중</h4>
+              <h4 class="depName4"><i class="fa fa-angle-right"></i>연수중</h4>
               <hr>
-              	<div class="table-inbox-wrap ">
-                <table class="address table table-border table-hover">
+              	<div class="updown table-inbox-wrap4">
+                <table class="address table table-border table-hover centered">
                 <thead>
                   <tr>
                   	<th style="display:none"></th>
@@ -176,6 +180,44 @@
     			console.log(eno); //http://localhost:8099/spring/
     			window.open("http://localhost:8099/spring/detailEmp.do?eno="+eno, "사원 정보", "width=550, height=300")
     		})
+    		
+    		
+    		$(".depName1").on("click",function(){
+    			var obj = $(".table-inbox-wrap1");
+
+				if(obj.hasClass("on")){
+					obj.removeClass("on").slideUp();
+       			  }else{
+       				obj.addClass("on").slideDown();
+       			  }
+    			});
+    		$(".depName2").on("click",function(){
+    			var obj = $(".table-inbox-wrap2");
+
+				if(obj.hasClass("on")){
+					obj.removeClass("on").slideUp();
+       			  }else{
+       				obj.addClass("on").slideDown();
+       			  }
+    			});
+    		$(".depName3").on("click",function(){
+    			var obj = $(".table-inbox-wrap3");
+
+				if(obj.hasClass("on")){
+					obj.removeClass("on").slideUp();
+       			  }else{
+       				obj.addClass("on").slideDown();
+       			  }
+    			});
+    		$(".depName4").on("click",function(){
+    			var obj = $(".table-inbox-wrap4");
+
+				if(obj.hasClass("on")){
+					obj.removeClass("on").slideUp();
+       			  }else{
+       				obj.addClass("on").slideDown();
+       			  }
+    			});
     	})
     
     </script>
