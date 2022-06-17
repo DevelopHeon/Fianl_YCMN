@@ -90,4 +90,24 @@ public class ApprovalDao {
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectAppErs", appNo);
 	}
 
+	public int selectApprovalInboxListCnt(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("approvalMapper.selectApprovalInboxListCnt", userNo);
+	}
+
+	public ArrayList<Approval> selectApprovalInboxList(SqlSessionTemplate sqlSession, PageInfo pi, int userNo) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectApprovalInboxList", userNo, rowBounds);
+	}
+
+	public void updateFirstApprove(SqlSessionTemplate sqlSession, int appNo) {
+		sqlSession.update("approvalMapper.updateFirstApprove", appNo);
+		
+	}
+
+	public void updateLastApprove(SqlSessionTemplate sqlSession, int appNo) {
+		sqlSession.update("approvalMapper.updateLastApprove", appNo);
+		
+	}
 }

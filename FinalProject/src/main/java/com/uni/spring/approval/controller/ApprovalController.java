@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.GsonBuilder;
 import com.uni.spring.approval.model.dto.Approval;
@@ -94,7 +95,7 @@ public class ApprovalController {
 		}
 		approvalService.insertErApproval(approval, appers, attachment);
 		session.setAttribute("msg", "지출결의서 작성 완료.");
-		return "redirect:approvalList.do";
+		return "redirect:listOutbox.do?userNo="+approval.getAppWriterNo();
 	}
 	
 	// 휴가 신청서는 첨부파일 선택 required=false 조건 걸어준다.
@@ -120,7 +121,7 @@ public class ApprovalController {
 		approvalService.insertLeaveApproval(approval, approvalLeave, attachment);
 		
 		session.setAttribute("msg", "휴가신청서 작성 완료");
-		return "redirect:approvalList.do";
+		return "redirect:listOutbox.do?userNo="+approval.getAppWriterNo();
 	}
 	
 	@RequestMapping("insertReportApproval.do")
@@ -144,7 +145,7 @@ public class ApprovalController {
 		approvalService.insertReportApproval(approval, approvalReport, attachment);
 		session.setAttribute("msg", "업무 보고서 작성 완료");
 		
-		return "redirect:approvalList.do";
+		return "redirect:listOutbox.do?userNo="+approval.getAppWriterNo();
 	}
 
 	// 파일 저장시 사용하는 메소드
@@ -201,6 +202,22 @@ public class ApprovalController {
 		model.addAttribute("pi", pi);
 		
 		return "approval/approvalOutboxListView";
+	}
+	
+	// 결재 수신함 목록 화면 전환 (승인해주어야하는 문서 목록)
+	@RequestMapping("listInbox.do")
+	public String selectApprovalInboxList(@RequestParam(value="currentPage", required=false, defaultValue="1")
+	int currentPage, int userNo, Model model) {
+		
+		int listCount = approvalService.selectApprovalInboxListCnt(userNo);
+		System.out.println("게시글 수 : " + listCount);
+		PageInfo pi = getPage(listCount, currentPage);
+		
+		ArrayList<Approval> list = approvalService.selectApprovalInboxList(pi, userNo); 
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		return "approval/approvalInboxListView";
 	}
 	
 	// 공통으로 사용할 페이징 메소드
@@ -261,5 +278,24 @@ public class ApprovalController {
 		model.addAttribute("appMap", appMap); 
 		
 		return "approval"+viewName;
+	}
+	
+	@RequestMapping("approve.do")
+	public ModelAndView updateFirstApprove(Approval approval,
+			@RequestParam("approverConfirm") String appCf, ModelAndView mv) {
+		
+		System.out.println(approval.toString());
+		System.out.println("종류: " + approval.getAppKinds());
+		int appNo = approval.getAppNo();
+		
+		if(approval.getFirstApprover().equals(appCf)) {
+			approvalService.updateFirstApprove(appNo);
+		}else {
+			approvalService.updateLastApprove(appNo);
+		}
+		
+		mv.addObject("appNo", approval.getAppNo()).addObject("appKinds", approval.getAppKinds()).
+		setViewName("redirect:detailApproval.do");
+		return mv;
 	}
 }

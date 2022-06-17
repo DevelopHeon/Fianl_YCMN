@@ -133,4 +133,27 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return approvalDao.selectAppErs(sqlSession, appNo);
 	}
 
+	// 결재 수신 문서 개수 조회
+	@Override
+	public int selectApprovalInboxListCnt(int userNo) {
+		return approvalDao.selectApprovalInboxListCnt(sqlSession, userNo);
+	}
+
+	@Override
+	public ArrayList<Approval> selectApprovalInboxList(PageInfo pi, int userNo) {
+		return approvalDao.selectApprovalInboxList(sqlSession, pi, userNo);
+	}
+
+	@Override
+	public void updateFirstApprove(int appNo) {
+		approvalDao.updateFirstApprove(sqlSession, appNo);
+		
+	}
+
+	@Override
+	public void updateLastApprove(int appNo) {
+		approvalDao.updateLastApprove(sqlSession, appNo);
+		
+	}
+
 }

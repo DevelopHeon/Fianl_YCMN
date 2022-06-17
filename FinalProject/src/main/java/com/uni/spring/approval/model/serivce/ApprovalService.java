@@ -35,5 +35,13 @@ public interface ApprovalService {
 
 	ArrayList<ApprovalErs> selectAppErs(int appNo);
 
+	int selectApprovalInboxListCnt(int userNo);
+
+	ArrayList<Approval> selectApprovalInboxList(PageInfo pi, int userNo);
+
+	void updateFirstApprove(int appNo);
+
+	void updateLastApprove(int appNo);
+
 
 }

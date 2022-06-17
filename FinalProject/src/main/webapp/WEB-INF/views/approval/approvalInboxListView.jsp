@@ -12,7 +12,7 @@
 	<section id="main-content">
 			<section class="wrapper">
 				<div class="container" id="main-container">
-					<h3 style="margin-top:8%;">결재 상신함</h3>
+					<h3 style="margin-top:8%;">결재 수신함</h3>
 					<hr>
 					<c:if test="${ empty list }">
 						<h4>조회된 결재문서가 없습니다.</h4>
@@ -36,6 +36,7 @@
 								<th>1차 승인일</th>
 								<th>2차 승인일</th>
 								<th>결재 상태</th>
+								<th style="width:5%;">차례</th>
 							</tr>
 						</thead>
 					<tbody id="listTable">
@@ -88,6 +89,20 @@
 									</c:otherwise>
 								</c:choose>
 								</td>
+								<%-- 승인차례일 경우 알려주기 위한 td --%>
+								<td>
+									<c:choose>
+										<c:when test='${ empty app.firstApprovalDate and app.firstApprover == loginUser.empNo }'>
+											<i class="bi bi-star-fill" style="color:#ffd400;"></i>
+										</c:when>
+										<c:when test='${ empty app.lastApprovalDate and !empty app.firstApprovalDate and app.lastApprover == loginUser.empNo }'>
+											<i class="bi bi-star-fill" style="color:#ffd400;"></i>
+										</c:when>
+										<c:otherwise>
+											
+										</c:otherwise>
+									</c:choose>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -98,7 +113,7 @@
 					<ul class="pagination justify-content-center">
 						<c:choose>
 							<c:when test="${ pi.currentPage ne 1 }">
-								<li class="page-item"><a class="page-link" href="listOutbox.do?currentPage=${ pi.currentPage-1 }&userNo=${ loginUser.empNo }">Previous</a></li>
+								<li class="page-item"><a class="page-link" href="listInbox.do?currentPage=${ pi.currentPage-1 }&userNo=${ loginUser.empNo }">Previous</a></li>
 							</c:when>
 							<c:otherwise>
 								<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
@@ -108,7 +123,7 @@
 						<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
 							<c:choose>
 								<c:when test="${ pi.currentPage ne p }">
-									<li class="page-item"><a class="page-link" href="listOutbox.do?currentPage=${ p }&userNo=${ loginUser.empNo }">${ p }</a></li>
+									<li class="page-item"><a class="page-link" href="listInbox.do?currentPage=${ p }&userNo=${ loginUser.empNo }">${ p }</a></li>
 								</c:when>
 								<c:otherwise>
 									<li class="page-item disabled"><a class="page-link" href="">${ p }</a></li>
@@ -117,8 +132,8 @@
 						</c:forEach>
 						
 						<c:choose>
-							<c:when test="${ pi.currentPage ne pi.maxPage }">
-								<li class="page-item"><a class="page-link" href="listOutbox.do?currentPage=${ pi.currentPage+1 }&userNo=${ loginUser.empNo }">Next</a></li>
+							<c:when test='${ pi.currentPage ne pi.maxPage}'>
+								<li class="page-item"><a class="page-link" href="listInbox.do?currentPage=${ pi.currentPage+1 }&userNo=${ loginUser.empNo }">Next</a></li>
 							</c:when>
 							<c:otherwise>
 								<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
