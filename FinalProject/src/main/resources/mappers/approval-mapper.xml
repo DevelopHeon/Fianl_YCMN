@@ -138,10 +138,33 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		</if>
 	ORDER BY APP_NO DESC
 	</select>
+	
+	<select id="selectApprovalInboxListCnt" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM APPROVAL A
+		     JOIN EMPLOYEE B ON (A.APP_WRITER_NO = B.EMP_NO)
+		WHERE A.STATUS = 'Y'
+		AND (A.FIRST_APPROVER = #{userNo} OR A.LAST_APPROVER = #{userNo})
+		<![CDATA[AND A.APP_STATUS <> 'R']]>
+	</select>
+	<select id="selectApprovalInboxList" parameterType="_int" resultType="Approval">
+		SELECT ROWNUM, A.APP_NO, B.EMP_NAME APP_WRITER_NO, A.APP_TITLE,
+		    A.APP_CREATE_DATE, A.REJECTER, A.REJECT_REASON,
+		    A.FIRST_APPROVER, A.LAST_APPROVER,
+		    A.FIRST_APPROVAL_DATE, A.LAST_APPROVAL_DATE,
+		    A.APP_KINDS, A.APP_STATUS
+		FROM APPROVAL A
+		     JOIN EMPLOYEE B ON (A.APP_WRITER_NO = B.EMP_NO)
+		WHERE A.STATUS = 'Y'
+			AND (A.FIRST_APPROVER = #{userNo} OR A.LAST_APPROVER = #{userNo})
+		<![CDATA[AND A.APP_STATUS <> 'R']]>
+			ORDER BY APP_NO DESC
+	</select>
+	
 	<select id="selectApprovalEr" parameterType="_int" resultMap="approvalResultMap">
        SELECT DISTINCT B.EMP_NO, A.APP_NO, B.EMP_NAME APP_WRITER_NO, D.DEP_NAME, E.POS_NAME,
 	        A.APP_CREATE_DATE, F.EMP_NAME FIRST_APPROVER, G.EMP_NAME LAST_APPROVER, A.APP_STATUS,
-	        A.FIRST_APPROVAL_DATE, A.LAST_APPROVAL_DATE,
+	        A.FIRST_APPROVAL_DATE, A.LAST_APPROVAL_DATE, A.APP_KINDS,
 	        A.REJECTER, A.REJECT_REASON, C.ER_ACCOUNT_HOLDER, C.BANK_NAME,
             C.ACCOUNT_NUMBER, C.ER_AMOUNT, A.APP_TITLE
 	   FROM APPROVAL A
@@ -164,7 +187,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<select id="selectApprovalLv" parameterType="_int" resultMap="approvalResultMap">
 	   SELECT DISTINCT B.EMP_NO, A.APP_NO, B.EMP_NAME APP_WRITER_NO, D.DEP_NAME, E.POS_NAME,
 	        A.APP_CREATE_DATE, F.EMP_NAME FIRST_APPROVER, G.EMP_NAME LAST_APPROVER, A.APP_STATUS,
-	        A.FIRST_APPROVAL_DATE, A.LAST_APPROVAL_DATE,
+	        A.FIRST_APPROVAL_DATE, A.LAST_APPROVAL_DATE, A.APP_KINDS,
 	        A.REJECTER, A.REJECT_REASON, C.LEAVE_START, C.LEAVE_FINISH, 
 	        A.APP_TITLE, C.LEAVE_CATEGORY, C.LEAVE_TOTALDATE, C.LEAVE_REASON
 	   FROM APPROVAL A
@@ -182,7 +205,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<select id="selectApprovalRp" parameterType="_int" resultMap="approvalResultMap">
        SELECT DISTINCT B.EMP_NO, A.APP_NO, B.EMP_NAME APP_WRITER_NO, D.DEP_NAME, E.POS_NAME,
 	        A.APP_CREATE_DATE, F.EMP_NAME FIRST_APPROVER, G.EMP_NAME LAST_APPROVER, A.APP_STATUS,
-	        A.FIRST_APPROVAL_DATE, A.LAST_APPROVAL_DATE,
+	        A.FIRST_APPROVAL_DATE, A.LAST_APPROVAL_DATE, A.APP_KINDS,
 	        A.REJECTER, A.REJECT_REASON, C.REPORT_CONTENT, C.REPORT_ISSUE, A.APP_TITLE
 	   FROM APPROVAL A
 	        JOIN EMPLOYEE B ON (A.APP_WRITER_NO = B.EMP_NO)
@@ -202,4 +225,16 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		WHERE A.REF_NO = #{appNo}
 		AND A.CATEGORY = 2
 	</select>
+	<update id="updateFirstApprove" parameterType="_int">
+		UPDATE APPROVAL
+		SET FIRST_APPROVAL_DATE = SYSDATE,
+			APP_STATUS = 'I'
+		WHERE APP_NO = #{appNo}
+	</update>
+	<update id="updateLastApprove" parameterType="_int">
+		UPDATE APPROVAL
+		SET LAST_APPROVAL_DATE = SYSDATE,
+			APP_STATUS = 'C'
+		WHERE APP_NO = #{appNo}
+	</update>
 </mapper>

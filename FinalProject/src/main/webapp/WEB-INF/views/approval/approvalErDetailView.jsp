@@ -33,26 +33,22 @@
 									</tr>
 									<tr>
 										<!-- <td>결재</td> -->
-										<td id="firstApprover">
-											<c:out value="${ appMap.approval.firstApprover }" />
-										</td>
-										<td id="lastApprover">
-											<c:out value="${ appMap.approval.lastApprover }" />
-										</td>
+										<td id="firstApprover"><c:out value="${ appMap.approval.firstApprover }" /></td>
+										<td id="lastApprover"><c:out value="${ appMap.approval.lastApprover }" /></td>
 									</tr>
 									<tr>
 										<!-- <td></td> -->
 										<td>
-										<!-- 승인날짜가 없고, 상태가 R이면 반려 승인날짜가있고 -->
+										<!-- 최종 승인날짜가 없고, 상태가 R이면 반려 승인날짜가있고 -->
 										<c:choose>
-											<c:when test='${ empty appMap.approval.firstApprovalDate && appMap.approval.appStatus.equals("R")}'>반려</c:when>
+											<c:when test='${ empty appMap.approval.lastApprovalDate && appMap.approval.appStatus.equals("R")}'>반려</c:when>
 											<c:when test="${ empty appMap.approval.firstApprovalDate }">승인대기</c:when>
 											<c:when test="${ !empty appMap.approval.firstApprovalDate }">승인완료</c:when>
 										</c:choose>
 										</td>
 										<td>
 										<c:choose>
-											<c:when test='${ empty appMap.approval.lastApprovalDate && appMap.approval.appStatus.equals("R")}'>반려</c:when>
+											<c:when test='${ !empty appMap.approval.firstApprovalDate && appMap.approval.rejecter.equals("loginUser.empName")}'>반려</c:when>
 											<c:when test="${ empty appMap.approval.lastApprovalDate }">승인대기</c:when>
 											<c:when test="${ !empty appMap.approval.lastApprovalDate }">승인완료</c:when>
 										</c:choose>
@@ -175,24 +171,13 @@
 							</tbody>
 						</table>
 						</div>
-						<!-- 전자결재 데이터에 필요한 문서 제목, 작성자 사번, 결재양식 hidden 값으로 전달 -->
-							<div class="hiddenInfo">
-								<input type="hidden" class="form-control" id="appTitle" name="appTitle" value="휴가신청서_${ sessionScope.loginUser.empName }">
-								<input type="hidden" class="form-control" id="appWriterNo" name="appWriterNo" value="${ sessionScope.loginUser.empNo }">
-								<input type=hidden class="form-control" id="appKinds" name="appKinds" value="3">
-							</div>
-							<div class="addFile" style="margin-top:2%;">
-								<b style="font-size:14px;">* 첨부파일</b><br><br>
-								<c:if test="${ empty appMap.attachment.originName }">
-									<b>첨부파일이 없습니다.</b>
-								</c:if>
-								<c:if test="${ !empty appMap.attachment.originName }">
-									<a download="${appMap.attachment.originName}" href="${ pageContext.servletContext.contextPath }/resources/appUpload_files/${appMap.attachment.changeName}">${appMap.attachment.originName}</a>
-								</c:if>
-							</div>
+						<!-- 결재 승인시 필요한 값들 hidden으로 값 전송 -->
 						<form id="postForm" action="" method="post">
-							<input type="hidden" name="appNo" value="appMap.approval.appNo">
-							<input type="hidden" name="appKinds" value="appMap.approval.appKinds">
+							<input type="hidden" name="appNo" value="${appMap.approval.appNo}">
+							<input type="hidden" name="appKinds" value="${appMap.approval.appKinds}">
+							<input type="hidden" name="firstApprover" value="${appMap.approval.firstApprover}">
+							<input type="hidden" name="lastApprover" value="${ appMap.approval.lastApprover }">
+							<input id="approverConfirm" name="approverConfirm" type="hidden" value="${ loginUser.empName }">
 						</form>
 						<div class="tableDiv" style="margin-top:3%;">
 							<table class="table table-striped" id="erTable" style="height:15px;">
@@ -222,6 +207,15 @@
 									</c:forEach>
 								</tbody>
 							</table>
+							<div class="addFile" style="margin-top:2%;">
+								<b style="font-size:14px;">* 첨부파일</b><br><br>
+								<c:if test="${ empty appMap.attachment.originName }">
+									<b>첨부파일이 없습니다.</b>
+								</c:if>
+								<c:if test="${ !empty appMap.attachment.originName }">
+									<a download="${appMap.attachment.originName}" href="${ pageContext.servletContext.contextPath }/resources/appUpload_files/${appMap.attachment.changeName}">${appMap.attachment.originName}</a>
+								</c:if>
+							</div>
 						<!-- 최초 승인일 컬럼이 비어있고, 최초승인자와 로그인유저의 이름이 같거나, 최초승인일 안비어있고 최종승인자컬럼과 이름이 같고 최종 승인일이 비어있을경우 출력 -->
 						<c:if test="${ appMap.approval.firstApprover.equals(loginUser.empName) and empty appMap.approval.firstApprovalDate
 						 or (appMap.approval.lastApprover.equals(loginUser.empName) and empty appMap.approval.lastApprovalDate and !empty appMap.approval.firstApprovalDate) }">
@@ -231,17 +225,29 @@
 							</div>
 						</c:if>
 						<script>
-						// 수정 화면 이동 스크립트
-					/* 		function postFormSubmit(num){
+						// 수정 화면 , 결재승인 스크립트
+					 		function postFormSubmit(num){
 							var postForm = $("#postForm");
+							
+							var firstApprover = $("#firstApprover").text();
+							var lastApprover = $("#lastApprover").text();
+							console.log(firstApprover, lastApprover);
 							
 							if(num == 1){
 								postForm.attr("action", "updateFormBoard.do");
-							}else{
+							}else if(num ==2){
 								postForm.attr("action", "deleteBoard.do");
+							}else if(num == 3){
+								if(confirm("결재 승인 처리를 하시겠습니까?")){
+									postForm.attr("action", "approve.do");
+								}else{
+									return false;
+								}
+							}else if(num == 4){
+								postForm.attr("action", "#");
 							}
 								postForm.submit();
-							} */
+							} 
 						</script>
 					</div>
 				</div>
