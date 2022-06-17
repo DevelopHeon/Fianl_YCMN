@@ -46,16 +46,20 @@
         <h3><i class="fa fa-angle-right"></i> 주소록</h3>
         <div class="row">
           <div class="col-md-10">
-            <div class="">
-				<form action="searchEmp.do" class="pull-left">
-                      <div class="input-append">
-                        <input type="text" name="search" class="form-control " placeholder="사원 이름 검색">
-                        <button id="searchBtn" type="submit" class="btn btn-theme02">검색</button>
-                      </div>
-                      
-                </form>
-              <br><br><br><br><br>
-              <h4 class="depName1"><i class="fa fa-angle-right"></i>개발</h4>
+			<form action="searchEmp.do" class="pull-left">
+				<table>
+					<tr>
+						<td>
+							<input type="text" name="search" class="form-control" placeholder="사원 이름 검색">
+						</td>
+						<td>
+							<button id="searchBtn" type="submit" class="btn btn-outline-secondary btn-theme02">검색</button>  
+						</td>
+					</tr>
+				</table>
+               </form>
+              <br><br><br>
+              <h3 class="depName1"><i class="fa fa-angle-right"></i> 개발</h3>
               <hr>
               	<div class="updown table-inbox-wrap1">
                 <table class="address table table-border table-hover centered">
@@ -81,7 +85,7 @@
               </c:forEach>
               </table>
               </div>
-              <h4 class="depName2"><i class="fa fa-angle-right"></i>총무</h4>
+              <h3 class="depName2"><i class="fa fa-angle-right"></i> 총무</h3>
               <hr>
               	<div class="updown table-inbox-wrap2">
                 <table class="address table table-border table-hover centered">
@@ -108,7 +112,7 @@
               </table>
               </div>
               
-              <h4 class="depName3"><i class="fa fa-angle-right"></i>인사</h4>
+              <h3 class="depName3"><i class="fa fa-angle-right"></i> 인사</h3>
               <hr>
               	<div class="updown table-inbox-wrap3">
                 <table class="address table table-border table-hover centered">
@@ -135,7 +139,7 @@
               </table>
               </div>
 
-              <h4 class="depName4"><i class="fa fa-angle-right"></i>연수중</h4>
+              <h3 class="depName4"><i class="fa fa-angle-right"></i> 연수중</h3>
               <hr>
               	<div class="updown table-inbox-wrap4">
                 <table class="address table table-border table-hover centered">
@@ -161,7 +165,6 @@
               </c:forEach>
               </table>
               </div>
-          </div>
           </div>
         </div>
         <!-- row -->
