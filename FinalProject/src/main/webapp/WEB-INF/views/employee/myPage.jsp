@@ -56,7 +56,7 @@
                 	<p><img src="resources/empUpload_files/${loginUser.empPfe}" id="empImg" class="img-circle"></p>
                 </c:if>
                   <p>
-                  	<input type="file" name="file" style="display:none">                 	
+                  	<input type="file" name="file" accept="image/gif, image/jpeg, image/png" style="display:none">                 	
                   	<input type="text" name="empNo" value= "${loginUser.empNo}" style="display:none">
                     <button type="button" onclick="onclick=document.all.file.click()" class="btn btn-theme"><i class="fa fa-check"></i>사진등록</button>
                     <button type="submit" id="updateBtn" class="btn btn-theme"><i class="fa fa-check"></i>저장하기</button>
