@@ -46,8 +46,8 @@ public class EmployeeDao {
 		return sqlSession.update("employeeMapper.updateThisWeek");	
 	}
 	//근무상태(정상,지각)
-	public int updateWorkStatus(SqlSessionTemplate sqlSession, int empNo) {
-		return sqlSession.update("employeeMapper.updateWorkStatus", empNo);	
+	public int updateWorkStatusL(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.update("employeeMapper.updateWorkStatusL", empNo);	
 	}
 
 	//퇴근체크
@@ -63,7 +63,11 @@ public class EmployeeDao {
 	public int selectFinishCheck(SqlSessionTemplate sqlSession, int empNo) {
 		return sqlSession.selectOne("employeeMapper.selectFinishCheck", empNo);
 	}
-	
+	//근무상태(조퇴)
+	public int updateWorkStatusE(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.update("employeeMapper.updateWorkStatusE", empNo);
+		
+	}
 	//주소록
 	public ArrayList<Employee> selectEmpAddress(SqlSessionTemplate sqlSession) {	
 		return (ArrayList)sqlSession.selectList("employeeMapper.selectEmpAddress");
@@ -123,19 +127,6 @@ public class EmployeeDao {
 		return sqlSession.selectOne("employeeMapper.selectListCount", empNo);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-	
 
 
 }

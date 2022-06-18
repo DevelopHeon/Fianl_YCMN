@@ -56,7 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- 근무상태(정상, 지각) -->
-	<update id="updateWorkStatus" parameterType="WorkingDay">
+	<update id="updateWorkStatusL" parameterType="WorkingDay">
 		UPDATE WORKINGDAY
 		SET STATUS = 'L'
 		WHERE START_TIME > TO_CHAR(TO_DATE('08:01:00', 'HH24:MI:SS'),'HH24:MI:SS')
@@ -96,6 +96,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND FINISH_TIME IS NOT NULL AND EMP_NO = #{empNo}
 	</select>
 	
+	<!-- 근무상태(조퇴) -->
+	<update id="updateWorkStatusE" parameterType="WorkingDay">
+		UPDATE WORKINGDAY
+		SET STATUS = 'E'
+		<![CDATA[WHERE TODAY != TO_CHAR(SYSDATE, 'YY/MM/DD') AND FINISH_TIME IS NULL AND EMP_NO = #{empNo}]]>
+	</update>
 	<!-- 주소록 -->
 	<select id="selectEmpAddress" parameterType="Employee" resultType="Employee" >
 		SELECT A.EMP_NO, A.EMP_NAME, A.EMP_ID, NVL(B.POS_NAME,'연수생') POS_NAME, NVL(C.DEP_NAME,'연수중') DEP_NAME

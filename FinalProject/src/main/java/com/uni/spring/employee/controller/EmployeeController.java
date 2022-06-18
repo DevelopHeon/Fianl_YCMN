@@ -104,6 +104,10 @@ public class EmployeeController {
 		Employee loginUser = (Employee)session.getAttribute("loginUser");
 		int empNo = loginUser.getEmpNo();
 		
+		//전날 미퇴근 출결이 있는지 업데이트
+		employeeService.updateWorkStatusE(empNo);
+//		employeeService.updateWorkStatusL(empNo);
+		
 		ArrayList<WorkingDay> working = employeeService.selectWorkingInfo(empNo);
 		
 		model.addAttribute("working", working);
@@ -125,7 +129,6 @@ public class EmployeeController {
 		w.setEmpNo(empNo);
 		
 		WorkingDay working = employeeService.insertStart(w, empNo);
-		
 		
 		model.addAttribute("working", working);
 		

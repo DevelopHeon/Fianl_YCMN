@@ -54,7 +54,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		return result;
 	}
-
+	//사원정보 수정
 	@Override
 	public Employee updateEmp(Employee emp) {
 		
@@ -72,8 +72,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public ArrayList<WorkingDay> selectWorkingInfo(int empNo) {
 		
-
-		
 		return employeeDao.selectWorkingInfo(sqlSession, empNo);
 	}
 	
@@ -85,10 +83,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		//출근 체킹 완
 		if(result > 0) {
+			//근태상태(정상,지각)
+			employeeDao.updateWorkStatusL(sqlSession, empNo);
 			//오늘은 이달의 몇주차?
 			employeeDao.updateThisWeek(sqlSession, w);
-			//근무상태(정상,지각)
-			employeeDao.updateWorkStatus(sqlSession, empNo);
+
 			return w;
 		} else {
 			throw new CommException("출근 등록 실패");
@@ -141,6 +140,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		
 		return result;
+	}
+//	@Override
+//	public void updateWorkStatusL(int empNo) {
+//		//근무상태(정상,지각)
+//		employeeDao.updateWorkStatusL(sqlSession, empNo);
+//		
+//	}
+	//퇴근 미체크(조퇴)
+	@Override
+	public void updateWorkStatusE(int empNo) {
+
+		employeeDao.updateWorkStatusE(sqlSession, empNo);
+		
 	}
 	
 	//주소록
@@ -217,7 +229,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public int selectListCount(int empNo) {
 		return employeeDao.selectListCount(sqlSession, empNo);
 	}
-
 
 
 
