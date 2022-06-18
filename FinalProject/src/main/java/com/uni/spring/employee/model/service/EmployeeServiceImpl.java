@@ -10,6 +10,8 @@ import com.uni.spring.common.CommException;
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.employee.model.dao.EmployeeDao;
 import com.uni.spring.employee.model.dto.Employee;
+import com.uni.spring.employee.model.dto.TimeOff;
+import com.uni.spring.employee.model.dto.TimeOffContent;
 import com.uni.spring.employee.model.dto.WorkingDay;
 
 import lombok.RequiredArgsConstructor;
@@ -156,13 +158,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 			throw new CommException("프로필 변경 실패");
 		}
 	}
-
-	@Override
-	public Employee selectLikedAddress(String empId) {
-		// TODO Auto-generated method stub
-		return employeeDao.selectLikedAddress(sqlSession, empId);
-	}
-
+	
+	//프로필 삭제
 	@Override
 	public void deleteImg(String empNo) {
 		int result = employeeDao.deleteImg(sqlSession, empNo);
@@ -172,6 +169,45 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		
 	}
+	//주소록_사원정보
+	@Override
+	public Employee detailEmp(int empNo) {
+
+		return employeeDao.selectDetailEmp(sqlSession, empNo);
+	}
+
+	//주소록_사원검색
+	@Override
+	public ArrayList<Employee> selectSearchEmp(String empName) {
+		
+		return employeeDao.selectSearchEmp(sqlSession, empName);
+	}
+	
+	//내 연차 조회
+	@Override
+	public TimeOff selectTimeOff(int empNo) {
+		//employeeDao.updateTimeOffNum(sqlSession, empNo);
+		
+		return employeeDao.selectTimeOff(sqlSession, empNo);
+	}
+
+	@Override
+	public  ArrayList<TimeOffContent> updateTimeOffContent(int empNo) {
+		
+		//update해줌 -> 승인되었을때 (결재완료:C) 연차내역테이블 업데이트
+		int result = employeeDao.updateTimeOffContent(sqlSession);
+		if(result > 0) {
+			//잔여연차 계산
+			employeeDao.updateRemainNum(sqlSession, empNo);
+			//연차 개수 업데이트
+			employeeDao.updateTimeOffNum(sqlSession, empNo);
+			
+		}
+
+		return employeeDao.selectTimeOffContent(sqlSession, empNo);
+	}
+
+
 
 
 
