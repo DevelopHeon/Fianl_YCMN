@@ -146,14 +146,32 @@ public class ApprovalServiceImpl implements ApprovalService {
 
 	@Override
 	public void updateFirstApprove(int appNo) {
-		approvalDao.updateFirstApprove(sqlSession, appNo);
+		int result = approvalDao.updateFirstApprove(sqlSession, appNo);
+		
+		if(result < 0) {
+			throw new CommException("결재 승인에 실패하였습니다.");
+		}
 		
 	}
 
 	@Override
 	public void updateLastApprove(int appNo) {
-		approvalDao.updateLastApprove(sqlSession, appNo);
+		int result = approvalDao.updateLastApprove(sqlSession, appNo);
 		
+		if(result < 0) {
+			throw new CommException("결재 승인에 실패하였습니다.");
+		}
+		
+	}
+
+	@Override
+	public void insertRejecter(Approval approval) {
+		
+		int result = approvalDao.insertRejecter(sqlSession, approval);
+		
+		if(result < 0) {
+			throw new CommException("반려 처리에 실패하였습니다.");
+		}
 	}
 
 }

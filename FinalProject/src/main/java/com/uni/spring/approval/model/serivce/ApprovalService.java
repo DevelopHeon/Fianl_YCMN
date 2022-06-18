@@ -43,5 +43,7 @@ public interface ApprovalService {
 
 	void updateLastApprove(int appNo);
 
+	void insertRejecter(Approval approval);
+
 
 }

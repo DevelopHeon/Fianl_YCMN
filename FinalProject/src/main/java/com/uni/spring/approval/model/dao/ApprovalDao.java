@@ -101,13 +101,17 @@ public class ApprovalDao {
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectApprovalInboxList", userNo, rowBounds);
 	}
 
-	public void updateFirstApprove(SqlSessionTemplate sqlSession, int appNo) {
-		sqlSession.update("approvalMapper.updateFirstApprove", appNo);
+	public int updateFirstApprove(SqlSessionTemplate sqlSession, int appNo) {
+		return sqlSession.update("approvalMapper.updateFirstApprove", appNo);
 		
 	}
 
-	public void updateLastApprove(SqlSessionTemplate sqlSession, int appNo) {
-		sqlSession.update("approvalMapper.updateLastApprove", appNo);
+	public int updateLastApprove(SqlSessionTemplate sqlSession, int appNo) {
+		return sqlSession.update("approvalMapper.updateLastApprove", appNo);
 		
+	}
+
+	public int insertRejecter(SqlSessionTemplate sqlSession, Approval approval) {
+		return sqlSession.update("approvalMapper.insertRejecter", approval);
 	}
 }
