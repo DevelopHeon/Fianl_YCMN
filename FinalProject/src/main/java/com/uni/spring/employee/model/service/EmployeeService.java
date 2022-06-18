@@ -52,6 +52,6 @@ public interface EmployeeService {
 
 	void updateWorkStatusE(int empNo);
 
-//	void updateWorkStatusL(int empNo);
+	void updateWorkStatusL(int empNo);
 
 }

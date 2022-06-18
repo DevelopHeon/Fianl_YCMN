@@ -104,9 +104,10 @@ public class EmployeeController {
 		Employee loginUser = (Employee)session.getAttribute("loginUser");
 		int empNo = loginUser.getEmpNo();
 		
-		//전날 미퇴근 출결이 있는지 업데이트
+		//전날 미퇴근 출결이 있는지 업데이트(근무상태:조퇴)
 		employeeService.updateWorkStatusE(empNo);
-//		employeeService.updateWorkStatusL(empNo);
+		//오늘 정상 출근했는지 업데이트(근무상태:지각)
+		employeeService.updateWorkStatusL(empNo);
 		
 		ArrayList<WorkingDay> working = employeeService.selectWorkingInfo(empNo);
 		
