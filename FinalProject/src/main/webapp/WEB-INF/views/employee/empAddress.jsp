@@ -24,9 +24,7 @@
 	#searchBtn{
 		display: block;
 	}
-	.address{
-		margin-left:30px;
-	}
+
 	.updown{
 		display:none;
 	}
@@ -65,7 +63,7 @@
                 <table class="address table table-border table-hover centered">
                 <thead>
                   <tr>
-                  	<th style="display:none"></th>
+                  	<th>사번</th>
                     <th>이름</th>
                     <th>아이디</th>
                     <th>직위</th>
@@ -75,7 +73,7 @@
               <c:if test="${e.depName eq '개발'}"> 
                 <tbody>
                   <tr>
-	                 <td style="display:none">${e.empNo }</td>
+	                 <td>${e.empNo }</td>
                      <td>${ e.empName }</td>
                      <td id="addressEmpId">${ e.empId}</td>
                      <td>${ e.posName}</td>
@@ -91,7 +89,7 @@
                 <table class="address table table-border table-hover centered">
                 <thead>
                   <tr>
-                  	<th style="display:none"></th>
+                  	<th>사번</th>
                     <th>이름</th>
                     <th>아이디</th>
                     <th>직위</th>
@@ -101,7 +99,7 @@
               <c:if test="${e.depName eq '총무'}"> 
                 <tbody>
                   <tr>
-	                 <td style="display:none">${e.empNo }</td>
+	                 <td>${e.empNo }</td>
                      <td>${ e.empName }</td>
                      <td id="addressEmpId">${ e.empId}</td>
                      <td>${ e.posName}</td>
@@ -118,7 +116,7 @@
                 <table class="address table table-border table-hover centered">
                 <thead>
                   <tr>
-                  	<th style="display:none"></th>
+                  	<th>사번</th>
                     <th>이름</th>
                     <th>아이디</th>
                     <th>직위</th>
@@ -128,7 +126,7 @@
               <c:if test="${e.depName eq '인사'}"> 
                 <tbody>
                   <tr>
-	                 <td style="display:none">${e.empNo }</td>
+	                 <td>${e.empNo }</td>
                      <td>${ e.empName }</td>
                      <td id="addressEmpId">${ e.empId}</td>
                      <td>${ e.posName}</td>
@@ -145,7 +143,7 @@
                 <table class="address table table-border table-hover centered">
                 <thead>
                   <tr>
-                  	<th style="display:none"></th>
+                  	<th>사번</th>
                     <th>이름</th>
                     <th>아이디</th>
                     <th>직위</th>
@@ -155,7 +153,7 @@
               <c:if test="${e.depName eq '연수중'}"> 
                 <tbody>
                   <tr>
-	                 <td style="display:none">${e.empNo }</td>
+	                 <td>${e.empNo }</td>
                      <td>${ e.empName }</td>
                      <td id="addressEmpId">${ e.empId}</td>
                      <td>${ e.posName}</td>
