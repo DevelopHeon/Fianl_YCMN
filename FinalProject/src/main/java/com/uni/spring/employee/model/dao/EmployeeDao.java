@@ -2,12 +2,15 @@ package com.uni.spring.employee.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.uni.spring.common.dto.Attachment;
-import com.uni.spring.employee.model.dto.Department;
+import com.uni.spring.common.dto.PageInfo;
 import com.uni.spring.employee.model.dto.Employee;
+import com.uni.spring.employee.model.dto.TimeOff;
+import com.uni.spring.employee.model.dto.TimeOffContent;
 import com.uni.spring.employee.model.dto.WorkingDay;
 
 @Repository
@@ -40,9 +43,11 @@ public class EmployeeDao {
 	}
 	//몇주차?
 	public int updateThisWeek(SqlSessionTemplate sqlSession, WorkingDay w) {
-		
-		return sqlSession.update("employeeMapper.updateThisWeek");
-		
+		return sqlSession.update("employeeMapper.updateThisWeek");	
+	}
+	//근무상태(정상,지각)
+	public int updateWorkStatusL(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.update("employeeMapper.updateWorkStatusL", empNo);	
 	}
 
 	//퇴근체크
@@ -58,7 +63,11 @@ public class EmployeeDao {
 	public int selectFinishCheck(SqlSessionTemplate sqlSession, int empNo) {
 		return sqlSession.selectOne("employeeMapper.selectFinishCheck", empNo);
 	}
-	
+	//근무상태(조퇴)
+	public int updateWorkStatusE(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.update("employeeMapper.updateWorkStatusE", empNo);
+		
+	}
 	//주소록
 	public ArrayList<Employee> selectEmpAddress(SqlSessionTemplate sqlSession) {	
 		return (ArrayList)sqlSession.selectList("employeeMapper.selectEmpAddress");
@@ -72,24 +81,52 @@ public class EmployeeDao {
 	public int updateWorkHour(SqlSessionTemplate sqlSession, WorkingDay w) {
 		return sqlSession.update("employeeMapper.updateWorkHour", w);
 	}
-	//주소록-즐겨찾기
-	public Employee selectLikedAddress(SqlSessionTemplate sqlSession, String empId) {
-		return sqlSession.selectOne("employeeMapper.selectLikedAddress", empId);
-	}
-
+	//프로필 삭제
 	public int deleteImg(SqlSessionTemplate sqlSession, String empNo) {
 		return sqlSession.delete("employeeMapper.deleteImg", empNo);
 	}
+	//주소록_사원정보
+	public Employee selectDetailEmp(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("employeeMapper.selectDetailEmp", empNo);
+	}
+	//주소록_사원검색
+	public ArrayList<Employee> selectSearchEmp(SqlSessionTemplate sqlSession, String empName) {
+		return (ArrayList)sqlSession.selectList("employeeMapper.selectSearchEmp", empName);
+	}
+	//연차개수조회
+	public TimeOff selectTimeOff(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("employeeMapper.selectTimeOff", empNo);
+	}
+	//연차내역 업데이트
+	public int updateTimeOffContent(SqlSessionTemplate sqlSession) {
+		return sqlSession.update("employeeMapper.updateTimeOffContent");
+	}
+	//잔여연차 업데이트
+	public int updateRemainNum(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.update("employeeMapper.updateRemainNum", empNo);
+	}
+	//잔여연차 업데이트 후 연차개수 차감
+	public int updateTimeOffNum(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.update("employeeMapper.updateTimeOffNum", empNo);
+	}
+	//연차내역조회
+	public ArrayList<TimeOffContent> selectTimeOffContent(SqlSessionTemplate sqlSession, int empNo, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		// * offset : 몇 개의 게시글을 건너 뛰고 조회할 지에 대해 계산
+		// ex) boardLimit : 5
+		// currentPage = 1		1~5		0개의 게시글 건너 뛰고 1부터 5개 조회
+		// currentPage = 2		6~10	5개의 게시글 건너 뛰고 6부터 5개 조회
+		// currentPage = 3		11~15	10개의 게시글 건너 뛰고 11부터 5개 조회
+		// currentPage = 4		16~20	15개의 게시글 건너 뛰고 16부터 5개 조회
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("employeeMapper.selectTimeOffContent", empNo, rowBounds);
+	}
+	//현재 연차 페이지 수?
+	public int selectListCount(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("employeeMapper.selectListCount", empNo);
+	}
 
-
-
-
-
-
-
-
-
-	
 
 
 }

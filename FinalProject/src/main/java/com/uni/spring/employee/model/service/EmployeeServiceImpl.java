@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.dto.Attachment;
+import com.uni.spring.common.dto.PageInfo;
 import com.uni.spring.employee.model.dao.EmployeeDao;
 import com.uni.spring.employee.model.dto.Employee;
+import com.uni.spring.employee.model.dto.TimeOff;
+import com.uni.spring.employee.model.dto.TimeOffContent;
 import com.uni.spring.employee.model.dto.WorkingDay;
 
 import lombok.RequiredArgsConstructor;
@@ -51,7 +54,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		return result;
 	}
-
+	//사원정보 수정
 	@Override
 	public Employee updateEmp(Employee emp) {
 		
@@ -68,19 +71,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 	//근태정보
 	@Override
 	public ArrayList<WorkingDay> selectWorkingInfo(int empNo) {
-
+		
 		return employeeDao.selectWorkingInfo(sqlSession, empNo);
 	}
 	
 	//근태-출근체크
 	@Override
-	public WorkingDay insertStart(WorkingDay w) {
+	public WorkingDay insertStart(WorkingDay w, int empNo) {
 		
 		int result = employeeDao.insertStart(sqlSession, w);
 		
 		//출근 체킹 완
 		if(result > 0) {
-			int thisWeek = employeeDao.updateThisWeek(sqlSession, w);
+			//오늘은 이달의 몇주차?
+			employeeDao.updateThisWeek(sqlSession, w);
+
 			return w;
 		} else {
 			throw new CommException("출근 등록 실패");
@@ -134,6 +139,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		return result;
 	}
+	//근무상태(지각)
+	@Override
+	public void updateWorkStatusL(int empNo) {
+		
+		employeeDao.updateWorkStatusL(sqlSession, empNo);
+		
+	}
+	//퇴근 미체크(조퇴)
+	@Override
+	public void updateWorkStatusE(int empNo) {
+
+		employeeDao.updateWorkStatusE(sqlSession, empNo);
+		
+	}
 	
 	//주소록
 	@Override
@@ -156,13 +175,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 			throw new CommException("프로필 변경 실패");
 		}
 	}
-
-	@Override
-	public Employee selectLikedAddress(String empId) {
-		// TODO Auto-generated method stub
-		return employeeDao.selectLikedAddress(sqlSession, empId);
-	}
-
+	
+	//프로필 삭제
 	@Override
 	public void deleteImg(String empNo) {
 		int result = employeeDao.deleteImg(sqlSession, empNo);
@@ -172,6 +186,49 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		
 	}
+	//주소록_사원정보
+	@Override
+	public Employee detailEmp(int empNo) {
+
+		return employeeDao.selectDetailEmp(sqlSession, empNo);
+	}
+
+	//주소록_사원검색
+	@Override
+	public ArrayList<Employee> selectSearchEmp(String empName) {
+		
+		return employeeDao.selectSearchEmp(sqlSession, empName);
+	}
+	
+	//내 연차 조회
+	@Override
+	public TimeOff selectTimeOff(int empNo) {
+		
+		return employeeDao.selectTimeOff(sqlSession, empNo);
+	}
+
+	@Override
+	public  ArrayList<TimeOffContent> selectTimeOffContent(int empNo, PageInfo pi) {
+		
+		//update해줌 -> 승인되었을때 (결재완료:C) 연차내역테이블 업데이트
+		int result = employeeDao.updateTimeOffContent(sqlSession);
+		if(result > 0) {
+			//잔여연차 계산
+			employeeDao.updateRemainNum(sqlSession, empNo);
+			//연차 개수 업데이트
+			employeeDao.updateTimeOffNum(sqlSession, empNo);
+			
+		}
+
+		return employeeDao.selectTimeOffContent(sqlSession, empNo, pi);
+	}
+
+	//현재 연차 페이지 수?
+	@Override
+	public int selectListCount(int empNo) {
+		return employeeDao.selectListCount(sqlSession, empNo);
+	}
+
 
 
 

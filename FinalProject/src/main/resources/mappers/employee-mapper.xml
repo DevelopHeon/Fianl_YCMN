@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM EMPLOYEE
 		WHERE EMP_ID = #{empId}
 	</select>
-	
+	<!-- 회원정보 수정 -->
 	<update id="updateEmp" parameterType="Employee">
 		UPDATE EMPLOYEE SET EMP_EMAIL = #{empEmail},
 								OFFICE_TEL = #{officeTel}, 
@@ -53,6 +53,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE WORKINGDAY
 		SET THIS_WEEK = CEIL((TO_DATE(TODAY,'YY/MM/DD') - TRUNC(TRUNC(TO_DATE(TODAY,'YY/MM/DD'), 'MM'), 'IW') + 1) / 7)
 		WHERE TODAY = TO_CHAR(SYSDATE, 'YY/MM/DD')
+	</update>
+	
+	<!-- 근무상태(정상, 지각) -->
+	<update id="updateWorkStatusL" parameterType="WorkingDay">
+		UPDATE WORKINGDAY
+		SET STATUS = 'L'
+		WHERE START_TIME > TO_CHAR(TO_DATE('08:01:00', 'HH24:MI:SS'),'HH24:MI:SS')
+		AND TODAY NOT IN
+		(SELECT TO_CHAR(C.LEAVE_START, 'YY/MM/DD') FROM APPROVAL B JOIN APP_LEAVE C ON B.APP_NO = C.APP_NO WHERE APP_WRITER_NO = #{empNo})
 	</update>
 	
 	<!-- 퇴근체크 -->
@@ -87,13 +96,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND FINISH_TIME IS NOT NULL AND EMP_NO = #{empNo}
 	</select>
 	
+	<!-- 근무상태(조퇴) -->
+	<update id="updateWorkStatusE" parameterType="WorkingDay">
+		UPDATE WORKINGDAY
+		SET STATUS = 'E'
+		<![CDATA[WHERE TODAY != TO_CHAR(SYSDATE, 'YY/MM/DD') AND FINISH_TIME IS NULL AND EMP_NO = #{empNo}]]>
+	</update>
 	<!-- 주소록 -->
 	<select id="selectEmpAddress" parameterType="Employee" resultType="Employee" >
-		SELECT A.EMP_NAME, A.EMP_ID, B.POS_NAME, C.DEP_NAME
+		SELECT A.EMP_NO, A.EMP_NAME, A.EMP_ID, NVL(B.POS_NAME,'연수생') POS_NAME, NVL(C.DEP_NAME,'연수중') DEP_NAME
 		FROM EMPLOYEE A
 		LEFT JOIN JOB_POSITION B ON A.POS_NO = B.POS_NO
 		LEFT JOIN DEPARTMENT C ON A.DEP_NO = C.DEP_NO
 		<![CDATA[WHERE A.STATUS = 'Y' AND A.EMP_ID != 'admin']]>
+		ORDER BY B.POS_NO
+	</select>
+	
+	<!-- 주소록_사원정보 -->
+	<select id="selectDetailEmp" parameterType="Employee" resultType="Employee" >
+		SELECT A.EMP_NO, A.EMP_NAME, A.EMP_ID, A.EMP_PHONE, A.EMP_LOC, A.EMP_PFE, A.EMP_ONOFF, 
+			   NVL(B.POS_NAME,'연수생') POS_NAME,
+			   NVL(C.DEP_NAME,'연수중') DEP_NAME,
+			   D.START_TIME, D.END_TIME, D.REZ_TITLE
+		FROM EMPLOYEE A
+		LEFT JOIN JOB_POSITION B ON A.POS_NO = B.POS_NO
+		LEFT JOIN DEPARTMENT C ON A.DEP_NO = C.DEP_NO
+		LEFT JOIN RESERVATION D ON A.EMP_NO = D.REZ_WRITER
+		WHERE A.STATUS = 'Y' AND A.EMP_NO = #{empNo}
+	</select>
+	
+	<!-- 주소록_사원검색 -->
+	<select id="selectSearchEmp" parameterType="Employee" resultType="Employee" >
+		SELECT A.EMP_NO, A.EMP_NAME, A.EMP_ID, NVL(B.POS_NAME,'연수생') POS_NAME, NVL(C.DEP_NAME,'연수중') DEP_NAME
+		FROM EMPLOYEE A
+		LEFT JOIN JOB_POSITION B ON A.POS_NO = B.POS_NO
+		LEFT JOIN DEPARTMENT C ON A.DEP_NO = C.DEP_NO
+		<![CDATA[WHERE A.STATUS = 'Y' AND A.EMP_NAME LIKE '%'||#{empName}||'%']]>
 	</select>
 	
 	<!-- 프로필 변경 -->
@@ -107,8 +145,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM ATTACHMENT WHERE CATEGORY = 1 AND EMP_NO = #{empNo}
 	</delete>
 	
-	<!-- 주소록-즐겨찾기 -->
-	<select id="selectLikedAddress" parameterType="Employee" resultType="Employee">
-		SELECT * FROM EMPLOYEE WHERE EMP_ID = #{empId}
+	<!-- 내 연차개수 조회 -->
+	<select id="selectTimeOff" parameterType="TimeOff" resultType="TimeOff">
+		SELECT * FROM TIMEOFF WHERE EMP_NO = #{empNo}
+	</select>
+	
+	<!-- 결재완료 후 연차내역 업데이트 -->
+	<update id="updateTimeOffContent" parameterType="TimeOffContent">
+		UPDATE TIMEOFFCONTENT A
+		SET (A.TIMEOFF_TYPE, A.TIMEOFF_CONTENT, A.USE_NUM) = (SELECT B.LEAVE_CATEGORY, B.LEAVE_REASON, B.LEAVE_TOTALDATE FROM APP_LEAVE B WHERE A.APP_NO = B.APP_NO)
+		, (A.TOTAL_NUM) = (SELECT C.REMAIN_NUM FROM TIMEOFF C WHERE ROWNUM=1)
+		WHERE A.APP_STATUS = 'C' AND (A.TODAY, A.EMP_NO, A.APP_NO) = (SELECT B.APP_CREATE_DATE, B.APP_WRITER_NO, B.APP_NO FROM APPROVAL B WHERE A.APP_NO = B.APP_NO) AND TOTAL_NUM IS NULL
+	</update>
+	
+	<!-- 잔여연차 -->
+	<update id="updateRemainNum" parameterType="TimeOffContent">
+		UPDATE TIMEOFFCONTENT A
+		SET REMAIN_NUM = TOTAL_NUM - USE_NUM
+		WHERE EMP_NO = #{empNo} AND APP_STATUS = 'C' AND A.APP_NO = (SELECT B.APP_NO FROM APP_LEAVE B WHERE A.APP_NO = B.APP_NO)
+	</update>
+	
+	<!-- 연차개수 업데이트 -->
+	<update id="updateTimeOffNum" parameterType="TimeOff">
+		UPDATE TIMEOFF
+		SET
+		USE_NUM = (SELECT SUM(USE_NUM) FROM TIMEOFFCONTENT),
+		REMAIN_NUM = (SELECT * FROM (SELECT REMAIN_NUM FROM TIMEOFFCONTENT ORDER BY REMAIN_NUM)WHERE ROWNUM=1)
+		WHERE EMP_NO = #{empNo} AND REMAIN_NUM = (SELECT * FROM (SELECT TOTAL_NUM FROM TIMEOFFCONTENT ORDER BY TOTAL_NUM)WHERE ROWNUM=1)
+	</update>
+	
+	<!-- 연차내역 조회 -->
+	<select id="selectTimeOffContent" parameterType="TimeOffContent" resultType="TimeOffContent">
+		SELECT * FROM TIMEOFFCONTENT WHERE EMP_NO = #{empNo} ORDER BY TIMEOFFCONTENT_NO
+	</select>
+	
+	<!-- 현재 연차 페이지 수? -->
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*) FROM TIMEOFFCONTENT WHERE EMP_NO = #{empNo}
 	</select>
 </mapper>

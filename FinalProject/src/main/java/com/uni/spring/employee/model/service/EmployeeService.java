@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.uni.spring.common.dto.Attachment;
+import com.uni.spring.common.dto.PageInfo;
 import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
+import com.uni.spring.employee.model.dto.TimeOff;
+import com.uni.spring.employee.model.dto.TimeOffContent;
 import com.uni.spring.employee.model.dto.WorkingDay;
 
 public interface EmployeeService {
@@ -19,7 +22,7 @@ public interface EmployeeService {
 
 	Employee updateEmp(Employee emp)throws Exception;
 
-	WorkingDay insertStart(WorkingDay w);
+	WorkingDay insertStart(WorkingDay w, int empNo);
 	
 	WorkingDay updateFinish(WorkingDay w);
 
@@ -31,13 +34,24 @@ public interface EmployeeService {
 
 	int updateWorkHour(WorkingDay w);
 
-	Employee selectLikedAddress(String empId);
-
 	int selectStartCheck(int empNo);
 	
 	int selectFinishCheck(int empNo);
 
 	void deleteImg(String empNo);
 
+	Employee detailEmp(int empNo);
+
+	ArrayList<Employee> selectSearchEmp(String empName);
+
+	TimeOff selectTimeOff(int empNo);
+
+	ArrayList<TimeOffContent> selectTimeOffContent(int empNo, PageInfo pi);
+
+	int selectListCount(int empNo);
+
+	void updateWorkStatusE(int empNo);
+
+	void updateWorkStatusL(int empNo);
 
 }

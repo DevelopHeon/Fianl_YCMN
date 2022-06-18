@@ -21,8 +21,12 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.uni.spring.common.CommException;
+import com.uni.spring.common.Pagination;
 import com.uni.spring.common.dto.Attachment;
+import com.uni.spring.common.dto.PageInfo;
 import com.uni.spring.employee.model.dto.Employee;
+import com.uni.spring.employee.model.dto.TimeOff;
+import com.uni.spring.employee.model.dto.TimeOffContent;
 import com.uni.spring.employee.model.dto.WorkingDay;
 import com.uni.spring.employee.model.service.EmployeeService;
 
@@ -94,10 +98,16 @@ public class EmployeeController {
 		return "employee/myPage";
 	}
 	
+	//근태기록 확인(selectList)
 	@RequestMapping("workingInfo.do")
 	public String workingInfo(WorkingDay w, HttpSession session, Model model) {
 		Employee loginUser = (Employee)session.getAttribute("loginUser");
 		int empNo = loginUser.getEmpNo();
+		
+		//전날 미퇴근 출결이 있는지 업데이트(근무상태:조퇴)
+		employeeService.updateWorkStatusE(empNo);
+		//오늘 정상 출근했는지 업데이트(근무상태:지각)
+		employeeService.updateWorkStatusL(empNo);
 		
 		ArrayList<WorkingDay> working = employeeService.selectWorkingInfo(empNo);
 		
@@ -119,7 +129,7 @@ public class EmployeeController {
 		w.setStartTime(startTime);
 		w.setEmpNo(empNo);
 		
-		WorkingDay working = employeeService.insertStart(w);
+		WorkingDay working = employeeService.insertStart(w, empNo);
 		
 		model.addAttribute("working", working);
 		
@@ -185,23 +195,32 @@ public class EmployeeController {
 		return "employee/empAddress";
 	}
 	
-	//주소록-즐겨찾기
-	@ResponseBody
-	@RequestMapping("likedAddress.do")
-	public String likedAddress(@RequestParam("addressEmpId")String empId, Model model) {
+	//주소록_사원상세보기
+	@RequestMapping("detailEmp.do")
+	public String detailEmp(@RequestParam("eno")String empNo, Model model) {
+		int empNo1 = Integer.parseInt(empNo);
+		Employee detailEmp = employeeService.detailEmp(empNo1);
+
+		model.addAttribute("detailEmp", detailEmp);
 		
-		Employee empLiked = employeeService.selectLikedAddress(empId);
+		return "employee/empDetail";
+	}
+	
+	//주소록_사원검색
+	@RequestMapping("searchEmp.do")
+	public String searchEmp(@RequestParam("search")String empName, Model model) {
 		
-		model.addAttribute("empLiked", empLiked);
+		ArrayList<Employee> searchEmp = employeeService.selectSearchEmp(empName);
+
+		model.addAttribute("searchEmp", searchEmp);
 		
-		return "employee/empAddress";
+		return "employee/empSearch";
 	}
 	
 	//프로필변경
 	@ResponseBody
 	@RequestMapping("updateImg.do")
-	public String updateImg(HttpSession session,
-							HttpServletRequest request,
+	public String updateImg(HttpServletRequest request,
 							@RequestParam("empNo")String empNo,
 							@RequestParam(name="file", required=false) MultipartFile file) {
 		
@@ -209,7 +228,7 @@ public class EmployeeController {
 		System.out.println(file.getOriginalFilename());
 
 		Attachment attachment = null;
-		
+		//attachment에 파일을 저장
 		attachment = saveFile(file, request);
 		attachment.setEmpNo(empNo);
 		
@@ -219,11 +238,10 @@ public class EmployeeController {
 		return attachment.getOriginName();
 	}
 	
-	//프로필변경
+	//프로필삭제(기본이미지user.jpg로 변경)
 	@ResponseBody
 	@RequestMapping("deleteImg.do")
-	public String deleteImg(HttpSession session,
-							HttpServletRequest request,
+	public String deleteImg(HttpServletRequest request,
 							@RequestParam("empNo")String empNo,
 							@RequestParam(name="file", required=false) MultipartFile file) {
 
@@ -277,4 +295,34 @@ public class EmployeeController {
 		
 		deleteFile.delete();
 	}
+	
+	//내 연차조회
+	@RequestMapping("timeOff.do")
+	public String timeOff(@RequestParam(value="currentPage", defaultValue="1")int currentPage,
+						  HttpSession session, Model model) {
+		Employee loginUser = (Employee)session.getAttribute("loginUser");
+		int empNo = loginUser.getEmpNo();
+		
+		//페이징 처리
+		int listCount = employeeService.selectListCount(empNo);
+		int listLimit = 5;
+		int pageLimit = 10;
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, listLimit);
+		
+		//연차개수 조회
+		TimeOff timeOff = employeeService.selectTimeOff(empNo);
+		
+		// 연차내역 조회
+		//연차내역 조회하면서 승인된 결재가 있으면 쿼리(update)
+		ArrayList<TimeOffContent> timeOffList = employeeService.selectTimeOffContent(empNo, pi);
+		
+		model.addAttribute("timeOff", timeOff); //연차개수
+		model.addAttribute("timeOffList", timeOffList);//연차내역
+		model.addAttribute("pi", pi);//페이징
+		
+		return "employee/empTimeOff";
+	}
+	
+
+	
 }
