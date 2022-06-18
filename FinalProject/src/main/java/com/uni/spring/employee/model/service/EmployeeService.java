@@ -50,6 +50,8 @@ public interface EmployeeService {
 
 	int selectListCount(int empNo);
 
+	void updateWorkStatusE(int empNo);
 
+//	void updateWorkStatusL(int empNo);
 
 }
