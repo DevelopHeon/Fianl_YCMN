@@ -4,13 +4,19 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.uni.spring.common.dto.Attachment;
+import com.uni.spring.mail.model.dto.Mail;
 
 @Repository
 public class MailDao {
-
-	public int insertMail(SqlSessionTemplate sqlSession, Attachment attachment) {
-		return sqlSession.insert("mailMapper.insertMail", attachment);
-
+	//메일 insert
+	public int insertMail(SqlSessionTemplate sqlSession, Mail mail) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("mailMapper.insertMail", mail);
+	}
+	//메일 첨부파일 insert
+	public int insertAttachment(SqlSessionTemplate sqlSession, Attachment attachment) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("mailMapper.insertAttachment", attachment);
 	}
 
 }

@@ -49,7 +49,7 @@
                   <form action="insertMail.do" id="insertMail" role="form-horizontal" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                       <label for="subject" class="">제목:</label>
-                      <input type="text" name="mailTitle" tabindex="1" id="subject" class="form-control">
+                      <input type="text" name="mailTitle" tabindex="1" id="subject" class="form-control" required>
                     </div>
                     <div class="form-group" style="display:none">
                       <label for="writer" class="">발신인</label>
@@ -91,7 +91,7 @@ ${loginUser.empPhone}
                     </div>
                     <div class="compose-btn">
                       <button class="btn btn-theme btn-sm"><i class="fa fa-check"></i> 보내기</button>
-                      <button type="button" class="btn btn-sm" onclick="location.href='main.do'"><i class="fa fa-times"></i> 취소하기</button>
+                      <button type="button" class="goMain btn btn-sm" onclick="goMain();"><i class="fa fa-times"></i> 취소하기</button>
                     </div>
                   </form>
                 </div>
@@ -108,7 +108,20 @@ ${loginUser.empPhone}
     <div class="modal fade" id="addressModal">
 		<jsp:include page="addressListModal.jsp"/>
 	</div>
-    
+    <script>
+	function goMain(){
+
+		var goMain = confirm("메인으로 돌아가시겠습니까? (메일은 저장되지 않습니다)");
+		
+		if(goMain){
+			location.href='main.do';
+		}
+
+		
+		
+	}
+    	
+    </script>
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="lib/jquery/jquery.min.js"></script>
   <script src="lib/bootstrap/js/bootstrap.min.js"></script>
