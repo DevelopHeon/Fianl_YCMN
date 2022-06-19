@@ -43,11 +43,7 @@
                   </h4>
               </header>
               <div class="panel-body">
-                <div class="compose-btn pull-right">
-                  <button class="btn btn-theme btn-sm"><i class="fa fa-check"></i> Send</button>
-                  <button class="btn btn-sm"><i class="fa fa-times"></i> Discard</button>
-                  <button class="btn btn-sm">Draft</button>
-                </div>
+
                 <div class="compose-mail">
                 
                   <form action="insertMail.do" id="insertMail" role="form-horizontal" method="post" enctype="multipart/form-data">
@@ -61,45 +57,41 @@
                     </div>
                     <div class="form-group">
                       <label for="to" class="">수신:</label>
-                      <input type="text" tabindex="1" name="mailTo" class="form-control">
-                      <a class="btn-primary" data-toggle="modal" data-target="#exampleModal" style="font-size:30px">+</a>
+                      <span id="mailTo"></span>
+                      <a class="btn-primary" onclick="selectApprover(1, '${loginUser.empNo}')"  data-toggle="modal" data-target="#addressModal" style="font-size:30px">+</a>
 
                       <div class="compose-options">
-                        <a onclick="$(this).hide(); $('#cc').parent().removeClass('hidden'); $('#cc').focus();" href="javascript:;">Cc</a>
-                        <a onclick="$(this).hide(); $('#bcc').parent().removeClass('hidden'); $('#bcc').focus();" href="javascript:;">Bcc</a>
+                        <a onclick="$(this).hide(); $('#mailRef').parent().removeClass('hidden'); $('#mailRef').focus();" href="javascript:;">Cc</a>
+                        <a onclick="$(this).hide(); $('#mailSec').parent().removeClass('hidden'); $('#mailSec').focus();" href="javascript:;">Bcc</a>
                       </div>
                     </div>
                     <div class="form-group hidden">
                       <label for="cc" class="">참조:</label>
-                      <input type="text" tabindex="2" name="mailRef" id="cc" class="form-control">
-                      <a class="btn-primary" data-toggle="modal" data-target="#exampleModa2" style="font-size:30px">+</a>
+                      <span id="mailRef"></span>
+                      <a class="btn-primary" onclick="selectApprover(2, '${loginUser.empNo}')"  data-toggle="modal" data-target="#addressModal" style="font-size:30px">+</a>
                     </div>
                     <div class="form-group hidden">
                       <label for="bcc" class="">비밀참조:</label>
-                      <input type="text" tabindex="2" name="mailSec" id="bcc" class="form-control">
-                      <a class="btn-primary" data-toggle="modal" data-target="#exampleModa3" style="font-size:30px">+</a>
+                      <span id="mailSec"></span>
+                      <a class="btn-primary" onclick="selectApprover(3, '${loginUser.empNo}')"  data-toggle="modal" data-target="#addressModal" style="font-size:30px">+</a>
                     </div>
 
                     <div class="compose-editor">
                       <textarea class="wysihtml5 form-control" name="mailContent" rows="9">
-                      
-                      
-                      
 
 
-              
+
 ${loginUser.empName} / ${loginUser.posName} / ${loginUser.depName}
 ${loginUser.empPhone}
                       </textarea>
                      </div>
                      <div class="form-group">
-                      <label for="upfile" class="">첨부파일:</label>
-                      <input type="file" class="upfile" name="fileName" >
+                      <label for="file" class="">첨부파일:</label>
+                      <input type="file" class="file" name="upfile" >
                     </div>
                     <div class="compose-btn">
-                      <button class="btn btn-theme btn-sm"><i class="fa fa-check"></i> Send</button>
-                      <button class="btn btn-sm"><i class="fa fa-times"></i> Discard</button>
-                      <button class="btn btn-sm">Draft</button>
+                      <button class="btn btn-theme btn-sm"><i class="fa fa-check"></i> 보내기</button>
+                      <button type="button" class="btn btn-sm" onclick="location.href='main.do'"><i class="fa fa-times"></i> 취소하기</button>
                     </div>
                   </form>
                 </div>
@@ -113,49 +105,10 @@ ${loginUser.empPhone}
     <!-- /MAIN CONTENT -->
     <!--main content end-->
     <!-- 수신 모달 -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  	<div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">수신</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-         <form action="#">
-            <div class="input-append">
-              <input type="text" class="form-control " placeholder="Search">
-            </div>
-         </form>
-         <div>
-         <input type="text" name="searchTo">
-         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+    <div class="modal fade" id="addressModal">
+		<jsp:include page="addressListModal.jsp"/>
+	</div>
     
-   <script>
-   
-   	$(function(){
-   		
-   		const $toMail = $("#enrollMail input[name=toMail]");
-   		
-   		$toMail.keyup(function(){
-   			
-   			if($toMail.val().length >= 1){
-   				
-   			}
-   		})
-   	})
-   
-   
-   </script>
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="lib/jquery/jquery.min.js"></script>
   <script src="lib/bootstrap/js/bootstrap.min.js"></script>
