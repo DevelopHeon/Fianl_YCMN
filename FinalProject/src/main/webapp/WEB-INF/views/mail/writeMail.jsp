@@ -49,14 +49,19 @@
                   <button class="btn btn-sm">Draft</button>
                 </div>
                 <div class="compose-mail">
-                  <form action="enrollMail.do" id="enrollMail" role="form-horizontal" method="post" enctype="multipart/form-data">
+                
+                  <form action="insertMail.do" id="insertMail" role="form-horizontal" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                       <label for="subject" class="">제목:</label>
-                      <input type="text" tabindex="1" id="subject" class="form-control">
+                      <input type="text" name="mailTitle" tabindex="1" id="subject" class="form-control">
+                    </div>
+                    <div class="form-group" style="display:none">
+                      <label for="writer" class="">발신인</label>
+                      <input type="text" value="${ loginUser.empNo }" name="empNo" tabindex="1" id="empNo" class="form-control">
                     </div>
                     <div class="form-group">
                       <label for="to" class="">수신:</label>
-                      <input type="text" tabindex="1" name="toMail" class="form-control">
+                      <input type="text" tabindex="1" name="mailTo" class="form-control">
                       <a class="btn-primary" data-toggle="modal" data-target="#exampleModal" style="font-size:30px">+</a>
 
                       <div class="compose-options">
@@ -66,21 +71,30 @@
                     </div>
                     <div class="form-group hidden">
                       <label for="cc" class="">참조:</label>
-                      <input type="text" tabindex="2" id="cc" class="form-control">
+                      <input type="text" tabindex="2" name="mailRef" id="cc" class="form-control">
                       <a class="btn-primary" data-toggle="modal" data-target="#exampleModa2" style="font-size:30px">+</a>
                     </div>
                     <div class="form-group hidden">
                       <label for="bcc" class="">비밀참조:</label>
-                      <input type="text" tabindex="2" id="bcc" class="form-control">
+                      <input type="text" tabindex="2" name="mailSec" id="bcc" class="form-control">
                       <a class="btn-primary" data-toggle="modal" data-target="#exampleModa3" style="font-size:30px">+</a>
                     </div>
 
                     <div class="compose-editor">
-                      <textarea class="wysihtml5 form-control" rows="9"></textarea>
+                      <textarea class="wysihtml5 form-control" name="mailContent" rows="9">
+                      
+                      
+                      
+
+
+              
+${loginUser.empName} / ${loginUser.posName} / ${loginUser.depName}
+${loginUser.empPhone}
+                      </textarea>
                      </div>
                      <div class="form-group">
                       <label for="upfile" class="">첨부파일:</label>
-                      <input type="file" class="upfile">
+                      <input type="file" class="upfile" name="fileName" >
                     </div>
                     <div class="compose-btn">
                       <button class="btn btn-theme btn-sm"><i class="fa fa-check"></i> Send</button>
