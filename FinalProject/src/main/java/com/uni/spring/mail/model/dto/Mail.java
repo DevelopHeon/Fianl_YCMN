@@ -21,7 +21,6 @@ public class Mail {
 	private int mailTo; //수신인
 	private int mailRef; //참조인
 	private int mailSec; //비밀참조인
-	private int fileNo; //파일번호
 	private String fileName; //파일명
 	private Date timestamp; //작성날짜
 	private String mailContent; //메일내용
