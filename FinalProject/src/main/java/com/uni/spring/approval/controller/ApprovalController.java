@@ -280,12 +280,11 @@ public class ApprovalController {
 		return "approval"+viewName;
 	}
 	
+	// 결재 승인 메소드 로그인한 유저의 네임을 받아서 승인자란에 들어가있는 회원이름과 비교한다.
 	@RequestMapping("approve.do")
 	public ModelAndView updateFirstApprove(Approval approval,
 			@RequestParam("approverConfirm") String appCf, ModelAndView mv) {
 		
-		System.out.println(approval.toString());
-		System.out.println("종류: " + approval.getAppKinds());
 		int appNo = approval.getAppNo();
 		
 		if(approval.getFirstApprover().equals(appCf)) {
@@ -293,6 +292,18 @@ public class ApprovalController {
 		}else {
 			approvalService.updateLastApprove(appNo);
 		}
+		
+		mv.addObject("appNo", approval.getAppNo()).addObject("appKinds", approval.getAppKinds()).
+		setViewName("redirect:detailApproval.do");
+		return mv;
+	}
+	
+	// 반려 처리 메소드
+	@RequestMapping("insertRejecter.do")
+	public ModelAndView insertRejecter(Approval approval, ModelAndView mv) {
+		
+		System.out.println("확인 : " + approval.getFirstApprovalDate().length());
+		approvalService.insertRejecter(approval);
 		
 		mv.addObject("appNo", approval.getAppNo()).addObject("appKinds", approval.getAppKinds()).
 		setViewName("redirect:detailApproval.do");
