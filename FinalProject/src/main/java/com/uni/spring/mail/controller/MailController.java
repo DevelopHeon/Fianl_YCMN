@@ -3,6 +3,7 @@ package com.uni.spring.mail.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +17,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.uni.spring.common.CommException;
+import com.uni.spring.common.Pagination;
 import com.uni.spring.common.dto.Attachment;
+import com.uni.spring.common.dto.PageInfo;
+import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.mail.model.dto.Mail;
+import com.uni.spring.mail.model.dto.ReceiveMail;
 import com.uni.spring.mail.model.service.MailService;
 
 import lombok.RequiredArgsConstructor;
@@ -99,9 +104,18 @@ public class MailController {
 	
 	//보낸메일함
 	@RequestMapping("sendMail.do")
-	public String sendMail() {
+	public String sendMail(@RequestParam(value="currentPage", defaultValue="1")int currentPage,
+						   HttpSession session,
+						   Model model) {
+		Employee loginUser = (Employee)session.getAttribute("loginUser");
+		int empNo = loginUser.getEmpNo();
 		
+		int listCount = mailService.selectSendListCount();
+		int boardLimit = 5;
+		int pageLimit = 10;
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
+		ArrayList<ReceiveMail> sendList = mailService.selectSendList(empNo, pi);
 		return "mail/sendMail";
 	}
 	

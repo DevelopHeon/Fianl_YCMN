@@ -15,4 +15,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INTO SENDMAIL VALUES(SEQ_MAIL.CURRVAL, #{empNo}, SYSDATE, DEFAULT)
 		SELECT * FROM DUAL
 	</insert>
+	<!-- 보낸메일List 페이지 수 -->
+	<select id="selectSendListCount" resultType="_int">
+		SELECT COUNT(*) FROM RECEIVEMAIL WHERE EMP_NO = #{empNo}
+	</select>
+	
+	<!-- 보낸메일 List -->
+	<select id="selectSendList" resultMap="ReceiveMail">
+	
+	</select>
 </mapper>
