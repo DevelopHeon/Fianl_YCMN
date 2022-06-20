@@ -179,7 +179,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM TIMEOFFCONTENT WHERE EMP_NO = #{empNo} ORDER BY TIMEOFFCONTENT_NO
 	</select>
 	
-	<!-- 현재 연차 페이지 수? -->
+	<!-- 연차 페이지 수? -->
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*) FROM TIMEOFFCONTENT WHERE EMP_NO = #{empNo}
 	</select>

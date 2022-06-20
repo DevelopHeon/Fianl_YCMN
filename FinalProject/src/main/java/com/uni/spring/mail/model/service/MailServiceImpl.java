@@ -1,12 +1,16 @@
 package com.uni.spring.mail.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.dto.Attachment;
+import com.uni.spring.common.dto.PageInfo;
 import com.uni.spring.mail.model.dao.MailDao;
 import com.uni.spring.mail.model.dto.Mail;
+import com.uni.spring.mail.model.dto.ReceiveMail;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +35,17 @@ public class MailServiceImpl implements MailService {
 			System.out.println("메일 작성 성공");
 		}
 		
+	}
+	//보낸메일함List 페이지 수
+	@Override
+	public int selectSendListCount() {
+		return mailDao.selectSendListCount(sqlSession);
+	}
+	//보낸메일함List
+	@Override
+	public ArrayList<ReceiveMail> selectSendList(int empNo, PageInfo pi) {
+		
+		return mailDao.selectSendList(sqlSession, empNo, pi);
 	}
 
 }
