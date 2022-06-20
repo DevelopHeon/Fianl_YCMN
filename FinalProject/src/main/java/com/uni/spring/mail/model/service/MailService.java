@@ -11,8 +11,16 @@ public interface MailService {
 
 	void insertMail(Mail mail, Attachment attachment);
 
-	int selectSendListCount();
+	int selectSendListCount(int empNo);
 
 	ArrayList<ReceiveMail> selectSendList(int empNo, PageInfo pi);
+
+	void updateTrashMail(int receiveNo);
+
+	ArrayList<ReceiveMail> selectDeleteList(int empNo);
+
+	int selectReceiveListCount(int empNo);
+
+	ArrayList<ReceiveMail> selectReceiveList(int empNo, PageInfo pi);
 
 }

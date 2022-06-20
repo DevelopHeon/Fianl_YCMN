@@ -24,7 +24,7 @@ public class Mail {
 	private String fileName; //파일명
 	private Date timestamp; //작성날짜
 	private String mailContent; //메일내용
-	private String status; //메일상태
+	private String status; //메일상태(Y,N:삭제)
 	private String category; //분류번호
 
 }

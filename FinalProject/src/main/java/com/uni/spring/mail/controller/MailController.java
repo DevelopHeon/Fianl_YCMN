@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -107,29 +108,70 @@ public class MailController {
 	public String sendMail(@RequestParam(value="currentPage", defaultValue="1")int currentPage,
 						   HttpSession session,
 						   Model model) {
+		
 		Employee loginUser = (Employee)session.getAttribute("loginUser");
 		int empNo = loginUser.getEmpNo();
-		
-		int listCount = mailService.selectSendListCount();
+		//보낸메일함 페이징처리
+		int listCount = mailService.selectSendListCount(empNo);
 		int boardLimit = 5;
 		int pageLimit = 10;
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-		
+		//보낸메일함 리스트(수신,참조,비참까지 다 보이게)
 		ArrayList<ReceiveMail> sendList = mailService.selectSendList(empNo, pi);
+		
+		model.addAttribute("sendList", sendList);
+		model.addAttribute("pi", pi);
+
 		return "mail/sendMail";
 	}
 	
 	
 	//받은메일함
 	@RequestMapping("receiveMail.do")
-	public String receiveMail() {
+	public String receiveMail(@RequestParam(value="currentPage", defaultValue="1")int currentPage,
+			   				  HttpSession session,
+			   				  Model model) {
+		
+		Employee loginUser = (Employee)session.getAttribute("loginUser");
+		int empNo = loginUser.getEmpNo();
+		//받은메일함 페이징처리
+		int listCount = mailService.selectReceiveListCount(empNo);
+		int boardLimit = 5;
+		int pageLimit = 10;
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		//받은메일함 리스트
+		ArrayList<ReceiveMail> receiveList = mailService.selectReceiveList(empNo, pi);
+		
+		model.addAttribute("receiveList", receiveList);
+		model.addAttribute("pi", pi);
+
+		
 		return "mail/receiveMail";
 	}
 
 	//휴지통
 	@RequestMapping("deleteMail.do")
-	public String deleteMail() {
+	public String deleteMail(HttpSession session,
+							 Model model) {
+		Employee loginUser = (Employee)session.getAttribute("loginUser");
+		int empNo = loginUser.getEmpNo();
+
+		ArrayList<ReceiveMail> trashMail = mailService.selectDeleteList(empNo);
+		
+		model.addAttribute("trashMail",trashMail);
+		
 		return "mail/deleteMail";
+	}
+	//보낸메일 삭제
+	@RequestMapping("deleteTrashMail.do")
+	public String deleteTrashMail(@RequestParam("checkNo")List<Integer> list,
+								  Model model) {
+		
+		for(int receiveNo : list) {
+			System.out.println(list);
+			mailService.updateTrashMail(receiveNo);
+		}
+		return "redirect:sendMail.do";
 	}
 
 }
