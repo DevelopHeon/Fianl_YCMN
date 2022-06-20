@@ -38,14 +38,42 @@ public class MailServiceImpl implements MailService {
 	}
 	//보낸메일함List 페이지 수
 	@Override
-	public int selectSendListCount() {
-		return mailDao.selectSendListCount(sqlSession);
+	public int selectSendListCount(int empNo) {
+		return mailDao.selectSendListCount(sqlSession, empNo);
 	}
+	
 	//보낸메일함List
 	@Override
 	public ArrayList<ReceiveMail> selectSendList(int empNo, PageInfo pi) {
-		
 		return mailDao.selectSendList(sqlSession, empNo, pi);
 	}
+	
+	//보낸메일함List 삭제
+	@Override
+	public void updateTrashMail(int receiveNo) {
+		int result = mailDao.updateTrashMail(sqlSession, receiveNo);
+		if(result < 0) {
+			throw new CommException("보낸메일 삭제 실패");
+		}	
+	}
+	
+	//휴지통 List
+	@Override
+	public ArrayList<ReceiveMail> selectDeleteList(int empNo) {
+		return mailDao.selectDeleteList(sqlSession, empNo);
+	}
+	
+	//받은 메일함 List 페이지
+	@Override
+	public int selectReceiveListCount(int empNo) {
+		return mailDao.selectReceiveListCount(sqlSession, empNo);
+	}
+	
+	//받은 메일함 List
+	@Override
+	public ArrayList<ReceiveMail> selectReceiveList(int empNo, PageInfo pi) {
+		return mailDao.selectReceiveList(sqlSession, empNo, pi);
+	}
+
 
 }

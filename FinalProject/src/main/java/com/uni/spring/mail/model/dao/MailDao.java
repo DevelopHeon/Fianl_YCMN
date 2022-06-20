@@ -22,8 +22,8 @@ public class MailDao {
 		return sqlSession.insert("mailMapper.insertAttachment", attachment);
 	}
 	//보낸메일List 페이지 수
-	public int selectSendListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("mailMapper.selectSendListCount");
+	public int selectSendListCount(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("mailMapper.selectSendListCount", empNo);
 	}
 	//보낸메일List
 	public ArrayList<ReceiveMail> selectSendList(SqlSessionTemplate sqlSession, int empNo, PageInfo pi) {
@@ -31,6 +31,26 @@ public class MailDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("mailMapper.selectSendList", empNo, rowBounds);
+	}
+	//보낸메일List 삭제
+	public int updateTrashMail(SqlSessionTemplate sqlSession, int receiveNo) {
+		return sqlSession.update("mailMapper.updateTrashMail", receiveNo);
+
+	}
+	//휴지통List
+	public ArrayList<ReceiveMail> selectDeleteList(SqlSessionTemplate sqlSession, int empNo) {
+		return (ArrayList)sqlSession.selectList("mailMapper.selectDeleteList", empNo);
+	}
+	//받은메일List 페이지 수
+	public int selectReceiveListCount(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("mailMapper.selectReceiveListCount", empNo);
+	}
+	//받은메일List
+	public ArrayList<ReceiveMail> selectReceiveList(SqlSessionTemplate sqlSession, int empNo, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiveList", empNo, rowBounds);
 	}
 
 }

@@ -103,7 +103,7 @@
                 <ul class="pagination">
                 	<c:choose>
                 		<c:when test="${ pi.currentPage ne 1 }">
-                			<li class="page-item"><a class="page-link" href="listBoard.do?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+                			<li class="page-item"><a class="page-link" href="timeOff.do?currentPage=${ pi.currentPage-1 }">Previous</a></li>
                 		</c:when>
                 		<c:otherwise>
                 			<li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
@@ -113,7 +113,7 @@
                     <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
                     	<c:choose>
 	                		<c:when test="${ pi.currentPage ne p }">
-                    			<li class="page-item"><a class="page-link" href="listBoard.do?currentPage=${ p }">${ p }</a></li>
+                    			<li class="page-item"><a class="page-link" href="timeOff.do?currentPage=${ p }">${ p }</a></li>
 	                		</c:when>
 	                		<c:otherwise>
 	                			<li class="page-item disabled"><a class="page-link" href="">${ p }</a></li>
@@ -124,10 +124,10 @@
                     
                     <c:choose>
                 		<c:when test="${ pi.currentPage ne pi.maxPage }">
-                			<li class="page-item"><a class="page-link" href="listBoard.do?currentPage=${ pi.currentPage+1 }">Next</a></li>
+                			<li class="page-item"><a class="page-link" href="timeOff.do?currentPage=${ pi.currentPage+1 }">Next</a></li>
                 		</c:when>
                 		<c:otherwise>
-                			<li class="page-item disabled"><a class="page-link" href="listBoard.do?currentPage=${ pi.currentPage+1 }">Next</a></li>
+                			<li class="page-item disabled"><a class="page-link" href="timeOff.do?currentPage=${ pi.currentPage+1 }">Next</a></li>
                 		</c:otherwise>
                 	</c:choose>
                 </ul>
