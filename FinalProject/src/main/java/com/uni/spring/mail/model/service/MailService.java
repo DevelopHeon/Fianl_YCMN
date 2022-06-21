@@ -23,4 +23,12 @@ public interface MailService {
 
 	ArrayList<ReceiveMail> selectReceiveList(int empNo, PageInfo pi);
 
+	ReceiveMail selectReceiveMail(int receiveNo);
+
+	void updateTrashRMail(int receiveNo);
+
+	ReceiveMail selectSendMail(int mailNo);
+
+	void updateTrashSMail(int mailNo);
+
 }

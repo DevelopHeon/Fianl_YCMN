@@ -145,7 +145,7 @@
 		})
 		
 	}
-	
+	//체크된 메일이 없는데 삭제버튼을 누를경우
 	function trashMail(){
 		if($('input[name=checkNo]:checked').length < 1){
 			alert('삭제할 메일을 선택하세요.')
@@ -156,8 +156,13 @@
 			$("#trashMail").submit();
 		}
 	}
-	
-
+	//글제목을 클릭해서 메일보기
+	$(function(){
+		$("#receiveMailList tbody tr").click(function(){
+			var mno = $(this).children().eq(0).find("input").val();
+			location.href="detailReceiveMail.do?mno="+mno;
+		})
+	})
 </script>
     <!-- /MAIN CONTENT -->
     <!--main content end-->

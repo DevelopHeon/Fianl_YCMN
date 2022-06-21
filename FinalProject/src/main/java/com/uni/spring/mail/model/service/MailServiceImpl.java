@@ -48,7 +48,7 @@ public class MailServiceImpl implements MailService {
 		return mailDao.selectSendList(sqlSession, empNo, pi);
 	}
 	
-	//보낸메일함List 삭제
+	//보낸메일함List에서 삭제
 	@Override
 	public void updateTrashMail(int receiveNo) {
 		int result = mailDao.updateTrashMail(sqlSession, receiveNo);
@@ -73,6 +73,42 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public ArrayList<ReceiveMail> selectReceiveList(int empNo, PageInfo pi) {
 		return mailDao.selectReceiveList(sqlSession, empNo, pi);
+	}
+	
+	//받은 메일 조회
+	@Override
+	public ReceiveMail selectReceiveMail(int receiveNo) {
+		ReceiveMail mail = null;
+		
+		int result = mailDao.increaseCount(sqlSession, receiveNo);
+		if(result < 0) {
+			throw new CommException("메일 카운팅 실패");
+		}else {
+			//카운팅 후 메일확인
+			mail = mailDao.selectReceiveMail(sqlSession, receiveNo);
+		}
+		return mail;
+	}
+	//받은메일조회에서 삭제
+	@Override
+	public void updateTrashRMail(int receiveNo) {
+		int result = mailDao.updateTrashRMail(sqlSession, receiveNo);
+		if(result < 0) {
+			throw new CommException(receiveNo + "번 메일 수신자 삭제 실패");
+		}	
+	}
+	//보낸 메일 조회
+	@Override
+	public ReceiveMail selectSendMail(int mailNo) {
+		return mailDao.selectSendMail(sqlSession, mailNo);
+	}
+	//보낸메일조회에서 삭제
+	@Override
+	public void updateTrashSMail(int mailNo) {
+		int result = mailDao.updateTrashSMail(sqlSession, mailNo);
+		if(result < 0) {
+			throw new CommException(mailNo + "번 메일 발신자 삭제 실패");
+		}	
 	}
 
 

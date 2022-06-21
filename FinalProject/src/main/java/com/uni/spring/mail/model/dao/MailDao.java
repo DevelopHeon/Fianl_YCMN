@@ -52,5 +52,25 @@ public class MailDao {
 		
 		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiveList", empNo, rowBounds);
 	}
+	//받은메일 조회 카운팅
+	public int increaseCount(SqlSessionTemplate sqlSession, int receiveNo) {
+		return sqlSession.update("mailMapper.increaseCount", receiveNo);
+	}
+	//받은메일 조회
+	public ReceiveMail selectReceiveMail(SqlSessionTemplate sqlSession, int receiveNo) {
+		return sqlSession.selectOne("mailMapper.selectReceiveMail", receiveNo);
+	}
+	//받은메일조회에서 삭제
+	public int updateTrashRMail(SqlSessionTemplate sqlSession, int receiveNo) {
+		return sqlSession.update("mailMapper.updateTrashRMail", receiveNo);
+	}
+	//보낸메일 조회
+	public ReceiveMail selectSendMail(SqlSessionTemplate sqlSession, int mailNo) {
+		return sqlSession.selectOne("mailMapper.selectSendMail", mailNo);
+	}
+	//보낸메일조회에서 삭제
+	public int updateTrashSMail(SqlSessionTemplate sqlSession, int mailNo) {
+		return sqlSession.update("mailMapper.updateTrashSMail", mailNo);
+	}
 
 }
