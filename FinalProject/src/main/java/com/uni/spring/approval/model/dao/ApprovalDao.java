@@ -114,4 +114,20 @@ public class ApprovalDao {
 	public int insertRejecter(SqlSessionTemplate sqlSession, Approval approval) {
 		return sqlSession.update("approvalMapper.insertRejecter", approval);
 	}
+
+	public int updateApproval(SqlSessionTemplate sqlSession, Approval approval) {
+		return sqlSession.update("approvalMapper.updateApproval", approval);
+	}
+
+	public int updateAttachment(SqlSessionTemplate sqlSession, Attachment attachment) {
+		return sqlSession.update("approvalMapper.updateAttachment", attachment);
+	}
+
+	public int updateApprovalRp(SqlSessionTemplate sqlSession, ApprovalReport approvalReport) {
+		return sqlSession.update("approvalMapper.updateApprovalRp", approvalReport);
+	}
+
+	public int updateApprovalLv(SqlSessionTemplate sqlSession, ApprovalLeave approvalLeave) {
+		return sqlSession.update("approvalMapper.updateApprovalLv", approvalLeave);
+	}
 }

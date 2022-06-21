@@ -125,7 +125,8 @@ public class ApprovalController {
 	}
 	
 	@RequestMapping("insertReportApproval.do")
-	public String insertReportApproval(@Valid Approval approval, BindingResult result, HttpServletRequest request,
+	public String insertReportApproval(@Valid
+			 Approval approval, BindingResult result, HttpServletRequest request,
 			@RequestParam(name="uploadFile", required=false) MultipartFile file, HttpSession session) {
 		
 		if(result.hasErrors()) {
@@ -308,5 +309,98 @@ public class ApprovalController {
 		mv.addObject("appNo", approval.getAppNo()).addObject("appKinds", approval.getAppKinds()).
 		setViewName("redirect:detailApproval.do");
 		return mv;
+	}
+	
+	// 수정화면 전환 메소드
+	@RequestMapping("updateFormApproval.do")
+	public String updateFormApproval(int appNo, Model model, String appKinds) {
+		
+		ApprovalMap appMap = approvalService.selectApproval(appNo, appKinds);
+		String viewName = "";
+		Attachment at = approvalService.selectAppAttachment(appNo);
+		appMap.setAttachment(at);
+		
+		if(appKinds.equals("2")) {
+			// 여러개의 증빙내역 배열로 받아서 model 객체에 담아준다.
+			ArrayList<ApprovalErs> appErs = approvalService.selectAppErs(appNo);
+			model.addAttribute("list", appErs);
+			viewName = "/approvalErUpdateForm";
+		}else if(appKinds.equals("3")) {
+			viewName = "/approvalLvUpdateForm";
+		}else if(appKinds.equals("4")) {
+			viewName = "/approvalRpUpdateForm";
+		}
+		System.out.println("조회내용" + appMap.getApproval().toString());
+		model.addAttribute("appMap", appMap); 
+		
+		return "approval"+viewName;
+	}
+	
+	// report approval 업데이트 메소드
+	@RequestMapping("updateApprovalReport.do")
+	public ModelAndView updateApprovalRp(Approval approval, ModelAndView mv, HttpServletRequest request,
+			@RequestParam(name="reUploadFile", required=false) MultipartFile file) {
+		
+		approval.getApprovalReport().setAppNo(approval.getAppNo());
+		
+		Attachment attachment = null;
+		// 새로운 첨부파일이 존재할 경우 첨부파일 등록 
+		if(!file.getOriginalFilename().equals("")) {
+			attachment = saveFile(file, request);
+			
+			if(attachment != null) {
+				attachment.setEmpNo(approval.getAppWriterNo());
+				attachment.setRefNo(approval.getAppNo());
+			}
+		}
+		
+		String orgChangeName = approval.getAttachment().getChangeName();
+		// 기존에 첨부파일이 존재할경우 기존파일 삭제
+		if(orgChangeName != null) {
+			deleteFile(orgChangeName, request);
+		}
+		approvalService.updateApprovalRp(approval, attachment);
+		
+		mv.addObject("appNo", approval.getAppNo()).addObject("appKinds", approval.getAppKinds())
+					.setViewName("redirect:detailApproval.do");
+		return mv;
+	}
+	
+	@RequestMapping("updateApprovalLeave.do")
+	public ModelAndView updateApprovalLv(Approval approval, ModelAndView mv, HttpServletRequest request,
+			@RequestParam(name="reUploadFile", required=false) MultipartFile file) {
+		
+		approval.getApprovalLeave().setAppNo(approval.getAppNo());
+		
+		Attachment attachment = null;
+		if(!file.getOriginalFilename().equals("")) {
+			attachment = saveFile(file, request);
+			
+			if(attachment != null) {
+				attachment.setEmpNo(approval.getAppWriterNo());
+				attachment.setRefNo(approval.getAppNo());
+			}
+		}
+		
+		String orgChangeName = approval.getAttachment().getChangeName();
+		if(orgChangeName != null) {
+			deleteFile(orgChangeName, request);
+		}
+		approvalService.updateApprovalLv(approval, attachment);
+		
+		mv.addObject("appNo", approval.getAppNo()).addObject("appKinds", approval.getAppKinds())
+		.setViewName("redirect:detailApproval.do");
+		return mv;
+	}
+	
+	// 첨부파일 삭제 메소드 공통으로 사용하기위해 메소드로 선언
+	private void deleteFile(String orgChangeName, HttpServletRequest request) {
+		String resources = request.getSession().getServletContext().getRealPath("resources");
+		
+		String savePath = resources + "\\appUpload_files\\";
+		
+		File deleteFile = new File(savePath + orgChangeName);
+		
+		deleteFile.delete();
 	}
 }

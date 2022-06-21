@@ -260,7 +260,7 @@
 							console.log(firstApprover, lastApprover);
 							
 							if(num == 1){
-								postForm.attr("action", "updateFormBoard.do");
+								postForm.attr("action", "updateFormApproval.do");
 							}else if(num ==2){
 								postForm.attr("action", "deleteBoard.do");
 							}else if(num == 3){
