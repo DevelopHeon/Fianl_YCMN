@@ -153,7 +153,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 		}
 		
 	}
-
+	
 	@Override
 	public void updateLastApprove(int appNo) {
 		int result = approvalDao.updateLastApprove(sqlSession, appNo);
@@ -173,5 +173,4 @@ public class ApprovalServiceImpl implements ApprovalService {
 			throw new CommException("반려 처리에 실패하였습니다.");
 		}
 	}
-
 }
