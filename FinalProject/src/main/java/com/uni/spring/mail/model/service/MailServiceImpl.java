@@ -24,7 +24,7 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public void insertMail(Mail mail, Attachment attachment) {
 		
-		int resultA = 1; //일단 1 첨부파일이 있다면 25행 로직 탐
+		int resultA = 1; //일단 1 첨부파일이 있다면 29행 로직 탐
 		int resultM = mailDao.insertMail(sqlSession, mail);
 		if(attachment != null) {
 			resultA = mailDao.insertAttachment(sqlSession, attachment);

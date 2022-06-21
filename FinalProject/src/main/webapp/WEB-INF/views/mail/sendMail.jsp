@@ -48,6 +48,14 @@
               <div class="panel-body minimal">
                 <div class="table-inbox-wrap ">
                 	<form id="trashMail" action="deleteTrashMail.do" method="post">
+                	<!-- 보낸메일이 없을 경우 -->
+                	<c:if test="${empty sendList}">
+                	 <table class="table table-inbox table-hover centered">
+                	 	<tr>
+                	 		<td>보낸 메일이 없습니다.</td>
+                	 	</tr>
+                	 </table>
+                	</c:if>
                 	<c:if test="${!empty sendList}">
 						<input type="checkbox" name="checkNo" value="1" class="btn btn-group" onclick="selectAll(this);">전체 선택</button>
 						<button type="button" class="btn btn-group" id="deleteBtn" onclick="trashMail();"><i class="fa fa-trash-o"></i> 선택 삭제</button>
