@@ -91,7 +91,7 @@
 								<div class="hiddenInfo">
 									<input type="hidden" class="form-control" id="appWriterNo" name="appWriterNo" value="${ sessionScope.loginUser.empNo }">
 									<input type=hidden class="form-control" id="appKinds" name="appKinds" value="4">
-									<input type=hidden class="form-control" id="appKinds" name="appNo" value="${ appMap.approval.appNo }">
+									<input type=hidden class="form-control" id="appNo" name="appNo" value="${ appMap.approval.appNo }">
 								</div>
 								<br>
 								<hr>
@@ -104,17 +104,13 @@
 								<label for="reportIssue">특이사항 : </label>
 								<textarea class="form-control" name="approvalReport.reportIssue" id="reportIssue" rows="8" cols="52" style="resize:none; margin-left:2.5%; margin-top:2%;"><c:out value="${appMap.approvalReport.reportIssue}" /></textarea>
 								<br><br>
-								<%-- <div class="errorCode" style="margin-left:5%;">
-									<h3 style="color:red;"><form:errors path="firstApprover" /></h3>
-									<h3 style="color:red;"><form:errors path="lastApprover" /></h3>
-								</div> --%>
 								<b>* 보고서 서류 첨부 (첨부할 파일이 있는경우에만 추가)</b><br><br>
 								<input type="file" id="reUploadFile" name="reUploadFile" class="form-control" style="width:50%; height:3%;">
 								<c:if test="${ !empty appMap.attachment.originName  }">
 									<br><br><b> * 현재 첨부 파일 : ${ appMap.attachment.originName }</b><br>
+								</c:if>
 									<input type="hidden" name="attachment.changeName" value="${ appMap.attachment.changeName }">
 									<input type="hidden" name="attachment.originName" value="${ appMap.attachment.originName }">
-								</c:if>
 							</div>
 							<div class="btns" align="center" style="margin-top:5%;">
 							<button type="submit" id="erAppBtn" class="btn btn-primary btn-lg">수정하기</button>

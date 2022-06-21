@@ -125,7 +125,8 @@ public class ApprovalController {
 	}
 	
 	@RequestMapping("insertReportApproval.do")
-	public String insertReportApproval(@Valid Approval approval, BindingResult result, HttpServletRequest request,
+	public String insertReportApproval(@Valid
+			 Approval approval, BindingResult result, HttpServletRequest request,
 			@RequestParam(name="uploadFile", required=false) MultipartFile file, HttpSession session) {
 		
 		if(result.hasErrors()) {
@@ -337,16 +338,10 @@ public class ApprovalController {
 	
 	// report approval 업데이트 메소드
 	@RequestMapping("updateApprovalReport.do")
-	public ModelAndView updateApproval(Approval approval, ModelAndView mv, HttpServletRequest request,
+	public ModelAndView updateApprovalRp(Approval approval, ModelAndView mv, HttpServletRequest request,
 			@RequestParam(name="reUploadFile", required=false) MultipartFile file) {
 		
-		System.out.println(approval.toString());
-		System.out.println(approval.getApprovalReport().toString());
-		System.out.println(file.getOriginalFilename());
-//		System.out.println(approval.getAttachment().toString());
-//		String orgChangeName = approval.getAttachment().getChangeName();
-//		Attachment at = approvalService.selectAppAttachment(approval.getAppNo());
-//		System.out.println(orgChangeName + "기존파일명");
+		approval.getApprovalReport().setAppNo(approval.getAppNo());
 		
 		Attachment attachment = null;
 		// 새로운 첨부파일이 존재할 경우 첨부파일 등록 
@@ -355,8 +350,57 @@ public class ApprovalController {
 			
 			if(attachment != null) {
 				attachment.setEmpNo(approval.getAppWriterNo());
+				attachment.setRefNo(approval.getAppNo());
 			}
 		}
-		return null;
+		
+		String orgChangeName = approval.getAttachment().getChangeName();
+		// 기존에 첨부파일이 존재할경우 기존파일 삭제
+		if(orgChangeName != null) {
+			deleteFile(orgChangeName, request);
+		}
+		approvalService.updateApprovalRp(approval, attachment);
+		
+		mv.addObject("appNo", approval.getAppNo()).addObject("appKinds", approval.getAppKinds())
+					.setViewName("redirect:detailApproval.do");
+		return mv;
+	}
+	
+	@RequestMapping("updateApprovalLeave.do")
+	public ModelAndView updateApprovalLv(Approval approval, ModelAndView mv, HttpServletRequest request,
+			@RequestParam(name="reUploadFile", required=false) MultipartFile file) {
+		
+		approval.getApprovalLeave().setAppNo(approval.getAppNo());
+		
+		Attachment attachment = null;
+		if(!file.getOriginalFilename().equals("")) {
+			attachment = saveFile(file, request);
+			
+			if(attachment != null) {
+				attachment.setEmpNo(approval.getAppWriterNo());
+				attachment.setRefNo(approval.getAppNo());
+			}
+		}
+		
+		String orgChangeName = approval.getAttachment().getChangeName();
+		if(orgChangeName != null) {
+			deleteFile(orgChangeName, request);
+		}
+		approvalService.updateApprovalLv(approval, attachment);
+		
+		mv.addObject("appNo", approval.getAppNo()).addObject("appKinds", approval.getAppKinds())
+		.setViewName("redirect:detailApproval.do");
+		return mv;
+	}
+	
+	// 첨부파일 삭제 메소드 공통으로 사용하기위해 메소드로 선언
+	private void deleteFile(String orgChangeName, HttpServletRequest request) {
+		String resources = request.getSession().getServletContext().getRealPath("resources");
+		
+		String savePath = resources + "\\appUpload_files\\";
+		
+		File deleteFile = new File(savePath + orgChangeName);
+		
+		deleteFile.delete();
 	}
 }

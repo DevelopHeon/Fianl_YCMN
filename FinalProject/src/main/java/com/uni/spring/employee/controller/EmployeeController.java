@@ -21,11 +21,13 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.uni.spring.common.CommException;
+import com.uni.spring.common.Pagination;
 import com.uni.spring.common.dto.Attachment;
+import com.uni.spring.common.dto.PageInfo;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.TimeOff;
-import com.uni.spring.employee.model.dto.WorkingDay;
 import com.uni.spring.employee.model.dto.TimeOffContent;
+import com.uni.spring.employee.model.dto.WorkingDay;
 import com.uni.spring.employee.model.service.EmployeeService;
 
 import lombok.RequiredArgsConstructor;
@@ -102,6 +104,11 @@ public class EmployeeController {
 		Employee loginUser = (Employee)session.getAttribute("loginUser");
 		int empNo = loginUser.getEmpNo();
 		
+		//전날 미퇴근 출결이 있는지 업데이트(근무상태:조퇴)
+		employeeService.updateWorkStatusE(empNo);
+		//오늘 정상 출근했는지 업데이트(근무상태:지각)
+		employeeService.updateWorkStatusL(empNo);
+		
 		ArrayList<WorkingDay> working = employeeService.selectWorkingInfo(empNo);
 		
 		model.addAttribute("working", working);
@@ -122,7 +129,7 @@ public class EmployeeController {
 		w.setStartTime(startTime);
 		w.setEmpNo(empNo);
 		
-		WorkingDay working = employeeService.insertStart(w);
+		WorkingDay working = employeeService.insertStart(w, empNo);
 		
 		model.addAttribute("working", working);
 		
@@ -291,18 +298,27 @@ public class EmployeeController {
 	
 	//내 연차조회
 	@RequestMapping("timeOff.do")
-	public String timeOff(HttpSession session, Model model) {
+	public String timeOff(@RequestParam(value="currentPage", defaultValue="1")int currentPage,
+						  HttpSession session, Model model) {
 		Employee loginUser = (Employee)session.getAttribute("loginUser");
 		int empNo = loginUser.getEmpNo();
 		
+		//페이징 처리
+		int listCount = employeeService.selectListCount(empNo);
+		int listLimit = 5;
+		int pageLimit = 10;
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, listLimit);
+		
+		//연차개수 조회
 		TimeOff timeOff = employeeService.selectTimeOff(empNo);
 		
-		//내 연차내역 조회
+		// 연차내역 조회
 		//연차내역 조회하면서 승인된 결재가 있으면 쿼리(update)
-		ArrayList<TimeOffContent> timeOffList = employeeService.updateTimeOffContent(empNo);
+		ArrayList<TimeOffContent> timeOffList = employeeService.selectTimeOffContent(empNo, pi);
 		
 		model.addAttribute("timeOff", timeOff); //연차개수
 		model.addAttribute("timeOffList", timeOffList);//연차내역
+		model.addAttribute("pi", pi);//페이징
 		
 		return "employee/empTimeOff";
 	}

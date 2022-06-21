@@ -40,12 +40,18 @@
         <div class="row">
           <div class="col-md-11">
             <div class="content-panel">
-				<form action="searchEmp.do" class="pull-left">
-                      <div class="input-append">
-                        <input type="text" name="search" class="form-control " placeholder="사원 검색">
-                        <button type="submit" id="searchBtn" class="btn btn-theme02" >검색</button>
-                      </div>                     
-                </form>
+			<form action="searchEmp.do" class="pull-left">
+				<table>
+					<tr>
+						<td>
+							<input type="text" name="search" class="form-control" placeholder="사원 이름 검색">
+						</td>
+						<td>
+							<button id="searchBtn" type="submit" class="btn btn-outline-secondary btn-theme02">검색</button>  
+						</td>
+					</tr>
+				</table>
+               </form>
               <br>
               <br>
               <br>

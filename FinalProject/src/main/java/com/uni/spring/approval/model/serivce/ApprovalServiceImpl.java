@@ -173,4 +173,35 @@ public class ApprovalServiceImpl implements ApprovalService {
 			throw new CommException("반려 처리에 실패하였습니다.");
 		}
 	}
+
+	@Override
+	public void updateApprovalRp(Approval approval, Attachment attachment) {
+		
+		int result1 = approvalDao.updateApproval(sqlSession, approval);
+		int result2 = approvalDao.updateApprovalRp(sqlSession, approval.getApprovalReport());
+		int result3 = 1;
+		
+		if(attachment != null) {
+			result3 = approvalDao.updateAttachment(sqlSession, attachment);
+		}
+		
+		if(result1 * result2 * result3 < 0) {
+			throw new CommException("업무 보고서 수정 실패");
+		}
+	}
+
+	@Override
+	public void updateApprovalLv(Approval approval, Attachment attachment) {
+		int result1 = approvalDao.updateApproval(sqlSession, approval);
+		int result2 = approvalDao.updateApprovalLv(sqlSession, approval.getApprovalLeave());
+		int result3 = 1;
+		
+		if(attachment != null) {
+			result3 = approvalDao.updateAttachment(sqlSession, attachment);
+		}
+		
+		if(result1 * result2 * result3 < 0) {
+			throw new CommException("휴가 신청서 수정 실패");
+		}
+	}
 }

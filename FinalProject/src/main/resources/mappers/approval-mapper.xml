@@ -169,7 +169,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	        A.APP_CREATE_DATE, F.EMP_NAME FIRST_APPROVER, G.EMP_NAME LAST_APPROVER, A.APP_STATUS,
 	        SUBSTR(A.FIRST_APPROVAL_DATE, 1,8) FIRST_APPROVAL_DATE, SUBSTR(A.LAST_APPROVAL_DATE, 1,8) LAST_APPROVAL_DATE, A.APP_KINDS,
 	        A.REJECTER, A.REJECT_REASON, C.ER_ACCOUNT_HOLDER, C.BANK_NAME,
-            C.ACCOUNT_NUMBER, C.ER_AMOUNT, A.APP_TITLE, A.FIRST_APPROVER FIRST_NO, A.LAST_APPROVER LASTNO
+            C.ACCOUNT_NUMBER, C.ER_AMOUNT, A.APP_TITLE, A.FIRST_APPROVER FIRST_APP_NO, A.LAST_APPROVER LAST_APP_NO
 	   FROM APPROVAL A
 	        JOIN EMPLOYEE B ON (A.APP_WRITER_NO = B.EMP_NO)
 	        JOIN APPER_ACCOUNT C ON (A.APP_NO = C.APP_NO)
@@ -192,7 +192,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	        A.APP_CREATE_DATE, F.EMP_NAME FIRST_APPROVER, G.EMP_NAME LAST_APPROVER, A.APP_STATUS,
 	        SUBSTR(A.FIRST_APPROVAL_DATE, 1,8) FIRST_APPROVAL_DATE, SUBSTR(A.LAST_APPROVAL_DATE, 1,8) LAST_APPROVAL_DATE, A.APP_KINDS,
 	        A.REJECTER, A.REJECT_REASON, C.LEAVE_START, C.LEAVE_FINISH, 
-	        A.APP_TITLE, C.LEAVE_CATEGORY, C.LEAVE_TOTALDATE, C.LEAVE_REASON, A.FIRST_APPROVER FIRSTNO, A.LAST_APPROVER LASTNO
+	        A.APP_TITLE, C.LEAVE_CATEGORY, C.LEAVE_TOTALDATE, C.LEAVE_REASON, A.FIRST_APPROVER FIRST_APP_NO, A.LAST_APPROVER LAST_APP_NO
 	   FROM APPROVAL A
 	        JOIN EMPLOYEE B ON (A.APP_WRITER_NO = B.EMP_NO)
 	        JOIN APP_LEAVE C ON (A.APP_NO = C.APP_NO)
@@ -254,5 +254,49 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		</choose>
 			APP_STATUS = 'R'
 		WHERE APP_NO = #{appNo}
+	</update>
+	<update id="updateApproval" parameterType="Approval">
+		UPDATE APPROVAL
+		 	SET
+				APP_TITLE = #{appTitle},
+				FIRST_APPROVER = #{firstApprover},
+				LAST_APPROVER = #{lastApprover},
+				APP_KINDS = #{appKinds}
+			WHERE APP_NO = #{appNo}
+			AND STATUS = 'Y'
+	</update>
+	<update id="updateApprovalRp" parameterType="com.uni.spring.approval.model.dto.ApprovalReport">
+		UPDATE APP_REPORT
+			SET
+				REPORT_CONTENT = #{reportContent},
+				REPORT_ISSUE = #{reportIssue}
+			WHERE APP_NO = #{appNo}
+	</update>
+	<update id="updateApprovalLv" parameterType="com.uni.spring.approval.model.dto.ApprovalLeave">
+		UPDATE APP_LEAVE
+			SET
+				LEAVE_START = #{leaveStart},
+				LEAVE_FINISH = #{leaveFinish},
+				LEAVE_REASON = #{leaveReason},
+				LEAVE_TOTALDATE = #{leaveTotalDate},
+				LEAVE_CATEGORY = #{leaveCategory}
+			WHERE APP_NO = #{appNo}
+	</update>
+	<update id="updateAttachment" parameterType="com.uni.spring.common.dto.Attachment">
+		MERGE INTO
+			ATTACHMENT A
+		USING DUAL
+		ON (A.REF_NO = #{refNo} AND A.EMP_NO = #{empNo} AND A.CATEGORY = 2)
+		WHEN MATCHED THEN
+		UPDATE SET
+			A.ORIGIN_NAME = #{originName},
+			A.CHANGE_NAME = #{changeName},
+			A.FILE_PATH = #{filePath},
+			A.UPLOAD_DATE = SYSDATE
+		WHEN NOT MATCHED THEN
+		INSERT (FILE_NO, EMP_NO, REF_NO, CATEGORY, ORIGIN_NAME, 
+				CHANGE_NAME, FILE_PATH, UPLOAD_DATE, STATUS)
+		VALUES(SEQ_ANO.NEXTVAL, #{empNo}, #{refNo}, 2, #{originName}, 
+			#{changeName}, #{filePath}, DEFAULT, DEFAULT)
 	</update>
 </mapper>

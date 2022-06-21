@@ -49,7 +49,8 @@
                 </c:if>
              <!-- 프로필 사진 -->
               <!-- /col-md-4 -->
-               <table class="detail">
+              <div class="profile-text mt mb centered right-divider">
+               <table class="table table-inbox">
 				<tr>
 					<td>${ detailEmp.empName }</td>
 					<td>${ detailEmp.empOnoff }</td>
@@ -73,6 +74,7 @@
 					<td><button>메신저</button></td>
 				</tr>
               </table>
+              </div>
             </div> 
             <!-- /row -->
           </div>
