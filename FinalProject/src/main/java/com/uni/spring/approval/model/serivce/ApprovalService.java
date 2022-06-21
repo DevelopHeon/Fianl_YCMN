@@ -45,5 +45,9 @@ public interface ApprovalService {
 
 	void insertRejecter(Approval approval);
 
+	void updateApprovalRp(Approval approval, Attachment attachment);
+
+	void updateApprovalLv(Approval approval, Attachment attachment);
+
 
 }

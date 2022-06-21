@@ -43,7 +43,18 @@ table, tr>th{text-align:center;}
 	          <form action="empExcelDown.do" method="get">
 	            <button type="submit">목록 엑셀 다운로드</button>
 	          </form>
-        
+        	<form>
+        		<%-- <select name="find">
+        			<option ${(param.find == "empNo")?"selected":""} value="empNo">사번</option>
+        			<option ${(param.find == "empName")?"selected":""} value="empName">이름</option>
+        			<option ${(param.find == "posName")?"selected":""} value="posName">직위</option>
+        			<option ${(param.find == "depName")?"selected":""} value="depName">직무</option>
+        			<option ${(param.find == "status")?"selected":""} value="status">상태</option>
+        		</select>
+        		<input type="text" name="keyword" value="${param.keyword}"/> --%>
+        		<input class="btn btn-search" type="submit" value="검색" />
+        	</form>
+        	
               <form action="list" method="post">
               	<input type="submit" class="btn-text btn-default" value="수정(임시)">
                 <table id="empList" class="table table-bordered table-striped table-condensed">
