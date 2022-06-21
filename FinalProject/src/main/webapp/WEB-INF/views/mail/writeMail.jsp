@@ -116,9 +116,6 @@ ${loginUser.empPhone}
 		if(goMain){
 			location.href='main.do';
 		}
-
-		
-		
 	}
     	
     </script>

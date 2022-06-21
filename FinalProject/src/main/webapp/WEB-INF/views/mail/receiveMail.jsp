@@ -68,7 +68,7 @@
 					<a data-original-title="Refresh" data-placement="top" data-toggle="dropdown" onclick="location.reload();" class="btn mini tooltips">
                       <i class=" fa fa-refresh"></i>
                       </a>
-                  <table class="table table-inbox table-hover">
+                  <table id="receiveMailList" class="table table-inbox table-hover">
                   	<c:forEach items="${receiveList }" var="r">
                     <tbody>
                       <tr class="">
@@ -136,6 +136,7 @@
       <!-- /wrapper -->
     </section>
     <script>
+    //메일전체선택
 	function selectAll(selectAll){
 		const checkNo = document.querySelectorAll('input[type="checkbox"]');
 		
