@@ -58,14 +58,15 @@ public class ManagerController {
 	// 사원 전체 정보를 리스트로 조회함. 
 	// 페이징 처리 들어가야 함. = 변경하고나서 이 주석 지우기
 	@RequestMapping("listEmp.do")
-	public String selectList(HttpServletRequest request, Model model,
-			@RequestParam("find") String find,
-			@RequestParam("keyword") String keyword) {
+	public String selectList(HttpServletRequest request, Model model
+//			, @RequestParam("find") String find
+//			, @RequestParam("keyword") String keyword
+			) {
 		
 		ArrayList<Employee> list = ManagerService.selectList();
 		model.addAttribute("list", list);
 		
-		ArrayList<Employee> list2 = ManagerService.selectList(find, keyword, 1);
+//		ArrayList<Employee> list2 = ManagerService.selectList(find, keyword, 1);
 		 
 		return "manager/empListView";
 	}
