@@ -57,13 +57,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY A.MAIL_NO DESC
 	</select>
 	
-	<!-- 보낸메일List 삭제 -->
-	<update id="updateTrashMail" parameterType="ReceiveMail">
-		UPDATE RECEIVEMAIL
-		SET RECEIVE_STATUS = 'SN'
-		WHERE RECEIVE_NO IN (#{receiveNo})
-	</update>
-	
 	<!-- 휴지통List -->
 	<select id="selectDeleteList" resultMap="ReceiveMailMap">
 		SELECT A.*, B.EMP_NAME, C.MAIL_TITLE, C.FILE_NAME FROM RECEIVEMAIL A 
@@ -115,7 +108,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE C.RECEIVE_NO = #{receiveNo}
 	</select>
 	
-	<!-- 받은메일조회에서 삭제 -->
+	<!-- 받은메일  삭제 -->
 	<update id="updateTrashRMail" parameterType="ReceiveMail">
 		UPDATE RECEIVEMAIL
 		SET RECEIVE_STATUS = 'RN'
@@ -140,4 +133,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	WHERE A.MAIL_NO = #{mailNo}
 	</select>
 	
+	<!-- 보낸메일 삭제 -->
+	<update id="updateTrashSMail" parameterType="ReceiveMail">
+		UPDATE RECEIVEMAIL
+		SET RECEIVE_STATUS = 'SN'
+		WHERE RECEIVE_NO IN (#{receiveNo})
+	</update>
 </mapper>

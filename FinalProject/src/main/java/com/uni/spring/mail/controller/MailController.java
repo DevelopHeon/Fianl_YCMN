@@ -162,16 +162,43 @@ public class MailController {
 		
 		return "mail/deleteMail";
 	}
+	
+	
 	//보낸메일List에서 삭제
-	@RequestMapping("deleteTrashMail.do")
-	public String deleteTrashMail(@RequestParam("checkNo")List<Integer> list,
+	@RequestMapping("deleteTrashSMail.do")
+	public String deleteTrashSMail(@RequestParam("checkNo")List<Integer> list,
 								  Model model) {
 		
 		for(int receiveNo : list) {
 			System.out.println(list);
-			mailService.updateTrashMail(receiveNo);
+			mailService.updateTrashSMail(receiveNo);
 		}
 		return "redirect:sendMail.do";
+	}
+	
+	//보낸메일조회(detail)
+	@RequestMapping("detailSendMail.do")
+	public String detailSendMail(@RequestParam("mno")int mailNo, 
+								 Model model) {
+		
+		//메일확인
+		ReceiveMail sendMail = mailService.selectSendMail(mailNo);
+		
+		model.addAttribute("sMail", sendMail);
+		return "mail/SendDetailView";
+	}
+
+	
+	//받은메일List에서 삭제
+	@RequestMapping("deleteTrashRMail.do")
+	public String deleteTrashRMail(@RequestParam("checkNo")List<Integer> list,
+								  Model model) {
+		
+		for(int receiveNo : list) {
+			System.out.println(list);
+			mailService.updateTrashRMail(receiveNo);
+		}
+		return "redirect:receiveMail.do";
 	}
 	
 	//받은메일조회(detail)
@@ -194,23 +221,6 @@ public class MailController {
 		return "redirect:receiveMail.do";
 	}
 	
-	//보낸메일조회(detail)
-	@RequestMapping("detailSendMail.do")
-	public String detailSendMail(@RequestParam("mno")int mailNo, Model model) {
-		
-		//메일확인
-		ReceiveMail sendMail = mailService.selectSendMail(mailNo);
-		
-		model.addAttribute("sMail", sendMail);
-		return "mail/SendDetailView";
-	}
-	
-	//보낸메일조회에서 삭제
-	@RequestMapping("deleteSMail.do")
-	public String deleteSMail(@RequestParam("mailNo")int mailNo, Model model) {
 
-		mailService.updateTrashSMail(mailNo);
-	
-		return "redirect:sendMail.do";
-	}
+
 }

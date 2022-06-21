@@ -60,19 +60,18 @@
                 <!-- 수신자 기준 가능한 조회목록: 발신자, 수신자(본인), 참조자  -->
                 <div class="mail-sender">
                   <div class="row">
+                  	<div class="col-md-8">
+                      <strong>수신&nbsp;&nbsp;:&nbsp;&nbsp;${ rMail.mail.mailTo}</strong>
+                    </div>                    
+                    <div class="col-md-4">
+                      <p class="date">${rMail.timestamp }</p>
+                    </div>
                   	<c:if test="${!empty rMail.mail.mailRef}">
                     <div class="col-md-8">
                       <strong>참조&nbsp;&nbsp;:&nbsp;&nbsp;${ rMail.mail.mailRef}</strong>
                     </div>
-                    <div class="col-md-4">
-                      <p class="date">${rMail.timestamp }</p>
-                    </div>
                     </c:if>
-                    <c:if test="${empty rMail.mail.mailRef}">
-                    <div class="col-md-10">
-                      <p class="date">${rMail.timestamp }</p>
-                    </div>
-                    </c:if>
+
                   </div>
                 </div>
                 

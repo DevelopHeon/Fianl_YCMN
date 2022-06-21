@@ -47,7 +47,7 @@
               </header>
               <div class="panel-body minimal">
                 <div class="table-inbox-wrap ">
-                	<form id="trashMail" action="deleteTrashMail.do" method="post">
+                	<form id="trashMail" action="deleteTrashSMail.do" method="post">
                 	<!-- 보낸메일이 없을 경우 -->
                 	<c:if test="${empty sendList}">
                 	 <table class="table table-inbox table-hover centered">
@@ -68,8 +68,8 @@
                     <tbody>
                       <tr class="">
                         <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox" id="checkSendTrash" name="checkNo" value="${s.receiveNo }">
-                        </td>
+                          <div><input type="checkbox" class="mail-checkbox" id="checkSendTrash" name="checkNo" value="${s.receiveNo }">
+                        </div></td>
                         <td style="display:none">${s.mailNo}</td>
                         <!-- 수신,참조,비밀참조 -->
                         <c:if test="${ s.status eq 'T'}"> 
@@ -170,8 +170,8 @@
 	
 	//글제목을 클릭해서 메일보기
 	$(function(){
-		$("#sendMailList tbody tr").click(function(){
-			var mno = $(this).children().eq(1).text();
+		$("#sendMailList tbody tr td:not(:has(input))").click(function(){
+			var mno = $(this).parent().children().eq(1).text();
 
 			location.href="detailSendMail.do?mno="+mno;
 		})

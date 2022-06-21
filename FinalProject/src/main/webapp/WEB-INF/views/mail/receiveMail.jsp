@@ -52,7 +52,7 @@
               </header>
               <div class="panel-body minimal">
                 <div class="table-inbox-wrap ">
-                	<form id="trashMail" action="deleteTrashMail.do" method="post">
+                	<form id="trashMail" action="deleteTrashRMail.do" method="post">
                 	<!-- 받은 메일이 없을 경우 -->
                 	<c:if test="${empty receiveList}">
                 	 <table class="table table-inbox table-hover centered">
@@ -158,8 +158,8 @@
 	}
 	//글제목을 클릭해서 메일보기
 	$(function(){
-		$("#receiveMailList tbody tr").click(function(){
-			var mno = $(this).children().eq(0).find("input").val();
+		$("#receiveMailList tbody tr td:not(:has(input))").click(function(){
+			var mno = $(this).parent().children().eq(0).find("input").val();
 			location.href="detailReceiveMail.do?mno="+mno;
 		})
 	})

@@ -50,8 +50,8 @@ public class MailServiceImpl implements MailService {
 	
 	//보낸메일함List에서 삭제
 	@Override
-	public void updateTrashMail(int receiveNo) {
-		int result = mailDao.updateTrashMail(sqlSession, receiveNo);
+	public void updateTrashSMail(int receiveNo) {
+		int result = mailDao.updateTrashSMail(sqlSession, receiveNo);
 		if(result < 0) {
 			throw new CommException("보낸메일 삭제 실패");
 		}	
@@ -101,14 +101,6 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public ReceiveMail selectSendMail(int mailNo) {
 		return mailDao.selectSendMail(sqlSession, mailNo);
-	}
-	//보낸메일조회에서 삭제
-	@Override
-	public void updateTrashSMail(int mailNo) {
-		int result = mailDao.updateTrashSMail(sqlSession, mailNo);
-		if(result < 0) {
-			throw new CommException(mailNo + "번 메일 발신자 삭제 실패");
-		}	
 	}
 
 
