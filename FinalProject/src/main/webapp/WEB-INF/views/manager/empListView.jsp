@@ -44,14 +44,14 @@ table, tr>th{text-align:center;}
 	            <button type="submit">목록 엑셀 다운로드</button>
 	          </form>
         	<form>
-        		<%-- <select name="find">
+        		<select name="find">
         			<option ${(param.find == "empNo")?"selected":""} value="empNo">사번</option>
         			<option ${(param.find == "empName")?"selected":""} value="empName">이름</option>
         			<option ${(param.find == "posName")?"selected":""} value="posName">직위</option>
         			<option ${(param.find == "depName")?"selected":""} value="depName">직무</option>
         			<option ${(param.find == "status")?"selected":""} value="status">상태</option>
         		</select>
-        		<input type="text" name="keyword" value="${param.keyword}"/> --%>
+        		<input type="text" name="keyword" value="${param.keyword}"/>
         		<input class="btn btn-search" type="submit" value="검색" />
         	</form>
         	
@@ -99,13 +99,15 @@ table, tr>th{text-align:center;}
 	                    </script>
                 	</tbody> 
                 	<tfoot>
-                	
-                	<!--  
+                	</tfoot>
+                </table>
+                </form>
+                	<!-- 페이징 시작 -->
             <div id="pagingArea">
                 <ul class="pagination">
                 	<c:choose>
                 		<c:when test="${ pi.currentPage ne 1 }">
-                			<li class="page-item"><a class="page-link" href="listBoard.do?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+                			<li class="page-item"><a class="page-link" href="listEmp.do?currentPage=${ pi.currentPage-1 }">Previous</a></li>
                 		</c:when>
                 		<c:otherwise>
                 			<li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
@@ -115,7 +117,7 @@ table, tr>th{text-align:center;}
                     <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
                     	<c:choose>
 	                		<c:when test="${ pi.currentPage ne p }">
-                    			<li class="page-item"><a class="page-link" href="listBoard.do?currentPage=${ p }">${ p }</a></li>
+                    			<li class="page-item"><a class="page-link" href="listEmp.do?currentPage=${ p }">${ p }</a></li>
 	                		</c:when>
 	                		<c:otherwise>
 	                			<li class="page-item disabled"><a class="page-link" href="">${ p }</a></li>
@@ -126,18 +128,14 @@ table, tr>th{text-align:center;}
                     
                     <c:choose>
                 		<c:when test="${ pi.currentPage ne pi.maxPage }">
-                			<li class="page-item"><a class="page-link" href="listBoard.do?currentPage=${ pi.currentPage+1 }">Next</a></li>
+                			<li class="page-item"><a class="page-link" href="listEmp.do?currentPage=${ pi.currentPage+1 }">Next</a></li>
                 		</c:when>
                 		<c:otherwise>
-                			<li class="page-item disabled"><a class="page-link" href="listBoard.do?currentPage=${ pi.currentPage+1 }">Next</a></li>
+                			<li class="page-item disabled"><a class="page-link" href="listEmp.do?currentPage=${ pi.currentPage+1 }">Next</a></li>
                 		</c:otherwise>
                 	</c:choose>
                 </ul>
             </div>
-           -->
-                	</tfoot>
-                </table>
-                </form>
               </section>
             </div>
             <!-- /content-panel -->
@@ -160,30 +158,6 @@ table, tr>th{text-align:center;}
 			});
 		});
 	</script>
-	<!-- 엑셀 시작 fail-->
-<script type="text/javascript">
-<![CDATA[
-$(function() {
-    $("#btn-excel").on("click", function () {
-        var $preparingFileModal = $("#preparing-file-modal");
-        $preparingFileModal.dialog({ modal: true });
-        $("#progressbar").progressbar({value: false});
-        $.fileDownload("/excel.do", {
-            successCallback: function (url) {
-                $preparingFileModal.dialog('close');
-            },
-            failCallback: function (responseHtml, url) {
-                $preparingFileModal.dialog('close');
-                $("#error-modal").dialog({ modal: true });
-            }
-        });
-        // 버튼의 원래 클릭 이벤트를 중지 시키기 위해 필요합니다.
-        return false;
-    });
-
-});
-]]>
-</script>
 	<!-- 엑셀 끝 -->
 	
 	<!-- js placed at the end of the document so the pages load faster -->

@@ -1,28 +1,19 @@
 package com.uni.spring.manager.model.service;
 
-import java.io.OutputStream;
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.ibatis.session.ResultContext;
-import org.apache.ibatis.session.ResultHandler;
-import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.uni.spring.common.CommException;
+import com.uni.spring.common.dto.PageInfo;
 import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.JobPosition;
 import com.uni.spring.hr.model.dto.Hr;
 import com.uni.spring.manager.model.dao.ManagerDao;
+import com.uni.spring.manager.model.dto.Search;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,8 +27,10 @@ public class ManagerServiceImpl implements ManagerService {
 	
 	// 사원 정보 전체 조회
 	@Override
-	public ArrayList<Employee> selectList() {
-		return (ArrayList)managerDao.selectList(sqlSession);
+	public ArrayList<Employee> selectList(PageInfo pi, Search search) {
+//		public ArrayList<Employee> selectList(PageInfo pi, String find, String keyword) {
+//		return (ArrayList)managerDao.selectList(sqlSession, pi, find, keyword);
+		return (ArrayList)managerDao.selectList(sqlSession, pi, search);
 	}
 	
 	// 선택한 사원 정보 조회
@@ -138,12 +131,12 @@ public class ManagerServiceImpl implements ManagerService {
 		return (ArrayList)managerDao.selectExcelList(sqlSession);
 	}
 
+	// 페이징 용
 	@Override
-	public ArrayList<Employee> selectList(String find, String keyword, int i) {
-		// TODO Auto-generated method stub
-		return null;
+	public int selectListCount() {
+		return managerDao.selectListCount(sqlSession);
 	}
-	
+
 //	// 사원 검색
 //	@Override
 //	public ArrayList<Employee> selectList(String find, String keyword, int i) {

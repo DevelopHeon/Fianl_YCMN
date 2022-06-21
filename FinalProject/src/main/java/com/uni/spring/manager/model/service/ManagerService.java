@@ -4,14 +4,17 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.uni.spring.common.dto.PageInfo;
 import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.JobPosition;
 import com.uni.spring.hr.model.dto.Hr;
+import com.uni.spring.manager.model.dto.Search;
 
 public interface ManagerService {
 	
-	ArrayList<Employee> selectList(); // 사원 정보 전체 조회
+//	ArrayList<Employee> selectList(PageInfo pi, String find, String keyword); // 사원 정보 전체 조회
+	ArrayList<Employee> selectList(PageInfo pi, Search search); // 사원 정보 전체 조회
 
 	Object selectEmp(int eno); // 선택한 사원 정보 조회
 
@@ -37,6 +40,8 @@ public interface ManagerService {
 	
 	ArrayList<Employee> selectExcelList(); // 엑셀 다운로드용 직원 정보 조회
 
-	ArrayList<Employee> selectList(String find, String keyword, int i); // 검색기능추가
+//	ArrayList<Employee> selectList(String find, String keyword, int i); // 검색기능추가
+
+	int selectListCount(); // 페이징 용
 	
 }

@@ -1,16 +1,11 @@
 package com.uni.spring.manager.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -29,16 +24,17 @@ import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.GsonBuilder;
+import com.uni.spring.common.Pagination;
+import com.uni.spring.common.dto.PageInfo;
 import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.JobPosition;
 import com.uni.spring.hr.model.dto.Hr;
+import com.uni.spring.manager.model.dto.Search;
 import com.uni.spring.manager.model.service.ManagerService;
 
 import lombok.RequiredArgsConstructor;
@@ -58,13 +54,29 @@ public class ManagerController {
 	// 사원 전체 정보를 리스트로 조회함. 
 	// 페이징 처리 들어가야 함. = 변경하고나서 이 주석 지우기
 	@RequestMapping("listEmp.do")
-	public String selectList(HttpServletRequest request, Model model
-//			, @RequestParam("find") String find
-//			, @RequestParam("keyword") String keyword
+	public String selectList(Model model
+			, @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage
+			, @RequestParam(value="find", required = false, defaultValue = "empName") String find // 검색 분류
+			, @RequestParam(value="keyword", required = false, defaultValue = "") String keyword // 검색어
 			) {
 		
-		ArrayList<Employee> list = ManagerService.selectList();
+		// 페이징
+		int listCount = ManagerService.selectListCount(); // 페이징용
+		System.out.println("listCount : "+listCount);
+		int pageLimit = 10; // 하단 최대 페이지 수
+		int boardLimit = 15; // 한 페이지에 보여질 회원 수
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		// 검색
+		Search search = new Search(find, keyword);
+		System.out.println(search.toString());
+		
+//		ArrayList<Employee> list = ManagerService.selectList(pi, find, keyword);
+//		ArrayList<Employee> list = ManagerService.selectList(pi);
+		ArrayList<Employee> list = ManagerService.selectList(pi, search);
+		
 		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
 		
 //		ArrayList<Employee> list2 = ManagerService.selectList(find, keyword, 1);
 		 
