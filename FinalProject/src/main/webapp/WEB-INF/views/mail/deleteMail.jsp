@@ -71,6 +71,7 @@
                         <td class="inbox-small-cells">
                           <input type="checkbox" class="mail-checkbox" id="checkSendTrash" name="checkNo" value="${t.receiveNo }">
                         </td>
+                        <c:if test="${t.empNo eq loginUser.empNo }"> <!-- 메일번호가 로그인유저번호랑 같으면 보낸이가 삭제한 것 -->
                         <!-- 수신,참조,비밀참조 -->
                         <c:if test="${ t.status eq 'T'}"> 
                         <td class="view-message"><span class="label label-primary">수신</span></td>
@@ -97,6 +98,25 @@
                         <td class="view-message">읽지 않음</td>
                         </c:if>
                         <td class="view-message text-right">${t.timestamp}</td>
+                        </c:if>
+                        
+                        <c:if test="${t.empNo ne loginUser.empNo }"> <!-- 메일번호가 로그인유저번호랑 다르면 받은이가 삭제한 것 -->
+                        <td class="dont-show">받은 메일</td>
+                        <!-- 메일제목 -->
+                        <td class="view-message">${t.mail.mailTitle}</td>
+                        <!-- 첨부파일 유무 -->
+                        <c:if test="${!empty t.mail.fileName}"> 
+                        <td class="view-message inbox-small-cells"><i class="fa fa-paperclip"></i></td>
+                        </c:if>
+                        <c:if test="${empty t.mail.fileName}"> 
+                        <td></td>
+                        </c:if>
+                        <!-- 수신확인 -->
+                        <c:if test="${ t.confirmMail eq 0}"> 
+                        <td class="view-message">읽지 않음</td>
+                        </c:if>
+                        <td class="view-message text-right">${t.timestamp}</td>
+                        </c:if>
                       </tr>                 
                     </tbody>
                   	</c:forEach>

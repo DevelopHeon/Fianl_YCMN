@@ -162,7 +162,7 @@ public class MailController {
 		
 		return "mail/deleteMail";
 	}
-	//보낸메일 삭제
+	//보낸메일List에서 삭제
 	@RequestMapping("deleteTrashMail.do")
 	public String deleteTrashMail(@RequestParam("checkNo")List<Integer> list,
 								  Model model) {
@@ -173,5 +173,44 @@ public class MailController {
 		}
 		return "redirect:sendMail.do";
 	}
+	
+	//받은메일조회(detail)
+	@RequestMapping("detailReceiveMail.do")
+	public String detailReceiveMail(@RequestParam("mno")int receiveNo, Model model) {
+		
+		//메일확인
+		ReceiveMail receiveMail = mailService.selectReceiveMail(receiveNo);
+		
+		model.addAttribute("rMail", receiveMail);
+		return "mail/ReceiveDetailView";
+	}
+	
+	//받은메일조회에서 삭제
+	@RequestMapping("deleteRMail.do")
+	public String deleteRMail(@RequestParam("receiveNo")int receiveNo, Model model) {
 
+		mailService.updateTrashRMail(receiveNo);
+	
+		return "redirect:receiveMail.do";
+	}
+	
+	//보낸메일조회(detail)
+	@RequestMapping("detailSendMail.do")
+	public String detailSendMail(@RequestParam("mno")int mailNo, Model model) {
+		
+		//메일확인
+		ReceiveMail sendMail = mailService.selectSendMail(mailNo);
+		
+		model.addAttribute("sMail", sendMail);
+		return "mail/SendDetailView";
+	}
+	
+	//보낸메일조회에서 삭제
+	@RequestMapping("deleteSMail.do")
+	public String deleteSMail(@RequestParam("mailNo")int mailNo, Model model) {
+
+		mailService.updateTrashSMail(mailNo);
+	
+		return "redirect:sendMail.do";
+	}
 }
