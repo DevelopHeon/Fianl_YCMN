@@ -2,20 +2,27 @@ package com.uni.spring.manager.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.uni.spring.common.dto.PageInfo;
 import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.JobPosition;
 import com.uni.spring.hr.model.dto.Hr;
+import com.uni.spring.manager.model.dto.Search;
 
 @Repository
 public class ManagerDao {
 
 	// 사원 정보 전체 불러오기
-	public ArrayList<Employee> selectList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("managerMapper.employeeList");
+	public ArrayList<Employee> selectList(SqlSessionTemplate sqlSession, PageInfo pi, Search search) {
+//		public ArrayList<Employee> selectList(SqlSessionTemplate sqlSession, PageInfo pi, String find, String keyword) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("managerMapper.employeeList", search, rowBounds);
 	}
 	// 선택한 사원 정보 불러오기
 	public static Employee selectEmp(SqlSessionTemplate sqlSession, int eno) {
@@ -72,10 +79,14 @@ public class ManagerDao {
 	public ArrayList<Employee> selectExcelList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("managerMapper.selectExcelList");
 	}
-	// 검색 용
-	public ArrayList<Employee> selectList(SqlSessionTemplate sqlSession, String find, String keyword) {
-		return (ArrayList)sqlSession.selectMap("managerMapper.selectFindEmp", find, keyword);
-	}
+//	// 검색 용
+//	public ArrayList<Employee> selectList(SqlSessionTemplate sqlSession, String find, String keyword) {
+//		return (ArrayList)sqlSession.selectMap("managerMapper.selectFindEmp", find, keyword);
+//	}
 	//	public ArrayList<Employee> selectList(SqlSessionTemplate sqlSession) {
 //	return (ArrayList)sqlSession.selectList("managerMapper.employeeList");
+	// 페이징 용
+	public int selectListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("managerMapper.selectListCount");
+	}
 }
