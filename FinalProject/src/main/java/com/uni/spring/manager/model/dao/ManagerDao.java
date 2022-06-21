@@ -25,14 +25,6 @@ public class ManagerDao {
 	public static Employee selectHr(SqlSessionTemplate sqlSession, int eno) {
 		return sqlSession.selectOne("managerMapper.selectEmpHr", eno);
 	}
-	// 직위 정보 불러오기
-	public ArrayList<JobPosition> getPosList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("managerMapper.selectPosList");
-	}
-	// 부서 정보 불러오기
-	public ArrayList<Department> getDepList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("managerMapper.selectDepList");
-	}
 	// 사원 기본정보 수정
 	public int updateEmpDetail(SqlSessionTemplate sqlSession, Employee e) {
 		return sqlSession.update("managerMapper.updateEmp", e);
@@ -41,8 +33,49 @@ public class ManagerDao {
 	public int updateEmpHr(SqlSessionTemplate sqlSession, Hr hr) {
 		return sqlSession.update("managerMapper.updateEmpHr", hr);
 	}
+	
+	// 직위 정보 불러오기
+	public ArrayList<JobPosition> getPosList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("managerMapper.selectPosList");
+	}
+	// 직위 추가
+	public int insertJobPosition(SqlSessionTemplate sqlSession, JobPosition job) {
+		return sqlSession.insert("managerMapper.insertJobPosition", job);
+	}
+	// 직위 수정
+	public int updateJobPosition(SqlSessionTemplate sqlSession, JobPosition job) {
+		return sqlSession.update("managerMapper.updateJobPosition", job);
+	}
+	// 직위 삭제
+	public int deleteJobPosition(SqlSessionTemplate sqlSession, JobPosition job) {
+		return sqlSession.update("managerMapper.deleteJobPosition", job);
+	}
+	
+	// 부서 정보 불러오기
+	public ArrayList<Department> getDepList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("managerMapper.selectDepList");
+	}
+	// 부서 추가
+	public int insertDepartment(SqlSessionTemplate sqlSession, Department dep) {
+		return sqlSession.insert("managerMapper.insertDepartment", dep);
+	}
+	// 부서 수정
+	public int updateDepartment(SqlSessionTemplate sqlSession, Department dep) {
+		return sqlSession.update("managerMapper.updateDepartment", dep);
+	}
+	// 부서 삭제
+	public int deleteDepartment(SqlSessionTemplate sqlSession, Department dep) {
+		return sqlSession.update("managerMapper.deleteDepartment", dep);
+	}
+	
 	// 엑셀 다운로드
 	public ArrayList<Employee> selectExcelList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("managerMapper.selectExcelList");
 	}
+	// 검색 용
+	public ArrayList<Employee> selectList(SqlSessionTemplate sqlSession, String find, String keyword) {
+		return (ArrayList)sqlSession.selectMap("managerMapper.selectFindEmp", find, keyword);
+	}
+	//	public ArrayList<Employee> selectList(SqlSessionTemplate sqlSession) {
+//	return (ArrayList)sqlSession.selectList("managerMapper.employeeList");
 }
