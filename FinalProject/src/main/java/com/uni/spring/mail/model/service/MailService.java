@@ -15,7 +15,7 @@ public interface MailService {
 
 	ArrayList<ReceiveMail> selectSendList(int empNo, PageInfo pi);
 
-	void updateTrashMail(int receiveNo);
+	void updateTrashSMail(int receiveNo);
 
 	ArrayList<ReceiveMail> selectDeleteList(int empNo);
 
@@ -29,6 +29,5 @@ public interface MailService {
 
 	ReceiveMail selectSendMail(int mailNo);
 
-	void updateTrashSMail(int mailNo);
 
 }

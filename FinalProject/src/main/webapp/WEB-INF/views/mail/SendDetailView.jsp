@@ -41,11 +41,9 @@
                     View Message
                   </h4>
               </header>
-              <form id="trashMail" action="deleteSMail.do" method="post">
               <div class="panel-body ">
                 <div class="mail-header row">
                   <div class="col-md-8">
-                  <input type="text" name="mailNo" value="${ sMail.mailNo}" style="display:none">
                     <h4 class="pull-left">${ sMail.mail.mailTitle}</h4>
                   </div>
                   <div class="col-md-4">
@@ -105,10 +103,8 @@
                 <div class="compose-btn pull-left">
                   <a href="mail_compose.html" class="btn btn-sm btn-theme"><i class="fa fa-reply"></i> Reply</a>
                   <button type="button" onclick="location.href='sendMail.do';" class="btn btn-sm "><i class="fa fa-arrow-right"></i> 목록으로</button>
-                  <button type="button" onclick="trashMail();" class="btn btn-sm tooltips"><i class="fa fa-trash-o"></i></button>
                 </div>
               </div>
-              </form>
             </section>
           </div>
         </div>
@@ -117,15 +113,6 @@
     </section>
     <!-- /MAIN CONTENT -->
     <!--main content end-->
-    <script>
-	function trashMail(){
-		
-		if(confirm("메일을 삭제 하시겠습니까?")){
-			alert("삭제 되었습니다");
-			$("#trashMail").submit();
-		}
-	}
-    </script>
     <!--footer start-->
     <footer class="site-footer">
       <div class="text-center">

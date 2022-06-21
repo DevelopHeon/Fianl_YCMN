@@ -33,8 +33,8 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectSendList", empNo, rowBounds);
 	}
 	//보낸메일List 삭제
-	public int updateTrashMail(SqlSessionTemplate sqlSession, int receiveNo) {
-		return sqlSession.update("mailMapper.updateTrashMail", receiveNo);
+	public int updateTrashSMail(SqlSessionTemplate sqlSession, int receiveNo) {
+		return sqlSession.update("mailMapper.updateTrashSMail", receiveNo);
 
 	}
 	//휴지통List
@@ -68,9 +68,6 @@ public class MailDao {
 	public ReceiveMail selectSendMail(SqlSessionTemplate sqlSession, int mailNo) {
 		return sqlSession.selectOne("mailMapper.selectSendMail", mailNo);
 	}
-	//보낸메일조회에서 삭제
-	public int updateTrashSMail(SqlSessionTemplate sqlSession, int mailNo) {
-		return sqlSession.update("mailMapper.updateTrashSMail", mailNo);
-	}
+
 
 }
