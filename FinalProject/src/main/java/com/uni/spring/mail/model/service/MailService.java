@@ -29,5 +29,9 @@ public interface MailService {
 
 	ReceiveMail selectSendMail(int mailNo);
 
+	int selectUnreadMail(int empNo);
+
+	int selectTotalMail(int empNo);
+
 
 }

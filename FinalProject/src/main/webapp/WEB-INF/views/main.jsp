@@ -203,12 +203,12 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
           	<c:if test="${ loginUser.empPfe eq null}">
-               	<p class="centered"><img src="resources/img/user.png" class="img-circle" width="80">
+               	<p class="centered"><img src="resources/img/user.png" class="img-circle" width="80"></p>
             </c:if>
             <c:if test="${ !empty loginUser.empPfe }">
                 <p class="centered"><img src="resources/empUpload_files/${loginUser.empPfe}" class="img-circle" width="80"></p>
-            </c:if></a>
-            </p>
+            </c:if>
+
           <h5 class="centered">${ sessionScope.loginUser.empName }</h5>
           <button type="button" class="workCheck btn btn-primary" data-toggle="modal" data-target="#workcheck" onclick="checkTime(); todayCheck();" >출퇴근 확인</button>
 
@@ -239,7 +239,10 @@
           <li class="sub-menu">
             <a href="views/javascript:;">
               <i class="fa fa-envelope"></i>
-              <span>메일</span>
+              <span>메일</span>&nbsp;&nbsp;&nbsp;&nbsp;
+	              <c:if test="${unread ne 0 }">
+	              <span class="badge bg-success">${unread}</span>
+	              </c:if>
               </a>
             <ul class="sub">
               <li><a href="writeMail.do">메일 작성</a></li>

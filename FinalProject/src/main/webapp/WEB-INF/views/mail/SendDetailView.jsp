@@ -38,7 +38,7 @@
             <section class="panel">
               <header class="panel-heading wht-bg">
                 <h4 class="gen-case">
-                    View Message
+                    	보낸 메일 확인
                   </h4>
               </header>
               <div class="panel-body ">
@@ -48,8 +48,6 @@
                   </div>
                   <div class="col-md-4">
                     <div class="compose-btn pull-right">
-                      <a href="mail_compose.html" class="btn btn-sm btn-theme"><i class="fa fa-reply"></i> Reply</a>
-                      <button class="btn  btn-sm tooltips" data-original-title="Print" type="button" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-print"></i> </button>
                       <button class="btn btn-sm tooltips" data-original-title="Trash" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-trash-o"></i></button>
                     </div>
                   </div>

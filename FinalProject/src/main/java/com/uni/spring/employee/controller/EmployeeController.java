@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.Pagination;
@@ -29,6 +30,7 @@ import com.uni.spring.employee.model.dto.TimeOff;
 import com.uni.spring.employee.model.dto.TimeOffContent;
 import com.uni.spring.employee.model.dto.WorkingDay;
 import com.uni.spring.employee.model.service.EmployeeService;
+import com.uni.spring.mail.model.service.MailService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -38,6 +40,7 @@ import lombok.RequiredArgsConstructor;
 public class EmployeeController {
 	
 	private final EmployeeService employeeService;
+	private final MailService mailService;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@RequestMapping("main.do")
@@ -65,7 +68,12 @@ public class EmployeeController {
 	@RequestMapping("login.do")
 	public String loginEmployee(Employee emp, Model model) {
 		Employee loginUser = employeeService.loginEmployee(bCryptPasswordEncoder, emp);
+		int empNo = loginUser.getEmpNo();
 		
+		int unread = mailService.selectUnreadMail(empNo);
+		
+		model.addAttribute("unread", unread);
+	
 		model.addAttribute("loginUser", loginUser);
 		return "main";
 	}

@@ -38,7 +38,7 @@
             <section class="panel">
               <header class="panel-heading wht-bg">
                 <h4 class="gen-case">
-                    View Message
+                    	받은 메일 확인
                   </h4>
               </header>
               <form id="trashMail" action="deleteRMail.do" method="post">
@@ -46,13 +46,13 @@
                 <div class="mail-header row">
                   <div class="col-md-8">
                   <input type="text" name="receiveNo" value="${ rMail.receiveNo}" style="display:none">
-                 	<h5 class="pull-left">보낸 사람&nbsp;&nbsp;:&nbsp;&nbsp;${ rMail.employee.empName}</h5> <br><br>
-                    <h4 class="pull-left">${ rMail.mail.mailTitle}</h4>
+                  	<span class="pull-left label label-warning">보낸 사람</span>
+                 	<span class="pull-left">&nbsp;&nbsp;${ rMail.employee.empName}</span><br><br>
+                    <h2 class="pull-left">${ rMail.mail.mailTitle}</h2>
                   </div>
                   <div class="col-md-4">
                     <div class="compose-btn pull-right">
                       <a href="mail_compose.html" class="btn btn-sm btn-theme"><i class="fa fa-reply"></i> Reply</a>
-                      <button class="btn  btn-sm tooltips" data-original-title="Print" type="button" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-print"></i> </button>
                       <button class="btn btn-sm tooltips" data-original-title="Trash" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-trash-o"></i></button>
                     </div>
                   </div>
@@ -61,14 +61,16 @@
                 <div class="mail-sender">
                   <div class="row">
                   	<div class="col-md-8">
-                      <strong>수신&nbsp;&nbsp;:&nbsp;&nbsp;${ rMail.mail.mailTo}</strong>
+                  	  <span class="label label-primary">수신</span>
+                      <span>&nbsp;&nbsp;${ rMail.mail.mailTo}</span>
                     </div>                    
                     <div class="col-md-4">
                       <p class="date">${rMail.timestamp }</p>
                     </div>
                   	<c:if test="${!empty rMail.mail.mailRef}">
                     <div class="col-md-8">
-                      <strong>참조&nbsp;&nbsp;:&nbsp;&nbsp;${ rMail.mail.mailRef}</strong>
+                      <span class="label label-success">참조</span>
+                      <span>&nbsp;&nbsp;${ rMail.mail.mailRef}</span>
                     </div>
                     </c:if>
 
@@ -87,10 +89,6 @@
                   <ul>
                     <li>
                       <a class="atch-thumb" href="resources/mailUpload_files/${rMail.mail.fileName}" download="${ rMail.mail.fileName }">
-                        <img src="resources/mailUpload_files/${rMail.mail.fileName}">
-                        </a>
-                      <a class="name">
-                        ${rMail.mail.fileName}
                         </a>
                     </li>
                   </ul>

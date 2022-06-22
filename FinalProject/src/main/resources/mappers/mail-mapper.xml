@@ -139,4 +139,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET RECEIVE_STATUS = 'SN'
 		WHERE RECEIVE_NO IN (#{receiveNo})
 	</update>
+	
+	<!-- 안읽은 메일 개수 -->
+	<select id="selectUnreadMail" resultType="_int">
+		SELECT COUNT(*)
+		FROM RECEIVEMAIL
+		WHERE RECEIVER = #{empNo} AND CONFIRM_MAIL = 0
+	</select>
+	
+	<!-- 전체 메일 개수 -->
+	<select id="selectTotalMail" resultType="_int">
+		SELECT COUNT(*)
+		FROM RECEIVEMAIL
+		WHERE RECEIVER = #{empNo} AND RECEIVE_STATUS = 'Y'
+	</select>
 </mapper>
