@@ -47,7 +47,7 @@
               </header>
               <div class="panel-body minimal">
                 <div class="table-inbox-wrap ">
-                	<form id="trashMail" action="deleteTrashMail.do" method="post">
+                	<form id="trashMail" action="deleteTrashSMail.do" method="post">
                 	<!-- 보낸메일이 없을 경우 -->
                 	<c:if test="${empty sendList}">
                 	 <table class="table table-inbox table-hover centered">
@@ -63,13 +63,14 @@
 					<a data-original-title="Refresh" data-placement="top" data-toggle="dropdown" onclick="location.reload();" class="btn mini tooltips">
                       <i class=" fa fa-refresh"></i>
                       </a>
-                  <table class="table table-inbox table-hover">
+                  <table id="sendMailList" class="table table-inbox table-hover">
                   	<c:forEach items="${sendList }" var="s">
                     <tbody>
                       <tr class="">
                         <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox" id="checkSendTrash" name="checkNo" value="${s.receiveNo }">
-                        </td>
+                          <div><input type="checkbox" class="mail-checkbox" id="checkSendTrash" name="checkNo" value="${s.receiveNo }">
+                        </div></td>
+                        <td style="display:none">${s.mailNo}</td>
                         <!-- 수신,참조,비밀참조 -->
                         <c:if test="${ s.status eq 'T'}"> 
                         <td class="view-message"><span class="label label-primary">수신</span></td>
@@ -94,6 +95,9 @@
                         <!-- 수신확인 -->
                         <c:if test="${ s.confirmMail eq 0}"> 
                         <td class="view-message">읽지 않음</td>
+                        </c:if>
+                        <c:if test="${ s.confirmMail ne 0}"> 
+                        <td class="view-message">읽음</td>
                         </c:if>
                         <td class="view-message text-right">${s.timestamp}</td>
                       </tr>                 
@@ -163,6 +167,15 @@
 			$("#trashMail").submit();
 		}
 	}
+	
+	//글제목을 클릭해서 메일보기
+	$(function(){
+		$("#sendMailList tbody tr td:not(:has(input))").click(function(){
+			var mno = $(this).parent().children().eq(1).text();
+
+			location.href="detailSendMail.do?mno="+mno;
+		})
+	})
 	
 
 </script>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.common.dto.PageInfo;
+import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.mail.model.dto.Mail;
 import com.uni.spring.mail.model.dto.ReceiveMail;
 
@@ -33,8 +34,8 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectSendList", empNo, rowBounds);
 	}
 	//보낸메일List 삭제
-	public int updateTrashMail(SqlSessionTemplate sqlSession, int receiveNo) {
-		return sqlSession.update("mailMapper.updateTrashMail", receiveNo);
+	public int updateTrashSMail(SqlSessionTemplate sqlSession, int receiveNo) {
+		return sqlSession.update("mailMapper.updateTrashSMail", receiveNo);
 
 	}
 	//휴지통List
@@ -52,5 +53,37 @@ public class MailDao {
 		
 		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiveList", empNo, rowBounds);
 	}
+	//받은메일 조회 카운팅
+	public int increaseCount(SqlSessionTemplate sqlSession, int receiveNo) {
+		return sqlSession.update("mailMapper.increaseCount", receiveNo);
+	}
+	//받은메일 조회
+	public ReceiveMail selectReceiveMail(SqlSessionTemplate sqlSession, int receiveNo) {
+		return sqlSession.selectOne("mailMapper.selectReceiveMail", receiveNo);
+	}
+	//받은메일조회에서 삭제
+	public int updateTrashRMail(SqlSessionTemplate sqlSession, int receiveNo) {
+		return sqlSession.update("mailMapper.updateTrashRMail", receiveNo);
+	}
+	//보낸메일 조회
+	public ReceiveMail selectSendMail(SqlSessionTemplate sqlSession, int mailNo) {
+		return sqlSession.selectOne("mailMapper.selectSendMail", mailNo);
+	}
+	//안읽은메일 개수
+	public int selectUnreadMail(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("mailMapper.selectUnreadMail", empNo);
+
+	}
+	//전체 메일 개수
+	public int selectTotalMail(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("mailMapper.selectTotalMail", empNo);
+
+	}
+	//주소록 -> 메일쓰기
+	public Employee selectChoiceMail(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("mailMapper.selectChoiceMail", empNo);
+
+	}
+
 
 }

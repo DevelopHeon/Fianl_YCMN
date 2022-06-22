@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.Pagination;
@@ -39,7 +40,17 @@ public class MailController {
 	
 	//메일작성폼
 	@RequestMapping("writeMail.do")
-	public String writeMail(HttpSession session) {
+	public String writeMail(@RequestParam(name="eno", required=false)String empNo,
+							HttpSession session,
+							Model model) {
+		//주소록에서 사원에게 메일쓰기를 클릭할때(empDetail, writeMail)
+		if(empNo != null) {
+			//필요한 것 : 사원번호, 이름
+			//eno는 주소록에서 작성할때만 필요하므로 required=false로 두어야함
+			//이때 required= false는  파라미터 값으로 int형을 받을 수 없다 -> string으로 쓰고 인자값에서 다시 int형변환
+			Employee emp = mailService.selectChoiceMail(Integer.parseInt(empNo));
+			model.addAttribute("emp", emp);
+		}
 		
 		return "mail/writeMail";
 	}
@@ -53,7 +64,7 @@ public class MailController {
 							 @RequestParam(name="upfile", required=false) MultipartFile file) {
 		//메일 잘 들어오는지 확인
 		System.out.println(mail);
-		
+		mail.setMailContent(mail.getMailContent().replaceAll("\n", "<br>"));
 		Attachment attachment = null;
 		if(!file.getOriginalFilename().equals("")) { //첨부파일에 업로드가 되었다면
 			//attachment에 파일을 저장
@@ -142,9 +153,18 @@ public class MailController {
 		//받은메일함 리스트
 		ArrayList<ReceiveMail> receiveList = mailService.selectReceiveList(empNo, pi);
 		
+		//안읽은메일 수, 전체메일 수
+		int unread = mailService.selectUnreadMail(empNo);
+		int total = mailService.selectTotalMail(empNo);
+	
 		model.addAttribute("receiveList", receiveList);
 		model.addAttribute("pi", pi);
 
+//		ModelAndView mv = new ModelAndView();
+//		mv.addObject("unread",unread).setViewName("main");
+//		
+		model.addAttribute("unread", unread);
+		model.addAttribute("total", total);
 		
 		return "mail/receiveMail";
 	}
@@ -162,16 +182,65 @@ public class MailController {
 		
 		return "mail/deleteMail";
 	}
-	//보낸메일 삭제
-	@RequestMapping("deleteTrashMail.do")
-	public String deleteTrashMail(@RequestParam("checkNo")List<Integer> list,
+	
+	
+	//보낸메일List에서 삭제
+	@RequestMapping("deleteTrashSMail.do")
+	public String deleteTrashSMail(@RequestParam("checkNo")List<Integer> list,
 								  Model model) {
 		
 		for(int receiveNo : list) {
 			System.out.println(list);
-			mailService.updateTrashMail(receiveNo);
+			mailService.updateTrashSMail(receiveNo);
 		}
 		return "redirect:sendMail.do";
 	}
+	
+	//보낸메일조회(detail)
+	@RequestMapping("detailSendMail.do")
+	public String detailSendMail(@RequestParam("mno")int mailNo, 
+								 Model model) {
+		
+		//메일확인
+		ReceiveMail sendMail = mailService.selectSendMail(mailNo);
+		
+		model.addAttribute("sMail", sendMail);
+		return "mail/SendDetailView";
+	}
+
+	
+	//받은메일List에서 삭제
+	@RequestMapping("deleteTrashRMail.do")
+	public String deleteTrashRMail(@RequestParam("checkNo")List<Integer> list,
+								  Model model) {
+		
+		for(int receiveNo : list) {
+			System.out.println(list);
+			mailService.updateTrashRMail(receiveNo);
+		}
+		return "redirect:receiveMail.do";
+	}
+	
+	//받은메일조회(detail)
+	@RequestMapping("detailReceiveMail.do")
+	public String detailReceiveMail(@RequestParam("mno")int receiveNo, Model model) {
+		
+		//메일확인
+		ReceiveMail receiveMail = mailService.selectReceiveMail(receiveNo);
+		
+		model.addAttribute("rMail", receiveMail);
+		return "mail/ReceiveDetailView";
+	}
+	
+	//받은메일조회에서 삭제
+	@RequestMapping("deleteRMail.do")
+	public String deleteRMail(@RequestParam("receiveNo")int receiveNo, Model model) {
+
+		mailService.updateTrashRMail(receiveNo);
+	
+		return "redirect:receiveMail.do";
+	}
+	
+
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.common.dto.PageInfo;
+import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.mail.model.dao.MailDao;
 import com.uni.spring.mail.model.dto.Mail;
 import com.uni.spring.mail.model.dto.ReceiveMail;
@@ -48,10 +49,10 @@ public class MailServiceImpl implements MailService {
 		return mailDao.selectSendList(sqlSession, empNo, pi);
 	}
 	
-	//보낸메일함List 삭제
+	//보낸메일함List에서 삭제
 	@Override
-	public void updateTrashMail(int receiveNo) {
-		int result = mailDao.updateTrashMail(sqlSession, receiveNo);
+	public void updateTrashSMail(int receiveNo) {
+		int result = mailDao.updateTrashSMail(sqlSession, receiveNo);
 		if(result < 0) {
 			throw new CommException("보낸메일 삭제 실패");
 		}	
@@ -73,6 +74,51 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public ArrayList<ReceiveMail> selectReceiveList(int empNo, PageInfo pi) {
 		return mailDao.selectReceiveList(sqlSession, empNo, pi);
+	}
+	
+	//받은 메일 조회
+	@Override
+	public ReceiveMail selectReceiveMail(int receiveNo) {
+		ReceiveMail mail = null;
+		
+		int result = mailDao.increaseCount(sqlSession, receiveNo);
+		if(result < 0) {
+			throw new CommException("메일 카운팅 실패");
+		}else {
+			//카운팅 후 메일확인
+			mail = mailDao.selectReceiveMail(sqlSession, receiveNo);
+		}
+		return mail;
+	}
+	//받은메일조회에서 삭제
+	@Override
+	public void updateTrashRMail(int receiveNo) {
+		int result = mailDao.updateTrashRMail(sqlSession, receiveNo);
+		if(result < 0) {
+			throw new CommException(receiveNo + "번 메일 수신자 삭제 실패");
+		}	
+	}
+	//보낸 메일 조회
+	@Override
+	public ReceiveMail selectSendMail(int mailNo) {
+		return mailDao.selectSendMail(sqlSession, mailNo);
+	}
+	
+	//안읽은메일 개수
+	@Override
+	public int selectUnreadMail(int empNo) {
+		return mailDao.selectUnreadMail(sqlSession, empNo);
+	}
+	//전체 메일 개수
+	@Override
+	public int selectTotalMail(int empNo) {
+		return mailDao.selectTotalMail(sqlSession, empNo);
+
+	}
+	//주소록 -> 메일쓰기
+	@Override
+	public Employee selectChoiceMail(int empNo) {
+		return mailDao.selectChoiceMail(sqlSession, empNo);
 	}
 
 

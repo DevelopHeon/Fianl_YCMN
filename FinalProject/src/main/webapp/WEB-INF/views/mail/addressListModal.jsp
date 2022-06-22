@@ -105,7 +105,6 @@
 				
 				// 선택한 사원 테이블에 추가
 				if(num == 1){
-
 					receiver += "<input type='hidden' tabindex='1' class='form-control' value="+ receiverNo +" name='mailTo'>";			
 					$("#mailTo").html(receiver);
 				}else if(num == 2){

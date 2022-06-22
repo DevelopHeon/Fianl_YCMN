@@ -19,6 +19,9 @@
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
 
+  <style>
+  	.on { visibility: visible; }
+  </style>
 </head>
 
 <body>
@@ -48,11 +51,14 @@
                   <a href="writeMail.do" class="btn btn-compose">
                   <i class="fa fa-pencil"></i>  메일쓰기
                   </a>
+                  
                   </div>
+                  <span style="font-size:25px">미확인<span style="color:red;"> ${unread }</span>건&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;전체  ${total }건</span>
+                  <br><br>
               </header>
               <div class="panel-body minimal">
                 <div class="table-inbox-wrap ">
-                	<form id="trashMail" action="deleteTrashMail.do" method="post">
+                	<form id="trashMail" action="deleteTrashRMail.do" method="post">
                 	<!-- 받은 메일이 없을 경우 -->
                 	<c:if test="${empty receiveList}">
                 	 <table class="table table-inbox table-hover centered">
@@ -69,13 +75,15 @@
                       <i class=" fa fa-refresh"></i>
                       </a>
                   <table id="receiveMailList" class="table table-inbox table-hover">
+                  	
                   	<c:forEach items="${receiveList }" var="r">
+                  	<c:if test="${r.confirmMail eq 0}">
                     <tbody>
-                      <tr class="">
+                      <tr class="unread">
                         <td class="inbox-small-cells">
                           <input type="checkbox" class="mail-checkbox" id="checkSendTrash" name="checkNo" value="${r.receiveNo }">
                         </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
+                        <td class="inbox-small-cells"><input style="display:none"><i style="font-size:20px" class="star fa fa-star inbox-started"></i></td>
                         <!-- 이름 -->
                         <td class="dont-show">${r.employee.empName}</td>
                         <!-- 메일제목 -->
@@ -90,7 +98,32 @@
                         <td class="view-message text-right">${r.timestamp}</td>
                       </tr>                 
                     </tbody>
+                    </c:if>
+                    
+                    <c:if test="${r.confirmMail ne 0}">
+                    <tbody>
+                      <tr class="">
+                        <td class="inbox-small-cells">
+                          <input type="checkbox" class="mail-checkbox" id="checkSendTrash" name="checkNo" value="${r.receiveNo }">
+                        </td>
+                        <td class="inbox-small-cells"><input style="display:none"><i style="font-size:20px" class="star fa fa-star inbox-started"></i></td>
+                        <!-- 이름 -->
+                        <td class="dont-show">${r.employee.empName}</td>
+                        <!-- 메일제목 -->
+                        <td class="view-message">${r.mail.mailTitle}</td>
+                        <!-- 첨부파일 유무 -->
+                        <c:if test="${!empty r.mail.fileName}"> 
+                        <td class="view-message inbox-small-cells"><i class="fa fa-paperclip"></i></td>
+                        </c:if>
+                        <c:if test="${empty r.mail.fileName}"> 
+                        <td></td>
+                        </c:if>
+                        <td class="view-message text-right">${r.timestamp}</td>
+                      </tr>                 
+                    </tbody>
+                    </c:if>
                   	</c:forEach>
+                  	
                   </table>
                   </form>
                 </div>
@@ -145,7 +178,7 @@
 		})
 		
 	}
-	
+	//체크된 메일이 없는데 삭제버튼을 누를경우
 	function trashMail(){
 		if($('input[name=checkNo]:checked').length < 1){
 			alert('삭제할 메일을 선택하세요.')
@@ -156,8 +189,22 @@
 			$("#trashMail").submit();
 		}
 	}
+	//글제목을 클릭해서 메일보기
+	$(function(){
+		$("#receiveMailList tbody tr td:not(:has(input))").click(function(){
+			var mno = $(this).parent().children().eq(0).find("input").val();
+			location.href="detailReceiveMail.do?mno="+mno;
+		})
+	})
 	
-
+	//즐겨찾기
+	$(".star").click(function(){
+		if($(this).hasClass("inbox-started")){
+			$(this).removeClass("inbox-started");
+		}else{
+			$(this).addClass("inbox-started");
+		}
+	})
 </script>
     <!-- /MAIN CONTENT -->
     <!--main content end-->

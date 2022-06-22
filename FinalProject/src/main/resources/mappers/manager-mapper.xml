@@ -4,107 +4,123 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="managerMapper">
 	<resultMap id="HrResultMap" type="Hr">
-	    <id column="EMP_NO" property="empNo"/>
-	    <result column="HIRE_DATE" property="hireDate"/>
-	    <result column="BIRTH_DATE" property="birthDate"/>
-	    <result column="GENDER" property="gender"/>
-	    <result column="HIRE_CATEGORY" property="hireCategory"/>
-	    <result column="SARARY" property="sarary"/>
-	    <result column="MARRY_STATUS" property="marryStatus"/>
-	    <result column="MILI_STATUS" property="miliStatus"/>
-	    <result column="PERSONNEL_EVAL" property="personnelEval"/>
-	    <result column="ENT_DATE" property="entDate"/>
-	    <result column="ENT_CON" property="entCon"/>
+		<id column="EMP_NO" property="empNo" />
+		<result column="HIRE_DATE" property="hireDate" />
+		<result column="BIRTH_DATE" property="birthDate" />
+		<result column="GENDER" property="gender" />
+		<result column="HIRE_CATEGORY" property="hireCategory" />
+		<result column="SARARY" property="sarary" />
+		<result column="MARRY_STATUS" property="marryStatus" />
+		<result column="MILI_STATUS" property="miliStatus" />
+		<result column="PERSONNEL_EVAL" property="personnelEval" />
+		<result column="ENT_DATE" property="entDate" />
+		<result column="ENT_CON" property="entCon" />
 	</resultMap>
-	
+
 	<resultMap id="EmployeeResultMap" type="Employee">
-	    <id column="EMP_NO" property="empNo"/>
-	    <result column="EMP_NAME" property="empName"/>
-	    <result column="EMP_ID" property="empId"/>
-	    <result column="EMP_PWD" property="empPwd"/>
-	    <result column="EMP_EMAIL" property="empEmail"/>
-	    <result column="OFFICE_TEL" property="officeTel"/>
-	    <result column="EMP_PHONE" property="empPhone"/>
-	    <result column="EMP_LOC" property="empLoc"/>
-	    <result column="EMP_PFE" property="empPfe"/>
-	    <result column="CATEGORY" property="category"/>
-	    <result column="STATUS" property="status"/>
-	    <result column="EMP_ONOFF" property="empOnoff"/>
-	    <result column="POS_NO" property="posNo"/>
-	    <result column="DEP_NO" property="depNo"/>
-	    <result column="POS_NAME" property="posName"/>
-	    <result column="DEP_NAME" property="depName"/>
-	    <association property="hr" resultMap="HrResultMap"/>
-	    <association property="department" javaType="Department">
-			<id property="depNo" column="DEP_NO"/>
-			<result property="depName" column="DEP_NAME"/>
-			<result property="status" column="STATUS"/>
+		<id column="EMP_NO" property="empNo" />
+		<result column="EMP_NAME" property="empName" />
+		<result column="EMP_ID" property="empId" />
+		<result column="EMP_PWD" property="empPwd" />
+		<result column="EMP_EMAIL" property="empEmail" />
+		<result column="OFFICE_TEL" property="officeTel" />
+		<result column="EMP_PHONE" property="empPhone" />
+		<result column="EMP_LOC" property="empLoc" />
+		<result column="EMP_PFE" property="empPfe" />
+		<result column="CATEGORY" property="category" />
+		<result column="STATUS" property="status" />
+		<result column="EMP_ONOFF" property="empOnoff" />
+		<result column="POS_NO" property="posNo" />
+		<result column="DEP_NO" property="depNo" />
+		<result column="POS_NAME" property="posName" />
+		<result column="DEP_NAME" property="depName" />
+		<association property="hr" resultMap="HrResultMap" />
+		<association property="department" javaType="Department">
+			<id property="depNo" column="DEP_NO" />
+			<result property="depName" column="DEP_NAME" />
+			<result property="status" column="STATUS" />
 		</association>
 	</resultMap>
 	
+	<!-- 전체 사원 수 -->
+	<select id="selectListCount" resultType="_int">
+		SELECT		COUNT(*)
+		FROM		EMPLOYEE
+	</select>
 	<!-- 전체 사원 목록 조회 -->
 	<select id="employeeList" resultType="Employee">
-        SELECT      A.EMP_NO, A.EMP_ID, A.EMP_NAME, A.EMP_EMAIL,
-		            A.OFFICE_TEL, A.EMP_PHONE, A.STATUS,
-		            A.POS_NO, B.POS_NAME,
-		            A.DEP_NO, C.DEP_NAME
-		FROM        EMPLOYEE A
-		LEFT JOIN 	JOB_POSITION B ON (A.POS_NO = B.POS_NO) 
+		SELECT 		A.EMP_NO, A.EMP_ID, A.EMP_NAME, A.EMP_EMAIL,
+					A.OFFICE_TEL, A.EMP_PHONE, A.STATUS,
+					A.POS_NO, B.POS_NAME,
+					A.DEP_NO, C.DEP_NAME
+		FROM 		EMPLOYEE A
+		LEFT JOIN 	JOB_POSITION B ON (A.POS_NO = B.POS_NO)
 		LEFT JOIN 	DEPARTMENT C ON(A.DEP_NO = C.DEP_NO)
-		ORDER BY    EMP_NO DESC
+		<where>
+			<if test="find.equals('empNo')">
+				EMP_NO LIKE '%'||#{keyword}||'%'
+			</if>
+			<if test='find == "empName"'>
+				EMP_NAME LIKE '%'||#{keyword}||'%'
+			</if>
+			<if test="find.equals('posName')">
+				POS_NAME LIKE '%'||#{keyword}||'%'
+			</if>
+			<if test="find.equals('depName')">
+				DEP_NAME LIKE '%'||#{keyword}||'%'
+			</if>
+			<if test="find == 'status'">
+				STATUS LIKE '%'||#{keyword}||'%'
+			</if>
+		</where>
+		ORDER BY 	EMP_NO DESC
 	</select>
 	<!-- 사원 상세 조회 -->
-	<select id="selectEmployee" parameterType="Employee" resultMap="EmployeeResultMap">
-		SELECT      A.EMP_NO, A.EMP_ID, A.EMP_NAME, A.EMP_EMAIL,A.OFFICE_TEL, A.EMP_PHONE, A.STATUS, A.EMP_LOC,
+	<select id="selectEmployee" parameterType="Employee"
+		resultMap="EmployeeResultMap">
+		SELECT 		A.EMP_NO, A.EMP_ID, A.EMP_NAME,
+					A.EMP_EMAIL,A.OFFICE_TEL, A.EMP_PHONE, A.STATUS, A.EMP_LOC,
 					A.POS_NO, B.POS_NAME,
 					A.DEP_NO, C.DEP_NAME,
-                    D.HIRE_DATE, D.BIRTH_DATE, D.GENDER, D.HIRE_CATEGORY, 
-                    D.SARARY, D.MARRY_STATUS, D.MILI_STATUS, D.PERSONNEL_EVAL,D.ENT_DATE, D.ENT_CON
+					D.HIRE_DATE, D.BIRTH_DATE, D.GENDER, D.HIRE_CATEGORY,
+					D.SARARY, D.MARRY_STATUS, D.MILI_STATUS, D.PERSONNEL_EVAL,D.ENT_DATE, D.ENT_CON
 		FROM 		EMPLOYEE A
-        LEFT JOIN 	JOB_POSITION B ON (A.POS_NO = B.POS_NO) 
-        LEFT JOIN 	DEPARTMENT C ON(A.DEP_NO = C.DEP_NO)
-        LEFT JOIN 	PERSONNEL_CHART D ON(A.EMP_NO = D.EMP_NO)
-        WHERE 		A.EMP_NO =  #{empNo}
+		LEFT JOIN 	JOB_POSITION B ON (A.POS_NO = B.POS_NO)
+		LEFT JOIN 	DEPARTMENT C ON(A.DEP_NO = C.DEP_NO)
+		LEFT JOIN 	PERSONNEL_CHART D ON(A.EMP_NO = D.EMP_NO)
+		WHERE 		A.EMP_NO = #{empNo}
 	</select>
-	
+
 	<!-- 직위 목록 불러오기 -->
-	<select id="selectPosList" resultType="com.uni.spring.employee.model.dto.JobPosition">
-	    SELECT 	 *
-	    FROM 	 JOB_POSITION
-	    WHERE	 STATUS = 'Y'
-	    ORDER BY POS_GRADE
+	<select id="selectPosList"
+		resultType="com.uni.spring.employee.model.dto.JobPosition">
+		SELECT 		*
+		FROM 		JOB_POSITION
+		WHERE 		STATUS = 'Y'
+		ORDER BY 	POS_GRADE
 	</select>
-	<select id="selectDepList" resultType="com.uni.spring.employee.model.dto.Department">
-	    SELECT 	 *
-	    FROM 	 DEPARTMENT
-	    WHERE	 STATUS = 'Y'
-	    ORDER BY DEP_NO
+	<select id="selectDepList"
+		resultType="com.uni.spring.employee.model.dto.Department">
+		SELECT 		*
+		FROM 		DEPARTMENT
+		WHERE 		STATUS = 'Y'
+		ORDER BY 	DEP_NO
 	</select>
-	
-<!--  	<select id="selectEmployeeHr" resultType="Hr">
-		SELECT *
-		FROM EMPLOYEE A
-        LEFT JOIN JOB_POSITION B USING(POS_NO)
-        LEFT JOIN DEPARTMENT C USING(DEP_NO)
-        LEFT JOIN PERSONNEL_CHART D USING(EMP_NO)
-        WHERE EMP_NO = #{empNo}
-	</select> -->
-	
+
 	<update id="updateEmp" parameterType="Employee">
-		UPDATE 	EMPLOYEE 
+		UPDATE 	EMPLOYEE
 		SET 	EMP_NAME = #{empName},
 				EMP_EMAIL = #{empEmail},
-				OFFICE_TEL = #{officeTel}, 
-				EMP_PHONE = #{empPhone}, 
+				OFFICE_TEL = #{officeTel},
+				EMP_PHONE = #{empPhone},
 				EMP_LOC = #{empLoc},
 				STATUS = #{status},
 				POS_NO = #{posNo},
 				DEP_NO = #{depNo}
 		WHERE 	EMP_NO = #{empNo}
 	</update>
-	
-		<!-- <![CDATA[ 
-		]]> -->
+
+	<!-- <![CDATA[ ]]> -->
 	<update id="updateHr" parameterType="Hr">
 		UPDATE 	PERSONNEL_CHART
 		SET 	HIRE_DATE = #{hireDate},
@@ -119,20 +135,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				ENT_CON = #{entCon}
 		WHERE 	EMP_NO = #{empNo}
 	</update>
-	<select id="selectEmpHr" parameterType="Hr" resultMap="HrResultMap">
-		SELECT      EMP_NO,
-					HIRE_DATE,
-					BIRTH_DATE,
-					GENDER,
-					HIRE_CATEGORY,
-					SARARY,
-					MARRY_STATUS,
-					MILI_STATUS,
-					PERSONNEL_EVAL,
-					ENT_DATE,
-					ENT_CON
-		FROM 		PERSONNEL_CHART
-        WHERE 		EMP_NO =  #{empNo}
+	<select id="selectEmpHr" parameterType="Hr"
+		resultMap="HrResultMap">
+		SELECT 	EMP_NO,
+				HIRE_DATE,
+				BIRTH_DATE,
+				GENDER,
+				HIRE_CATEGORY,
+				SARARY,
+				MARRY_STATUS,
+				MILI_STATUS,
+				PERSONNEL_EVAL,
+				ENT_DATE,
+				ENT_CON
+		FROM 	PERSONNEL_CHART
+		WHERE 	EMP_NO = #{empNo}
 	</select>
 	<update id="updateEmpHr" parameterType="Hr">
 		UPDATE 	PERSONNEL_CHART
@@ -145,29 +162,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				ENT_CON = #{entCon}
 		WHERE 	EMP_NO = #{empNo}
 	</update>
-	
-	
-	
-	
-	
-	
-	
-	
-	<!-- 엑셀  -->
-	<select id="selectExcelList" fetchSize="100" resultType="Employee">
-        SELECT      A.EMP_NO, A.EMP_ID, A.EMP_NAME, A.EMP_EMAIL,
-		            A.OFFICE_TEL, A.EMP_PHONE, B.POS_NAME, C.DEP_NAME
-		FROM        EMPLOYEE A
-        LEFT JOIN 	JOB_POSITION B ON (A.POS_NO = B.POS_NO) 
-        LEFT JOIN 	DEPARTMENT C ON(A.DEP_NO = C.DEP_NO)
-		ORDER BY    EMP_NO ASC
+
+	<!-- 엑셀 -->
+	<select id="selectExcelList" fetchSize="100"
+		resultType="Employee">
+		SELECT 		A.EMP_NO, A.EMP_ID, A.EMP_NAME, A.EMP_EMAIL,
+					A.OFFICE_TEL, A.EMP_PHONE, B.POS_NAME, C.DEP_NAME
+		FROM 		EMPLOYEE A
+		LEFT JOIN 	JOB_POSITION B ON (A.POS_NO = B.POS_NO)
+		LEFT JOIN 	DEPARTMENT C ON(A.DEP_NO = C.DEP_NO)
+		ORDER BY 	EMP_NO ASC
 	</select>
 	
+	<!-- 직위 추가/수정/삭제 -->
+	<insert id="insertDepartment" parameterType="Department">
+		INSERT INTO
+		DEPARTMENT
+		VALUES(SEQ_DNO.NEXTVAL, #{depName}, DEFAULT)
+	</insert>
+	<update id="updateDepartment" parameterType="Department">
+		UPDATE 	DEPARTMENT
+		SET		DEP_NAME = #{depName}
+		WHERE 	DEP_NO = #{depNo}
+	</update>
+	<update id="deleteDepartment" parameterType="Department">
+		UPDATE 	DEPARTMENT
+		SET		STATUS = 'N'
+		WHERE 	DEP_NO = #{depNo}
+	</update>
 	
-	
-	
-	
-	
-	
+	<!-- 부서 추가/수정/삭제 -->
+	<insert id="insertJobPosition" parameterType="JobPosition">
+		INSERT INTO
+		JOB_POSITION
+		VALUES(SEQ_JNO.NEXTVAL, #{posName}, #{posGrade}, DEFAULT)
+	</insert>
+	<update id="updateJobPosition" parameterType="JobPosition">
+		UPDATE 	JOB_POSITION
+		SET		POS_NAME = #{posName}, 
+				POS_GRADE = #{posGrade}
+		WHERE 	POS_NO = #{posNo}
+	</update>
+	<update id="deleteJobPosition" parameterType="JobPosition">
+		UPDATE 	JOB_POSITION
+		SET		STATUS = 'N'
+		WHERE 	POS_NO = #{posNo}
+	</update>
 	
 </mapper>
