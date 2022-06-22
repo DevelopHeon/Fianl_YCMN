@@ -41,14 +41,14 @@
 										<td>
 										<!-- 최종 승인날짜가 없고, 상태가 R이면 반려 승인날짜가있고 -->
 										<c:choose>
-											<c:when test='${ empty appMap.approval.lastApprovalDate && appMap.approval.appStatus.equals("R")}'>반려</c:when>
+											<c:when test='${ !empty appMap.approval.firstApprovalDate && appMap.approval.appStatus.equals("R")}'>반려</c:when>
 											<c:when test="${ empty appMap.approval.firstApprovalDate }">승인대기</c:when>
 											<c:when test="${ !empty appMap.approval.firstApprovalDate }">승인완료</c:when>
 										</c:choose>
 										</td>
 										<td>
 										<c:choose>
-											<c:when test='${ !empty appMap.approval.firstApprovalDate && appMap.approval.rejecter.equals("loginUser.empName")}'>반려</c:when>
+											<c:when test='${ !empty appMap.approval.lastApprovalDate && appMap.approval.appStatus.equals("R")}'>반려</c:when>
 											<c:when test="${ empty appMap.approval.lastApprovalDate }">승인대기</c:when>
 											<c:when test="${ !empty appMap.approval.lastApprovalDate }">승인완료</c:when>
 										</c:choose>
@@ -117,6 +117,32 @@
 						</table>
 							<br>
 							<hr>
+							<c:if test="${ !empty appMap.approval.rejecter }">
+								<table class="__se_tbl" style="width: 600px; margin-top : 0px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic,dotum,arial,tahoma;">
+								<tbody>
+									<tr>	
+										<td style="background: rgb(221, 221, 221); width:200px; padding: 5px; border: 1px solid black; height: 25px; width: 100px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+											반려자
+										</td>
+										<td colspan="3" style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;">
+											<span id="vacationTypeArea" name="select" style="font-family: malgun gothic, dotum, arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
+												<c:out value="${ appMap.approval.rejecter }" />
+											</span> 
+										</td>
+									</tr>
+									<tr>	
+										<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; width: 100px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+											반려 사유
+										</td>
+										<td colspan="3" style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;">
+											<span id="vacationTypeArea" name="select" style="font-family: malgun gothic, dotum, arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
+												<textarea name="rejectReason" rows="10" cols="70" style="resize:none;" readonly><c:out value="${appMap.approval.rejectReason}"/></textarea>
+											</span> 
+										</td>
+									</tr>
+									</tbody>
+								</table>
+							</c:if>
 							<br>
 							<table class="__se_tbl" style="width: 800px; margin-top : 0px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic,dotum,arial,tahoma;">
 							<tbody>
@@ -217,9 +243,13 @@
 						 or (appMap.approval.lastApprover.equals(loginUser.empName) and empty appMap.approval.lastApprovalDate and !empty appMap.approval.firstApprovalDate) }">
 							<div class="btns" align="center" style="margin-top:5%;">
 								<button class="btn btn-info btn-lg" onclick="postFormSubmit(3)">결재 승인</button>
-								<button class="btn btn-danger btn-lg" style="margin-left:1%;" onclick="postFormSubmit(4)">반려</button>
+								<button class="btn btn-danger btn-lg" style="margin-left:1%;" type="button" data-toggle="modal" data-target="#reject">반려</button>
 							</div>
 						</c:if>
+						<!-- 반려 버튼 클릭시 출력되는 모달 -->
+						<div class="modal fade" id="reject" style="height:60%;">
+							<jsp:include page="rejectModal.jsp"/>
+						</div>
 						<script>
 						// 수정 화면 , 결재승인 스크립트
 					 		function postFormSubmit(num){
@@ -230,7 +260,7 @@
 							console.log(firstApprover, lastApprover);
 							
 							if(num == 1){
-								postForm.attr("action", "updateFormBoard.do");
+								postForm.attr("action", "updateFormApproval.do");
 							}else if(num ==2){
 								postForm.attr("action", "deleteBoard.do");
 							}else if(num == 3){
@@ -239,8 +269,6 @@
 								}else{
 									return false;
 								}
-							}else if(num == 4){
-								postForm.attr("action", "#");
 							}
 								postForm.submit();
 							} 

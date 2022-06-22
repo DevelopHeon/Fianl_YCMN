@@ -22,12 +22,6 @@
 </head>
 
 <body>
-	<c:if test = "${ !empty msg }">
-		<script>
-			alert("${msg}");
-		</script>
-		<c:remove var="msg" scope="session"/>
-	</c:if>
 	<jsp:include page="../main.jsp"/>
   <section id="container">
    
@@ -43,7 +37,7 @@
             <section class="panel">
               <header class="panel-heading wht-bg">
                 <h4 class="gen-case">
-                    Inbox (3)
+                    	보낸메일함
                     <form action="#" class="pull-right mail-src-position">
                       <div class="input-append">
                         <input type="text" class="form-control " placeholder="Search Mail">
@@ -52,237 +46,163 @@
                   </h4>
               </header>
               <div class="panel-body minimal">
-                <div class="mail-option">
-                  <div class="chk-all">
-                    <div class="pull-left mail-checkbox">
-                      <input type="checkbox" class="">
-                    </div>
-                    <div class="btn-group">
-                      <a data-toggle="dropdown" href="#" class="btn mini all">
-                        All
-                        <i class="fa fa-angle-down "></i>
-                        </a>
-                      <ul class="dropdown-menu">
-                        <li><a href="#"> None</a></li>
-                        <li><a href="#"> Read</a></li>
-                        <li><a href="#"> Unread</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="btn-group">
-                    <a data-original-title="Refresh" data-placement="top" data-toggle="dropdown" href="#" class="btn mini tooltips">
+                <div class="table-inbox-wrap ">
+                	<form id="trashMail" action="deleteTrashSMail.do" method="post">
+                	<!-- 보낸메일이 없을 경우 -->
+                	<c:if test="${empty sendList}">
+                	 <table class="table table-inbox table-hover centered">
+                	 	<tr>
+                	 		<td>보낸 메일이 없습니다.</td>
+                	 	</tr>
+                	 </table>
+                	</c:if>
+                	<c:if test="${!empty sendList}">
+						<input type="checkbox" name="checkNo" value="1" class="btn btn-group" onclick="selectAll(this);">전체 선택</button>
+						<button type="button" class="btn btn-group" id="deleteBtn" onclick="trashMail();"><i class="fa fa-trash-o"></i> 선택 삭제</button>
+					</c:if>
+					<a data-original-title="Refresh" data-placement="top" data-toggle="dropdown" onclick="location.reload();" class="btn mini tooltips">
                       <i class=" fa fa-refresh"></i>
                       </a>
-                  </div>
-                  <div class="btn-group hidden-phone">
-                    <a data-toggle="dropdown" href="#" class="btn mini blue">
-                      More
-                      <i class="fa fa-angle-down "></i>
-                      </a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>
-                      <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>
-                      <li class="divider"></li>
-                      <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
-                    </ul>
-                  </div>
-                  <div class="btn-group">
-                    <a data-toggle="dropdown" href="#" class="btn mini blue">
-                      Move to
-                      <i class="fa fa-angle-down "></i>
-                      </a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>
-                      <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>
-                      <li class="divider"></li>
-                      <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
-                    </ul>
-                  </div>
-                  <ul class="unstyled inbox-pagination">
-                    <li><span>1-50 of 99</span></li>
-                    <li>
-                      <a class="np-btn" href="#"><i class="fa fa-angle-left  pagination-left"></i></a>
-                    </li>
-                    <li>
-                      <a class="np-btn" href="#"><i class="fa fa-angle-right pagination-right"></i></a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="table-inbox-wrap ">
-                  <table class="table table-inbox table-hover">
+                  <table id="sendMailList" class="table table-inbox table-hover">
+                  	<c:forEach items="${sendList }" var="s">
                     <tbody>
-                      <tr class="unread">
-                        <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox">
-                        </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                        <td class="view-message  dont-show"><a href="mail_view.html">Google Inc.</a></td>
-                        <td class="view-message "><a href="mail_view.html">Your new account is ready.</a></td>
-                        <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td>
-                        <td class="view-message  text-right">08:10 AM</td>
-                      </tr>
-                      <tr class="unread">
-                        <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox">
-                        </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                        <td class="view-message dont-show"><a href="mail_view.html">Mark Thompson</a></td>
-                        <td class="view-message"><a href="mail_view.html">Last project updates</a></td>
-                        <td class="view-message inbox-small-cells"></td>
-                        <td class="view-message text-right">March 15</td>
-                      </tr>
-                      <tr class="unread">
-                        <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox">
-                        </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                        <td class="view-message dont-show"><a href="mail_view.html">Wonder Corp.</a></td>
-                        <td class="view-message"><a href="mail_view.html">Thanks for your registration</a></td>
-                        <td class="view-message inbox-small-cells"></td>
-                        <td class="view-message text-right">March 15</td>
-                      </tr>
                       <tr class="">
                         <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox">
-                        </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                        <td class="view-message dont-show"><a href="mail_view.html">Facebook</a></td>
-                        <td class="view-message"><a href="mail_view.html">New Friendship Request</a></td>
-                        <td class="view-message inbox-small-cells"></td>
-                        <td class="view-message text-right">March 13</td>
-                      </tr>
-                      <tr class="">
-                        <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox">
-                        </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
-                        <td class="view-message dont-show"><a href="mail_view.html">Mark Webber <span class="label label-danger pull-right">urgent</span></a></td>
-                        <td class="view-message"><a href="mail_view.html">The server is down</a></td>
-                        <td class="view-message inbox-small-cells"></td>
-                        <td class="view-message text-right">March 09</td>
-                      </tr>
-                      <tr class="">
-                        <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox">
-                        </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
-                        <td class="view-message dont-show"><a href="mail_view.html">Facebook</a></td>
-                        <td class="view-message"><a href="mail_view.html">New message from Patrick S.</a></td>
+                          <div><input type="checkbox" class="mail-checkbox" id="checkSendTrash" name="checkNo" value="${s.receiveNo }">
+                        </div></td>
+                        <td style="display:none">${s.mailNo}</td>
+                        <!-- 수신,참조,비밀참조 -->
+                        <c:if test="${ s.status eq 'T'}"> 
+                        <td class="view-message"><span class="label label-primary">수신</span></td>
+                        </c:if>
+                        <c:if test="${ s.status eq 'R'}"> 
+                        <td class="view-message"><span class="label label-success">참조</span></td>
+                        </c:if>
+                        <c:if test="${ s.status eq 'S'}"> 
+                        <td class="view-message inbox-small-cells"><span class="label label-default">비밀참조</span></td>
+                        </c:if>
+                        <!-- 이름 -->
+                        <td class="dont-show">${s.employee.empName}</td>
+                        <!-- 메일제목 -->
+                        <td class="view-message">${s.mail.mailTitle}</td>
+                        <!-- 첨부파일 유무 -->
+                        <c:if test="${!empty s.mail.fileName}"> 
                         <td class="view-message inbox-small-cells"><i class="fa fa-paperclip"></i></td>
-                        <td class="view-message text-right">March 08</td>
-                      </tr>
-                      <tr class="">
-                        <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox">
-                        </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
-                        <td class="view-message dont-show">Paypal inc.</td>
-                        <td class="view-message">New payment received</td>
-                        <td class="view-message inbox-small-cells"><i class="fa fa-paperclip"></i></td>
-                        <td class="view-message text-right">March 04</td>
-                      </tr>
-                      <tr class="">
-                        <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox">
-                        </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                        <td class="view-message dont-show">Andrea <span class="label label-success pull-right">girlfriend</span></td>
-                        <td class="view-message view-message">Weekend plans</td>
-                        <td class="view-message inbox-small-cells"></td>
-                        <td class="view-message text-right">March 04</td>
-                      </tr>
-                      <tr class="">
-                        <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox">
-                        </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                        <td class="view-message dont-show">David Green</td>
-                        <td class="view-message view-message">Soccer tickets</td>
-                        <td class="view-message inbox-small-cells"></td>
-                        <td class="view-message text-right">February 22</td>
-                      </tr>
-                      <tr class="">
-                        <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox">
-                        </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                        <td class="view-message dont-show">Evelyn <span class="label label-info pull-right">family</span></td>
-                        <td class="view-message view-message">Surprise party</td>
-                        <td class="view-message inbox-small-cells"></td>
-                        <td class="view-message text-right">February 19</td>
-                      </tr>
-                      <tr class="">
-                        <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox">
-                        </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
-                        <td class="view-message dont-show">Martin Moore</td>
-                        <td class="view-message">Hey mate!</td>
-                        <td class="view-message inbox-small-cells"></td>
-                        <td class="view-message text-right">February 17</td>
-                      </tr>
-                      <tr class="">
-                        <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox">
-                        </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
-                        <td class="dont-show">Facebook</td>
-                        <td class="view-message">Paul published on your wall</td>
-                        <td class="view-message inbox-small-cells"><i class="fa fa-paperclip"></i></td>
-                        <td class="view-message text-right">February 14</td>
-                      </tr>
-                      <tr class="">
-                        <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox">
-                        </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                        <td class="view-message dont-show">Steve Stoll</td>
-                        <td class="view-message">Update developed</td>
-                        <td class="view-message inbox-small-cells"><i class="fa fa-paperclip"></i></td>
-                        <td class="view-message text-right">February 11</td>
-                      </tr>
-                      <tr class="">
-                        <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox">
-                        </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                        <td class="dont-show">Laura Anton</td>
-                        <td class="view-message view-message">New subscription</td>
-                        <td class="view-message inbox-small-cells"></td>
-                        <td class="view-message text-right">January 14</td>
-                      </tr>
-                      <tr class="">
-                        <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox">
-                        </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                        <td class="view-message dont-show">Ryanair</td>
-                        <td class="view-message">Your flight tickets</td>
-                        <td class="view-message inbox-small-cells"></td>
-                        <td class="view-message text-right">January 07</td>
-                      </tr>
-                      <tr class="">
-                        <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox">
-                        </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                        <td class="view-message dont-show">Twitter</td>
-                        <td class="view-message">Password reset</td>
-                        <td class="view-message inbox-small-cells"></td>
-                        <td class="view-message text-right">January 04</td>
-                      </tr>
+                        </c:if>
+                        <c:if test="${empty s.mail.fileName}"> 
+                        <td></td>
+                        </c:if>
+                        <!-- 수신확인 -->
+                        <c:if test="${ s.confirmMail eq 0}"> 
+                        <td class="view-message">읽지 않음</td>
+                        </c:if>
+                        <c:if test="${ s.confirmMail ne 0}"> 
+                        <td class="view-message">읽음</td>
+                        </c:if>
+                        <td class="view-message text-right">${s.timestamp}</td>
+                      </tr>                 
                     </tbody>
+                  	</c:forEach>
                   </table>
+                  </form>
                 </div>
               </div>
             </section>
           </div>
         </div>
+        
+                 <div id="pagingArea" class="centered">
+                <ul class="pagination">
+                	<c:choose>
+                		<c:when test="${ pi.currentPage ne 1 }">
+                			<li class="page-item"><a class="page-link" href="sendMail.do?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+                		</c:when>
+                		<c:otherwise>
+                			<li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
+                		</c:otherwise>
+                	</c:choose>
+                	
+                    <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+                    	<c:choose>
+	                		<c:when test="${ pi.currentPage ne p }">
+                    			<li class="page-item"><a class="page-link" href="sendMail.do?currentPage=${ p }">${ p }</a></li>
+	                		</c:when>
+	                		<c:otherwise>
+	                			<li class="page-item disabled"><a class="page-link" href="">${ p }</a></li>
+	                		</c:otherwise>
+	                	</c:choose>
+                    </c:forEach>
+                    
+                    
+                    <c:choose>
+                		<c:when test="${ pi.currentPage ne pi.maxPage }">
+                			<li class="page-item"><a class="page-link" href="sendMail.do?currentPage=${ pi.currentPage+1 }">Next</a></li>
+                		</c:when>
+                		<c:otherwise>
+                			<li class="page-item disabled"><a class="page-link" href="sendMail.do?currentPage=${ pi.currentPage+1 }">Next</a></li>
+                		</c:otherwise>
+                	</c:choose>
+                </ul>
+            </div>
       </section>
       <!-- /wrapper -->
     </section>
+    <script>
+	function selectAll(selectAll){
+		const checkNo = document.querySelectorAll('input[type="checkbox"]');
+		
+		checkNo.forEach((checkbox) => {
+			checkbox.checked = selectAll.checked
+		})
+		
+	}
+	
+	function trashMail(){
+		if($('input[name=checkNo]:checked').length < 1){
+			alert('삭제할 메일을 선택하세요.')
+			return false;
+		}
+		if(confirm("선택한 메일을 삭제 하시겠습니까?")){
+			alert("삭제 되었습니다");
+			$("#trashMail").submit();
+		}
+	}
+	
+	//글제목을 클릭해서 메일보기
+	$(function(){
+		$("#sendMailList tbody tr td:not(:has(input))").click(function(){
+			var mno = $(this).parent().children().eq(1).text();
+
+			location.href="detailSendMail.do?mno="+mno;
+		})
+	})
+	
+
+</script>
     <!-- /MAIN CONTENT -->
     <!--main content end-->
+    <!--                       
+    <tr class="unread">
+      <td class="inbox-small-cells">
+        <input type="checkbox" class="mail-checkbox">
+      </td>
+      <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
+      <td class="view-message  dont-show"><a href="mail_view.html">Google Inc.</a></td>
+      <td class="view-message "><a href="mail_view.html">Your new account is ready.</a></td>
+      <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td>
+      <td class="view-message  text-right">08:10 AM</td>
+    </tr>
+    <tr class="">
+      <td class="inbox-small-cells">
+        <input type="checkbox" class="mail-checkbox">
+      </td>
+      <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
+      <td class="dont-show">Facebook</td>
+      <td class="view-message">Paul published on your wall</td>
+      <td class="view-message inbox-small-cells"><i class="fa fa-paperclip"></i></td>
+      <td class="view-message text-right">February 14</td>
+    </tr>   
+    -->
     <!--footer start-->
     <footer class="site-footer">
       <div class="text-center">

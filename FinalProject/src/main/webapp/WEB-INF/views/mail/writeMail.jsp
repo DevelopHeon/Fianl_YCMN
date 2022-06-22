@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,57 +36,66 @@
               <header class="panel-heading wht-bg">
                 <h4 class="gen-case">
                     	작성하기
-                    <form action="#" class="pull-right mail-src-position">
-                      <div class="input-append">
-                        <input type="text" class="form-control " placeholder="Search Mail">
-                      </div>
-                    </form>
                   </h4>
               </header>
               <div class="panel-body">
-                <div class="compose-btn pull-right">
-                  <button class="btn btn-theme btn-sm"><i class="fa fa-check"></i> Send</button>
-                  <button class="btn btn-sm"><i class="fa fa-times"></i> Discard</button>
-                  <button class="btn btn-sm">Draft</button>
-                </div>
+
                 <div class="compose-mail">
-                  <form action="enrollMail.do" id="enrollMail" role="form-horizontal" method="post" enctype="multipart/form-data">
+                
+                  <form action="insertMail.do" id="insertMail" role="form-horizontal" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                       <label for="subject" class="">제목:</label>
-                      <input type="text" tabindex="1" id="subject" class="form-control">
+                      <input type="text" name="mailTitle" tabindex="1" id="subject" class="form-control" required>
+                    </div>
+                    <div class="form-group" style="display:none">
+                      <label for="writer" class="">발신인</label>
+                      <input type="text" value="${ loginUser.empNo }" name="empNo" tabindex="1" id="empNo" class="form-control">
                     </div>
                     <div class="form-group">
                       <label for="to" class="">수신:</label>
-                      <input type="text" tabindex="1" name="toMail" class="form-control">
-                      <a class="btn-primary" data-toggle="modal" data-target="#exampleModal" style="font-size:30px">+</a>
+                      
+                      <!-- 주소록에서 특정사원 메일쓰기를 클릭할때 -->
+                      <c:if test="${!empty emp.empName}">
+                      <input type="text" id="mailTo" name="mailTo" value="${emp.empNo }" style="display:none"></input>
+                      <span>${emp.empName}</span>
+                      </c:if>
+
+                      <c:if test="${empty emp.empName}">
+                      <span id="mailTo"></span>
+                      </c:if>
+                      <a class="btn" onclick="selectApprover(1, '${loginUser.empNo}')"  data-toggle="modal" data-target="#addressModal" style="font-size:20px"><i class="fa fa-plus-circle"></i></a>
 
                       <div class="compose-options">
-                        <a onclick="$(this).hide(); $('#cc').parent().removeClass('hidden'); $('#cc').focus();" href="javascript:;">Cc</a>
-                        <a onclick="$(this).hide(); $('#bcc').parent().removeClass('hidden'); $('#bcc').focus();" href="javascript:;">Bcc</a>
+                        <a onclick="$(this).hide(); $('#mailRef').parent().removeClass('hidden'); $('#mailRef').focus();" href="javascript:;"><i class="fa fa-plus"></i> 참조 </a>&nbsp;&nbsp;
+                        <a onclick="$(this).hide(); $('#mailSec').parent().removeClass('hidden'); $('#mailSec').focus();" href="javascript:;"><i class="fa fa-plus"></i> 비밀참조</a>
                       </div>
                     </div>
                     <div class="form-group hidden">
                       <label for="cc" class="">참조:</label>
-                      <input type="text" tabindex="2" id="cc" class="form-control">
-                      <a class="btn-primary" data-toggle="modal" data-target="#exampleModa2" style="font-size:30px">+</a>
+                      <span id="mailRef"></span>
+                      <a class="btn" onclick="selectApprover(2, '${loginUser.empNo}')"  data-toggle="modal" data-target="#addressModal" style="font-size:20px"><i class="fa fa-plus-circle"></i></a>
                     </div>
                     <div class="form-group hidden">
                       <label for="bcc" class="">비밀참조:</label>
-                      <input type="text" tabindex="2" id="bcc" class="form-control">
-                      <a class="btn-primary" data-toggle="modal" data-target="#exampleModa3" style="font-size:30px">+</a>
+                      <span id="mailSec"></span>
+                      <a class="btn" onclick="selectApprover(3, '${loginUser.empNo}')"  data-toggle="modal" data-target="#addressModal" style="font-size:20px"><i class="fa fa-plus-circle"></i></a>
                     </div>
 
                     <div class="compose-editor">
-                      <textarea class="wysihtml5 form-control" rows="9"></textarea>
+                      <textarea class="wysihtml5 form-control" name="mailContent" rows="9">
+
+
+${loginUser.empName} / ${loginUser.posName} / ${loginUser.depName}
+${loginUser.empPhone}
+                      </textarea>
                      </div>
                      <div class="form-group">
-                      <label for="upfile" class="">첨부파일:</label>
-                      <input type="file" class="upfile">
+                      <label for="file" class="">첨부파일:</label>
+                      <input type="file" class="file" name="upfile" >
                     </div>
                     <div class="compose-btn">
-                      <button class="btn btn-theme btn-sm"><i class="fa fa-check"></i> Send</button>
-                      <button class="btn btn-sm"><i class="fa fa-times"></i> Discard</button>
-                      <button class="btn btn-sm">Draft</button>
+                      <button class="btn btn-theme btn-sm""><i class="fa fa-check"></i> 보내기</button>
+                      <button type="button" class="goMain btn btn-sm" onclick="goMain();"><i class="fa fa-times"></i> 취소하기</button>
                     </div>
                   </form>
                 </div>
@@ -99,49 +109,22 @@
     <!-- /MAIN CONTENT -->
     <!--main content end-->
     <!-- 수신 모달 -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  	<div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">수신</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-         <form action="#">
-            <div class="input-append">
-              <input type="text" class="form-control " placeholder="Search">
-            </div>
-         </form>
-         <div>
-         <input type="text" name="searchTo">
-         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-    
-   <script>
-   
-   	$(function(){
-   		
-   		const $toMail = $("#enrollMail input[name=toMail]");
-   		
-   		$toMail.keyup(function(){
-   			
-   			if($toMail.val().length >= 1){
-   				
-   			}
-   		})
-   	})
-   
-   
-   </script>
+    <div class="modal fade" id="addressModal">
+		<jsp:include page="addressListModal.jsp"/>
+	</div>
+    <script>
+	function goMain(){
+
+		var goMain = confirm("메인으로 돌아가시겠습니까? (메일은 저장되지 않습니다)");
+		
+		if(goMain){
+			location.href='main.do';
+		}
+	}
+	
+
+    	
+    </script>
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="lib/jquery/jquery.min.js"></script>
   <script src="lib/bootstrap/js/bootstrap.min.js"></script>

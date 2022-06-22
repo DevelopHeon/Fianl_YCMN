@@ -19,11 +19,15 @@
 		<typeAlias type="com.uni.spring.employee.model.dto.TimeOffContent" alias="TimeOffContent"/>
 		<typeAlias type="com.uni.spring.hr.model.dto.Hr" alias="Hr"/>
 		<typeAlias type="com.uni.spring.employee.model.dto.Department" alias="Department"/>
+		<typeAlias type="com.uni.spring.mail.model.dto.Mail" alias="Mail"/>
+		<typeAlias type="com.uni.spring.mail.model.dto.ReceiveMail" alias="ReceiveMail"/>
+		<typeAlias type="com.uni.spring.employee.model.dto.JobPosition" alias="JobPosition"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="/mappers/employee-mapper.xml"/>
 		<mapper resource="/mappers/approval-mapper.xml"/>
 		<mapper resource="/mappers/schedule-mapper.xml"/>
 		<mapper resource="/mappers/manager-mapper.xml"/>
+		<mapper resource="/mappers/mail-mapper.xml"/>
 	</mappers>
 </configuration>

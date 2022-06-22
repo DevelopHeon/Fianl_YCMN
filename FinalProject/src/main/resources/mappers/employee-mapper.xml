@@ -55,6 +55,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE TODAY = TO_CHAR(SYSDATE, 'YY/MM/DD')
 	</update>
 	
+	<!-- 근무상태(정상, 지각) -->
+	<update id="updateWorkStatusL" parameterType="WorkingDay">
+		UPDATE WORKINGDAY
+		SET STATUS = 'L'
+		WHERE START_TIME > TO_CHAR(TO_DATE('08:01:00', 'HH24:MI:SS'),'HH24:MI:SS')
+		AND TODAY NOT IN
+		(SELECT TO_CHAR(C.LEAVE_START, 'YY/MM/DD') FROM APPROVAL B JOIN APP_LEAVE C ON B.APP_NO = C.APP_NO WHERE APP_WRITER_NO = #{empNo})
+	</update>
+	
 	<!-- 퇴근체크 -->
 	<update id="updateFinish" parameterType="WorkingDay">
 		UPDATE WORKINGDAY SET FINISH_TIME = #{finishTime} WHERE TO_CHAR(TO_DATE(TODAY, 'YY/MM/DD'), 'YYYY"년 "MM"월 "DD"일 ("DY")"') = #{today} AND EMP_NO = #{empNo}
@@ -87,6 +96,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND FINISH_TIME IS NOT NULL AND EMP_NO = #{empNo}
 	</select>
 	
+	<!-- 근무상태(조퇴) -->
+	<update id="updateWorkStatusE" parameterType="WorkingDay">
+		UPDATE WORKINGDAY
+		SET STATUS = 'E'
+		<![CDATA[WHERE TODAY != TO_CHAR(SYSDATE, 'YY/MM/DD') AND FINISH_TIME IS NULL AND EMP_NO = #{empNo}]]>
+	</update>
 	<!-- 주소록 -->
 	<select id="selectEmpAddress" parameterType="Employee" resultType="Employee" >
 		SELECT A.EMP_NO, A.EMP_NAME, A.EMP_ID, NVL(B.POS_NAME,'연수생') POS_NAME, NVL(C.DEP_NAME,'연수중') DEP_NAME
@@ -162,5 +177,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 연차내역 조회 -->
 	<select id="selectTimeOffContent" parameterType="TimeOffContent" resultType="TimeOffContent">
 		SELECT * FROM TIMEOFFCONTENT WHERE EMP_NO = #{empNo} ORDER BY TIMEOFFCONTENT_NO
+	</select>
+	
+	<!-- 연차 페이지 수? -->
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*) FROM TIMEOFFCONTENT WHERE EMP_NO = #{empNo}
 	</select>
 </mapper>

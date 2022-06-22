@@ -84,8 +84,8 @@ function checkMonth() {
           </div>
 
           <!-- /col-lg-12 -->
-          <div class="col-lg-12 mt">
-            <div class="row content-panel">
+          <div class="col-lg-12 mt content-panel">
+            <div class="row">
               <div class="panel-heading">
               
                 <ul class="nav nav-tabs nav-justified">           
@@ -111,19 +111,19 @@ function checkMonth() {
 
              </div>
              <!-- /tab-content -->
-           	</div>
+           	
               <!-- /panel-body -->
               <div class="panel-body">
                 <div class="tab-content">
-                  <div id="1week" class="tab-pane active">
+                
+                  <div id="1week" class="tab-pane">
                     <div class="row">
-                      <div class="col-md-6">
-                        <div><p>1</p></div>
-		             	<table>
+		             	<table class="table centered">
 		             		<tr>
 	             				<td width="80">날짜</td>
 	             				<td width="150">출근시간</td>
 	             				<td width="150">퇴근시간</td>
+	           					<td width="150">근무상태</td>	
 	             				<td width="150">총 근무시간</td>
 		             		</tr>
 			        <c:forEach items="${working}" var="w">
@@ -132,23 +132,34 @@ function checkMonth() {
 		             			<td>${w.today }</td>
 		             			<td>${w.startTime }</td>
 		             			<td>${w.finishTime }</td>
+		             		<c:if test="${w.status eq 'L' }">
+		             			<td>지각</td>
+		             		</c:if>
+		             		<c:if test="${w.status eq 'Y' }">
+		             			<td>정상</td>
+		             		</c:if>
+		             		<c:if test="${w.status eq 'E' }">
+		             			<td>조퇴</td>
+		             		</c:if>
+		             		<c:if test="${w.status eq 'N' }">
+		             			<td>결근</td>
+		             		</c:if>
 		             			<td>${w.workHour }</td>
 		             		</tr>
 		            </c:if>
                   	</c:forEach>
 			             </table>
-                      </div>
                      </div>
                   	</div> 
                  
                   	<div id="2week" class="tab-pane">
                     <div class="row">
-                       	<div><p>2</p></div>
-		             	<table>
+		             	<table class="table centered">
 		             		<tr>
 		             			<td width="80">날짜</td>
 		             			<td width="150">출근시간</td>
 		             			<td width="150">퇴근시간</td>
+		             			<td width="150">근무상태</td>
 		             			<td width="150">총 근무시간</td>
 		             		</tr>
 		            <c:forEach items="${working}" var="w">
@@ -157,6 +168,18 @@ function checkMonth() {
 		             			<td>${w.today }</td>
 		             			<td>${w.startTime }</td>
 		             			<td>${w.finishTime }</td>
+		             		<c:if test="${w.status eq 'L' }">
+		             			<td>지각</td>
+		             		</c:if>
+		             		<c:if test="${w.status eq 'Y' }">
+		             			<td>정상</td>
+		             		</c:if>
+		             		<c:if test="${w.status eq 'E' }">
+		             			<td>조퇴</td>
+		             		</c:if>
+		             		<c:if test="${w.status eq 'N' }">
+		             			<td>결근</td>
+		             		</c:if>
 		             			<td>${w.workHour }</td>
 		             		</tr>
 		             </c:if>
@@ -168,12 +191,12 @@ function checkMonth() {
 
                   	<div id="3week" class="tab-pane">
                     <div class="row">
-                       	<div><p>3</p></div>
-			             <table>
+			             <table class="table centered">
 		             		<tr>
 		             			<td width="80">날짜</td>
 		             			<td width="150">출근시간</td>
 		             			<td width="150">퇴근시간</td>
+		             			<td width="150">근무상태</td>
 		             			<td width="150">총 근무시간</td>
 		             		</tr>
 		            <c:forEach items="${working}" var="w">
@@ -182,6 +205,18 @@ function checkMonth() {
 		             			<td>${w.today }</td>
 		             			<td>${w.startTime }</td>
 		             			<td>${w.finishTime }</td>
+			             		<c:if test="${w.status eq 'L' }">
+		             			<td>지각</td>
+		             		</c:if>
+		             		<c:if test="${w.status eq 'Y' }">
+		             			<td>정상</td>
+		             		</c:if>
+		             		<c:if test="${w.status eq 'E' }">
+		             			<td>조퇴</td>
+		             		</c:if>
+		             		<c:if test="${w.status eq 'N' }">
+		             			<td>결근</td>
+		             		</c:if>
 		             			<td>${w.workHour }</td>
 		             		</tr>
 		           	</c:if>
@@ -192,12 +227,12 @@ function checkMonth() {
                   	
                   	<div id="4week" class="tab-pane">
                     <div class="row">
-                       	<div><p>4</p></div>
-			            <table>
+			            <table class="table centered">
 		             		<tr>
 		             			<td width="80">날짜</td>
 		             			<td width="150">출근시간</td>
 		             			<td width="150">퇴근시간</td>
+		             			<td width="150">근무상태</td>
 		             			<td width="150">총 근무시간</td>
 		             		</tr>
 		            <c:forEach items="${working}" var="w">
@@ -206,6 +241,18 @@ function checkMonth() {
 		             			<td>${w.today }</td>
 		             			<td>${w.startTime }</td>
 		             			<td>${w.finishTime }</td>
+		             		<c:if test="${w.status eq 'L' }">
+		             			<td>지각</td>
+		             		</c:if>
+		             		<c:if test="${w.status eq 'Y' }">
+		             			<td>정상</td>
+		             		</c:if>
+		             		<c:if test="${w.status eq 'E' }">
+		             			<td>조퇴</td>
+		             		</c:if>
+		             		<c:if test="${w.status eq 'N' }">
+		             			<td>결근</td>
+		             		</c:if>
 		             			<td>${w.workHour }</td>
 		             		</tr>
 		             </c:if>
@@ -216,12 +263,12 @@ function checkMonth() {
 
                   	<div id="5week" class="tab-pane">
                     <div class="row">
-                       	<div><p>5</p></div>
-			            <table>
+			            <table class="table centered">
 		             		<tr>
 		             			<td width="80">날짜</td>
 		             			<td width="150">출근시간</td>
 		             			<td width="150">퇴근시간</td>
+		             			<td width="150">근무상태</td>		             			
 		             			<td width="150">총 근무시간</td>
 		             		</tr>
 		            <c:forEach items="${working}" var="w">
@@ -230,10 +277,28 @@ function checkMonth() {
 		             			<td>${w.today }</td>
 		             			<td>${w.startTime }</td>
 		             			<td>${w.finishTime }</td>
+		             		<c:if test="${w.status eq 'L' }">
+		             			<td>지각</td>
+		             		</c:if>
+		             		<c:if test="${w.status eq 'Y' }">
+		             			<td>정상</td>
+		             		</c:if>
+		             		<c:if test="${w.status eq 'E' }">
+		             			<td>조퇴</td>
+		             		</c:if>
+		             		<c:if test="${w.status eq 'N' }">
+		             			<td>결근</td>
+		             		</c:if>
 		             			<td>${w.workHour }</td>
 		             		</tr>
 		            </c:if>
+		            <!-- <c:if test="${w.thisWeek ne null}">
+		             		<tr>
+		             			<td colspan="4">근태 기록이 없습니다.</td>
+		             		</tr>
+		            </c:if> -->
                   	</c:forEach>
+
 		             	</table>
                     </div>
                   	</div>
@@ -241,6 +306,7 @@ function checkMonth() {
             <!-- /col-lg-12 -->
           </div>
           <!-- /row -->
+          </div>
         </div>
         <!-- /container -->
       </section>

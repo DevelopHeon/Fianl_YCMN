@@ -1,6 +1,5 @@
 package com.uni.spring.manager.controller;
 
-import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -9,11 +8,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -26,15 +20,21 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.uni.spring.common.Pagination;
+import com.uni.spring.common.dto.PageInfo;
+import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
+import com.uni.spring.employee.model.dto.JobPosition;
 import com.uni.spring.hr.model.dto.Hr;
+import com.uni.spring.manager.model.dto.Search;
 import com.uni.spring.manager.model.service.ManagerService;
 
 import lombok.RequiredArgsConstructor;
@@ -54,11 +54,32 @@ public class ManagerController {
 	// 사원 전체 정보를 리스트로 조회함. 
 	// 페이징 처리 들어가야 함. = 변경하고나서 이 주석 지우기
 	@RequestMapping("listEmp.do")
-	public String selectList(Model model) {
-
-		ArrayList<Employee> list = ManagerService.selectList();
+	public String selectList(Model model
+			, @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage
+			, @RequestParam(value="find", required = false, defaultValue = "empName") String find // 검색 분류
+			, @RequestParam(value="keyword", required = false, defaultValue = "") String keyword // 검색어
+			) {
+		
+		// 페이징
+		int listCount = ManagerService.selectListCount(); // 페이징용
+		System.out.println("listCount : "+listCount);
+		int pageLimit = 10; // 하단 최대 페이지 수
+		int boardLimit = 15; // 한 페이지에 보여질 회원 수
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		// 검색
+		Search search = new Search(find, keyword);
+		System.out.println(search.toString());
+		
+//		ArrayList<Employee> list = ManagerService.selectList(pi, find, keyword);
+//		ArrayList<Employee> list = ManagerService.selectList(pi);
+		ArrayList<Employee> list = ManagerService.selectList(pi, search);
+		
 		model.addAttribute("list", list);
-
+		model.addAttribute("pi", pi);
+		
+//		ArrayList<Employee> list2 = ManagerService.selectList(find, keyword, 1);
+		 
 		return "manager/empListView";
 	}
 	
@@ -218,4 +239,143 @@ public class ManagerController {
 	    wb.close();
 	}
 	
+	// 조직도 페이지로 이동
+    @RequestMapping("organizationChart.do")
+    public String organizationChart() {
+        return "manager/organizationChart";
+    }
+    
+	// 직위/부서 페이지로 이동
+	@RequestMapping("jobManage.do")
+	public String JobManage(Model model) {
+		ArrayList<JobPosition> posList = ManagerService.getPosList();
+		ArrayList<Department> depList = ManagerService.getDepList();
+		
+		System.out.println("직위 조회 :" + posList);
+		System.out.println("부서 조회 :" + depList);
+		
+		model.addAttribute("posList", posList);
+		model.addAttribute("depList", depList);
+		
+		return "manager/JobManagement";
+	}
+	
+	// 모달창에 선택한 직위 띄워주는 용도
+	@ResponseBody
+	@RequestMapping(value="selectPos.do")
+	public JSONObject selectPos1(int posNo){
+		ArrayList<JobPosition> posList = ManagerService.getPosList();
+		
+		System.out.println("selectPos.do > posNo : "+posNo);
+		
+		JobPosition selectPos = null;
+		JSONObject jsonObj = null;
+		
+		for(int i = 0; i < posList.size(); i++) {
+			if (posList.get(i).getPosNo() == posNo) {
+				selectPos = posList.get(i);
+				
+				jsonObj = new JSONObject();
+				
+				jsonObj.put("posNo", selectPos.getPosNo());
+				jsonObj.put("posGrade", selectPos.getPosGrade());
+				jsonObj.put("posName", selectPos.getPosName());
+				jsonObj.put("status", selectPos.getStatus());
+			}
+		}
+		return jsonObj;
+	}
+	
+	// 직위 추가
+	@RequestMapping("insertPos.do")
+	public String insertJobPosition(JobPosition job, Model model) {
+		ManagerService.insertJobPosition(job);
+		
+		ArrayList<JobPosition> posList = ManagerService.getPosList();
+		ArrayList<Department> depList = ManagerService.getDepList();
+
+		model.addAttribute("posList", posList);
+		model.addAttribute("depList", depList);
+		
+		return "manager/JobManagement";
+	}
+	
+	// 직위 수정/삭제
+	@RequestMapping("updatePos.do")
+	public String updateJobPosition(JobPosition job, Model model, String updatePosBtn) {
+		System.out.println("직위 수정");
+		System.out.println("jp : "+job);
+		
+		if(updatePosBtn.equals("update")) {
+			ManagerService.updateJobPosition(job);
+		}else if(updatePosBtn.equals("delete")) {
+			ManagerService.deleteJobPosition(job);
+		}
+		
+		ArrayList<JobPosition> posList = ManagerService.getPosList();
+		ArrayList<Department> depList = ManagerService.getDepList();
+		
+		model.addAttribute("posList", posList);
+		model.addAttribute("depList", depList);
+		
+		return "manager/JobManagement";
+	}
+	
+	// 모달창에 선택한 직위 띄워주는 용도
+	@ResponseBody
+	@RequestMapping(value="selectDep.do")
+	public JSONObject selectDep(int depNo){
+		ArrayList<Department> depList = ManagerService.getDepList();
+		
+		System.out.println("selectDep.do > depNo : "+depNo);
+		
+		Department selectDep = null;
+		JSONObject jsonObj = null;
+		
+		for(int i = 0; i < depList.size(); i++) {
+			if (depList.get(i).getDepNo() == depNo) {
+				selectDep = depList.get(i);
+				
+				jsonObj = new JSONObject();
+				
+				jsonObj.put("depNo", selectDep.getDepNo());
+				jsonObj.put("depName", selectDep.getDepName());
+				jsonObj.put("status", selectDep.getStatus());
+			}
+		}
+		return jsonObj;
+	}
+	
+	// 부서 추가
+	@RequestMapping("insertDept.do")
+	public String insertDepartment(Department dep, Model model) {
+
+		ManagerService.insertDepartment(dep);
+		
+		ArrayList<JobPosition> posList = ManagerService.getPosList();
+		ArrayList<Department> depList = ManagerService.getDepList();
+
+		model.addAttribute("posList", posList);
+		model.addAttribute("depList", depList);
+		
+		return "manager/JobManagement";
+	}
+	
+	// 부서 수정
+	@RequestMapping("updateDept.do")
+	public String updateDepartment(Department dep, Model model, String updateDepBtn) {
+		if(updateDepBtn.equals("update")) {
+			ManagerService.updateDepartment(dep);
+		}else if(updateDepBtn.equals("delete")) {
+			ManagerService.deleteDepartment(dep);
+		}
+		
+		ArrayList<JobPosition> posList = ManagerService.getPosList();
+		ArrayList<Department> depList = ManagerService.getDepList();
+		
+		model.addAttribute("posList", posList);
+		model.addAttribute("depList", depList);
+		
+		return "manager/JobManagement";
+	}
 }

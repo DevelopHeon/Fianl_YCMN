@@ -101,13 +101,33 @@ public class ApprovalDao {
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectApprovalInboxList", userNo, rowBounds);
 	}
 
-	public void updateFirstApprove(SqlSessionTemplate sqlSession, int appNo) {
-		sqlSession.update("approvalMapper.updateFirstApprove", appNo);
+	public int updateFirstApprove(SqlSessionTemplate sqlSession, int appNo) {
+		return sqlSession.update("approvalMapper.updateFirstApprove", appNo);
 		
 	}
 
-	public void updateLastApprove(SqlSessionTemplate sqlSession, int appNo) {
-		sqlSession.update("approvalMapper.updateLastApprove", appNo);
+	public int updateLastApprove(SqlSessionTemplate sqlSession, int appNo) {
+		return sqlSession.update("approvalMapper.updateLastApprove", appNo);
 		
+	}
+
+	public int insertRejecter(SqlSessionTemplate sqlSession, Approval approval) {
+		return sqlSession.update("approvalMapper.insertRejecter", approval);
+	}
+
+	public int updateApproval(SqlSessionTemplate sqlSession, Approval approval) {
+		return sqlSession.update("approvalMapper.updateApproval", approval);
+	}
+
+	public int updateAttachment(SqlSessionTemplate sqlSession, Attachment attachment) {
+		return sqlSession.update("approvalMapper.updateAttachment", attachment);
+	}
+
+	public int updateApprovalRp(SqlSessionTemplate sqlSession, ApprovalReport approvalReport) {
+		return sqlSession.update("approvalMapper.updateApprovalRp", approvalReport);
+	}
+
+	public int updateApprovalLv(SqlSessionTemplate sqlSession, ApprovalLeave approvalLeave) {
+		return sqlSession.update("approvalMapper.updateApprovalLv", approvalLeave);
 	}
 }

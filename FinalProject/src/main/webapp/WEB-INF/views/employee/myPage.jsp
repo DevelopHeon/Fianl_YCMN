@@ -22,13 +22,11 @@
 
 <style>
 
- #update {
-	margin-top: 300px;
-	margin-right: 300px;
- }
- .detail{
- 	width: 800px;
- }
+/* table>thead>tr>th {
+ 	white-space : pre;
+ 	padding: 10px;
+ } */
+
 </style>
 </head>
 
@@ -43,11 +41,13 @@
       <section class="wrapper site-min-height">
         <div class="row mt">
           <div class="col-lg-12">
-            <div class="row content-panel">
+            <div class="row">
             <!-- /col-md-4 -->
             <!-- 프로필 사진 -->
+
             <form id="updateImg" method="post" enctype="multipart/form-data">
               <div class="col-md-4 profile-text mt mb centered right-divider">
+              <h4>프로필 사진</h4>
                 <div class="profile-pic">
                 <c:if test="${ empty loginUser.empPfe}">
                		<p><img src="resources/img/user.png" class="img-circle"></p>
@@ -56,7 +56,7 @@
                 	<p><img src="resources/empUpload_files/${loginUser.empPfe}" id="empImg" class="img-circle"></p>
                 </c:if>
                   <p>
-                  	<input type="file" name="file" style="display:none">                 	
+                  	<input type="file" name="file" accept="image/gif, image/jpeg, image/png" style="display:none">                 	
                   	<input type="text" name="empNo" value= "${loginUser.empNo}" style="display:none">
                     <button type="button" onclick="onclick=document.all.file.click()" class="btn btn-theme"><i class="fa fa-check"></i>사진등록</button>
                     <button type="submit" id="updateBtn" class="btn btn-theme"><i class="fa fa-check"></i>저장하기</button>
@@ -149,37 +149,37 @@
    
               <!-- /col-md-4 -->
               <form action="updateEmp.do" method="post">
-               <div class="col-md-4 profile-text">
-               <label>내 정보</label>
-               <table class="detail table" align="center">
+              
+               <div class="col-md-8 profile-text mt mb centered right-divider">
+               <h4>내 정보</h4>
+               <table class="table">
 				<tr>
 					<th>이름 : </th>
-					<td><input type="text"  name="empName" value="${ loginUser.empName }"></td>
+					<td><input type="text"  name="empName" value="${ loginUser.empName }" class="col-sm-10 form-control" ></td>
 					<th>사번 : </th>
-					<td><input type="text"  name="empNo" value="${ loginUser.empNo }" readonly></td>
+					<td><input type="text"  name="empNo" value="${ loginUser.empNo }" readonly class="form-control"></td>
 					<th>아이디 : </th>
-					<td><input type="text"  name="empId" value="${ loginUser.empId }" readonly></td>
+					<td><input type="text"  name="empId" value="${ loginUser.empId }" readonly class="form-control"></td>
 				</tr>
 				<tr>
 					<th>부서 : </th>
-					<td><input type="text"  name="depName" value="${ loginUser.depName }" readonly></td>
+					<td><input type="text"  name="depName" value="${ loginUser.depName }" readonly class="form-control"></td>
 					<th>직위 : </th>
-					<td><input type="text"  name="posName" value="${ loginUser.posName }" readonly></td>
+					<td><input type="text"  name="posName" value="${ loginUser.posName }" readonly class="form-control"></td>
 					<th>이메일 : </th>
-					<td><input type="email"  name="empEmail" value="${ loginUser.empEmail }" style="width:180px"></td>
+					<td><input type="email"  name="empEmail" value="${ loginUser.empEmail }" style="width:180px" class="form-control"></td>
 				</tr>
 				<tr>
 					<th>위치 : </th>
-					<td><input type="text"  name="empLoc" value="${ loginUser.empLoc }"></td>
+					<td><input type="text"  name="empLoc" value="${ loginUser.empLoc }" class="form-control"></td>
 					<th>내선번호 : </th>
-					<td><input type="text"  name="officeTel" value="${ loginUser.officeTel }"></td>
-					<th>휴대번호 : </th>
-					<td><input type="tel"  name="empPhone" value="${ loginUser.empPhone }"></td>
-				</tr>		
+					<td><input type="text"  name="officeTel" value="${ loginUser.officeTel }" class="form-control"></td>
+					<th width="100">휴대번호 : </th>
+					<td><input type="tel"  name="empPhone" value="${ loginUser.empPhone }" class="form-control"></td>
+				</tr>
 			   </table>
-               </div>
-               <div>
-               <button id="update" type="submit" class="btn btn-primary">수정하기</button></div>
+			   <button id="update" type="submit" class="btn btn-primary">수정하기</button>
+			   </div>
               </form>
               <!-- /col-md-4 -->
             </div> 
