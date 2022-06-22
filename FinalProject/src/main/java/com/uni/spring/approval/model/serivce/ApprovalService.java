@@ -9,13 +9,14 @@ import com.uni.spring.approval.model.dto.ApprovalReport;
 import com.uni.spring.approval.model.dto.mapDto.ApprovalMap;
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.common.dto.PageInfo;
+import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 
 public interface ApprovalService {
 
 	void insertErApproval(Approval approval, ArrayList<ApprovalErs> appers, Attachment attachment);
 
-	ArrayList<Employee> selectApproverList(int empNo);
+	ArrayList<Employee> selectApproverList(Employee employee);
 
 	void insertLeaveApproval(Approval approval, ApprovalLeave approvalLeave, Attachment attachment);
 
@@ -49,5 +50,12 @@ public interface ApprovalService {
 
 	void updateApprovalLv(Approval approval, Attachment attachment);
 
+	void updateApprovalEr(Approval approval, ArrayList<ApprovalErs> appers, Attachment attachment);
+
+	int selectApprovalReturnListCnt(int userNo);
+
+	ArrayList<Approval> selectApprovalReturnList(PageInfo pi, int userNo);
+
+	ArrayList<Department> selectDeptList();
 
 }

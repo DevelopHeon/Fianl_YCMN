@@ -31,6 +31,7 @@ import com.uni.spring.common.CommException;
 import com.uni.spring.common.Pagination;
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.common.dto.PageInfo;
+import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 
 import lombok.RequiredArgsConstructor;
@@ -83,6 +84,7 @@ public class ApprovalController {
 		
 		for(int i=0; i<approvalErs.getApprovalErs().size(); i++) {
 			appers.add(approvalErs.getApprovalErs().get(i));
+			System.out.println("지출증빙내역: " + appers.get(i).toString());
 		}
 		
 		// 첨부파일 테이블에 추가해주기 위해 객체 생성
@@ -180,12 +182,39 @@ public class ApprovalController {
 		return at;
 	}
 
+	// 부서 목록 조회하는 메소드
+	@ResponseBody
+	@RequestMapping(value="selectDept.do", produces="application/json; charset=utf-8")
+	public String selectDeptList() {
+		ArrayList<Department> list = approvalService.selectDeptList();
+		return new GsonBuilder().create().toJson(list);
+	}
 	//결재자 사원 목록 조회하는 메소드
 	@ResponseBody
 	@RequestMapping(value="selectApprover.do", produces="application/json; charset=utf-8")
 	public String selectApproverList(int empNo) {
+		Employee employee = new Employee();
+		employee.setEmpNo(empNo);
+		ArrayList<Employee> list = approvalService.selectApproverList(employee);
+		return new GsonBuilder().create().toJson(list);
+	}
+	
+	// 부서별 사원 목록 조회 메소드
+	@ResponseBody
+	@RequestMapping(value="selectDeptEmp.do", produces="application/json; charset=utf-8")
+	public String selectDeptEmpList(Employee employee) {
 		
-		ArrayList<Employee> list = approvalService.selectApproverList(empNo);
+		ArrayList<Employee> list = approvalService.selectApproverList(employee);
+		
+		return new GsonBuilder().create().toJson(list);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="searchAppEmp.do", produces="application/json; charset=utf-8")
+	public String selectSearchEmpList(Employee employee) {
+		
+		ArrayList<Employee> list = approvalService.selectApproverList(employee);
+		
 		return new GsonBuilder().create().toJson(list);
 	}
 	
@@ -211,7 +240,6 @@ public class ApprovalController {
 	int currentPage, int userNo, Model model) {
 		
 		int listCount = approvalService.selectApprovalInboxListCnt(userNo);
-		System.out.println("게시글 수 : " + listCount);
 		PageInfo pi = getPage(listCount, currentPage);
 		
 		ArrayList<Approval> list = approvalService.selectApprovalInboxList(pi, userNo); 
@@ -219,6 +247,22 @@ public class ApprovalController {
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
 		return "approval/approvalInboxListView";
+	}
+	
+	// 결재 반려함 목록 화면 전환
+	@RequestMapping("listReturn.do")
+	public String selectApprovalReturnList(@RequestParam(value="currentPage", required=false, defaultValue="1")
+	int currentPage, int userNo, Model model) {
+		
+		int listCount = approvalService.selectApprovalReturnListCnt(userNo);
+		System.out.println("게시글수 : " + listCount);
+		PageInfo pi = getPage(listCount, currentPage);
+		
+		ArrayList<Approval> list = approvalService.selectApprovalReturnList(pi, userNo);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		return "approval/approvalReturnListView";
 	}
 	
 	// 공통으로 사용할 페이징 메소드
@@ -371,7 +415,7 @@ public class ApprovalController {
 			@RequestParam(name="reUploadFile", required=false) MultipartFile file) {
 		
 		approval.getApprovalLeave().setAppNo(approval.getAppNo());
-		
+		System.out.println("휴가신청 : " + approval.getApprovalLeave().toString());
 		Attachment attachment = null;
 		if(!file.getOriginalFilename().equals("")) {
 			attachment = saveFile(file, request);
@@ -393,6 +437,39 @@ public class ApprovalController {
 		return mv;
 	}
 	
+	@RequestMapping("updateApprovalEr.do")
+	public ModelAndView updateApprovalEr(Approval approval, ApprovalErs approvalErs,
+			ModelAndView mv, HttpServletRequest request, @RequestParam(name="reUploadFile", required=false) MultipartFile file) {
+		
+		System.out.println("결재문서 : " + approval.toString());
+		System.out.println("은행내역 : " + approval.getApperAccount());
+		
+		ArrayList<ApprovalErs> appers = new ArrayList<>();
+		// 증빙 지출 내역 list에 참조 결재 번호 반복문으로 같은 값 담아준다.
+		for(int i=0; i<approvalErs.getApprovalErs().size(); i++) {
+			appers.add(approvalErs.getApprovalErs().get(i));
+			appers.get(i).setErAppNo(approval.getAppNo());
+		}
+		approval.getApperAccount().setAppNo(approval.getAppNo());
+		
+		// 지출결의서는 기존에 첨부파일이 무조건 있으므로 새로운 첨부파일이 들어올 경우에만 삭제 진행
+		Attachment attachment = null;
+		if(!file.getOriginalFilename().equals("")) {
+			attachment = saveFile(file, request);
+			
+			if(attachment != null) {
+				attachment.setEmpNo(approval.getAppWriterNo());
+				attachment.setRefNo(approval.getAppNo());
+			}
+			
+			deleteFile(approval.getAttachment().getChangeName(), request);
+		}
+		approvalService.updateApprovalEr(approval, appers, attachment);
+		
+		mv.addObject("appNo", approval.getAppNo()).addObject("appKinds", approval.getAppKinds())
+		.setViewName("redirect:detailApproval.do");
+		return mv;
+	}
 	// 첨부파일 삭제 메소드 공통으로 사용하기위해 메소드로 선언
 	private void deleteFile(String orgChangeName, HttpServletRequest request) {
 		String resources = request.getSession().getServletContext().getRealPath("resources");

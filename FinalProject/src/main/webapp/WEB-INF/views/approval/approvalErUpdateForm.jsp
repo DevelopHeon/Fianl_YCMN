@@ -35,7 +35,7 @@
 					<hr>
 					<div class="row">
 						<!-- 전자결재 양식 시작 -->
-						<form action="updateApproval.do" method="post" 
+						<form action="updateApprovalEr.do" method="post" 
 						onsubmit="return approvalErValidate();" class="form-inline" 
 						enctype="multipart/form-data">
 							<div class="form-group" style="line-height:2em;">
@@ -81,42 +81,34 @@
 										<jsp:include page="approverModal.jsp"/>
 									</div>
 								<label for="posName"> 직위/직책 :</label> 
-									<input type="text" class="form-control" style="margin-left:1.3%;" id="posName" name="appMap.employee.posName" value="${ appMap.employee.posName }" readonly>
+									<input type="text" class="form-control" style="margin-left:1.3%;" id="posName" value="${ appMap.employee.posName }" readonly>
 									<br>
 								<label for="empName"> 기안자명 :</label>
-									<input type="text" class="form-control"style="margin-left:1.8%;" id="empName" name="appMap.approval.appWriterNo" value="${ appMap.approval.appWriterNo }" readonly>
+									<input type="text" class="form-control"style="margin-left:1.8%;" id="empName" value="${ appMap.approval.appWriterNo }" readonly>
 									<br>
 								<label for="appCreateDate"> 기안일 :</label>
-									<input type="text" class="form-control" style="margin-left:3%;" id="appCreateDate" name="appMap.approval.appCreateDate" value="${ appMap.approval.appCreateDate }" readonly>
+									<input type="text" class="form-control" style="margin-left:3%;" id="appCreateDate" value="${ appMap.approval.appCreateDate }" readonly>
 								<br>
 								<!-- 전자결재 데이터에 필요한 문서 제목, 작성자 사번, 결재양식 hidden 값으로 전달 -->
 								<div class="hiddenInfo">
-									<input type="hidden" class="form-control" id="appTitle" name="appMap.approval.appTitle" value="지출결의서_${ sessionScope.loginUser.empName }">
-									<input type="hidden" class="form-control" id="appWriterNo" name="appMap.approval.appWriterNo" value="${ sessionScope.loginUser.empNo }">
-									<input type=hidden class="form-control" id="appKinds" name="appMap.approval.appKinds" value="2">
-									<input type=hidden class="form-control" id="appKinds" name="appMap.approval.appNo" value="${ appMap.approval.appNo }">
+									<input type="hidden" class="form-control" id="appWriterNo" name="appWriterNo" value="${ sessionScope.loginUser.empNo }">
+									<input type=hidden class="form-control" id="appKinds" name="appKinds" value="2">
+									<input type=hidden class="form-control" id="appKinds" name="appNo" value="${ appMap.approval.appNo }">
+									<input type="hidden" class="form-control" id="appTitle" name="appTitle" value="지출결의서_${ sessionScope.loginUser.empName }">
 								</div>
 								<br>
 							<hr>
 							<div class="erInfo">
 								<label for="bankName">은행명 : </label>
-								<input type="text" class="form-control" id="bankName" name="appMap.apperAccount.bankName" value="${appMap.apperAccount.bankName }" style="margin-left:3.2%;" placeholder="은행명을 입력하세요." required />
+								<input type="text" class="form-control" id="bankName" name="apperAccount.bankName" value="${appMap.apperAccount.bankName }" style="margin-left:3.2%;" placeholder="은행명을 입력하세요." required />
 								<label for="erAccountHolder" style="margin-left:20%;">예금주 : </label>
-								<input type="text" class="form-control" id="erAccountHolder" name="appMap.apperAccount.erAccountHolder" value="${appMap.apperAccount.erAccountHolder}" placeholder="예금주명"  required />
+								<input type="text" class="form-control" id="erAccountHolder" name="apperAccount.erAccountHolder" value="${appMap.apperAccount.erAccountHolder}" placeholder="예금주명"  required />
 								<br>
-<%-- 								<div class="errorCode">
-									<h4 style="color:red;"><form:errors path="appMap.apperAccount.bankName" /></h4>
-									<h4 style="color:red;"><form:errors path="appMap.apperAccount.erAccountHolder" /></h4>
-								</div> --%>
 								<label for="accountNumber">계좌번호 : </label>
-								<input type="text" value="${appMap.apperAccount.accountNumber}" style="width:25%;" class="form-control" id="accountNumber" name="appMap.apperAccount.accountNumber" placeholder="계좌번호를 입력하세요. ('-'미포함)"  required />
+								<input type="text" value="${appMap.apperAccount.accountNumber}" style="width:25%;" class="form-control" id="accountNumber" name="apperAccount.accountNumber" placeholder="계좌번호를 입력하세요. ('-'미포함)"  required />
 								<label for="erAmount" style="margin-left:7%;">총 지출금액 : </label>
-								<input type="number" class="form-control" id="erAmount" name="appMap.apperAccount.erAmount" value="${appMap.apperAccount.erAmount}" placeholder="숫자만 입력"  required />
+								<input type="number" class="form-control" id="erAmount" name="apperAccount.erAmount" value="${appMap.apperAccount.erAmount}" placeholder="숫자만 입력"  required />
 								<br>
-								<%-- <div class="errorCode">
-									<h4 style="color:red;"><form:errors path="appMap.apperAccount.accountNumber" /></h4>
-									<h4 style="color:red;"><form:errors path="appMap.apperAccount.erAmount" /></h4>
-								</div>	 --%>							
 								<b>* 경비지출 확인을 위해 증빙란에 지출에 관련된 서류를 첨부해주세요.</b>
 								<div class="tableDiv" style="margin-top:3%;">
 									<table class="table" id="erTable">
@@ -131,9 +123,9 @@
 											</tr>
 										</thead>
 										<tbody>
-										<c:forEach items="${ list }" var="appEr">
+										<c:forEach items="${ list }" var="appEr" varStatus="status">
 											<tr>
-												<td><input type="text" class="form-control" list="listOptions" id="erClass" name="appMap.approvalErs.erClass" value="${appEr.erClass}" placeholder="과목입력"  required="required" />
+												<td><input type="text" class="form-control" list="listOptions" id="erClass" name="approvalErs[${status.index}].erClass" value="${appEr.erClass}" placeholder="과목입력"  required />
 													<datalist id="listOptions">
 														<option value="교육훈련비">
 														<option value="도서인쇄비">
@@ -145,23 +137,24 @@
 													</datalist>
 												</td>
 												<td>
-													<input class="form-control" type="date" id="erDate" name="appMap.approvalErs.erDate" value="${appEr.erDate}" required />
+													<input class="form-control" type="date" id="erDate" name="approvalErs[${status.index}].erDate" value="${appEr.erDate}" required />
 												</td>
 												<td>
-													<input class="form-control" type="text" id="erDetail" name="appMap.approvalErs.erDetail" value="${appEr.erDetail}" placeholder="내용"  required />
+													<input class="form-control" type="text" id="erDetail" name="approvalErs[${status.index}].erDetail" value="${appEr.erDetail}" placeholder="내용"  required />
 												</td>
 												<td>
-													<input class="form-control" type="text" id="erUse" name="appEr.erUse" value="${appEr.erUse}" placeholder="사용처"  required />
+													<input class="form-control" type="text" id="erUse" name="approvalErs[${status.index}].erUse" value="${appEr.erUse}" placeholder="사용처"  required />
 												</td>
 												<td>
-													<select class="form-control" id="erPayment" name="appEr.erPayment" required>
+													<select class="form-control" id="erPayment" name="approvalErs[${status.index}].erPayment" required>
+														<option value="BC">법인카드</option>
 														<option value="M">현금</option>
 														<option value="PC">개인카드</option>
-														<option value="BC">법인카드</option>
 													</select>
 												</td>
 												<td>
-													<button type="button" id="rowRemoveBtn" class="btn btn-danger" disabled>삭제</button>
+													<input type="hidden" value="${appEr.apperNo }" name="approvalErs[${status.index}].apperNo">
+													<button type="button" id="rowRemoveBtn${status.index}" onclick="goDelete(this);" class="btn btn-danger">삭제</button>
 												</td>
 											</tr>
 										</c:forEach>
@@ -173,9 +166,9 @@
 										<input type="file" id="reUploadFile" name="reUploadFile" class="form-control" style="width:50%; height:3%;">
 										<c:if test="${ !empty appMap.attachment.originName  }">
 											<br><br><b> * 현재 첨부 파일 : ${ appMap.attachment.originName }</b><br>
-											<input type="hidden" name="changeName" value="${ appMap.attachment.changeName }">
-											<input type="hidden" name="originName" value="${ appMap.attachment.originName }">
 										</c:if>
+										<input type="hidden" name="attachment.changeName" value="${ appMap.attachment.changeName }">
+										<input type="hidden" name="attachment.originName" value="${ appMap.attachment.originName }">
 									</div>
 								</div>
 							</div>
@@ -195,11 +188,11 @@
 		</section>
 		<script>
 		// 추가하기 버튼 클릭시 지출내용 작성 row 추가하기
-		var count = 0;
 		$("#rowAddBtn").click(function(){
 			var trCnt = $('#erTable tr').length;
-			count++;
+			var count = trCnt - 1;
 			console.log(count);
+			console.log(trCnt);
 			var insertTr = "";
 			if(trCnt < 6){
 				insertTr += '<tr><td><input type="text" class="form-control" list="listOptions" name="approvalErs['+count+'].erClass" placeholder="과목입력" required="required" />'
@@ -233,12 +226,14 @@
 		// 지출항목 작성 row 삭제하기
 		function goDelete(obj){
 			$(obj).closest('tr').remove();
-			count--;
 		}
+			count--;
 		</script>
 		<script>
-		// 오늘 날짜 화면에 출력
-		 document.getElementById('appCreateDate').value = new Date().toISOString().substring(0, 10);
+		// 페이지 로드 후 첫번째 지출증빙내역 삭제 버튼 비활성화
+		$(function(){
+			$("#rowRemoveBtn0").attr("disabled", true);
+		});
 		</script>
 </body>
 </html>

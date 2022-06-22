@@ -72,10 +72,15 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</insert>
 	<insert id="insertApprovalErs" parameterType="java.util.List">
 		<foreach collection="list" item="item" index="index" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
-		INTO APP_ER(APP_NO, ER_CLASS, ER_DATE, ER_DETAIL, ER_USE, ER_PAYMENT, CATEGORY)
-		VALUES
-		(SEQ_APP.CURRVAL, #{item.erClass}, #{item.erDate}, #{item.erDetail}, #{item.erUse}, #{item.erPayment}, DEFAULT)
-	</foreach>
+			INTO APP_ER(APP_NO, ER_CLASS, ER_DATE, ER_DETAIL, ER_USE, ER_PAYMENT, CATEGORY)
+			VALUES
+			<if test="item.erAppNo == 0">
+				(SEQ_APP.CURRVAL, #{item.erClass}, #{item.erDate}, #{item.erDetail}, #{item.erUse}, #{item.erPayment}, DEFAULT)
+			</if>
+			<if test="item.erAppNo != 0">
+				(#{item.erAppNo}, #{item.erClass}, #{item.erDate}, #{item.erDetail}, #{item.erUse}, #{item.erPayment}, DEFAULT)
+			</if>
+		</foreach>
 	</insert>
 	<insert id="insertAttachment" parameterType="Attachment">
 		INSERT INTO ATTACHMENT
@@ -89,12 +94,22 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	INSERT INTO APP_REPORT
 	VALUES(SEQ_APP.CURRVAL, #{reportContent}, #{reportIssue}, DEFAULT)
 	</insert>
-	<select id="selectApproverList" parameterType="_int" resultType="Employee">
+	<select id="selectDeptList" resultType="Department">
+		SELECT *
+		FROM DEPARTMENT
+	</select>
+	<select id="selectApproverList" parameterType="Employee" resultType="Employee">
 		SELECT A.EMP_NO, A.EMP_NAME, A.POS_NO, B.POS_NAME, C.DEP_NAME
 		FROM EMPLOYEE A
 		LEFT JOIN JOB_POSITION B ON A.POS_NO = B.POS_NO
 		LEFT JOIN DEPARTMENT C ON A.DEP_NO = C.DEP_NO
 		<![CDATA[WHERE A.EMP_NO <> #{empNo}]]>
+		<if test="depNo != 0">
+		AND A.DEP_NO = #{depNo}
+		</if>
+		<if test="empName != null">
+		AND A.EMP_NAME LIKE '%'||#{empName}||'%'
+		</if>
 		AND A.STATUS = 'Y'
 		ORDER BY A.POS_NO
 	</select>
@@ -102,6 +117,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT COUNT(*)
 		FROM APPROVAL
 		WHERE STATUS = 'Y'
+	<![CDATA[AND APP_STATUS <> 'R']]>
 		AND APP_WRITER_NO = #{userNo}
 	</select>
 	<select id="selectMyApprovalList" parameterType="_int" resultType="Approval">
@@ -163,7 +179,27 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		<![CDATA[AND A.APP_STATUS <> 'R']]>
 			ORDER BY APP_NO DESC
 	</select>
-	
+	<select id="selectApprovalReturnListCnt" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM APPROVAL
+		WHERE STATUS = 'Y'
+        AND APP_STATUS = 'R'
+		AND APP_WRITER_NO = #{userNo}
+	</select>
+	<select id="selectApprovalReturnList" parameterType="_int" resultType="Approval">
+		SELECT ROWNUM, A.APP_NO, B.EMP_NAME APP_WRITER_NO, A.APP_TITLE,
+		    A.APP_CREATE_DATE, A.REJECTER, A.REJECT_REASON,
+		    A.FIRST_APPROVER, A.LAST_APPROVER,
+		    SUBSTR(A.FIRST_APPROVAL_DATE, 1,8) FIRST_APPROVAL_DATE, SUBSTR(A.LAST_APPROVAL_DATE, 1,8) LAST_APPROVAL_DATE,
+		    A.APP_KINDS, A.APP_STATUS
+		FROM APPROVAL A
+		     JOIN EMPLOYEE B ON (A.APP_WRITER_NO = B.EMP_NO)
+		WHERE A.STATUS = 'Y'
+            AND A.APP_WRITER_NO = #{userNo}
+            AND A.APP_STATUS = 'R'
+			ORDER BY APP_NO DESC
+	</select>
+
 	<select id="selectApprovalEr" parameterType="_int" resultMap="approvalResultMap">
        SELECT DISTINCT B.EMP_NO, A.APP_NO, B.EMP_NAME APP_WRITER_NO, D.DEP_NAME, E.POS_NAME,
 	        A.APP_CREATE_DATE, F.EMP_NAME FIRST_APPROVER, G.EMP_NAME LAST_APPROVER, A.APP_STATUS,
@@ -282,6 +318,19 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 				LEAVE_CATEGORY = #{leaveCategory}
 			WHERE APP_NO = #{appNo}
 	</update>
+	<update id="updateApperAcc" parameterType="com.uni.spring.approval.model.dto.ApperAccount">
+		UPDATE APPER_ACCOUNT
+			SET
+				ER_ACCOUNT_HOLDER = #{erAccountHolder},
+				BANK_NAME = #{bankName},
+				ACCOUNT_NUMBER = #{accountNumber},
+				ER_AMOUNT = #{erAmount}
+			WHERE APP_NO = #{appNo}
+	</update>
+	<delete id="deleteApprovalErs" parameterType="_int">
+		DELETE FROM APP_ER
+		WHERE APP_NO = #{appNo}
+	</delete>
 	<update id="updateAttachment" parameterType="com.uni.spring.common.dto.Attachment">
 		MERGE INTO
 			ATTACHMENT A

@@ -14,6 +14,7 @@ import com.uni.spring.approval.model.dto.ApprovalReport;
 import com.uni.spring.approval.model.dto.mapDto.ApprovalMap;
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.common.dto.PageInfo;
+import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 
 @Repository
@@ -35,8 +36,8 @@ public class ApprovalDao {
 		return sqlSession.insert("approvalMapper.insertAttachment", attachment);
 	}
 
-	public ArrayList<Employee> selectApproverList(int empNo, SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("approvalMapper.selectApproverList", empNo);
+	public ArrayList<Employee> selectApproverList(Employee employee, SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectApproverList", employee);
 	}
 
 	public int insertLeaveApproval(SqlSessionTemplate sqlSession, ApprovalLeave approvalLeave) {
@@ -129,5 +130,28 @@ public class ApprovalDao {
 
 	public int updateApprovalLv(SqlSessionTemplate sqlSession, ApprovalLeave approvalLeave) {
 		return sqlSession.update("approvalMapper.updateApprovalLv", approvalLeave);
+	}
+
+	public int updateApperAcc(SqlSessionTemplate sqlSession, ApperAccount apperAccount) {
+		return sqlSession.update("approvalMapper.updateApperAcc", apperAccount);
+	}
+
+	public int deleteApprovalErs(SqlSessionTemplate sqlSession, int appNo) {
+		return sqlSession.delete("approvalMapper.deleteApprovalErs", appNo);
+	}
+
+	public int selectApprovalReturnListCnt(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("approvalMapper.selectApprovalReturnListCnt", userNo);
+	}
+
+	public ArrayList<Approval> selectApprovalReturnList(SqlSessionTemplate sqlSession, PageInfo pi, int userNo) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectApprovalReturnList", userNo, rowBounds);
+	}
+
+	public ArrayList<Department> selectDeptList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectDeptList");
 	}
 }
