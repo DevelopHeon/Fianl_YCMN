@@ -50,8 +50,9 @@
              <!-- 프로필 사진 -->
               <!-- /col-md-4 -->
               <div class="profile-text mt mb centered right-divider">
-               <table class="table table-inbox">
+               <table class="empDetail table table-inbox">
 				<tr>
+					<td id="empNo" style="display:none">${ detailEmp.empNo }</td>
 					<td>${ detailEmp.empName }</td>
 					<td>${ detailEmp.empOnoff }</td>
 				</tr>
@@ -70,8 +71,7 @@
               <!-- /col-md-4 -->
               <table>
               	<tr>
-					<td><button>메일쓰기</button></td>
-					<td><button>메신저</button></td>
+					<td><button type="button" class="btn" onclick="writeMail();">메일쓰기</button></td>
 				</tr>
               </table>
               </div>
@@ -88,6 +88,17 @@
     </section>
     <!-- /MAIN CONTENT -->
     <!--main content end-->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script>
+    	function writeMail(){
+  
+			var eno = $("#empNo").text();
+			console.log(eno);
+			window.location.href="writeMail.do?eno="+eno;
+    		
+    	}
+
+    </script>
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="lib/jquery/jquery.min.js"></script>
   <script src="lib/bootstrap/js/bootstrap.min.js"></script>

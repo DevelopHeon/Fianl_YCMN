@@ -44,7 +44,13 @@ public class EmployeeController {
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@RequestMapping("main.do")
-	public String main() {
+	public String main(HttpSession session, Model model) {
+		Employee loginUser = (Employee)session.getAttribute("loginUser");
+		int empNo = loginUser.getEmpNo();
+		//메일함에 새로운메일이 카운팅
+		int unread = mailService.selectUnreadMail(empNo);
+		
+		model.addAttribute("unread", unread);
 		return "main";
 	}
 	
@@ -69,11 +75,10 @@ public class EmployeeController {
 	public String loginEmployee(Employee emp, Model model) {
 		Employee loginUser = employeeService.loginEmployee(bCryptPasswordEncoder, emp);
 		int empNo = loginUser.getEmpNo();
-		
+		//메일함에 새로운메일이 카운팅
 		int unread = mailService.selectUnreadMail(empNo);
 		
 		model.addAttribute("unread", unread);
-	
 		model.addAttribute("loginUser", loginUser);
 		return "main";
 	}

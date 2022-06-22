@@ -19,6 +19,9 @@
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
 
+  <style>
+  	.on { visibility: visible; }
+  </style>
 </head>
 
 <body>
@@ -80,7 +83,7 @@
                         <td class="inbox-small-cells">
                           <input type="checkbox" class="mail-checkbox" id="checkSendTrash" name="checkNo" value="${r.receiveNo }">
                         </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
+                        <td class="inbox-small-cells"><input style="display:none"><i style="font-size:20px" class="star fa fa-star inbox-started"></i></td>
                         <!-- 이름 -->
                         <td class="dont-show">${r.employee.empName}</td>
                         <!-- 메일제목 -->
@@ -103,7 +106,7 @@
                         <td class="inbox-small-cells">
                           <input type="checkbox" class="mail-checkbox" id="checkSendTrash" name="checkNo" value="${r.receiveNo }">
                         </td>
-                        <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
+                        <td class="inbox-small-cells"><input style="display:none"><i style="font-size:20px" class="star fa fa-star inbox-started"></i></td>
                         <!-- 이름 -->
                         <td class="dont-show">${r.employee.empName}</td>
                         <!-- 메일제목 -->
@@ -192,6 +195,15 @@
 			var mno = $(this).parent().children().eq(0).find("input").val();
 			location.href="detailReceiveMail.do?mno="+mno;
 		})
+	})
+	
+	//즐겨찾기
+	$(".star").click(function(){
+		if($(this).hasClass("inbox-started")){
+			$(this).removeClass("inbox-started");
+		}else{
+			$(this).addClass("inbox-started");
+		}
 	})
 </script>
     <!-- /MAIN CONTENT -->

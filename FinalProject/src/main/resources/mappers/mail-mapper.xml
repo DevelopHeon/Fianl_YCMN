@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="CATEGORY" property="category"/>
 	</resultMap>
 		<resultMap type="Employee" id="EmployeeMap">
+		<id column="EMP_NO" property="empNo"/>
 		<result column="EMP_NAME" property="empName"/>
 	</resultMap>
 	<resultMap type="ReceiveMail" id="ReceiveMailMap">
@@ -152,5 +153,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*)
 		FROM RECEIVEMAIL
 		WHERE RECEIVER = #{empNo} AND RECEIVE_STATUS = 'Y'
+	</select>
+	
+	<!-- 주소록 -> 메일쓰기 -->
+	<select id="selectChoiceMail" parameterType="Employee" resultType="Employee">
+	SELECT EMP_NO, EMP_NAME
+	FROM EMPLOYEE
+	WHERE EMP_NO = #{empNo}
 	</select>
 </mapper>
