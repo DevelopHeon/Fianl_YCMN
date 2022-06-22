@@ -68,6 +68,16 @@ public class MailDao {
 	public ReceiveMail selectSendMail(SqlSessionTemplate sqlSession, int mailNo) {
 		return sqlSession.selectOne("mailMapper.selectSendMail", mailNo);
 	}
+	//안읽은메일 개수
+	public int selectUnreadMail(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("mailMapper.selectUnreadMail", empNo);
+
+	}
+	//전체 메일 개수
+	public int selectTotalMail(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("mailMapper.selectTotalMail", empNo);
+
+	}
 
 
 }

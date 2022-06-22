@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.Pagination;
@@ -53,7 +54,7 @@ public class MailController {
 							 @RequestParam(name="upfile", required=false) MultipartFile file) {
 		//메일 잘 들어오는지 확인
 		System.out.println(mail);
-		
+		mail.setMailContent(mail.getMailContent().replaceAll("\n", "<br>"));
 		Attachment attachment = null;
 		if(!file.getOriginalFilename().equals("")) { //첨부파일에 업로드가 되었다면
 			//attachment에 파일을 저장
@@ -142,9 +143,18 @@ public class MailController {
 		//받은메일함 리스트
 		ArrayList<ReceiveMail> receiveList = mailService.selectReceiveList(empNo, pi);
 		
+		//안읽은메일 수, 전체메일 수
+		int unread = mailService.selectUnreadMail(empNo);
+		int total = mailService.selectTotalMail(empNo);
+	
 		model.addAttribute("receiveList", receiveList);
 		model.addAttribute("pi", pi);
 
+//		ModelAndView mv = new ModelAndView();
+//		mv.addObject("unread",unread).setViewName("main");
+//		
+		model.addAttribute("unread", unread);
+		model.addAttribute("total", total);
 		
 		return "mail/receiveMail";
 	}

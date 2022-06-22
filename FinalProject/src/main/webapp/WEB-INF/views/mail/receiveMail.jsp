@@ -48,7 +48,10 @@
                   <a href="writeMail.do" class="btn btn-compose">
                   <i class="fa fa-pencil"></i>  메일쓰기
                   </a>
+                  
                   </div>
+                  <span style="font-size:25px">미확인<span style="color:red;"> ${unread }</span>건&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;전체  ${total }건</span>
+                  <br><br>
               </header>
               <div class="panel-body minimal">
                 <div class="table-inbox-wrap ">
@@ -69,7 +72,32 @@
                       <i class=" fa fa-refresh"></i>
                       </a>
                   <table id="receiveMailList" class="table table-inbox table-hover">
+                  	
                   	<c:forEach items="${receiveList }" var="r">
+                  	<c:if test="${r.confirmMail eq 0}">
+                    <tbody>
+                      <tr class="unread">
+                        <td class="inbox-small-cells">
+                          <input type="checkbox" class="mail-checkbox" id="checkSendTrash" name="checkNo" value="${r.receiveNo }">
+                        </td>
+                        <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
+                        <!-- 이름 -->
+                        <td class="dont-show">${r.employee.empName}</td>
+                        <!-- 메일제목 -->
+                        <td class="view-message">${r.mail.mailTitle}</td>
+                        <!-- 첨부파일 유무 -->
+                        <c:if test="${!empty r.mail.fileName}"> 
+                        <td class="view-message inbox-small-cells"><i class="fa fa-paperclip"></i></td>
+                        </c:if>
+                        <c:if test="${empty r.mail.fileName}"> 
+                        <td></td>
+                        </c:if>
+                        <td class="view-message text-right">${r.timestamp}</td>
+                      </tr>                 
+                    </tbody>
+                    </c:if>
+                    
+                    <c:if test="${r.confirmMail ne 0}">
                     <tbody>
                       <tr class="">
                         <td class="inbox-small-cells">
@@ -90,7 +118,9 @@
                         <td class="view-message text-right">${r.timestamp}</td>
                       </tr>                 
                     </tbody>
+                    </c:if>
                   	</c:forEach>
+                  	
                   </table>
                   </form>
                 </div>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,27 +59,26 @@
                     <div class="form-group">
                       <label for="to" class="">수신:</label>
                       <span id="mailTo"></span>
-                      <a class="btn-primary" onclick="selectApprover(1, '${loginUser.empNo}')"  data-toggle="modal" data-target="#addressModal" style="font-size:30px">+</a>
+                      <a class="btn" onclick="selectApprover(1, '${loginUser.empNo}')"  data-toggle="modal" data-target="#addressModal" style="font-size:20px"><i class="fa fa-plus-circle"></i></a>
 
                       <div class="compose-options">
-                        <a onclick="$(this).hide(); $('#mailRef').parent().removeClass('hidden'); $('#mailRef').focus();" href="javascript:;">Cc</a>
-                        <a onclick="$(this).hide(); $('#mailSec').parent().removeClass('hidden'); $('#mailSec').focus();" href="javascript:;">Bcc</a>
+                        <a onclick="$(this).hide(); $('#mailRef').parent().removeClass('hidden'); $('#mailRef').focus();" href="javascript:;"><i class="fa fa-plus"></i> 참조 </a>&nbsp;&nbsp;
+                        <a onclick="$(this).hide(); $('#mailSec').parent().removeClass('hidden'); $('#mailSec').focus();" href="javascript:;"><i class="fa fa-plus"></i> 비밀참조</a>
                       </div>
                     </div>
                     <div class="form-group hidden">
                       <label for="cc" class="">참조:</label>
                       <span id="mailRef"></span>
-                      <a class="btn-primary" onclick="selectApprover(2, '${loginUser.empNo}')"  data-toggle="modal" data-target="#addressModal" style="font-size:30px">+</a>
+                      <a class="btn" onclick="selectApprover(2, '${loginUser.empNo}')"  data-toggle="modal" data-target="#addressModal" style="font-size:20px"><i class="fa fa-plus-circle"></i></a>
                     </div>
                     <div class="form-group hidden">
                       <label for="bcc" class="">비밀참조:</label>
                       <span id="mailSec"></span>
-                      <a class="btn-primary" onclick="selectApprover(3, '${loginUser.empNo}')"  data-toggle="modal" data-target="#addressModal" style="font-size:30px">+</a>
+                      <a class="btn" onclick="selectApprover(3, '${loginUser.empNo}')"  data-toggle="modal" data-target="#addressModal" style="font-size:20px"><i class="fa fa-plus-circle"></i></a>
                     </div>
 
                     <div class="compose-editor">
                       <textarea class="wysihtml5 form-control" name="mailContent" rows="9">
-
 
 
 ${loginUser.empName} / ${loginUser.posName} / ${loginUser.depName}
@@ -90,7 +90,7 @@ ${loginUser.empPhone}
                       <input type="file" class="file" name="upfile" >
                     </div>
                     <div class="compose-btn">
-                      <button class="btn btn-theme btn-sm"><i class="fa fa-check"></i> 보내기</button>
+                      <button type="button" class="btn btn-theme btn-sm" onclick="writeMail();"><i class="fa fa-check"></i> 보내기</button>
                       <button type="button" class="goMain btn btn-sm" onclick="goMain();"><i class="fa fa-times"></i> 취소하기</button>
                     </div>
                   </form>
@@ -117,6 +117,8 @@ ${loginUser.empPhone}
 			location.href='main.do';
 		}
 	}
+	
+
     	
     </script>
   <!-- js placed at the end of the document so the pages load faster -->

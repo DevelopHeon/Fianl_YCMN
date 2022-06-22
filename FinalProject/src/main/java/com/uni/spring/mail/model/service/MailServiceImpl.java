@@ -102,6 +102,18 @@ public class MailServiceImpl implements MailService {
 	public ReceiveMail selectSendMail(int mailNo) {
 		return mailDao.selectSendMail(sqlSession, mailNo);
 	}
+	
+	//안읽은메일 개수
+	@Override
+	public int selectUnreadMail(int empNo) {
+		return mailDao.selectUnreadMail(sqlSession, empNo);
+	}
+	//전체 메일 개수
+	@Override
+	public int selectTotalMail(int empNo) {
+		return mailDao.selectTotalMail(sqlSession, empNo);
+
+	}
 
 
 }
