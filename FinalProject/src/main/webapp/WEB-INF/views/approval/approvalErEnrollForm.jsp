@@ -127,7 +127,7 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td><input type="text" class="form-control" list="listOptions" id="erClass" name="approvalErs[0].erClass" placeholder="과목입력"  required="required" />
+												<td><input type="text" class="form-control" list="listOptions" id="erClass" name="approvalErs[0].erClass" placeholder="과목입력"  required />
 													<datalist id="listOptions">
 														<option value="교육훈련비">
 														<option value="도서인쇄비">
@@ -139,19 +139,19 @@
 													</datalist>
 												</td>
 												<td>
-													<input class="form-control" type="date" id="erDate" name="approvalErs[0].erDate"  required="required" />
+													<input class="form-control" type="date" id="erDate" name="approvalErs[0].erDate"  required />
 												</td>
 												<td>
-													<input class="form-control" type="text" id="erDetail" name="approvalErs[0].erDetail" placeholder="내용"  required="required" />
+													<input class="form-control" type="text" id="erDetail" name="approvalErs[0].erDetail" placeholder="내용"  required />
 												</td>
 												<td>
-													<input class="form-control" type="text" id="erUse" name="approvalErs[0].erUse" placeholder="사용처"  required="required" />
+													<input class="form-control" type="text" id="erUse" name="approvalErs[0].erUse" placeholder="사용처"  required />
 												</td>
 												<td>
-													<select class="form-control" id="erPayment" name="approvalErs[0].erPayment"  required="required">
-														<option value="M">현금</option>
-														<option value="PC">개인카드</option>
+													<select class="form-control" id="erPayment" name="approvalErs[0].erPayment"  required>
 														<option value="BC">법인카드</option>
+														<option value="PC">개인카드</option>
+														<option value="M">현금</option>
 													</select>
 												</td>
 												<td>
@@ -163,7 +163,7 @@
 									<button type="button" id="rowAddBtn" class="btn btn-primary">추가</button>
 									<div class="addFile" style="margin-top:2%;">
 										<b>* 증빙 서류 첨부</b><br><br>
-										<input type="file" id="uploadFile" name="uploadFile" class="form-control" style="width:50%; height:3%;">
+										<input type="file" id="uploadFile" name="uploadFile" class="form-control" style="width:50%; height:3%;" required>
 									</div>
 								</div>
 							</div>

@@ -29,7 +29,7 @@
 						<thead style="background:lightgray;">
 							<tr>
 								<th>번호</th>
-								<th>제목</th>
+								<th style="width:25%;">제목</th>
 								<th>결재 양식</th>
 								<th>기안일</th>
 								<th>기안자</th>

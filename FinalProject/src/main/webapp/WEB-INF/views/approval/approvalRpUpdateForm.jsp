@@ -121,9 +121,5 @@
 				</div>
 			</section>
 		</section>
-		<script>
-		// 오늘 날짜 화면에 출력
-		 document.getElementById('appCreateDate').value = new Date().toISOString().substring(0, 10);
-		</script>
 </body>
 </html>

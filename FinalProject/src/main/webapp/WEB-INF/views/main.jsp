@@ -40,9 +40,8 @@
   <style>
 	#main-content{
 		color:black;
-		background-color:white;
-		height:1200px;
 	}
+	body{ background:white;}
 	#approverTable>tbody>tr>td{
 		height:35px;
 	}
@@ -233,7 +232,7 @@
               <li><a href="approvalList.do">결재 신청</a></li>
               <li><a href="listOutbox.do?userNo=${ sessionScope.loginUser.empNo }">결재 상신함</a></li>
               <li><a href="listInbox.do?userNo=${ sessionScope.loginUser.empNo }">결재 수신함</a></li>
-              <li><a href="#">결재 반려함</a></li>
+              <li><a href="listReturn.do?userNo=${ sessionScope.loginUser.empNo }">결재 반려함</a></li>
             </ul>
           </li>
           <li class="sub-menu">

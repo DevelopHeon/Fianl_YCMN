@@ -14,6 +14,7 @@ import com.uni.spring.approval.model.dto.mapDto.ApprovalMap;
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.common.dto.PageInfo;
+import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 
 import lombok.RequiredArgsConstructor;
@@ -43,9 +44,14 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public ArrayList<Employee> selectApproverList(int empNo) {
+	public ArrayList<Employee> selectApproverList(Employee employee) {
 		
-		return approvalDao.selectApproverList(empNo, sqlSession);
+		return approvalDao.selectApproverList(employee, sqlSession);
+	}
+	
+	@Override
+	public ArrayList<Department> selectDeptList() {
+		return approvalDao.selectDeptList(sqlSession);
 	}
 
 	@Override
@@ -204,4 +210,35 @@ public class ApprovalServiceImpl implements ApprovalService {
 			throw new CommException("휴가 신청서 수정 실패");
 		}
 	}
+
+	@Override
+	public void updateApprovalEr(Approval approval, ArrayList<ApprovalErs> appers, Attachment attachment) {
+		int result1 = approvalDao.updateApproval(sqlSession, approval);
+		int result2 = approvalDao.updateApperAcc(sqlSession, approval.getApperAccount());
+		// 기존 내용도 변경하지 않으면 똑같이 넘어오므로 전체 삭제 후 새로 추가하는 방식으로 했음..
+		// 기존 row 삭제했을경우 삭제하는 방법이 이거밖에 떠오르지 않음
+		int result3 = approvalDao.deleteApprovalErs(sqlSession, approval.getAppNo());
+		int result4 = approvalDao.insertApprovalErs(sqlSession, appers);
+		int result5 = 1;
+		
+		if(attachment != null) {
+			result5 = approvalDao.updateAttachment(sqlSession, attachment);
+		}
+		
+		if (result1 * result2 * result3 * result4 * result5 < 0) {
+			throw new CommException("지출 결의서 수정 실패");
+		}
+		
+	}
+
+	@Override
+	public int selectApprovalReturnListCnt(int userNo) {
+		return approvalDao.selectApprovalReturnListCnt(sqlSession, userNo);
+	}
+
+	@Override
+	public ArrayList<Approval> selectApprovalReturnList(PageInfo pi, int userNo) {
+		return approvalDao.selectApprovalReturnList(sqlSession, pi, userNo);
+	}
+
 }
