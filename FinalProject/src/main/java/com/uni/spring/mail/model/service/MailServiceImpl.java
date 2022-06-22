@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.common.dto.PageInfo;
+import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.mail.model.dao.MailDao;
 import com.uni.spring.mail.model.dto.Mail;
 import com.uni.spring.mail.model.dto.ReceiveMail;
@@ -113,6 +114,11 @@ public class MailServiceImpl implements MailService {
 	public int selectTotalMail(int empNo) {
 		return mailDao.selectTotalMail(sqlSession, empNo);
 
+	}
+	//주소록 -> 메일쓰기
+	@Override
+	public Employee selectChoiceMail(int empNo) {
+		return mailDao.selectChoiceMail(sqlSession, empNo);
 	}
 
 

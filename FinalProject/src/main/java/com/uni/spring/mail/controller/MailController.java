@@ -40,7 +40,17 @@ public class MailController {
 	
 	//메일작성폼
 	@RequestMapping("writeMail.do")
-	public String writeMail(HttpSession session) {
+	public String writeMail(@RequestParam(name="eno", required=false)String empNo,
+							HttpSession session,
+							Model model) {
+		//주소록에서 사원에게 메일쓰기를 클릭할때(empDetail, writeMail)
+		if(empNo != null) {
+			//필요한 것 : 사원번호, 이름
+			//eno는 주소록에서 작성할때만 필요하므로 required=false로 두어야함
+			//이때 required= false는  파라미터 값으로 int형을 받을 수 없다 -> string으로 쓰고 인자값에서 다시 int형변환
+			Employee emp = mailService.selectChoiceMail(Integer.parseInt(empNo));
+			model.addAttribute("emp", emp);
+		}
 		
 		return "mail/writeMail";
 	}

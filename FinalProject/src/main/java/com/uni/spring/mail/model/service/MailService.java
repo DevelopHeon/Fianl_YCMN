@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.common.dto.PageInfo;
+import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.mail.model.dto.Mail;
 import com.uni.spring.mail.model.dto.ReceiveMail;
 
@@ -32,6 +33,8 @@ public interface MailService {
 	int selectUnreadMail(int empNo);
 
 	int selectTotalMail(int empNo);
+
+	Employee selectChoiceMail(int empNo);
 
 
 }

@@ -36,11 +36,6 @@
               <header class="panel-heading wht-bg">
                 <h4 class="gen-case">
                     	작성하기
-                    <form action="#" class="pull-right mail-src-position">
-                      <div class="input-append">
-                        <input type="text" class="form-control " placeholder="Search Mail">
-                      </div>
-                    </form>
                   </h4>
               </header>
               <div class="panel-body">
@@ -58,7 +53,16 @@
                     </div>
                     <div class="form-group">
                       <label for="to" class="">수신:</label>
+                      
+                      <!-- 주소록에서 특정사원 메일쓰기를 클릭할때 -->
+                      <c:if test="${!empty emp.empName}">
+                      <input type="text" id="mailTo" name="mailTo" value="${emp.empNo }" style="display:none"></input>
+                      <span>${emp.empName}</span>
+                      </c:if>
+
+                      <c:if test="${empty emp.empName}">
                       <span id="mailTo"></span>
+                      </c:if>
                       <a class="btn" onclick="selectApprover(1, '${loginUser.empNo}')"  data-toggle="modal" data-target="#addressModal" style="font-size:20px"><i class="fa fa-plus-circle"></i></a>
 
                       <div class="compose-options">
@@ -90,7 +94,7 @@ ${loginUser.empPhone}
                       <input type="file" class="file" name="upfile" >
                     </div>
                     <div class="compose-btn">
-                      <button type="button" class="btn btn-theme btn-sm" onclick="writeMail();"><i class="fa fa-check"></i> 보내기</button>
+                      <button class="btn btn-theme btn-sm""><i class="fa fa-check"></i> 보내기</button>
                       <button type="button" class="goMain btn btn-sm" onclick="goMain();"><i class="fa fa-times"></i> 취소하기</button>
                     </div>
                   </form>

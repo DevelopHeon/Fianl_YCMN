@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.common.dto.PageInfo;
+import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.mail.model.dto.Mail;
 import com.uni.spring.mail.model.dto.ReceiveMail;
 
@@ -76,6 +77,11 @@ public class MailDao {
 	//전체 메일 개수
 	public int selectTotalMail(SqlSessionTemplate sqlSession, int empNo) {
 		return sqlSession.selectOne("mailMapper.selectTotalMail", empNo);
+
+	}
+	//주소록 -> 메일쓰기
+	public Employee selectChoiceMail(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("mailMapper.selectChoiceMail", empNo);
 
 	}
 
