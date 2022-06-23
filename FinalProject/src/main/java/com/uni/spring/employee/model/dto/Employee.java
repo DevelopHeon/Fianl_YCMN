@@ -25,7 +25,7 @@ public class Employee {
    private String empPfe;
    private int category;
    private String status;
-   private String empOnoff;
+   private String empOnOff;
    private int posNo;
    private int depNo;
    private String posName;
@@ -39,7 +39,7 @@ public class Employee {
 	public String toString() {
 		return "Employee [empNo=" + empNo + ", empName=" + empName + ", empId=" + empId + ", empPwd=" + empPwd
 				+ ", empEmail=" + empEmail + ", officeTel=" + officeTel + ", empPhone=" + empPhone + ", empLoc=" + empLoc
-				+ ", empPfe=" + empPfe + ", category=" + category + ", status=" + status + ", empOnoff=" + empOnoff
+				+ ", empPfe=" + empPfe + ", category=" + category + ", status=" + status + ", empOnoff=" + empOnOff
 				+ ", posNo=" + posNo + ", depNo=" + depNo + ", posName=" + posName + ", depName=" + depName + "]";
 	}
 }
