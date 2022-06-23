@@ -6,12 +6,53 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+.card{
+	display:flex;
+	justify-content:center;
+	align-items: center;
+}
+.card-body {
+	margin-right:22%;
+}
+p{
+	font-size:2.8rem;
+	color:#16c97e;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="../main.jsp"/>
 	<section id="main-content">
 			<section class="wrapper">
 				<div class="container" id="main-container">
+				<h3>결재현황</h3>
+				<div class="row" style="white-space:nowrap;">
+					<div class="col-sm-3" style="margin-left:12.5%;">
+						<div class="card">
+							<div class="card-body col-sm-3">
+								<h1>&nbsp;${ appCnt.APP_W } 건</h1>
+								<p>결재대기</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="card">
+							<div class="card-body col-sm-3">
+								<h1>${ appCnt.APP_I } 건</h1>
+								<p>결재중</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="card">
+							<div class="card-body col-sm-3">
+								<h1>&nbsp;${ appCnt.APP_C } 건</h1>
+								<p>결재완료</p>
+							</div>
+						</div>
+					</div>
+				</div>
 					<h3 style="margin-top:8%;">결재 수신함</h3>
 					<hr>
 					<c:if test="${ empty list }">
@@ -43,7 +84,7 @@
 						<c:forEach items="${ list }" var="app">
 							<tr>
 								<td><input type="hidden" class="number" value="${ app.appNo }" />${ app.rownum }</td>
-								<td>${ app.appTitle }</td>
+								<td>${ app.appTitle }&nbsp;<c:if test="${app.opicnt != 0}">[<span style="color:#2c86dc;"><c:out value="${app.opicnt }"/></span>]</c:if></td>
 								<c:choose>
 									<c:when test="${ app.appKinds eq 3 }">
 										<td>휴가신청서</td>

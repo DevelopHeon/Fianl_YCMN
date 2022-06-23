@@ -115,129 +115,132 @@
 								</tr>
 							</tbody>
 						</table>
-							<br>
-							<hr>
-							<c:if test="${ !empty appMap.approval.rejecter }">
-								<table class="__se_tbl" style="width: 600px; margin-top : 0px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic,dotum,arial,tahoma;">
-								<tbody>
-									<tr>	
-										<td style="background: rgb(221, 221, 221); width:200px; padding: 5px; border: 1px solid black; height: 25px; width: 100px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
-											반려자
-										</td>
-										<td colspan="3" style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;">
-											<span id="vacationTypeArea" name="select" style="font-family: malgun gothic, dotum, arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-												<c:out value="${ appMap.approval.rejecter }" />
-											</span> 
-										</td>
-									</tr>
-									<tr>	
-										<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; width: 100px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
-											반려 사유
-										</td>
-										<td colspan="3" style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;">
-											<span id="vacationTypeArea" name="select" style="font-family: malgun gothic, dotum, arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-												<textarea name="rejectReason" rows="10" cols="70" style="resize:none;" readonly><c:out value="${appMap.approval.rejectReason}"/></textarea>
-											</span> 
-										</td>
-									</tr>
-									</tbody>
-								</table>
-							</c:if>
-							<br>
-							<table class="__se_tbl" style="width: 800px; margin-top : 0px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic,dotum,arial,tahoma;">
+						<br>
+						<hr>
+						<c:if test="${ !empty appMap.approval.rejecter }">
+							<table class="__se_tbl" style="width: 600px; margin-top : 0px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic,dotum,arial,tahoma;">
 							<tbody>
 								<tr>	
-									<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
-										제목
+									<td style="background: rgb(221, 221, 221); width:200px; padding: 5px; border: 1px solid black; height: 25px; width: 100px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+										반려자
 									</td>
-									<td style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;">
+									<td colspan="3" style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;">
 										<span id="vacationTypeArea" name="select" style="font-family: malgun gothic, dotum, arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-											<c:out value="${ appMap.approval.appTitle }" />
+											<c:out value="${ appMap.approval.rejecter }" />
 										</span> 
 									</td>
 								</tr>
-								<tr>
-									<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 80px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
-										<b style="color: rgb(255, 0, 0);">*</b>&nbsp;업무&nbsp;내용 
+								<tr>	
+									<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; width: 100px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+										반려 사유
 									</td>
-									<td style="padding: 3px; border: 1px solid black; width: 700px; height: 100px; text-align: left; color: rgb(0, 0, 0); font-size: 12px;  vertical-align: top; background: rgb(255, 255, 255);">
-										<span unselectable="on" contenteditable="false" class="comp_wrap" data-cid="6" data-dsl="{{textarea:description}}" data-wrapper="" style="width: 100%;" data-value="" data-autotype="">
-											<textarea class="txta_editor" rows="10" cols="110" style="resize:none;" readonly><c:out value="${ appMap.approvalReport.reportContent }" /></textarea>
+									<td colspan="3" style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;">
+										<span id="vacationTypeArea" name="select" style="font-family: malgun gothic, dotum, arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
+											<textarea name="rejectReason" rows="10" cols="70" style="resize:none;" readonly><c:out value="${appMap.approval.rejectReason}"/></textarea>
 										</span> 
 									</td>
 								</tr>
-								<tr>
-									<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 80px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
-										<b style="color: rgb(255, 0, 0);"></b>&nbsp;특이&nbsp;사항
-									</td>
-									<td style="padding: 3px; border: 1px solid black; width: 700px; height: 100px; text-align: left; color: rgb(0, 0, 0); font-size: 12px;  vertical-align: top; background: rgb(255, 255, 255);">
-										<span unselectable="on" contenteditable="false" class="comp_wrap" data-cid="6" data-dsl="{{textarea:description}}" data-wrapper="" style="width: 100%;" data-value="" data-autotype="">
-											<c:if test="${ !empty appMap.approvalReport.reportIssue }"><textarea class="txta_editor" rows="5" cols="110" style="resize:none;" readonly><c:out value="${ appMap.approvalReport.reportIssue }" /></textarea></c:if>
-										</span> 
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						</div>
-						<!-- 결재 승인시 필요한 값들 hidden으로 값 전송 -->
-						<form id="postForm" action="" method="post">
-							<input type="hidden" name="appNo" value="${appMap.approval.appNo}">
-							<input type="hidden" name="appKinds" value="${appMap.approval.appKinds}">
-							<input type="hidden" name="firstApprover" value="${appMap.approval.firstApprover}">
-							<input type="hidden" name="lastApprover" value="${ appMap.approval.lastApprover }">
-							<input id="approverConfirm" name="approverConfirm" type="hidden" value="${ loginUser.empName }">
-						</form>
-						<div class="addFile" style="margin-top:2%;">
-							<b style="font-size:14px;">* 첨부파일</b><br><br>
-							<c:if test="${ empty appMap.attachment.originName }">
-								<b>첨부파일이 없습니다.</b>
-							</c:if>
-							<c:if test="${ !empty appMap.attachment.originName }">
-								<a download="${appMap.attachment.originName}" href="${ pageContext.servletContext.contextPath }/resources/appUpload_files/${appMap.attachment.changeName}">${appMap.attachment.originName}</a>
-							</c:if>
-						</div>
-						<form id="postForm" action="" method="post">
-							<input type="hidden" name="appNo" value="appMap.approval.appNo">
-							<input type="hidden" name="appKinds" value="appMap.approval.appKinds">
-						</form>
-						<!-- 최초 승인일 컬럼이 비어있고, 최초승인자와 로그인유저의 이름이 같거나, 최초승인일 안비어있고 최종승인자컬럼과 이름이 같고 최종 승인일이 비어있을경우 출력 -->
-						<c:if test="${ appMap.approval.firstApprover.equals(loginUser.empName) and empty appMap.approval.firstApprovalDate
-						 or (appMap.approval.lastApprover.equals(loginUser.empName) and empty appMap.approval.lastApprovalDate and !empty appMap.approval.firstApprovalDate) }">
-							<div class="btns" align="center" style="margin-top:5%;">
-								<button class="btn btn-info btn-lg" onclick="postFormSubmit(3)">결재 승인</button>
-								<button class="btn btn-danger btn-lg" style="margin-left:1%;" type="button" data-toggle="modal" data-target="#reject">반려</button>
-							</div>
+								</tbody>
+							</table>
 						</c:if>
-						<!-- 반려 버튼 클릭시 출력되는 모달 -->
-						<div class="modal fade" id="reject" style="height:60%;">
-							<jsp:include page="rejectModal.jsp"/>
-						</div>
-						<script>
-						// 수정 화면 , 결재승인 스크립트
-					 		function postFormSubmit(num){
-							var postForm = $("#postForm");
-							
-							var firstApprover = $("#firstApprover").text();
-							var lastApprover = $("#lastApprover").text();
-													
-							
-							if(num == 1){
-								postForm.attr("action", "updateFormApproval.do");
-							}else if(num ==2){
-								postForm.attr("action", "deleteBoard.do");
-							}else if(num == 3){
-								if(confirm("결재 승인 처리를 하시겠습니까?")){
-									postForm.attr("action", "approve.do");
-								}else{
-									return false;
-								}
-							}
-								postForm.submit();
-							} 
-						</script>
+						<br>
+						<table class="__se_tbl" style="width: 800px; margin-top : 0px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic,dotum,arial,tahoma;">
+						<tbody>
+							<tr>	
+								<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+									제목
+								</td>
+								<td style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;">
+									<span id="vacationTypeArea" name="select" style="font-family: malgun gothic, dotum, arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
+										<c:out value="${ appMap.approval.appTitle }" />
+									</span> 
+								</td>
+							</tr>
+							<tr>
+								<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 80px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+									<b style="color: rgb(255, 0, 0);">*</b>&nbsp;업무&nbsp;내용 
+								</td>
+								<td style="padding: 3px; border: 1px solid black; width: 700px; height: 100px; text-align: left; color: rgb(0, 0, 0); font-size: 12px;  vertical-align: top; background: rgb(255, 255, 255);">
+									<span unselectable="on" contenteditable="false" class="comp_wrap" data-cid="6" data-dsl="{{textarea:description}}" data-wrapper="" style="width: 100%;" data-value="" data-autotype="">
+										<textarea class="txta_editor" rows="10" cols="110" style="resize:none;" readonly><c:out value="${ appMap.approvalReport.reportContent }" /></textarea>
+									</span> 
+								</td>
+							</tr>
+							<tr>
+								<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 80px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+									<b style="color: rgb(255, 0, 0);"></b>&nbsp;특이&nbsp;사항
+								</td>
+								<td style="padding: 3px; border: 1px solid black; width: 700px; height: 100px; text-align: left; color: rgb(0, 0, 0); font-size: 12px;  vertical-align: top; background: rgb(255, 255, 255);">
+									<span unselectable="on" contenteditable="false" class="comp_wrap" data-cid="6" data-dsl="{{textarea:description}}" data-wrapper="" style="width: 100%;" data-value="" data-autotype="">
+										<c:if test="${ !empty appMap.approvalReport.reportIssue }"><textarea class="txta_editor" rows="5" cols="110" style="resize:none;" readonly><c:out value="${ appMap.approvalReport.reportIssue }" /></textarea></c:if>
+									</span> 
+								</td>
+							</tr>
+						</tbody>
+					</table>
 					</div>
+					<!-- 결재 승인시 필요한 값들 hidden으로 값 전송 -->
+					<form id="postForm" action="" method="post">
+						<input type="hidden" name="appNo" value="${appMap.approval.appNo}">
+						<input type="hidden" name="appKinds" value="${appMap.approval.appKinds}">
+						<input type="hidden" name="firstApprover" value="${appMap.approval.firstApprover}">
+						<input type="hidden" name="lastApprover" value="${ appMap.approval.lastApprover }">
+						<input id="approverConfirm" name="approverConfirm" type="hidden" value="${ loginUser.empName }">
+					</form>
+					<div class="addFile" style="margin-top:2%;">
+						<b style="font-size:14px;">* 첨부파일</b><br><br>
+						<c:if test="${ empty appMap.attachment.originName }">
+							<b>첨부파일이 없습니다.</b>
+						</c:if>
+						<c:if test="${ !empty appMap.attachment.originName }">
+							<a download="${appMap.attachment.originName}" href="${ pageContext.servletContext.contextPath }/resources/appUpload_files/${appMap.attachment.changeName}">${appMap.attachment.originName}</a>
+						</c:if>
+					</div>
+					<form id="postForm" action="" method="post">
+						<input type="hidden" name="appNo" value="appMap.approval.appNo">
+						<input type="hidden" name="appKinds" value="appMap.approval.appKinds">
+					</form>
+					<!-- 최초 승인일 컬럼이 비어있고, 최초승인자와 로그인유저의 이름이 같거나, 최초승인일 안비어있고 최종승인자컬럼과 이름이 같고 최종 승인일이 비어있을경우 출력 -->
+					<c:if test="${ appMap.approval.firstApprover.equals(loginUser.empName) and empty appMap.approval.firstApprovalDate
+					 or (appMap.approval.lastApprover.equals(loginUser.empName) and empty appMap.approval.lastApprovalDate and !empty appMap.approval.firstApprovalDate) }">
+						<div class="btns" align="center" style="margin-top:5%;">
+							<button class="btn btn-info btn-lg" onclick="postFormSubmit(3)">결재 승인</button>
+							<button class="btn btn-danger btn-lg" style="margin-left:1%;" type="button" data-toggle="modal" data-target="#reject">반려</button>
+						</div>
+					</c:if>
+					<!-- 반려 버튼 클릭시 출력되는 모달 -->
+					<div class="modal fade" id="reject" style="height:60%;">
+						<jsp:include page="rejectModal.jsp"/>
+					</div>
+					<br><br>
+					<%-- 의견 작성란 jsp --%>
+					<jsp:include page="opinionTable.jsp"/>	
+       			</div>
 				</div>
 			</section>
 		</section>
 </body>
+	<script>
+	// 수정 화면 , 결재승인 스크립트
+ 		function postFormSubmit(num){
+		var postForm = $("#postForm");
+		
+		var firstApprover = $("#firstApprover").text();
+		var lastApprover = $("#lastApprover").text();
+								
+		
+		if(num == 1){
+			postForm.attr("action", "updateFormApproval.do");
+		}else if(num ==2){
+			postForm.attr("action", "deleteBoard.do");
+		}else if(num == 3){
+			if(confirm("결재 승인 처리를 하시겠습니까?")){
+				postForm.attr("action", "approve.do");
+			}else{
+				return false;
+			}
+		}
+			postForm.submit();
+		} 
+	</script>
 </html>

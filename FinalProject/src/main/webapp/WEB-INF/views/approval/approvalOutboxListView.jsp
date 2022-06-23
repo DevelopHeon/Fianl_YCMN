@@ -42,7 +42,7 @@
 						<c:forEach items="${ list }" var="app">
 							<tr>
 								<td><input type="hidden" class="number" value="${ app.appNo }" />${ app.rownum }</td>
-								<td>${ app.appTitle }</td>
+								<td>${ app.appTitle }&nbsp;<c:if test="${app.opicnt != 0}">[<span style="color:#2c86dc;"><c:out value="${app.opicnt }"/></span>]</c:if></td>
 								<c:choose>
 									<c:when test="${ app.appKinds eq 3 }">
 										<td>휴가신청서</td>

@@ -1,6 +1,7 @@
 package com.uni.spring.approval.model.serivce;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import com.uni.spring.approval.model.dto.Approval;
 import com.uni.spring.approval.model.dto.ApprovalErs;
 import com.uni.spring.approval.model.dto.ApprovalLeave;
 import com.uni.spring.approval.model.dto.ApprovalReport;
+import com.uni.spring.approval.model.dto.Opinion;
 import com.uni.spring.approval.model.dto.mapDto.ApprovalMap;
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.dto.Attachment;
@@ -239,6 +241,38 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public ArrayList<Approval> selectApprovalReturnList(PageInfo pi, int userNo) {
 		return approvalDao.selectApprovalReturnList(sqlSession, pi, userNo);
+	}
+
+	@Override
+	public Map<String, Object> appStatusCnt(int userNo) {
+		return approvalDao.appStatusCnt(sqlSession, userNo);
+	}
+
+	@Override
+	public ArrayList<Opinion> selectOpinionList(int refNo) {
+		return approvalDao.selectOpinionList(sqlSession, refNo);
+	}
+
+	@Override
+	public int insertOpinion(Opinion o) {
+		
+		int result = approvalDao.insertOpinion(sqlSession, o);
+		
+		if(result < 0) {
+			throw new CommException("의견 등록 실패");
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int deleteOpinion(int opinionNo) {
+		int result = approvalDao.deleteOpinion(sqlSession, opinionNo);
+		
+		if(result < 0) {
+			throw new CommException("의견 삭제 실패");
+		}
+		return result;
 	}
 
 }
