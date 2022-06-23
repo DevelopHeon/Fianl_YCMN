@@ -21,6 +21,7 @@
 
   <style>
   	.on { visibility: visible; }
+  	.test {display : none;}
   </style>
 </head>
 
@@ -41,72 +42,58 @@
               <header class="panel-heading wht-bg">
                 <h4 class="gen-case">
                     	받은메일함
-                    <form action="#" class="pull-right mail-src-position">
-                      <div class="input-append">
-                        <input type="text" class="form-control " placeholder="Search Mail">
-                      </div>
-                    </form>
                   </h4>
                   <div class="col-sm-2">
-                  <a href="writeMail.do" class="btn btn-compose">
-                  <i class="fa fa-pencil"></i>  메일쓰기
-                  </a>
-                  
+	                  <a href="writeMail.do" class="btn btn-compose"><i class="fa fa-pencil"></i> 메일쓰기</a>
                   </div>
                   <span style="font-size:25px">미확인<span style="color:red;"> ${unread }</span>건&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;전체  ${total }건</span>
                   <br><br>
               </header>
-              <div class="panel-body minimal">
-                <div class="table-inbox-wrap ">
-                	<form id="trashMail" action="deleteTrashRMail.do" method="post">
-                	<!-- 받은 메일이 없을 경우 -->
-                	<c:if test="${empty receiveList}">
-                	 <table class="table table-inbox table-hover centered">
-                	 	<tr>
-                	 		<td>받은 메일이 없습니다.</td>
-                	 	</tr>
-                	 </table>
-                	</c:if>
+          <div class="panel-body minimal">
+             <div class="table-inbox-wrap ">
+                <form id="trashMail" action="deleteTrashRMail.do" method="post">
+	               	<!-- ******* 받은 메일이 없을 경우 *******  -->
+	               	<c:if test="${empty receiveList}">
+	              	 		<table class="table table-inbox table-hover centered">
+	                	 	<tr>
+	                	 		<td>받은 메일이 없습니다.</td>
+	                	 	</tr>
+	              	 		</table>
+	              		</c:if>
                 	<c:if test="${!empty receiveList}">
 						<input type="checkbox" name="checkNo" value="1" class="btn btn-group" onclick="selectAll(this);">전체 선택</button>
 						<button type="button" class="btn btn-group" id="deleteBtn" onclick="trashMail();"><i class="fa fa-trash-o"></i> 선택 삭제</button>
 					</c:if>
+					
 					<a data-original-title="Refresh" data-placement="top" data-toggle="dropdown" onclick="location.reload();" class="btn mini tooltips">
                       <i class=" fa fa-refresh"></i>
-                      </a>
-                  <table id="receiveMailList" class="table table-inbox table-hover">
+                    </a>
+                    <a id="mailOn"><i style="font-size:15px" class="star fa fa-star inbox-started"></i>중요</a>
+                    
+                  <!-- ******* 전체 리스트 ******* -->
+                  <table id="totalList" class="receiveMailList table table-inbox table-hover">
                   	
                   	<c:forEach items="${receiveList }" var="r">
+                  	<!-- 새로운 메일과 읽은 메일 UI -->
                   	<c:if test="${r.confirmMail eq 0}">
                     <tbody>
-                      <tr class="unread">
-                        <td class="inbox-small-cells">
-                          <input type="checkbox" class="mail-checkbox" id="checkSendTrash" name="checkNo" value="${r.receiveNo }">
-                        </td>
-                        <td class="inbox-small-cells"><input style="display:none"><i style="font-size:20px" class="star fa fa-star inbox-started"></i></td>
-                        <!-- 이름 -->
-                        <td class="dont-show">${r.employee.empName}</td>
-                        <!-- 메일제목 -->
-                        <td class="view-message">${r.mail.mailTitle}</td>
-                        <!-- 첨부파일 유무 -->
-                        <c:if test="${!empty r.mail.fileName}"> 
-                        <td class="view-message inbox-small-cells"><i class="fa fa-paperclip"></i></td>
-                        </c:if>
-                        <c:if test="${empty r.mail.fileName}"> 
-                        <td></td>
-                        </c:if>
-                        <td class="view-message text-right">${r.timestamp}</td>
-                      </tr>                 
-                    </tbody>
+                    	<tr class="unread">
                     </c:if>
-                    
                     <c:if test="${r.confirmMail ne 0}">
                     <tbody>
-                      <tr class="">
+                      	<tr class="">
+                    </c:if>
+                    	<!-- 받은메일번호 -->
                         <td class="inbox-small-cells">
                           <input type="checkbox" class="mail-checkbox" id="checkSendTrash" name="checkNo" value="${r.receiveNo }">
                         </td>
-                        <td class="inbox-small-cells"><input style="display:none"><i style="font-size:20px" class="star fa fa-star inbox-started"></i></td>
+                        <!-- .STAR클릭 시 ON OFF -->
+                            <c:if test="${r.starMail eq 'Y'}"> 
+                        		<td class="inbox-small-cells"><input style="display:none"><i style="font-size:20px" class="star fa fa-star inbox-started"></i></td>
+                        	</c:if>
+                            <c:if test="${r.starMail eq 'N'}"> 
+                        		<td class="inbox-small-cells"><input style="display:none"><i style="font-size:20px" class="star fa fa-star"></i></td>
+                        	</c:if>
                         <!-- 이름 -->
                         <td class="dont-show">${r.employee.empName}</td>
                         <!-- 메일제목 -->
@@ -121,10 +108,47 @@
                         <td class="view-message text-right">${r.timestamp}</td>
                       </tr>                 
                     </tbody>
-                    </c:if>
                   	</c:forEach>
                   	
                   </table>
+                  
+                  <!-- ******* 중요메일 리스트만 ******* -->
+                  <table id="starList" class="receiveMailList table table-inbox table-hover test">
+                  	<c:forEach items="${receiveList }" var="r">
+                  	<c:if test="${r.starMail eq 'Y'}"> 
+                  	<!-- 새로운 메일과 읽은 메일 UI -->
+                  	<c:if test="${r.confirmMail eq 0}">
+                    <tbody>
+                    	<tr class="unread">
+                    </c:if>
+                    <c:if test="${r.confirmMail ne 0}">
+                    <tbody>
+                      	<tr class="">
+                    </c:if>
+                    	<!-- 받은메일번호 -->
+                        <td class="inbox-small-cells">
+                          <input type="checkbox" class="mail-checkbox" id="checkSendTrash" name="checkNo" value="${r.receiveNo }">
+                        </td>
+                        <!-- starMail -->
+                    	<td class="inbox-small-cells"><input style="display:none"><i style="font-size:20px" class="star fa fa-star inbox-started"></i></td>
+                        <!-- 이름 -->
+                        <td class="dont-show">${r.employee.empName}</td>
+                        <!-- 메일제목 -->
+                        <td class="view-message">${r.mail.mailTitle}</td>
+                        <!-- 첨부파일 유무 -->
+                        <c:if test="${!empty r.mail.fileName}"> 
+                        <td class="view-message inbox-small-cells"><i class="fa fa-paperclip"></i></td>
+                        </c:if>
+                        <c:if test="${empty r.mail.fileName}"> 
+                        <td></td>
+                        </c:if>
+                        <td class="view-message text-right">${r.timestamp}</td>
+                      </tr>                 
+                    </tbody>
+                    </c:if>
+                  	</c:forEach>                	
+                  </table>
+                  
                   </form>
                 </div>
               </div>
@@ -191,19 +215,48 @@
 	}
 	//글제목을 클릭해서 메일보기
 	$(function(){
-		$("#receiveMailList tbody tr td:not(:has(input))").click(function(){
+		$(".receiveMailList tbody tr td:not(:has(input))").click(function(){
 			var mno = $(this).parent().children().eq(0).find("input").val();
 			location.href="detailReceiveMail.do?mno="+mno;
 		})
 	})
 	
-	//즐겨찾기
+	//즐겨찾기 on off
 	$(".star").click(function(){
+		var starM =  $(this).parent().parent().children().eq(0).find("input").val();
+		console.log(starM);
+		
 		if($(this).hasClass("inbox-started")){
 			$(this).removeClass("inbox-started");
+
 		}else{
 			$(this).addClass("inbox-started");
 		}
+		
+		$.ajax({
+			type:"get",
+			url:"starMail.do",
+			data:{starM:starM},
+			success:function(result){
+				console.log(result);
+			},
+			error:function(e){
+			}
+		})
+	})
+	
+	
+	$("#mailOn").click(function(){
+		if($("#starList").hasClass("test")){
+			
+			$("#starList").removeClass("test");
+			$("#totalList").addClass("test");
+		}else{
+			$("#totalList").removeClass("test");
+			$("#starList").addClass("test");
+		}
+		
+		
 	})
 </script>
     <!-- /MAIN CONTENT -->

@@ -19,6 +19,10 @@
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
 
+<!-- SmartEditor2 라이브러리  --> 
+<script type="text/javascript" src="resources/smartEditor2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
 </head>
 <body>
 	<jsp:include page="../main.jsp"/>
@@ -80,21 +84,31 @@
                       <span id="mailSec"></span>
                       <a class="btn" onclick="selectApprover(3, '${loginUser.empNo}')"  data-toggle="modal" data-target="#addressModal" style="font-size:20px"><i class="fa fa-plus-circle"></i></a>
                     </div>
-
-                    <div class="compose-editor">
+                    
+                      <!-- <div class="compose-editor">
                       <textarea class="wysihtml5 form-control" name="mailContent" rows="9">
 
 
 ${loginUser.empName} / ${loginUser.posName} / ${loginUser.depName}
 ${loginUser.empPhone}
                       </textarea>
-                     </div>
+                     </div> -->
+
+							<textarea name="mailContent" id="se"
+								style="width: 100%; height: 412px;">
+								
+								
+${loginUser.empName} / ${loginUser.posName} / ${loginUser.depName}
+${loginUser.empPhone}</textarea>
+
+
+                     
                      <div class="form-group">
                       <label for="file" class="">첨부파일:</label>
                       <input type="file" class="file" name="upfile" >
                     </div>
                     <div class="compose-btn">
-                      <button class="btn btn-theme btn-sm""><i class="fa fa-check"></i> 보내기</button>
+                      <button id="save" class="btn btn-theme btn-sm"><i class="fa fa-check"></i> 보내기</button>
                       <button type="button" class="goMain btn btn-sm" onclick="goMain();"><i class="fa fa-times"></i> 취소하기</button>
                     </div>
                   </form>
@@ -121,10 +135,55 @@ ${loginUser.empPhone}
 			location.href='main.do';
 		}
 	}
-	
 
     	
     </script>
+    
+<script id="smartEditor" type="text/javascript"> 
+		var oEditors = [];
+		nhn.husky.EZCreator.createInIFrame({
+		    oAppRef: oEditors,
+		    elPlaceHolder: "se",  //textarea ID 입력
+		    sSkinURI: "resources/smartEditor2/SmartEditor2Skin.html", //martEditor2Skin.html 경로 입력
+					fCreator : "createSEditor2",
+					htParams : {
+						// 툴바 사용 여부 (true:사용/ false:사용하지 않음) 
+						bUseToolbar : true,
+						// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음) 
+						bUseVerticalResizer : true,
+						// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음) 
+						bUseModeChanger : true
+					}
+				});
+		
+	$("#save").click(function() {
+		oEditors.getById["se"].exec("UPDATE_CONTENTS_FIELD", []);
+		
+		if($("#subject").val() == ""){
+			alert("제목을 입력해주세요");
+			return;
+		}
+		if($("#mailTo").val() == null){
+			alert("수신자를 입력해주세요");
+			return false;
+		}
+		
+		var contentVal = $("#se").val();
+		console.log(contentVal);
+		contentVal = contentVal.replace(/<p>/gi,"");
+		contentVal = contentVal.replace(/<\/p>/gi,"<br>");
+		contentVal = contentVal.replace(/<p><br><\/p>/gi,"<br>");
+		contentVal = contentVal.replace(/<\/p><p>/gi, "<br>");
+		if(contentVal == "" || contentVal == "<p>&nbsp;</p>"){
+			alert("글 내용을 입력해주세요");
+			return;
+		}
+		
+		
+		$("#insertMail").submit();
+	})
+</script>
+
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="lib/jquery/jquery.min.js"></script>
   <script src="lib/bootstrap/js/bootstrap.min.js"></script>

@@ -157,8 +157,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 주소록 -> 메일쓰기 -->
 	<select id="selectChoiceMail" parameterType="Employee" resultType="Employee">
-	SELECT EMP_NO, EMP_NAME
-	FROM EMPLOYEE
-	WHERE EMP_NO = #{empNo}
+		SELECT EMP_NO, EMP_NAME
+		FROM EMPLOYEE
+		WHERE EMP_NO = #{empNo}
 	</select>
+	
+	<!-- 받은메일 즐겨찾기 on -->
+	<update id="updateStarMail" parameterType="ReceiveMail">
+		UPDATE RECEIVEMAIL
+		SET STAR_MAIL = 'Y'
+		WHERE RECEIVE_NO = #{receiveNo} AND STAR_MAIL = 'N'
+	</update>	
+	
+	<!-- 받은메일 즐겨찾기 off -->
+	<update id="updateOffStarMail" parameterType="ReceiveMail">
+		UPDATE RECEIVEMAIL
+		SET STAR_MAIL = 'N'
+		WHERE RECEIVE_NO = #{receiveNo} AND STAR_MAIL = 'Y'
+	</update>
+	
+	<delete id="realDelete" parameterType="ReceiveMail">
+	DELETE FROM RECEIVEMAIL
+	WHERE RECEIVE_NO IN (#{receiveNo})
+	</delete>
 </mapper>
