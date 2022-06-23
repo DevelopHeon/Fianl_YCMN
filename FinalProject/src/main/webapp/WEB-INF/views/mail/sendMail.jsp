@@ -38,11 +38,6 @@
               <header class="panel-heading wht-bg">
                 <h4 class="gen-case">
                     	보낸메일함
-                    <form action="#" class="pull-right mail-src-position">
-                      <div class="input-append">
-                        <input type="text" class="form-control " placeholder="Search Mail">
-                      </div>
-                    </form>
                   </h4>
               </header>
               <div class="panel-body minimal">

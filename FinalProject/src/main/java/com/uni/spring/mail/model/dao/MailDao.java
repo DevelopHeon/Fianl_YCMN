@@ -84,6 +84,20 @@ public class MailDao {
 		return sqlSession.selectOne("mailMapper.selectChoiceMail", empNo);
 
 	}
+	//받은메일 즐겨찾기 on
+	public int updateStarMail(SqlSessionTemplate sqlSession, int receiveNo) {
+		return sqlSession.update("mailMapper.updateStarMail", receiveNo);
+
+	}
+	//받은메일 즐겨찾기 off
+	public int updateOffStarMail(SqlSessionTemplate sqlSession, int receiveNo) {
+		return sqlSession.update("mailMapper.updateOffStarMail", receiveNo);
+
+	}
+	//휴지통에서 영구삭제
+	public int realDelete(SqlSessionTemplate sqlSession, int receiveNo) {
+		return sqlSession.delete("mailMapper.realDelete", receiveNo);		
+	}
 
 
 }

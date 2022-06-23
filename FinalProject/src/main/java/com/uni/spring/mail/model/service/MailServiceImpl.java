@@ -98,6 +98,7 @@ public class MailServiceImpl implements MailService {
 			throw new CommException(receiveNo + "번 메일 수신자 삭제 실패");
 		}	
 	}
+	
 	//보낸 메일 조회
 	@Override
 	public ReceiveMail selectSendMail(int mailNo) {
@@ -109,16 +110,33 @@ public class MailServiceImpl implements MailService {
 	public int selectUnreadMail(int empNo) {
 		return mailDao.selectUnreadMail(sqlSession, empNo);
 	}
+	
 	//전체 메일 개수
 	@Override
 	public int selectTotalMail(int empNo) {
 		return mailDao.selectTotalMail(sqlSession, empNo);
 
 	}
+	
 	//주소록 -> 메일쓰기
 	@Override
 	public Employee selectChoiceMail(int empNo) {
 		return mailDao.selectChoiceMail(sqlSession, empNo);
+	}
+	
+	//받은메일 즐겨찾기
+	@Override
+	public void updateStarMail(int receiveNo) {
+		int onStar = mailDao.updateStarMail(sqlSession, receiveNo);
+		
+		if(onStar < 1) { //Y로 바뀌지 않았다면 Y상태인 것
+			mailDao.updateOffStarMail(sqlSession, receiveNo);
+		}	
+	}
+	//휴지통에서 영구삭제
+	@Override
+	public void realDelete(int receiveNo) {
+		mailDao.realDelete(sqlSession, receiveNo);	
 	}
 
 

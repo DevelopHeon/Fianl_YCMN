@@ -36,5 +36,10 @@ public interface MailService {
 
 	Employee selectChoiceMail(int empNo);
 
+	void updateStarMail(int receiveNo);
+
+	void realDelete(int receiveNo);
+
+
 
 }
