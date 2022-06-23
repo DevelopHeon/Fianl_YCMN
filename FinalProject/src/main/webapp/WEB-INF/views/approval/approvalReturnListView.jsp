@@ -12,7 +12,7 @@
 	<section id="main-content">
 			<section class="wrapper">
 				<div class="container" id="main-container">
-					<h3 style="margin-top:8%;">결재 수신함</h3>
+					<h3 style="margin-top:8%;">반려함</h3>
 					<hr>
 					<c:if test="${ empty list }">
 						<h4>조회된 결재문서가 없습니다.</h4>
@@ -34,7 +34,7 @@
 						<c:forEach items="${ list }" var="app">
 							<tr>
 								<td><input type="hidden" class="number" value="${ app.appNo }" />${ app.rownum }</td>
-								<td>${ app.appTitle }</td>
+								<td>${ app.appTitle }&nbsp;<c:if test="${app.opicnt != 0}">[<span style="color:#2c86dc;"><c:out value="${app.opicnt }"/></span>]</c:if></td>
 								<c:choose>
 									<c:when test="${ app.appKinds eq 3 }">
 										<td>휴가신청서</td>

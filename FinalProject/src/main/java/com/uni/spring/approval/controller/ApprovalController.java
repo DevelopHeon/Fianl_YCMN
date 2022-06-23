@@ -5,11 +5,14 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +28,7 @@ import com.uni.spring.approval.model.dto.Approval;
 import com.uni.spring.approval.model.dto.ApprovalErs;
 import com.uni.spring.approval.model.dto.ApprovalLeave;
 import com.uni.spring.approval.model.dto.ApprovalReport;
+import com.uni.spring.approval.model.dto.Opinion;
 import com.uni.spring.approval.model.dto.mapDto.ApprovalMap;
 import com.uni.spring.approval.model.serivce.ApprovalService;
 import com.uni.spring.common.CommException;
@@ -34,6 +38,7 @@ import com.uni.spring.common.dto.PageInfo;
 import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 
+import ch.qos.logback.classic.Logger;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -42,6 +47,7 @@ public class ApprovalController {
 	
 	// approvalService 사용 위해 생성자로 의존성 주입
 	private final ApprovalService approvalService;
+	private static final Logger log=(Logger) LoggerFactory.getLogger(ApprovalController.class);
 	
 	// 결재신청 양식목록 화면전환
 	@RequestMapping("approvalList.do")
@@ -239,11 +245,19 @@ public class ApprovalController {
 	public String selectApprovalInboxList(@RequestParam(value="currentPage", required=false, defaultValue="1")
 	int currentPage, int userNo, Model model) {
 		
+		// dto 생성하지 않고 map으로 받아서 화면에 전달
+		Map<String, Object> appStatusCnt = (HashMap<String, Object>)approvalService.appStatusCnt(userNo);
+		
+		log.info("맵으로 출력"+appStatusCnt.toString());
+		
 		int listCount = approvalService.selectApprovalInboxListCnt(userNo);
 		PageInfo pi = getPage(listCount, currentPage);
 		
 		ArrayList<Approval> list = approvalService.selectApprovalInboxList(pi, userNo); 
-		
+		for(Approval a : list) {
+			System.out.println(a.getOpicnt());
+		}
+		model.addAttribute("appCnt", appStatusCnt);
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
 		return "approval/approvalInboxListView";
@@ -277,7 +291,7 @@ public class ApprovalController {
 	@RequestMapping("selectBoxList.do")
 	public String selectBoxList(String appStatus, String appWriterNo, Model model) {
 		
-		System.out.println("종류 : " + appStatus + "사번 : " + appWriterNo);
+		log.info("종류 : " + appStatus + "사번 : " + appWriterNo);
 		
 		Approval approval = new Approval();
 		approval.setAppStatus(appStatus);
@@ -287,10 +301,6 @@ public class ApprovalController {
 		PageInfo pi = getPage(listCount, 1);
 		
 		ArrayList<Approval> list = approvalService.selectBoxList(approval, pi); 
-		
-		for(Approval a : list) {
-			System.out.println("게시글 : " + a);
-		}
 		
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
@@ -479,5 +489,32 @@ public class ApprovalController {
 		File deleteFile = new File(savePath + orgChangeName);
 		
 		deleteFile.delete();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="olistApp.do", produces="application/json; charset=utf-8")
+	public String selectOpinionList(int refNo) {
+		
+		ArrayList<Opinion> list = approvalService.selectOpinionList(refNo);
+		
+		log.info("댓글조회" + list.toString());
+		return new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create().toJson(list);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="oinsertApp.do")
+	public String insertOpinion(Opinion o) {
+		
+		int result = approvalService.insertOpinion(o);
+		
+		return String.valueOf(result);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="deleteOpinion.do")
+	public String deleteOpinion(int opinionNo) {
+		
+		int result = approvalService.deleteOpinion(opinionNo);
+		return String.valueOf(result);
 	}
 }

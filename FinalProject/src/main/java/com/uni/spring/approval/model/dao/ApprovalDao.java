@@ -1,6 +1,7 @@
 package com.uni.spring.approval.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -11,6 +12,7 @@ import com.uni.spring.approval.model.dto.Approval;
 import com.uni.spring.approval.model.dto.ApprovalErs;
 import com.uni.spring.approval.model.dto.ApprovalLeave;
 import com.uni.spring.approval.model.dto.ApprovalReport;
+import com.uni.spring.approval.model.dto.Opinion;
 import com.uni.spring.approval.model.dto.mapDto.ApprovalMap;
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.common.dto.PageInfo;
@@ -154,4 +156,21 @@ public class ApprovalDao {
 	public ArrayList<Department> selectDeptList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectDeptList");
 	}
+
+	public Map<String, Object> appStatusCnt(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("approvalMapper.appStatusCnt", userNo);
+	}
+
+	public ArrayList<Opinion> selectOpinionList(SqlSessionTemplate sqlSession, int refNo) {
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectOpinionList", refNo);
+	}
+
+	public int insertOpinion(SqlSessionTemplate sqlSession, Opinion o) {
+		return sqlSession.insert("approvalMapper.insertOpinion", o);
+	}
+
+	public int deleteOpinion(SqlSessionTemplate sqlSession, int opinionNo) {
+		return sqlSession.update("approvalMapper.deleteOpinion", opinionNo);
+	}
+
 }

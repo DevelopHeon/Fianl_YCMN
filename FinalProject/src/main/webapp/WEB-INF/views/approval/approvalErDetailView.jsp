@@ -254,6 +254,9 @@
 						<div class="modal fade" id="reject" style="height:60%;">
 							<jsp:include page="rejectModal.jsp"/>
 						</div>
+						<br><br>
+						<%-- 의견 작성란 jsp --%>
+						<jsp:include page="opinionTable.jsp"/>	
 						<script>
 						// 수정 화면 , 결재승인 스크립트
 					 		function postFormSubmit(num){

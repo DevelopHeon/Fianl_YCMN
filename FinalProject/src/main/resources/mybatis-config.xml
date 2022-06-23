@@ -22,6 +22,7 @@
 		<typeAlias type="com.uni.spring.mail.model.dto.Mail" alias="Mail"/>
 		<typeAlias type="com.uni.spring.mail.model.dto.ReceiveMail" alias="ReceiveMail"/>
 		<typeAlias type="com.uni.spring.employee.model.dto.JobPosition" alias="JobPosition"/>
+		<typeAlias type="com.uni.spring.approval.model.dto.Opinion" alias="Opinion"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="/mappers/employee-mapper.xml"/>

@@ -1,11 +1,13 @@
 package com.uni.spring.approval.model.serivce;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.uni.spring.approval.model.dto.Approval;
 import com.uni.spring.approval.model.dto.ApprovalErs;
 import com.uni.spring.approval.model.dto.ApprovalLeave;
 import com.uni.spring.approval.model.dto.ApprovalReport;
+import com.uni.spring.approval.model.dto.Opinion;
 import com.uni.spring.approval.model.dto.mapDto.ApprovalMap;
 import com.uni.spring.common.dto.Attachment;
 import com.uni.spring.common.dto.PageInfo;
@@ -57,5 +59,13 @@ public interface ApprovalService {
 	ArrayList<Approval> selectApprovalReturnList(PageInfo pi, int userNo);
 
 	ArrayList<Department> selectDeptList();
+
+	Map<String, Object> appStatusCnt(int userNo);
+
+	ArrayList<Opinion> selectOpinionList(int refNo);
+
+	int insertOpinion(Opinion o);
+
+	int deleteOpinion(int opinionNo);
 
 }

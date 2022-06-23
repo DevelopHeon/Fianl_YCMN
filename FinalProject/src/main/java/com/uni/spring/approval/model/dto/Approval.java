@@ -47,6 +47,8 @@ public class Approval {
 	private String status; // 상태 (Y: 기본값, N: 삭제후 값)
 	private int firstAppNo;
 	private int lastAppNo;
+	private int opicnt;
+	
 	private ApperAccount apperAccount; // dto 합쳐서 보내기위해 선언 (apper_account 테이블)
 	private ApprovalLeave approvalLeave; // dto 합쳐서 보내기위해 선언 (app_leave 테이블)
 	private ApprovalReport approvalReport; // dto 합쳐서 보내기 위해 선언 (app_report 테이블)
