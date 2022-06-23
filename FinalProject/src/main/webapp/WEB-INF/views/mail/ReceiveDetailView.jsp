@@ -41,18 +41,19 @@
                     	받은 메일 확인
                   </h4>
               </header>
-              <form id="trashMail" action="deleteRMail.do" method="post">
+              <form id="receiveDetail" action="" method="post">
               <div class="panel-body ">
                 <div class="mail-header row">
                   <div class="col-md-8">
                   <input type="text" name="receiveNo" value="${ rMail.receiveNo}" style="display:none">
                   	<span class="pull-left label label-warning">보낸 사람</span>
+                  	<span class="empNo pull-left" style="display:none">&nbsp;&nbsp;${ rMail.empNo}</span>
                  	<span class="pull-left">&nbsp;&nbsp;${ rMail.employee.empName}</span><br><br>
                     <h2 class="pull-left">${ rMail.mail.mailTitle}</h2>
                   </div>
                   <div class="col-md-4">
                     <div class="compose-btn pull-right">
-                      <a href="mail_compose.html" class="btn btn-sm btn-theme"><i class="fa fa-reply"></i> Reply</a>
+                      <a class="btn btn-sm btn-theme"><i class="fa fa-reply"></i> Reply</a>
                       <button class="btn btn-sm tooltips" data-original-title="Trash" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-trash-o"></i></button>
                     </div>
                   </div>
@@ -95,9 +96,9 @@
                 </div>
                 </c:if>
                 <div class="compose-btn pull-left">
-                  <a href="mail_compose.html" class="btn btn-sm btn-theme"><i class="fa fa-reply"></i> Reply</a>
+                  <button type="button" class="btn btn-sm btn-theme" onclick="receiveDetailMail(1);"><i class="fa fa-reply"></i> Reply</button>
                   <button type="button" onclick="location.href='receiveMail.do';" class="btn btn-sm "><i class="fa fa-arrow-right"></i> 목록으로</button>
-                  <button type="button" onclick="trashMail();" class="btn btn-sm tooltips"><i class="fa fa-trash-o"></i></button>
+                  <button type="button" class="btn btn-sm tooltips" onclick="receiveDetailMail(2);"><i class="fa fa-trash-o"></i></button>
                 </div>
               </div>
               </form>
@@ -110,12 +111,37 @@
     <!-- /MAIN CONTENT -->
     <!--main content end-->
     <script>
+    function receiveDetailMail(num){
+    	var receiveForm = $("#receiveDetail");
+    	
+    	if(num == 1){
+    		receiveForm.attr("action","writeReplyForm.do");
+    	}else{
+    		if(confirm("메일을 삭제 하시겠습니까?")){
+    			alert("삭제 되었습니다");
+    		}else{
+    			return false;
+    		}
+    		receiveForm.attr("action","deleteRMail.do");
+    	}
+    	receiveForm.submit();
+    	
+    }
 	function trashMail(){
 		
 		if(confirm("메일을 삭제 하시겠습니까?")){
 			alert("삭제 되었습니다");
 			$("#trashMail").submit();
 		}
+	}
+	
+	function writeReply(){
+		  
+		//var eno = ${ rMail.empNo};
+		//console.log(eno);
+		//window.location.href="writeMail.do?eno="+eno;
+		
+		
 	}
     </script>
     <!--footer start-->
