@@ -173,4 +173,23 @@ public class ApprovalDao {
 		return sqlSession.update("approvalMapper.deleteOpinion", opinionNo);
 	}
 
+	public int deleteAttachment(SqlSessionTemplate sqlSession, int appNo) {
+		return sqlSession.delete("approvalMapper.deleteAttachment", appNo);
+	}
+
+	public int deleteApproval(SqlSessionTemplate sqlSession, int appNo) {
+		return sqlSession.update("approvalMapper.deleteApproval", appNo);
+	}
+
+	public int selectInBoxListCnt(SqlSessionTemplate sqlSession, Approval approval) {
+		return sqlSession.selectOne("approvalMapper.selectInBoxListCnt", approval);
+	}
+
+	public ArrayList<Approval> selectInBoxList(SqlSessionTemplate sqlSession, Approval approval, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectInBoxList", approval, rowBounds);
+	}
+
 }

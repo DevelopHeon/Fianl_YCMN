@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="../main.jsp"/>
+	<jsp:include page="../common/menubar.jsp"/>
 	<!-- 결재양식 신청 목록 화면 -->
 		<section id="main-content">
 		<section class="wrapper">

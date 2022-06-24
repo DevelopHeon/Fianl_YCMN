@@ -22,7 +22,7 @@ p{
 </style>
 </head>
 <body>
-	<jsp:include page="../main.jsp"/>
+	<jsp:include page="../common/menubar.jsp"/>
 	<section id="main-content">
 			<section class="wrapper">
 				<div class="container" id="main-container">
@@ -32,7 +32,7 @@ p{
 						<div class="card">
 							<div class="card-body col-sm-3">
 								<h1>&nbsp;${ appCnt.APP_W } 건</h1>
-								<p>결재대기</p>
+								<a href="selectInboxList.do?appStatus=W&userNo=${ loginUser.empNo }"><p>결재대기</p></a>
 							</div>
 						</div>
 					</div>
@@ -40,7 +40,7 @@ p{
 						<div class="card">
 							<div class="card-body col-sm-3">
 								<h1>${ appCnt.APP_I } 건</h1>
-								<p>결재중</p>
+								<a href="selectInboxList.do?appStatus=I&userNo=${ loginUser.empNo }"><p>결재중</p></a>
 							</div>
 						</div>
 					</div>
@@ -48,7 +48,7 @@ p{
 						<div class="card">
 							<div class="card-body col-sm-3">
 								<h1>&nbsp;${ appCnt.APP_C } 건</h1>
-								<p>결재완료</p>
+								<a href="selectInboxList.do?appStatus=C&userNo=${ loginUser.empNo }"><p>결재완료</p></a>
 							</div>
 						</div>
 					</div>
@@ -58,13 +58,6 @@ p{
 					<c:if test="${ empty list }">
 						<h4>조회된 결재문서가 없습니다.</h4>
 					</c:if>
-					<select id="appStatusBox" onchange="changeKinds()" class="form-control" style="width:10%; float:right; margin-bottom:2%;">
-						<option>선택</option>
-						<option value="A">전체</option>
-						<option value="W">결재 대기</option>
-						<option value="I">결재중</option>
-						<option value="C">결재 완료</option>
-					</select>
 					<input type="hidden" id="userNo" value="${ loginUser.empNo }">
 					<table id="myAppList" class="table table-hover" style="text-align:center;">
 						<thead style="background:lightgray;">

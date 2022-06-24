@@ -275,4 +275,33 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return result;
 	}
 
+	@Override
+	public void deleteApproval(int appNo) {
+		int result = approvalDao.deleteApproval(sqlSession, appNo);
+		
+		if(result < 0) {
+			throw new CommException("결재문서 삭제 실패");
+		}
+	}
+
+	@Override
+	public void deleteAttachment(int appNo) {
+		
+		int result = approvalDao.deleteAttachment(sqlSession, appNo);
+		
+		if(result < 0) {
+			throw new CommException("첨부파일 삭제 실패");
+		}
+	}
+
+	@Override
+	public int selectInBoxListCnt(Approval approval) {
+		return approvalDao.selectInBoxListCnt(sqlSession, approval);
+	}
+
+	@Override
+	public ArrayList<Approval> selectInBoxList(Approval approval, PageInfo pi) {
+		return approvalDao.selectInBoxList(sqlSession, approval, pi);
+	}
+
 }
