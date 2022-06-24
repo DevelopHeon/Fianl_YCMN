@@ -58,10 +58,9 @@
 	 	margin: 80px 0 0 150px;
 	 	background-color : black;
  		color : #eee;
- 		display : none;
  	}
- 	.on{
- 		visibility: visible;
+ 	.off{
+ 	 	display : none;
  	}
 </style>
 </head>
@@ -217,10 +216,10 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
           	<c:if test="${ loginUser.empPfe eq null}">
-               	<p class="centered"><img src="resources/img/user.png" class="img-circle" width="80"></p>
+               	<p class="empImg centered"><img src="resources/img/user.png" class="img-circle" width="80"></p>
             </c:if>
             <c:if test="${ !empty loginUser.empPfe }">
-                <p class="centered"><img src="resources/empUpload_files/${loginUser.empPfe}" class="img-circle" width="80"></p>
+                <p class="empImg centered"><img src="resources/empUpload_files/${loginUser.empPfe}" class="img-circle" width="80"></p>
             </c:if>
 
           <h5 class="centered">${ sessionScope.loginUser.empName }</h5>
@@ -314,18 +313,18 @@
 	<div class="content">
 		<br>
 		<br>
-		<div class="innerOuter">
+		<div class="innerOuter off">
    	      <div id="empOnOff">
            	<label for="empOnOff">상태 </label><br>
-           	<input type="radio" name="empOnOff" value="O" checked><span class="badge bg-success"> </span>온라인&nbsp;
-           	<input type="radio" name="empOnOff" value="E"><span class="badge bg-primary"> </span>자리비움&nbsp;
-           	<input type="radio" name="empOnOff" value="F"><span class="badge"> </span>오프라인&nbsp;
+           	<input type="radio" name="empOnOff" value="O" onclick="changeOnOff(1);" <c:if test ="${loginUser.empOnOff eq 'O'}">checked</c:if>><span class="badge bg-success">온라인</span>&nbsp;
+           	<input type="radio" name="empOnOff" value="E" onclick="changeOnOff(2);" <c:if test ="${loginUser.empOnOff eq 'E'}">checked</c:if>><span class="badge bg-primary">자리비움</span>&nbsp;
+           	<input type="radio" name="empOnOff" value="F" onclick="changeOnOff(3);" <c:if test ="${loginUser.empOnOff eq 'F'}">checked</c:if>><span class="badge">오프라인</span>&nbsp;
            </div>
 		</div>
 		<br>
 		<br>
 	</div>
-
+	
   <div class="modal fade" id="workcheck" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
 
@@ -439,6 +438,44 @@
       console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
     }
     
+  /*******상태 표시*******/
+  $(function(){
+
+	  $(".empImg").click(function(){ //프로필을 클릭하면
+		  if($(".innerOuter").hasClass("off")){ //상태 라디오버튼이 조회됨
+			  $(".innerOuter").removeClass("off");
+		  }else{
+			  $(".innerOuter").addClass("off");
+		  }
+	  })
+  })
+  //상태 변경할때마다 값 받기
+   function changeOnOff(num){
+	  if(num == 1){
+		  $('input:radio[name="empOnOff"]:input[value="O"]').prop("checked", true);
+	  }else if(num == 2){
+		  $('input:radio[name="empOnOff"]:input[value="E"]').prop("checked", true);			  
+	  }else{
+		  $('input:radio[name="empOnOff"]:input[value="F"]').prop("checked", true);
+	  }
+	  
+	  var empOnOff = $("input:radio[name='empOnOff']:checked").val();
+	  console.log(empOnOff);
+	  
+	  	$.ajax({
+	  		type:"get",
+			url:"empOnOff.do",
+			data:{empOnOff:empOnOff},
+			success:function(result){
+				console.log(result);
+			},
+			error:function(e){
+			}
+	  	})
+	  }
+		 //다른페이지에서 바뀌어있음,,,
+		 
+  //로그인하면 O로 바뀌는 트리거?.. 로그인 하는 곳에서 O심기
   
   /*******출퇴근*******/
   //서버시간 출력

@@ -135,14 +135,6 @@
 		}
 	}
 	
-	function writeReply(){
-		  
-		//var eno = ${ rMail.empNo};
-		//console.log(eno);
-		//window.location.href="writeMail.do?eno="+eno;
-		
-		
-	}
     </script>
     <!--footer start-->
     <footer class="site-footer">

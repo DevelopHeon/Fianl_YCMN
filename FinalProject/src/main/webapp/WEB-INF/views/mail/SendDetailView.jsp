@@ -46,11 +46,7 @@
                   <div class="col-md-8">
                     <h4 class="pull-left">${ sMail.mail.mailTitle}</h4>
                   </div>
-                  <div class="col-md-4">
-                    <div class="compose-btn pull-right">
-                      <button class="btn btn-sm tooltips" data-original-title="Trash" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-trash-o"></i></button>
-                    </div>
-                  </div>
+                 
                 </div>
                 <!-- 발신자 기준 조회 가능한 목록 : 수신, 참조, 비밀참조자  -->
                 <div class="mail-sender">
@@ -99,7 +95,6 @@
                 </div>
                 </c:if>
                 <div class="compose-btn pull-left">
-                  <a href="mail_compose.html" class="btn btn-sm btn-theme"><i class="fa fa-reply"></i> Reply</a>
                   <button type="button" onclick="location.href='sendMail.do';" class="btn btn-sm "><i class="fa fa-arrow-right"></i> 목록으로</button>
                 </div>
               </div>

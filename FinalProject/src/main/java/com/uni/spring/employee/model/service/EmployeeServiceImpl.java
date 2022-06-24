@@ -228,6 +228,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public int selectListCount(int empNo) {
 		return employeeDao.selectListCount(sqlSession, empNo);
 	}
+	
+	//사원 상태(온라인,오프라인,자리비움)
+	@Override
+	public void updateEmpOnOff(Employee loginUser) {
+		int result = employeeDao.updateEmpOnOff(sqlSession, loginUser);
+		
+		if(result < 0) {
+			throw new CommException("사원 상태 변경 실패");		
+		}
+		
+	}
 
 
 

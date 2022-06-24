@@ -61,12 +61,14 @@ public class EmployeeController {
 	
 	// 회원가입
 	@RequestMapping("insertEmployee.do")
-	public String insertEmployee(@ModelAttribute Employee emp) throws Exception {
+	public String insertEmployee(@ModelAttribute Employee emp, HttpServletRequest request) throws Exception {
 		
 		String encPwd = bCryptPasswordEncoder.encode(emp.getEmpPwd());
 		System.out.println("비밀번호 : " + emp.getEmpPwd());
 		emp.setEmpPwd(encPwd);
 		employeeService.insertEmployee(emp);
+		request.getSession().setAttribute("msg", "가입이 완료되었습니다. 관리자 승인이 필요합니다.");
+		
 		return "redirect:/";
 	}
 	
@@ -336,6 +338,15 @@ public class EmployeeController {
 		return "employee/empTimeOff";
 	}
 	
+	//사원 상태(온라인,오프라인,자리비움)변경
+	@ResponseBody
+	@RequestMapping("empOnOff.do")
+	public String empOnOff(@RequestParam("empOnOff")String empOnOff, HttpSession session) {
+		Employee loginUser = (Employee)session.getAttribute("loginUser");
+		loginUser.setEmpOnOff(empOnOff);
+		
+		employeeService.updateEmpOnOff(loginUser);
+		return "redirect:main.do";
 
-	
+	}
 }

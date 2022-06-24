@@ -19,8 +19,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insertEmployee" parameterType="Employee">
 		INSERT ALL 
-		INTO EMPLOYEE(EMP_NO, EMP_NAME, EMP_ID, EMP_PWD, EMP_EMAIL, EMP_PHONE, CATEGORY, STATUS)
-   		VALUES(SEQ_EMP.NEXTVAL, #{empName}, #{empId}, #{empPwd}, #{empEmail}, #{empPhone}, DEFAULT, DEFAULT)
+		INTO EMPLOYEE(EMP_NO, EMP_NAME, EMP_ID, EMP_PWD, EMP_EMAIL, EMP_PHONE, CATEGORY, STATUS, EMP_ONOFF)
+   		VALUES(SEQ_EMP.NEXTVAL, #{empName}, #{empId}, #{empPwd}, #{empEmail}, #{empPhone}, DEFAULT, DEFAULT, 'O')
    		INTO PERSONNEL_CHART(EMP_NO, HIRE_DATE)
 		VALUES(SEQ_EMP.CURRVAL, SYSDATE)
         SELECT * FROM DUAL
@@ -183,4 +183,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*) FROM TIMEOFFCONTENT WHERE EMP_NO = #{empNo}
 	</select>
+	
+	<!-- 사원상태(온라인,오프라인,자리비움) -->
+	<update id="updateEmpOnOff" parameterType="Employee">
+	UPDATE EMPLOYEE
+	SET EMP_ONOFF = #{empOnOff}
+	WHERE EMP_NO = #{empNo}
+	</update>
 </mapper>
