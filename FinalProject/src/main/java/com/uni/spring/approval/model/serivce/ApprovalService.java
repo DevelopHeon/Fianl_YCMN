@@ -68,4 +68,12 @@ public interface ApprovalService {
 
 	int deleteOpinion(int opinionNo);
 
+	void deleteAttachment(int appNo);
+
+	void deleteApproval(int appNo);
+
+	int selectInBoxListCnt(Approval approval);
+
+	ArrayList<Approval> selectInBoxList(Approval approval, PageInfo pi);
+
 }

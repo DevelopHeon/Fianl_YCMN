@@ -90,7 +90,6 @@ public class ApprovalController {
 		
 		for(int i=0; i<approvalErs.getApprovalErs().size(); i++) {
 			appers.add(approvalErs.getApprovalErs().get(i));
-			System.out.println("지출증빙내역: " + appers.get(i).toString());
 		}
 		
 		// 첨부파일 테이블에 추가해주기 위해 객체 생성
@@ -171,7 +170,6 @@ public class ApprovalController {
 		// 확장자
 		String ext = originName.substring(originName.lastIndexOf("."));
 		String changeName = currentTime + ext;
-		System.out.println(changeName);
 		
 		// 첨부파일 객체 반환해줄거임 여기서 필요한것들 전부 set해준다.
 		at.setFilePath(savePath);
@@ -254,9 +252,7 @@ public class ApprovalController {
 		PageInfo pi = getPage(listCount, currentPage);
 		
 		ArrayList<Approval> list = approvalService.selectApprovalInboxList(pi, userNo); 
-		for(Approval a : list) {
-			System.out.println(a.getOpicnt());
-		}
+
 		model.addAttribute("appCnt", appStatusCnt);
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
@@ -269,7 +265,6 @@ public class ApprovalController {
 	int currentPage, int userNo, Model model) {
 		
 		int listCount = approvalService.selectApprovalReturnListCnt(userNo);
-		System.out.println("게시글수 : " + listCount);
 		PageInfo pi = getPage(listCount, currentPage);
 		
 		ArrayList<Approval> list = approvalService.selectApprovalReturnList(pi, userNo);
@@ -308,6 +303,23 @@ public class ApprovalController {
 		return "approval/approvalOutboxListView";
 	}
 	
+	@RequestMapping("selectInboxList.do")
+	public ModelAndView selectInboxList(String appStatus, int userNo, ModelAndView mv) {
+		
+		Approval approval = new Approval();
+		approval.setAppStatus(appStatus);
+		approval.setAppWriterNo(String.valueOf(userNo));
+		
+		int listCount = approvalService.selectInBoxListCnt(approval);
+		PageInfo pi = getPage(listCount, 1);
+		
+		ArrayList<Approval> list = approvalService.selectInBoxList(approval, pi);
+		Map<String, Object> appStatusCnt = (HashMap<String, Object>)approvalService.appStatusCnt(userNo);
+		
+		mv.addObject("list", list).addObject("appCnt", appStatusCnt).addObject("pi", pi).setViewName("approval/approvalInboxListView");
+		return mv;
+	}
+	
 	//전자결재 문서 상세 조회 페이지 전환
 	@RequestMapping("detailApproval.do")
 	public String selectApproval(int appNo, String appKinds, Model model) {
@@ -329,7 +341,6 @@ public class ApprovalController {
 		}else if(appKinds.equals("4")) {
 			viewName = "/approvalRpDetailView";
 		}
-//		System.out.println("조회내용" + appMap.getApprovalReport().toString());
 		model.addAttribute("appMap", appMap); 
 		
 		return "approval"+viewName;
@@ -357,7 +368,6 @@ public class ApprovalController {
 	@RequestMapping("insertRejecter.do")
 	public ModelAndView insertRejecter(Approval approval, ModelAndView mv) {
 		
-		System.out.println("확인 : " + approval.getFirstApprovalDate().length());
 		approvalService.insertRejecter(approval);
 		
 		mv.addObject("appNo", approval.getAppNo()).addObject("appKinds", approval.getAppKinds()).
@@ -384,7 +394,6 @@ public class ApprovalController {
 		}else if(appKinds.equals("4")) {
 			viewName = "/approvalRpUpdateForm";
 		}
-		System.out.println("조회내용" + appMap.getApproval().toString());
 		model.addAttribute("appMap", appMap); 
 		
 		return "approval"+viewName;
@@ -425,7 +434,6 @@ public class ApprovalController {
 			@RequestParam(name="reUploadFile", required=false) MultipartFile file) {
 		
 		approval.getApprovalLeave().setAppNo(approval.getAppNo());
-		System.out.println("휴가신청 : " + approval.getApprovalLeave().toString());
 		Attachment attachment = null;
 		if(!file.getOriginalFilename().equals("")) {
 			attachment = saveFile(file, request);
@@ -450,9 +458,6 @@ public class ApprovalController {
 	@RequestMapping("updateApprovalEr.do")
 	public ModelAndView updateApprovalEr(Approval approval, ApprovalErs approvalErs,
 			ModelAndView mv, HttpServletRequest request, @RequestParam(name="reUploadFile", required=false) MultipartFile file) {
-		
-		System.out.println("결재문서 : " + approval.toString());
-		System.out.println("은행내역 : " + approval.getApperAccount());
 		
 		ArrayList<ApprovalErs> appers = new ArrayList<>();
 		// 증빙 지출 내역 list에 참조 결재 번호 반복문으로 같은 값 담아준다.
@@ -516,5 +521,21 @@ public class ApprovalController {
 		
 		int result = approvalService.deleteOpinion(opinionNo);
 		return String.valueOf(result);
+	}
+	
+	// 전자결재 문서 삭제
+	@RequestMapping("deleteApproval.do")
+	public String deleteApproval(int appNo, int userNo, ModelAndView mv,
+			String fileName, HttpServletRequest request) {
+		
+		approvalService.deleteApproval(appNo);
+		// 첨부파일이 있는경우에만 첨부파일 삭제
+		if(fileName != null) {
+			approvalService.deleteAttachment(appNo);
+			deleteFile(fileName, request);
+		}
+		
+		return "redirect:listOutbox.do?userNo="+userNo;
+		
 	}
 }

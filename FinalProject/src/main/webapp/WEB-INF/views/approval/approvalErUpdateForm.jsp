@@ -26,7 +26,7 @@
 </style>
 </head>
 <body>
-	<jsp:include page="../main.jsp"/>
+	<jsp:include page="../common/menubar.jsp"/>
 	<!-- 지출결의서 작성 Form -->
 		<section id="main-content">
 			<section class="wrapper">
