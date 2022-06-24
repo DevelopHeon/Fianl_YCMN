@@ -25,7 +25,7 @@
 </style>
 </head>
 <body>
-	<jsp:include page="../main.jsp"/>
+	<jsp:include page="../common/menubar.jsp"/>
 	<!-- 휴가신청서 작성 Form -->
 		<section id="main-content">
 			<section class="wrapper">

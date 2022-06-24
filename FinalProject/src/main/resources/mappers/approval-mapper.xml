@@ -155,16 +155,38 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		<if test='appStatus.equals("I") or appStatus.equals("W") or appStatus.equals("C")'>
 			AND	A.APP_STATUS = #{appStatus}
 		</if>
+		<![CDATA[AND A.APP_STATUS <> 'R']]>
+	ORDER BY APP_NO DESC
+	</select>
+	<select id="selectInBoxListCnt" parameterType="Approval" resultType="_int">
+		SELECT COUNT(*)
+		FROM APPROVAL
+		WHERE STATUS = 'Y'
+		AND (FIRST_APPROVER = #{appWriterNo} OR LAST_APPROVER = #{appWriterNo})
+		AND	APP_STATUS = #{appStatus}
+	</select>
+	<select id="selectInBoxList" parameterType="Approval" resultType="Approval">
+		SELECT ROWNUM, A.APP_NO, B.EMP_NAME APP_WRITER_NO, A.APP_TITLE,
+		    A.APP_CREATE_DATE, A.REJECTER, A.REJECT_REASON,
+		    A.FIRST_APPROVER, A.LAST_APPROVER,
+		    SUBSTR(A.FIRST_APPROVAL_DATE, 1,8) FIRST_APPROVAL_DATE, SUBSTR(A.LAST_APPROVAL_DATE, 1,8) LAST_APPROVAL_DATE,
+		    A.APP_KINDS, A.APP_STATUS, (SELECT NVL(COUNT(*), 0) FROM OPINION WHERE OPINION.REF_NO = A.APP_NO AND OPINION.STATUS = 'Y') OPICNT
+		FROM APPROVAL A
+	    	JOIN EMPLOYEE B ON (A.APP_WRITER_NO = B.EMP_NO)
+		WHERE A.STATUS = 'Y'
+			AND (A.FIRST_APPROVER = #{appWriterNo} OR A.LAST_APPROVER = #{appWriterNo})
+			AND	A.APP_STATUS = #{appStatus}
+		<![CDATA[AND A.APP_STATUS <> 'R']]>
 	ORDER BY APP_NO DESC
 	</select>
 	<select id="appStatusCnt" parameterType="_int" resultType="java.util.Map">
 		SELECT DISTINCT
 		    (SELECT COUNT(*) FROM APPROVAL 
-		    WHERE APP_STATUS = 'W' AND (FIRST_APPROVER = #{userNo} OR LAST_APPROVER = #{userNo})) APP_W,
+		    WHERE APP_STATUS = 'W' AND STATUS = 'Y' AND (FIRST_APPROVER = #{userNo} OR LAST_APPROVER = #{userNo})) APP_W,
 		    (SELECT COUNT(*) FROM APPROVAL 
-		    WHERE APP_STATUS = 'I' AND (FIRST_APPROVER = #{userNo} OR LAST_APPROVER = #{userNo})) APP_I,
+		    WHERE APP_STATUS = 'I' AND STATUS = 'Y' AND (FIRST_APPROVER = #{userNo} OR LAST_APPROVER = #{userNo})) APP_I,
 		    (SELECT COUNT(*) FROM APPROVAL 
-		    WHERE APP_STATUS = 'C' AND (FIRST_APPROVER = #{userNo} OR LAST_APPROVER = #{userNo})) APP_C
+		    WHERE APP_STATUS = 'C' AND STATUS = 'Y' AND (FIRST_APPROVER = #{userNo} OR LAST_APPROVER = #{userNo})) APP_C
 		FROM APPROVAL
 	</select>
 	<select id="selectApprovalInboxListCnt" parameterType="_int" resultType="_int">
@@ -267,7 +289,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		   AND A.FIRST_APPROVER = F.FIRST_APPROVER
 		   AND A.LAST_APPROVER = G.LAST_APPROVER
 	</select>
-	<select id="selectAppAttachment" parameterType="_int" resultType="com.uni.spring.common.dto.Attachment">
+	<select id="selectAppAttachment" parameterType="_int" resultType="Attachment">
 		SELECT A.ORIGIN_NAME, A.CHANGE_NAME
 		FROM ATTACHMENT A
 		WHERE A.REF_NO = #{appNo}
@@ -340,7 +362,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		DELETE FROM APP_ER
 		WHERE APP_NO = #{appNo}
 	</delete>
-	<update id="updateAttachment" parameterType="com.uni.spring.common.dto.Attachment">
+	<update id="updateAttachment" parameterType="Attachment">
 		MERGE INTO
 			ATTACHMENT A
 		USING DUAL
@@ -375,5 +397,15 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		UPDATE OPINION
 		SET STATUS = 'N'
 		WHERE OPINION_NO = #{opinionNo}
+	</update>
+	<delete id="deleteAttachment" parameterType="_int">
+		DELETE FROM ATTACHMENT
+		WHERE REF_NO = #{appNo}
+		AND CATEGORY = 2
+	</delete>
+	<update id="deleteApproval" parameterType="_int">
+		UPDATE APPROVAL
+		SET STATUS = 'N'
+		WHERE APP_NO = #{appNo}
 	</update>
 </mapper>

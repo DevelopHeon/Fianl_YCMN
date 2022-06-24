@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="../main.jsp"/>
+	<jsp:include page="../common/menubar.jsp"/>
 	<section id="main-content">
 			<section class="wrapper">
 				<div class="container" id="main-container">

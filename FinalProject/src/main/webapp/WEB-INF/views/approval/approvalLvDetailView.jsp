@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="../main.jsp"/>
+	<jsp:include page="../common/menubar.jsp"/>
 	<section id="main-content">
 			<section class="wrapper">
 				<div class="container" id="main-container">
@@ -224,6 +224,7 @@
 							<input type="hidden" name="firstApprover" value="${appMap.approval.firstApprover}">
 							<input type="hidden" name="lastApprover" value="${ appMap.approval.lastApprover }">
 							<input id="approverConfirm" name="approverConfirm" type="hidden" value="${ loginUser.empName }">
+							<input type=hidden name="fileName" value="${appMap.attachment.changeName}" >
 						</form>
 						<div class="addFile" style="margin-top:2%;">
 							<b style="font-size:14px;">* 첨부파일</b><br><br>
@@ -265,7 +266,11 @@
 							if(num == 1){
 								postForm.attr("action", "updateFormApproval.do");
 							}else if(num ==2){
-								postForm.attr("action", "deleteBoard.do");
+								if(confirm("정말 삭제하시겠습니까?")){
+									postForm.attr("action", "deleteApproval.do?userNo=${loginUser.empNo}");
+								}else{
+									return false;
+								}
 							}else if(num == 3){
 								if(confirm("결재 승인 처리를 하시겠습니까?")){
 									postForm.attr("action", "approve.do");
