@@ -19,12 +19,20 @@
   <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
 <style>
- .img-circle {
- 	width:80px;
- 	float : left;
- 	margin-right : 30px;
- }
+	#main-content{
+		margin: 30px;
+	}
+	
+ 	.img-circle {
+ 		width:80px;
+ 		float : left;
+ 		margin-right : 30px;
+ 	}
 </style>
 </head>
 
@@ -37,7 +45,7 @@
     <section id="main-content">
       <section class="wrapper site-min-height">
         <div class="row mt">
-          <div class="col-xs-12">
+          <div class="col-md-12">
             <div class="row content-panel">
             <!-- /col-md-4 -->
             <!-- 프로필 사진 -->
@@ -54,26 +62,30 @@
 				<tr>
 					<td id="empNo" style="display:none">${ detailEmp.empNo }</td>
 					<td>${ detailEmp.empName }</td>
-					<td>${ detailEmp.empOnoff }</td>
+					<c:if test="${detailEmp.empOnOff eq 'O'}">
+               			<td><span class="badge bg-success">온라인</span></td>
+                	</c:if>
+                	<c:if test="${detailEmp.empOnOff eq 'E'}">
+               			<td><span class="badge bg-primary">자리비움</span></td>
+                	</c:if>
+                	<c:if test="${detailEmp.empOnOff eq 'F'}">
+               			<td><span class="badge">오프라인</span></td>
+                	</c:if>
 				</tr>
 				<tr>
 					<td>${ detailEmp.posName }</td>
-					<td>${ detailEmp.depName }</td>
-					
+					<td>${ detailEmp.depName }</td>	
 				</tr>
 				<tr>
 					<td>${ detailEmp.empPhone }</td>
 				</tr>
 				<tr>
 					<td>${ detailEmp.empLoc }</td>
-				</tr>		
-			   </table>
-              <!-- /col-md-4 -->
-              <table>
-              	<tr>
-					<td><button type="button" class="btn" onclick="writeMail();">메일쓰기</button></td>
 				</tr>
-              </table>
+				<tr>
+					<td><button type="button" class="btn btn-primary" onclick="writeMail();">메일쓰기</button></td>
+				</tr>
+			   </table>
               </div>
             </div> 
             <!-- /row -->
