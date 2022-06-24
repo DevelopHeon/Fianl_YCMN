@@ -186,8 +186,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 사원상태(온라인,오프라인,자리비움) -->
 	<update id="updateEmpOnOff" parameterType="Employee">
-	UPDATE EMPLOYEE
-	SET EMP_ONOFF = #{empOnOff}
-	WHERE EMP_NO = #{empNo}
+		UPDATE EMPLOYEE
+		SET EMP_ONOFF = #{empOnOff}
+		WHERE EMP_NO = #{empNo}
 	</update>
 </mapper>

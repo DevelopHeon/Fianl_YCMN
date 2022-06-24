@@ -20,7 +20,7 @@
   <link href="css/style-responsive.css" rel="stylesheet">
 
 <!-- SmartEditor2 라이브러리  --> 
-<script type="text/javascript" src="resources/smartEditor2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="resources/smartEditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 
 </head>
@@ -94,7 +94,7 @@ ${loginUser.empPhone}
                       </textarea>
                      </div> -->
 
-							<textarea name="mailContent" id="se"
+							<textarea name="mailContent" id="ir1"
 								style="width: 100%; height: 412px;">
 								
 								
@@ -143,7 +143,7 @@ ${loginUser.empPhone}</textarea>
 		var oEditors = [];
 		nhn.husky.EZCreator.createInIFrame({
 		    oAppRef: oEditors,
-		    elPlaceHolder: "se",  //textarea ID 입력
+		    elPlaceHolder: "ir1",  //textarea ID 입력
 		    sSkinURI: "resources/smartEditor2/SmartEditor2Skin.html", //martEditor2Skin.html 경로 입력
 					fCreator : "createSEditor2",
 					htParams : {
@@ -157,7 +157,7 @@ ${loginUser.empPhone}</textarea>
 				});
 		
 	$("#save").click(function() {
-		oEditors.getById["se"].exec("UPDATE_CONTENTS_FIELD", []);
+		oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
 		
 		if($("#subject").val() == ""){
 			alert("제목을 입력해주세요");
@@ -168,7 +168,7 @@ ${loginUser.empPhone}</textarea>
 			return false;
 		}
 		
-		var contentVal = $("#se").val();
+		var contentVal = $("#ir1").val();
 		console.log(contentVal);
 		contentVal = contentVal.replace(/<p>/gi,"");
 		contentVal = contentVal.replace(/<\/p>/gi,"<br>");

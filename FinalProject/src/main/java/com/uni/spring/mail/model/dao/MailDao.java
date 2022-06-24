@@ -98,6 +98,11 @@ public class MailDao {
 	public int realDelete(SqlSessionTemplate sqlSession, int receiveNo) {
 		return sqlSession.delete("mailMapper.realDelete", receiveNo);		
 	}
+	//부재메일..
+	public int insertReturnMail(SqlSessionTemplate sqlSession, Mail mail) {
+		return sqlSession.insert("mailMapper.insertReturnMail", mail);		
+		
+	}
 
 
 }
