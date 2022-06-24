@@ -85,6 +85,7 @@ public class MailController {
 		mailService.insertMail(mail, attachment);
 		
 		session.setAttribute("msg", "메일 작성 완료");
+		
 		return "mail/writeMail";
 	}
 	
@@ -213,6 +214,11 @@ public class MailController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		//보낸메일함 리스트(수신,참조,비참까지 다 보이게)
 		ArrayList<ReceiveMail> sendList = mailService.selectSendList(empNo, pi);
+//
+//		for(int i = 0; i < sendList.size(); i++) {
+//			sendList.get(i).getReceiver()
+//		}
+		
 		
 		model.addAttribute("sendList", sendList);
 		model.addAttribute("pi", pi);
