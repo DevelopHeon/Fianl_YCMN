@@ -176,8 +176,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE RECEIVE_NO = #{receiveNo} AND STAR_MAIL = 'Y'
 	</update>
 	
+	<!-- 휴지통 삭제 -->
 	<delete id="realDelete" parameterType="ReceiveMail">
 	DELETE FROM RECEIVEMAIL
 	WHERE RECEIVE_NO IN (#{receiveNo})
 	</delete>
+	
+	<!-- 부재메일 -->
+	<insert id="insertReturnMail" parameterType="Mail">
+		INSERT INTO MAIL VALUES(SEQ_MAIL.NEXTVAL, #{mailTo}, '부재중메일제목', #{empNo}, NULL, NULL, NULL, TO_CHAR(SYSDATE, 'MM/DD HH24:MI'), '부재중메일내용', DEFAULT, DEFAULT)
+	</insert>
 </mapper>
