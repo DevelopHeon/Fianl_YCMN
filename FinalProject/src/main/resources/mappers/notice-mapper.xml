@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="noticeMapper">
+	<select id="selectNoticeList" resultType="Notice">
+		SELECT ROWNUM, A.NOTICE_NO, A.NOTICE_TITLE, A.NOTICE_CONTENT,
+        		B.EMP_NAME NOTICE_WRITER, A.CREATE_DATE, A.COUNT, C.CHANGE_NAME
+		FROM NOTICE A
+		JOIN EMPLOYEE B ON (A.NOTICE_WRITER = B.EMP_NO)
+		LEFT OUTER JOIN ATTACHMENT C ON (A.NOTICE_NO = C.REF_NO)
+		ORDER BY CREATE_DATE
+	</select>
+</mapper>
