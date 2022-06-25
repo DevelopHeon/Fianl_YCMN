@@ -23,6 +23,7 @@
 		<typeAlias type="com.uni.spring.mail.model.dto.ReceiveMail" alias="ReceiveMail"/>
 		<typeAlias type="com.uni.spring.employee.model.dto.JobPosition" alias="JobPosition"/>
 		<typeAlias type="com.uni.spring.approval.model.dto.Opinion" alias="Opinion"/>
+		<typeAlias type="com.uni.spring.notice.model.dto.Notice" alias="Notice"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="/mappers/employee-mapper.xml"/>
@@ -30,5 +31,6 @@
 		<mapper resource="/mappers/schedule-mapper.xml"/>
 		<mapper resource="/mappers/manager-mapper.xml"/>
 		<mapper resource="/mappers/mail-mapper.xml"/>
+		<mapper resource="/mappers/notice-mapper.xml"/>
 	</mappers>
 </configuration>
