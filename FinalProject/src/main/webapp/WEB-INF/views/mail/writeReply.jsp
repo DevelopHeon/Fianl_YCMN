@@ -86,7 +86,7 @@ ${loginUser.empPhone}
                       </textarea>
                      </div> -->
 
-					<textarea name="mailContent" id="se" style="width: 100%; height: 412px;">
+					<textarea name="mailContent" id="ir1" style="width: 100%; height: 412px;">
 <br>
 -----Original Message-----<br>
 From: ${reply.employee.empName}<br>

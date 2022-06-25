@@ -86,6 +86,8 @@ public class MailController {
 		
 		session.setAttribute("msg", "메일 작성 완료");
 		
+		//다시 메일 보내기 (1.메일 받은 수신자가  부재중인 것을 확인  2.부재중일때 메일 발송)
+		
 		return "mail/writeMail";
 	}
 	
