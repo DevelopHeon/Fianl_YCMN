@@ -28,7 +28,7 @@
 </head>
 
 <body>
-<jsp:include page="../main.jsp" />
+<jsp:include page="../common/menubar.jsp"/>
 <section id="container">
   <!--main content start-->
   <section id="main-content">

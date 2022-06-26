@@ -1,28 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
-
 <head>
-<meta charset="utf-8">
-<title>직위/직무 관리</title>
+  <meta charset="utf-8">
+  <title>개발웍스 - 직위/부서 관리</title>
 
-<!-- Favicons -->
-<link href="img/favicon.png" rel="icon">
-<link href="img/apple-touch-icon.png" rel="apple-touch-icon">
-<!-- Bootstrap core CSS -->
-<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!--external css-->
-<link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
-<link href="lib/bootstrap-wysihtml5/bootstrap-wysihtml5.css" rel="stylesheet" />
-<!-- Custom styles for this template -->
-<link href="css/style.css" rel="stylesheet">
-<link href="css/style-responsive.css" rel="stylesheet">
-<!-- jquery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript"
-    src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
     table,
     tr>th {
@@ -33,71 +18,10 @@
         cursor: pointer;
     }
 </style>
-
-
-<script type="text/javascript">
-// 직위 정보 불러오기
-
-    /* $(function () {
-        $("#버튼아이디").click(function () {
-            var posNo = $("#값받아올버튼아이디").val();
-            $.ajax({
-                url: "selectPos.do",
-                data: { posNo: posNo },
-                type: "get",
-                dataType: "json",
-                success: function (obj) {
-                    console.log(obj);
-
-                    $("#번호넣어줄 응답박스1").val(obj.posNo); // 직위 번호
-                    $("#등급넣어줄 응답박스2").val(obj.posGrade); // 직위 등급
-                    $("#이름넣어줄 응답박스3").val(obj.posName); // 직위 이름
-                },
-                error: function () {
-                    console.log("ajax 통신 실패");
-                }
-            })
-        })
-    }) */
-
-
-    /* function updatePos(posNo) {
-        var check = $('#posNo');
-        if($(':radio[name="posNo"]:checked').length < 1){
-            alert('직위를 선택해주세요');                        
-            check.focus();
-            event.preventDefault();
-        }else{
-        $.ajax({
-            url:"selectPos.do",
-            type:"get",
-            data: {posNo:posNo},
-            dataType:"JSON",
-            success:function(json){
-                console.log(json)
-                
-                var html = "";
-                
-                html += "<label for="posGrade" class="mr-sm-2">직위 번호</label>";
-                html += "<input type="text" class="form-control mb-2 mr-sm-2" id="posNo" name="posNo" value="json.posGrade">";
-                html += "<label for="posGrade" class="mr-sm-2">등급</label>";
-                html += "<input type="number" class="form-control mb-2 mr-sm-2" placeholder="등급을 입력하세요." id="posGrade" name="posGrade" value="json.posGrade">";
-                html += "<label for="posName" class="mr-sm-2">직위 명</label>";
-                html += "<input type="text" class="form-control mb-2 mr-sm-2" placeholder="직위 명을 입력하세요." id="posName" name="posName" value="json.posGrade" >";
-                
-                $("#updatePosModal .modal-body").html(html);
-            },
-            error: function(request, status, error){
-                alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
-            }
-        });
-    }} */
-
-</script>
 </head>
 
 <body>
-<jsp:include page="../main.jsp" />
+<jsp:include page="../common/menubar.jsp"/>
 <!-- **********************************************************************************************************************************************************
 MAIN CONTENT
 *********************************************************************************************************************************************************** -->
@@ -344,18 +268,6 @@ MAIN CONTENT
 </section>
 <!-- /MAIN CONTENT -->
 <!--main content end-->
-
-
-<!-- js placed at the end of the document so the pages load faster -->
-<script src="lib/jquery/jquery.min.js"></script>
-<script src="lib/bootstrap/js/bootstrap.min.js"></script>
-<script class="include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
-<script src="lib/jquery.scrollTo.min.js"></script>
-<script src="lib/jquery.nicescroll.js" type="text/javascript"></script>
-<!--common script for all pages-->
-<script src="lib/common-scripts.js"></script>
-<!--script for this page-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </body>
 
 </html>
