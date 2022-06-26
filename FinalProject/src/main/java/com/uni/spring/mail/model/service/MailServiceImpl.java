@@ -34,6 +34,12 @@ public class MailServiceImpl implements MailService {
 			throw new CommException("메일 작성 실패");
 		}else {
 			System.out.println("메일 작성 성공");
+			//다시 메일 보내기 (1.메일 받은 수신자가  부재중인 것을 확인  2.부재중일때 메일 발송)
+			Mail offMail = mailDao.selectOffEmp(sqlSession, mail);
+			if(offMail != null) {
+				System.out.println("성공");
+				mailDao.insertOffMail(sqlSession, mail);
+			}
 		}
 		
 	}

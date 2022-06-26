@@ -98,9 +98,14 @@ public class MailDao {
 	public int realDelete(SqlSessionTemplate sqlSession, int receiveNo) {
 		return sqlSession.delete("mailMapper.realDelete", receiveNo);		
 	}
-	//부재메일..
-	public int insertReturnMail(SqlSessionTemplate sqlSession, Mail mail) {
-		return sqlSession.insert("mailMapper.insertReturnMail", mail);		
+
+	//메일 보낸 상대방이 오프라인 인지 확인
+	public Mail selectOffEmp(SqlSessionTemplate sqlSession, Mail mail) {
+		return sqlSession.selectOne("mailMapper.selectOffEmp", mail);
+	}
+	//오프라인 상태 사원 -> 발신자
+	public int insertOffMail(SqlSessionTemplate sqlSession, Mail mail) {
+		return sqlSession.insert("mailMapper.insertOffMail", mail);
 		
 	}
 

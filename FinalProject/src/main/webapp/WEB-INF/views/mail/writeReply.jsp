@@ -87,15 +87,17 @@ ${loginUser.empPhone}
                      </div> -->
 
 					<textarea name="mailContent" id="ir1" style="width: 100%; height: 412px;">
-<br>
------Original Message-----<br>
-From: ${reply.employee.empName}<br>
-To: ${reply.mail.mailTo}<br>
-Cc: ${reply.mail.mailRef}<br>
-Sent: ${reply.timestamp }<br>
-Subject: ${reply.mail.mailTitle }<br><br>
-${reply.mail.mailContent}<br><br>
-${loginUser.empName} / ${loginUser.posName} / ${loginUser.depName}<br>
+
+-----Original Message-----
+From: ${reply.employee.empName}
+To: ${reply.mail.mailTo}
+Cc: ${reply.mail.mailRef}
+Sent: ${reply.timestamp }
+Subject: ${reply.mail.mailTitle }
+
+${reply.mail.mailContent}
+
+${loginUser.empName} / ${loginUser.posName} / ${loginUser.depName}
 ${loginUser.empPhone}</textarea>
 
 

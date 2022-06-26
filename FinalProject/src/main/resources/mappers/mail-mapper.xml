@@ -14,6 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="MAIL_CONTENT" property="mailContent"/>
 		<result column="STATUS" property="status"/>
 		<result column="CATEGORY" property="category"/>
+		<collection property="Employee" resultMap="EmployeeMap"/>
 	</resultMap>
 		<resultMap type="Employee" id="EmployeeMap">
 		<id column="EMP_NO" property="empNo"/>
@@ -178,12 +179,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 휴지통 삭제 -->
 	<delete id="realDelete" parameterType="ReceiveMail">
-	DELETE FROM RECEIVEMAIL
-	WHERE RECEIVE_NO IN (#{receiveNo})
+		DELETE FROM RECEIVEMAIL
+		WHERE RECEIVE_NO IN (#{receiveNo})
 	</delete>
 	
+	<!-- 메일 보낸사람이 부재인지 확인 -->
+	<select id="selectOffEmp" resultMap="MailMap">
+		SELECT *
+		FROM
+			(SELECT B.*
+			FROM MAIL A
+			LEFT JOIN EMPLOYEE B ON B.EMP_NO = A.MAIL_TO
+			WHERE B.EMP_ONOFF = 'F' AND MAIL_TO = #{mailTo}
+			ORDER BY MAIL_NO DESC)
+		WHERE ROWNUM = 1
+	</select>
+	
 	<!-- 부재메일 -->
-	<insert id="insertReturnMail" parameterType="Mail">
-		INSERT INTO MAIL VALUES(SEQ_MAIL.NEXTVAL, #{mailTo}, '부재중메일제목', #{empNo}, NULL, NULL, NULL, TO_CHAR(SYSDATE, 'MM/DD HH24:MI'), '부재중메일내용', DEFAULT, DEFAULT)
+	<insert id="insertOffMail" parameterType="Mail">
+		INSERT INTO MAIL VALUES(SEQ_MAIL.NEXTVAL, #{mailTo}, '부재중 입니다.', #{empNo}, NULL, NULL, NULL, TO_CHAR(SYSDATE, 'MM/DD HH24:MI'), '현재 부재중 입니다. 긴급한 사항은 연락 부탁드립니다.', DEFAULT, DEFAULT)
 	</insert>
 </mapper>
