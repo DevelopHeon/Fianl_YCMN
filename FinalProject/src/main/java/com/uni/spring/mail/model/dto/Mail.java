@@ -2,6 +2,8 @@ package com.uni.spring.mail.model.dto;
 
 import java.sql.Date;
 
+import com.uni.spring.employee.model.dto.Employee;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,5 +28,5 @@ public class Mail {
 	private String mailContent; //메일내용
 	private String status; //메일상태(Y,N:삭제)
 	private String category; //분류번호
-
+	private Employee Employee;
 }

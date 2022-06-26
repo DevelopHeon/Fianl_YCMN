@@ -85,9 +85,7 @@ public class MailController {
 		mailService.insertMail(mail, attachment);
 		
 		session.setAttribute("msg", "메일 작성 완료");
-		
-		//다시 메일 보내기 (1.메일 받은 수신자가  부재중인 것을 확인  2.부재중일때 메일 발송)
-		
+
 		return "mail/writeMail";
 	}
 	
@@ -239,7 +237,7 @@ public class MailController {
 		int empNo = loginUser.getEmpNo();
 		//받은메일함 페이징처리
 		int listCount = mailService.selectReceiveListCount(empNo);
-		int boardLimit = 5;
+		int boardLimit = 10;
 		int pageLimit = 10;
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		//받은메일함 리스트
@@ -358,8 +356,9 @@ public class MailController {
 	//받은메일 답장
 	@RequestMapping("writeReplyForm.do")
 	public ModelAndView writeReplyForm(int receiveNo, ModelAndView mv) {
+		ReceiveMail receiveMail = mailService.selectReceiveMail(receiveNo);
 
-		mv.addObject("reply", mailService.selectReceiveMail(receiveNo)).setViewName("mail/writeReply");
+		mv.addObject("reply", receiveMail).setViewName("mail/writeReply");
 
 		return mv;
 	}
