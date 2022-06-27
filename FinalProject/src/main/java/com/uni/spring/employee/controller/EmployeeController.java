@@ -45,12 +45,8 @@ public class EmployeeController {
 	
 	@RequestMapping("main.do")
 	public String main(HttpSession session, Model model) {
-		Employee loginUser = (Employee)session.getAttribute("loginUser");
-		int empNo = loginUser.getEmpNo();
-		//메일함에 새로운메일이 카운팅
-		int unread = mailService.selectUnreadMail(empNo);
-		
-		model.addAttribute("unread", unread);
+
+
 		return "main";
 	}
 	
@@ -74,14 +70,19 @@ public class EmployeeController {
 	
 	//로그인
 	@RequestMapping("login.do")
-	public String loginEmployee(Employee emp, Model model) {
+	public String loginEmployee(Employee emp, HttpSession session, Model model) {
 		Employee loginUser = employeeService.loginEmployee(bCryptPasswordEncoder, emp);
 		int empNo = loginUser.getEmpNo();
-		//메일함에 새로운메일이 카운팅
-		int unread = mailService.selectUnreadMail(empNo);
-		
-		model.addAttribute("unread", unread);
 		model.addAttribute("loginUser", loginUser);
+		
+		//메일함에 새로운 메일이 카운팅(세션)
+		int unread = mailService.selectUnreadMail(empNo);
+		session.setAttribute("unread", unread);
+		
+		//프사 변경 
+		Employee empInfo = employeeService.selectEmpMypage(empNo);
+		session.setAttribute("empInfo", empInfo);
+		
 		return "main";
 	}
 	
@@ -101,19 +102,28 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping("myPage.do")
-	public String myPage(Model model, @ModelAttribute("loginUser")Employee emp) {
+	public String myPage(Model model, HttpSession session, @ModelAttribute("loginUser")Employee emp) {
 		int empNo = emp.getEmpNo();
-		
+		//프사 변경
 		Employee empInfo = employeeService.selectEmpMypage(empNo);
-		model.addAttribute("empInfo", empInfo);
+		session.setAttribute("empInfo", empInfo);
 		return "employee/myPage";
 	}
 	
 	//수정하기(사원정보)
 	@RequestMapping("updateEmp.do")
-	public String updateEmp(@ModelAttribute Employee emp, Model model) throws Exception {
+	public String updateEmp(@ModelAttribute Employee emp,
+							HttpServletRequest request,
+							
+							Model model) throws Exception {
 		Employee empInfo = employeeService.updateEmp(emp);
 		model.addAttribute("loginUser",empInfo);
+		
+		//프사 변경 
+//		Employee empInfo1 = employeeService.selectEmpMypage(emp.getEmpNo());
+//		request.getSession().setAttribute("empInfo", empInfo1);
+		
+		request.getSession().setAttribute("msg", "사원 정보 수정 완료");
 		return "employee/myPage";
 	}
 	
@@ -252,8 +262,7 @@ public class EmployeeController {
 		attachment.setEmpNo(empNo);
 		
 		employeeService.updateImg(attachment);
-		System.out.println(attachment.getOriginName());
-		request.getSession().setAttribute("msg", "변경 완. 재로그인 바람");
+
 		return attachment.getOriginName();
 	}
 	
@@ -272,11 +281,10 @@ public class EmployeeController {
 		employeeService.deleteImg(empNo);
 		
 		int empNo1 = emp.getEmpNo();
+		//프사 변경 
 		Employee empInfo = employeeService.selectEmpMypage(empNo1);
-		
-		model.addAttribute("empInfo", empInfo);
-
-		return "redirect:myPage.do";
+		request.getSession().setAttribute("empInfo", empInfo);
+		return  "employee/myPage";
 	}
 	
 	//첨부파일(프로필) 저장
