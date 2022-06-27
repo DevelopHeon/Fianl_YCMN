@@ -31,7 +31,7 @@
 </head>
 
 <body>
-	<jsp:include page="../main.jsp"/>
+	<jsp:include page="../common/menubar.jsp"/>	
 	
     <!-- **********************************************************************************************************************************************************
         MAIN CONTENT
@@ -49,15 +49,20 @@
               <div class="col-md-4 profile-text mt mb centered right-divider">
               <h4>프로필 사진</h4>
                 <div class="profile-pic">
-                <c:if test="${ empty loginUser.empPfe}">
-               		<p><img src="resources/img/user.png" class="img-circle"></p>
-                </c:if>
-                 <c:if test="${ !empty loginUser.empPfe }">
+                <c:choose>
+                <c:when test="${ !empty loginUser.empPfe }">
                 	<p><img src="resources/empUpload_files/${loginUser.empPfe}" id="empImg" class="img-circle"></p>
-                </c:if>
+                </c:when>
+                 <c:when test="${ !empty empInfo.empPfe }">
+                	<p><img src="resources/empUpload_files/${empInfo.empPfe}" id="empImg" class="img-circle"></p>
+                </c:when>
+                <c:when test="${ empty empInfo.empPfe}">
+               		<p><img src="resources/img/user.png" class="img-circle"></p>
+                </c:when>
+                </c:choose>
                   <p>
                   	<input type="file" name="file" accept="image/gif, image/jpeg, image/png" style="display:none">                 	
-                  	<input type="text" name="empNo" value= "${loginUser.empNo}" style="display:none">
+                  	<input type="text" name="empNo" value= "${empInfo.empNo}" style="display:none">
                     <button type="button" onclick="onclick=document.all.file.click()" class="btn btn-theme"><i class="fa fa-check"></i>사진등록</button>
                     <button type="submit" id="updateBtn" class="btn btn-theme"><i class="fa fa-check"></i>저장하기</button>
                     <button type="button" onclick="changeESTJ();" id="deleteBtn" class="btn btn-theme02">삭제하기</button>

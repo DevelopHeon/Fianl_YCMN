@@ -190,4 +190,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET EMP_ONOFF = #{empOnOff}
 		WHERE EMP_NO = #{empNo}
 	</update>
+	
+	<!-- 사원 마이페이지 -->
+	<select id="selectEmpMypage" parameterType="Employee" resultType="Employee">
+		SELECT * FROM EMPLOYEE WHERE EMP_NO = #{empNo}
+	</select>
 </mapper>
