@@ -49,20 +49,16 @@
               <div class="col-md-4 profile-text mt mb centered right-divider">
               <h4>프로필 사진</h4>
                 <div class="profile-pic">
-                <c:choose>
-                <c:when test="${ !empty loginUser.empPfe }">
-                	<p><img src="resources/empUpload_files/${loginUser.empPfe}" id="empImg" class="img-circle"></p>
-                </c:when>
-                 <c:when test="${ !empty empInfo.empPfe }">
+                 <c:if test="${ !empty empInfo.empPfe }">
                 	<p><img src="resources/empUpload_files/${empInfo.empPfe}" id="empImg" class="img-circle"></p>
-                </c:when>
-                <c:when test="${ empty empInfo.empPfe}">
+                </c:if>
+                <c:if test="${ empty empInfo.empPfe}">
                		<p><img src="resources/img/user.png" class="img-circle"></p>
-                </c:when>
-                </c:choose>
+                </c:if>
+
                   <p>
                   	<input type="file" name="file" accept="image/gif, image/jpeg, image/png" style="display:none">                 	
-                  	<input type="text" name="empNo" value= "${empInfo.empNo}" style="display:none">
+                  	<input type="text" name="empNo" value= "${loginUser.empNo}" style="display:none">
                     <button type="button" onclick="onclick=document.all.file.click()" class="btn btn-theme"><i class="fa fa-check"></i>사진등록</button>
                     <button type="submit" id="updateBtn" class="btn btn-theme"><i class="fa fa-check"></i>저장하기</button>
                     <button type="button" onclick="changeESTJ();" id="deleteBtn" class="btn btn-theme02">삭제하기</button>
@@ -90,10 +86,8 @@
        				cache:false,
        				success:function(result){
        					console.log(result);
-       					alert("하");
-   						$("#empImg").empty();
-   						$("#empImg").attr("src", "resources/empUpload_files/"+result);
-   						document.location.href = document.location.href;
+       					alert("프로필 사진이 변경되었습니다.");
+
        				},
        				error:function(e){
        					console.log(e);
@@ -142,7 +136,8 @@
  				cache:false,
  				success:function(result){
  					console.log(result);
- 					alert("호");
+ 					alert("프로필 사진이 삭제되었습니다.");
+ 					document.location.reload();
  				},
  				error:function(e){
  					console.log(e);

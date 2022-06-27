@@ -249,6 +249,9 @@ public class MailController {
 		model.addAttribute("receiveList", receiveList);
 		model.addAttribute("pi", pi);
 		model.addAttribute("total", total);
+		int unread = mailService.selectUnreadMail(empNo);
+		
+		model.addAttribute("unread", unread);
 		
 		return "mail/receiveMail";
 	}

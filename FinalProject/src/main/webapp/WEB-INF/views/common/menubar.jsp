@@ -215,12 +215,13 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          	<c:if test="${ loginUser.empPfe eq null}">
+          	<c:if test="${ empInfo.empPfe eq null}">
                	<p class="empImg centered"><img src="resources/img/user.png" class="img-circle" width="80"></p>
             </c:if>
-            <c:if test="${ !empty loginUser.empPfe }">
-                <p class="empImg centered"><img src="resources/empUpload_files/${loginUser.empPfe}" class="img-circle" width="80"></p>
+            <c:if test="${ !empty empInfo.empPfe }">
+                <p class="empImg centered"><img src="resources/empUpload_files/${empInfo.empPfe}" class="img-circle" width="80"></p>
             </c:if>
+            
 
           <h5 class="centered">${ sessionScope.loginUser.empName }</h5>
           <button type="button" class="workCheck btn btn-primary" data-toggle="modal" data-target="#workcheck" onclick="checkTime(); todayCheck();" >출퇴근 확인</button>
@@ -253,8 +254,7 @@
             <a href="views/javascript:;">
               <i class="fa fa-envelope"></i>
               <span>메일</span>&nbsp;&nbsp;&nbsp;&nbsp;
-              	  <c:set var ="u" value="${unread }" scope="session"/>
-	              <c:if test="${u ne 0 }" >
+	              <c:if test="${unread ne 0 }" >
 	              <span class="badge bg-success">${unread}</span>
 	              </c:if>
               </a>
