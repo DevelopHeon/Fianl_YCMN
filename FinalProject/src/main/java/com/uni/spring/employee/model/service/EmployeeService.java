@@ -56,4 +56,6 @@ public interface EmployeeService {
 
 	void updateEmpOnOff(Employee loginUser);
 
+	Employee selectEmpMypage(int empNo);
+
 }

@@ -195,7 +195,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ROWNUM = 1
 	</select>
 	
-	<!-- 부재메일 -->
+	<!-- 부재메일 발송 -->
 	<insert id="insertOffMail" parameterType="Mail">
 		INSERT INTO MAIL VALUES(SEQ_MAIL.NEXTVAL, #{mailTo}, '부재중 입니다.', #{empNo}, NULL, NULL, NULL, TO_CHAR(SYSDATE, 'MM/DD HH24:MI'), '현재 부재중 입니다. 긴급한 사항은 연락 부탁드립니다.', DEFAULT, DEFAULT)
 	</insert>

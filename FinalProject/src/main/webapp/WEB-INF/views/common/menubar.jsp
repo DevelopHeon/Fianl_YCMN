@@ -253,7 +253,8 @@
             <a href="views/javascript:;">
               <i class="fa fa-envelope"></i>
               <span>메일</span>&nbsp;&nbsp;&nbsp;&nbsp;
-	              <c:if test="${unread ne 0 }">
+              	  <c:set var ="u" value="${unread }" scope="session"/>
+	              <c:if test="${u ne 0 }" >
 	              <span class="badge bg-success">${unread}</span>
 	              </c:if>
               </a>

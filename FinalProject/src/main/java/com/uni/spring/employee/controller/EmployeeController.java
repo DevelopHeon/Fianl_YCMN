@@ -101,7 +101,11 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping("myPage.do")
-	public String myPage() {
+	public String myPage(Model model, @ModelAttribute("loginUser")Employee emp) {
+		int empNo = emp.getEmpNo();
+		
+		Employee empInfo = employeeService.selectEmpMypage(empNo);
+		model.addAttribute("empInfo", empInfo);
 		return "employee/myPage";
 	}
 	
@@ -256,7 +260,9 @@ public class EmployeeController {
 	//프로필삭제(기본이미지user.jpg로 변경)
 	@ResponseBody
 	@RequestMapping("deleteImg.do")
-	public String deleteImg(HttpServletRequest request,
+	public String deleteImg(@ModelAttribute("loginUser")Employee emp,
+							Model model,
+							HttpServletRequest request,
 							@RequestParam("empNo")String empNo,
 							@RequestParam(name="file", required=false) MultipartFile file) {
 
@@ -264,9 +270,13 @@ public class EmployeeController {
 		deleteFile(file.getOriginalFilename(), request);
 		
 		employeeService.deleteImg(empNo);
+		
+		int empNo1 = emp.getEmpNo();
+		Employee empInfo = employeeService.selectEmpMypage(empNo1);
+		
+		model.addAttribute("empInfo", empInfo);
 
-		request.getSession().setAttribute("msg", "변경 완. 재로그인 바람");
-		return "employee/myPage";
+		return "redirect:myPage.do";
 	}
 	
 	//첨부파일(프로필) 저장

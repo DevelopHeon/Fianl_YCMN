@@ -130,7 +130,10 @@ public class EmployeeDao {
 	//사원 상태(온라인, 오프라인, 자리비움)
 	public int updateEmpOnOff(SqlSessionTemplate sqlSession, Employee loginUser) {
 		return sqlSession.update("employeeMapper.updateEmpOnOff", loginUser);
-
+	}
+	//사원 마이페이지
+	public Employee selectEmpMypage(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("employeeMapper.selectEmpMypage", empNo);
 	}
 
 
