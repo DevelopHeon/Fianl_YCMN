@@ -45,13 +45,8 @@ public class EmployeeController {
 	
 	@RequestMapping("main.do")
 	public String main(HttpSession session, Model model) {
-		Employee loginUser = (Employee)session.getAttribute("loginUser");
-		int empNo = loginUser.getEmpNo();
 
-		//프사변경
-		Employee empInfo = employeeService.selectEmpMypage(empNo);		
-		model.addAttribute("empInfo", empInfo);
-		
+
 		return "main";
 	}
 	
@@ -86,7 +81,7 @@ public class EmployeeController {
 		
 		//프사 변경 
 		Employee empInfo = employeeService.selectEmpMypage(empNo);
-		model.addAttribute("empInfo", empInfo);
+		session.setAttribute("empInfo", empInfo);
 		
 		return "main";
 	}
@@ -107,11 +102,11 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping("myPage.do")
-	public String myPage(Model model, @ModelAttribute("loginUser")Employee emp) {
+	public String myPage(Model model, HttpSession session, @ModelAttribute("loginUser")Employee emp) {
 		int empNo = emp.getEmpNo();
-		
+		//프사 변경
 		Employee empInfo = employeeService.selectEmpMypage(empNo);
-		model.addAttribute("empInfo", empInfo);
+		session.setAttribute("empInfo", empInfo);
 		return "employee/myPage";
 	}
 	
@@ -119,13 +114,14 @@ public class EmployeeController {
 	@RequestMapping("updateEmp.do")
 	public String updateEmp(@ModelAttribute Employee emp,
 							HttpServletRequest request,
+							
 							Model model) throws Exception {
 		Employee empInfo = employeeService.updateEmp(emp);
 		model.addAttribute("loginUser",empInfo);
 		
 		//프사 변경 
-		Employee empInfo1 = employeeService.selectEmpMypage(emp.getEmpNo());
-		model.addAttribute("empInfo", empInfo1);
+//		Employee empInfo1 = employeeService.selectEmpMypage(emp.getEmpNo());
+//		request.getSession().setAttribute("empInfo", empInfo1);
 		
 		request.getSession().setAttribute("msg", "사원 정보 수정 완료");
 		return "employee/myPage";
@@ -287,7 +283,7 @@ public class EmployeeController {
 		int empNo1 = emp.getEmpNo();
 		//프사 변경 
 		Employee empInfo = employeeService.selectEmpMypage(empNo1);
-		model.addAttribute("empInfo", empInfo);
+		request.getSession().setAttribute("empInfo", empInfo);
 		return  "employee/myPage";
 	}
 	
