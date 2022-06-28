@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"//mybatis.org/DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="anonymBoardMapper">
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ANONYM_BOARD
+		WHERE STATUS = 'Y'
+	</select>
+	<select id="selectList" resultType="AnonymBoard">
+		SELECT  ROW_NUMBER() OVER(ORDER BY A.CREATE_DATE DESC) AS ROW_NUM, A.*,
+		(SELECT NVL(COUNT(*), 0) 
+		    FROM ANONYM_REPLY  
+		    WHERE ANONYM_REPLY.REF_NO = A.ANO_NO 
+		    AND ANONYM_REPLY.STATUS = 'Y') REPLY_CNT
+		FROM ANONYM_BOARD A
+		WHERE A.STATUS = 'Y'
+	</select>
+	<insert id="insertAnonymBoard" parameterType="AnonymBoard">
+		INSERT INTO ANONYM_BOARD
+		VALUES(SEQ_BNO.NEXTVAL, #{anoWriter}, #{anoTitle}, #{anoContent}, DEFAULT,
+				DEFAULT, DEFAULT, DEFAULT)
+	</insert>
+	<update id="increaseCount" parameterType="_int">
+		UPDATE ANONYM_BOARD
+		SET COUNT = COUNT + 1
+		WHERE ANO_NO = #{anoNo}
+		AND STATUS = 'Y'
+	</update>
+	<select id="selectAnonymBoard" parameterType="_int" resultType="AnonymBoard">
+		SELECT *
+		FROM ANONYM_BOARD
+		WHERE STATUS = 'Y'
+		AND ANO_NO = #{anoNo}
+	</select>
+	<select id="selectReplyList" parameterType="_int" resultType="com.uni.spring.anonym.model.dto.AnonymReply">
+		SELECT *
+		FROM ANONYM_REPLY
+		WHERE STATUS = 'Y'
+		AND REF_NO = #{anoNo}
+		ORDER BY CREATE_DATE
+	</select>
+	<insert id="insertAnoReply" parameterType="com.uni.spring.anonym.model.dto.AnonymReply">
+		INSERT INTO ANONYM_REPLY
+		VALUES(SEQ_RENO.NEXTVAL, #{refNo}, #{replyWriter}, #{replyContent}, SYSDATE, DEFAULT)
+	</insert>
+	<delete id="deleteAnoReply" parameterType="_int">
+		DELETE FROM ANONYM_REPLY
+		WHERE REPLY_NO = #{replyNo}
+	</delete>
+</mapper>
