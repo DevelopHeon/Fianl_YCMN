@@ -277,7 +277,7 @@
               <span>게시판</span>
               </a>
             <ul class="sub">
-              <li><a href="#">공지사항</a></li>
+              <li><a href="listNotice.do">공지사항</a></li>
               <li><a href="#">익명게시판</a></li>
             </ul>
           </li>
