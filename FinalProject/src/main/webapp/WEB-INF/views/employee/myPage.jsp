@@ -189,14 +189,56 @@
           <!-- /col-lg-12 -->
           <div class="col-lg-12 mt">
             <div class="row content-panel">
-              
+              <h3>인사 정보</h3>
+               <table class="table">
+				<tr>
+					<th>입사일 : </th>
+					<td>${empPer.hireDate }</td>
+					<th>생년월일 : </th>
+					<td>${empPer.birthDate }</td>
+					<th>성별 : </th>
+					<td>${empPer.gender }</td>
+					<th>채용구분 : </th>
+					<td>${empPer.hireCategory }</td>
+				</tr>
+				<tr>
+					<th>급여 : </th>
+					<td>${empPer.sarary }</td>
+					<th>결혼 : </th>
+						<c:choose>
+						<c:when test="${empPer.marryStatus eq 'Y'}">
+					<td>기혼</td>
+						</c:when>
+						<c:otherwise>
+					<td>미혼</td>
+						</c:otherwise>
+						</c:choose>
+					<th>병역 : </th>
+						<c:choose>
+						<c:when test="${empPer.gender eq 'F' && empPer.miliStatus eq 'N'}">
+					<td>면제 (여성)</td>
+						</c:when>
+						<c:when test="${empPer.miliStatus eq 'Y'}">
+					<td>병장 만기전역</td>
+						</c:when>
+						<c:otherwise>
+					<td>사유 : </td>
+						</c:otherwise>
+						</c:choose>
+					<th>인사 : </th>
+						<c:if test="${ empty empPer.personnelEval}">
+					<td>신입</td>
+						</c:if>
+					<td>${empPer.personnelEval }</td>
+				</tr>
+			   </table>
               </div>
               <!-- /panel-body -->
             </div>
             <!-- /col-lg-12 -->
           </div>
           <!-- /row -->
-        </div>
+        
         <!-- /container -->
       </section>
       <!-- /wrapper -->

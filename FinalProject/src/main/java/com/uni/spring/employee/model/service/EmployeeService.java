@@ -11,6 +11,7 @@ import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.TimeOff;
 import com.uni.spring.employee.model.dto.TimeOffContent;
 import com.uni.spring.employee.model.dto.WorkingDay;
+import com.uni.spring.hr.model.dto.Hr;
 
 public interface EmployeeService {
 
@@ -57,5 +58,7 @@ public interface EmployeeService {
 	void updateEmpOnOff(Employee loginUser);
 
 	Employee selectEmpMypage(int empNo);
+
+	Hr selectEmpPersonnel(int empNo);
 
 }
