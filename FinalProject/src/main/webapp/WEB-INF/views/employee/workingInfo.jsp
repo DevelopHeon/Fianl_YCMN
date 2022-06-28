@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.uni.spring.employee.model.dto.WorkingDay"%>
+    pageEncoding="UTF-8" import="com.uni.spring.employee.model.dto.WorkingDay, java.util.ArrayList"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-
 <%
-
 	Date currentTime = new Date();
-	SimpleDateFormat format = new SimpleDateFormat("MM/dd");
-	
+	SimpleDateFormat format = new SimpleDateFormat("M");
+	String thisMonth = String.valueOf(currentTime.getMonth()+1);
+	String prevM = String.valueOf(currentTime.getMonth());
+	ArrayList<WorkingDay> workInfo = (ArrayList)session.getAttribute("workInfo");
+
 %>
 
 <!DOCTYPE html>
@@ -65,8 +66,13 @@ function checkMonth() {
           <div class="col-lg-12">
             <div class="row content-panel">
             <!-- /col-md-4 -->
-             <div><h2 class="month"></h2></div>
-             <table>
+             <div>
+             <!-- <a id="prev"><i class="fa fa-chevron-left centered" style="font-size:25px"></i></a> -->
+             <h2 id="thisM" class="centered"><%=format.format(currentTime) %>월</h2>
+             <!-- <a id="next"><i class="fa fa-chevron-right centered" style="font-size:25px"></i></a>  -->
+             
+             </div>
+             <!-- <table>
              	<tr>
              	  <td width="300"><label class="month"></label> 누적 근무</td>
              	  <td width="300"><label class="month"></label> 잔여 근무</td>
@@ -77,7 +83,7 @@ function checkMonth() {
              	  <td width="300"></td>
              	  <td width="300"></td>
              	</tr>
-             </table>
+             </table> -->
              
             </div> 
             <!-- /row -->
@@ -114,6 +120,7 @@ function checkMonth() {
            	
               <!-- /panel-body -->
               <div class="panel-body">
+              <%if(format.format(currentTime).equals(prevM) || format.format(currentTime).equals(thisMonth) ) {%>
                 <div class="tab-content">
                 
                   <div id="1week" class="tab-pane">
@@ -304,6 +311,7 @@ function checkMonth() {
                   	</div>
             </div>
             <!-- /col-lg-12 -->
+            <% } %>
           </div>
           <!-- /row -->
           </div>
@@ -315,6 +323,25 @@ function checkMonth() {
     <!-- /MAIN CONTENT -->
     <!--main content end-->
     <!--footer start-->
+    <script>
+    	$(function(){
+    		var thisM = document.getElementById("thisM").innerHTML;
+    		var currentDate = new Date();   		
+    		var prevM = (currentDate.getMonth()) +"월"
+    		var nextM = currentDate.getMonth()+2 + "월"
+    		
+    		$("#prev").click(function(){
+    			console.log(thisM);
+    			$("#thisM").html(prevM);
+    		})
+    		
+    		$("#next").click(function(){
+    			console.log(thisM);
+    			$("#thisM").html(nextM);
+    		})
+    		
+    	})
+    </script>
     <footer class="site-footer">
       <div class="text-center">
         <p>
