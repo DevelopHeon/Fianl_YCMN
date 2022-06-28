@@ -26,6 +26,7 @@
 						<input type="hidden" name="fileName" value="${ notice.changeName }">
 					</form>
 					<br>
+					<small>조회수 : <c:out value="${ notice.count }" /></small>
 					<hr style="opacity:0.4;">
 					<c:if test="${ !empty notice.originName }">
 						<b>첨부파일 : <a href="${ pageContext.servletContext.contextPath }/resources/noticeUpload_files/${notice.changeName}" download="${ notice.originName }">${ notice.originName }</a></b>
