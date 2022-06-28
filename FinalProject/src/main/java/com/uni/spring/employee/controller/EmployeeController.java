@@ -141,7 +141,8 @@ public class EmployeeController {
 		ArrayList<WorkingDay> working = employeeService.selectWorkingInfo(empNo);
 		
 		model.addAttribute("working", working);
-
+		session.setAttribute("workInfo", working);
+		
 		return "employee/workingInfo";
 	}
 	
@@ -338,7 +339,7 @@ public class EmployeeController {
 		
 		//페이징 처리
 		int listCount = employeeService.selectListCount(empNo);
-		int listLimit = 5;
+		int listLimit = 10;
 		int pageLimit = 10;
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, listLimit);
 		

@@ -262,6 +262,7 @@
               <li><a href="writeMail.do">메일 작성</a></li>
               <li><a href="receiveMail.do">받은 메일함</a></li>
               <li><a href="sendMail.do">보낸 메일함</a></li>
+              <li><a href="leaveOffice.do">부재중 메일</a></li>
               <li><a href="deleteMail.do">휴지통</a></li>
             </ul>
           </li>
