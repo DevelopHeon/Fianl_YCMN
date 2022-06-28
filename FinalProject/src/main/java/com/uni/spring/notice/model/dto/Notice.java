@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 public class Notice {
 
-	private int rownum;
+	private int rowNum;
 	private int noticeNo;
 	private String noticeWriter;
 	private String noticeTitle;
@@ -24,5 +24,6 @@ public class Notice {
 	private int category;
 	private int count;
 	private String status;
+	private String originName;
 	private String changeName;
 }

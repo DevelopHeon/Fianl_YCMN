@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,6 @@
 <!-- SmartEditor2 라이브러리  --> 
 <script type="text/javascript" src="resources/smartEditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-
 </head>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>
@@ -24,27 +24,30 @@
 		<section class="wrapper">
 			<div class="row mt">
 				<div class="col-sm-11">
-					<h2>공지사항 작성하기</h2>
-					<form id="enrollNotice" method="post" action="insertNotice.do" enctype="multipart/form-data">
+					<h2>공지사항 수정하기</h2>
+					<form id="updateNotice" method="post" action="updateNotice.do" enctype="multipart/form-data">
 						<br><br>
 						<div id="titleDiv" class="form-group form-inline">
 							<label for="title" class="col-sm-1" style="font-size:2rem">제목</label>
-							<input type="text" id="title" class="form-control col-sm-10" name="noticeTitle" style="width:80%;" required>
+							<input type="text" id="title" class="form-control col-sm-10" name="noticeTitle" style="width:80%;" value="${ notice.noticeTitle }" required>
 							<div class="file_input_div col-sm-1">
 								<button type="button" class="file_input_img_btn btn btn-info">파일첨부</button>
-								<input type="file" name="uploadFile" class="file_input_hidden"
+								<input type="file" name="reUploadFile" class="file_input_hidden"
 								onchange="javascript: document.getElementById('fileName').value = this.value">
+								<input type="hidden" name="changeName" value="${ notice.changeName }">
+								<input type="hidden" name="originName" value="${ notice.originName }">
 							</div>
 						</div>
-						<input type="text" id="fileName" class="file_input_textbox" placeholder="첨부파일명" readonly>
+						<input type="text" id="fileName" class="file_input_textbox" placeholder="첨부파일명" value="${ notice.originName }" readonly>
 						<div id="contentDiv" class="form-group" style="margin-top:3%;">
-							<textarea id="content" name="noticeContent" style="width:100%; height:500px;"></textarea>
+							<textarea id="content" name="noticeContent" style="width:100%; height:500px;">${ notice.noticeContent }</textarea>
 						</div>
 						<div id="inputHidden">
-							<input type="hidden" name="noticeWriter" value="${ loginUser.empNo }"> 
+							<input type="hidden" name="noticeWriter" value="${ loginUser.empNo }">
+							<input type="hidden" name="noticeNo" value="${ notice.noticeNo }" >
 						</div>
 						<div align="center">
-		                    <button id="save" class="btn btn-primary btn-lg">등록하기</button>&nbsp;&nbsp;&nbsp;
+		                    <button id="update" class="btn btn-primary btn-lg">수정하기</button>&nbsp;&nbsp;&nbsp;
 		                    <button type="button" onclick="javascript:history.go(-1);" class="btn btn-danger btn-lg">취소하기</button>
 		                </div>
 					</form>
@@ -70,7 +73,7 @@
 					}
 				});
 		
-	$("#save").click(function() {
+	$("#update").click(function() {
 		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 		
 		if($("#title").val() == ""){
@@ -88,7 +91,7 @@
 		}
 		
 		
-		$("#insertNotice.do").submit();
+		$("#updateNotice.do").submit();
 	});
 </script>
 </html>
