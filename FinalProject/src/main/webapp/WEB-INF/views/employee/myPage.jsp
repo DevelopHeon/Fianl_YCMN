@@ -31,7 +31,7 @@
 </head>
 
 <body>
-	<jsp:include page="../main.jsp"/>
+	<jsp:include page="../common/menubar.jsp"/>	
 	
     <!-- **********************************************************************************************************************************************************
         MAIN CONTENT
@@ -49,12 +49,13 @@
               <div class="col-md-4 profile-text mt mb centered right-divider">
               <h4>프로필 사진</h4>
                 <div class="profile-pic">
-                <c:if test="${ empty loginUser.empPfe}">
+                 <c:if test="${ !empty empInfo.empPfe }">
+                	<p><img src="resources/empUpload_files/${empInfo.empPfe}" id="empImg" class="img-circle"></p>
+                </c:if>
+                <c:if test="${ empty empInfo.empPfe}">
                		<p><img src="resources/img/user.png" class="img-circle"></p>
                 </c:if>
-                 <c:if test="${ !empty loginUser.empPfe }">
-                	<p><img src="resources/empUpload_files/${loginUser.empPfe}" id="empImg" class="img-circle"></p>
-                </c:if>
+
                   <p>
                   	<input type="file" name="file" accept="image/gif, image/jpeg, image/png" style="display:none">                 	
                   	<input type="text" name="empNo" value= "${loginUser.empNo}" style="display:none">
@@ -85,10 +86,8 @@
        				cache:false,
        				success:function(result){
        					console.log(result);
-       					alert("하");
-   						$("#empImg").empty();
-   						$("#empImg").attr("src", "resources/empUpload_files/"+result);
-   						document.location.href = document.location.href;
+       					alert("프로필 사진이 변경되었습니다.");
+
        				},
        				error:function(e){
        					console.log(e);
@@ -137,7 +136,8 @@
  				cache:false,
  				success:function(result){
  					console.log(result);
- 					alert("호");
+ 					alert("프로필 사진이 삭제되었습니다.");
+ 					document.location.reload();
  				},
  				error:function(e){
  					console.log(e);

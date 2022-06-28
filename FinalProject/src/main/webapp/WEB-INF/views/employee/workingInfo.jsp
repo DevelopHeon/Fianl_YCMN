@@ -39,7 +39,7 @@
 </head>
 
 <body onload="checkMonth()">
-	<jsp:include page="../main.jsp"/>
+	<jsp:include page="../common/menubar.jsp"/>	
 <script>
 function checkMonth() {
 	var currentDate = new Date();

@@ -243,18 +243,15 @@ public class MailController {
 		//받은메일함 리스트
 		ArrayList<ReceiveMail> receiveList = mailService.selectReceiveList(empNo, pi);
 		
-		//안읽은메일 수, 전체메일 수
-		int unread = mailService.selectUnreadMail(empNo);
+		//전체 메일수
 		int total = mailService.selectTotalMail(empNo);
 	
 		model.addAttribute("receiveList", receiveList);
 		model.addAttribute("pi", pi);
-
-//		ModelAndView mv = new ModelAndView();
-//		mv.addObject("unread",unread).setViewName("main");
-//		
-		model.addAttribute("unread", unread);
 		model.addAttribute("total", total);
+		int unread = mailService.selectUnreadMail(empNo);
+		
+		model.addAttribute("unread", unread);
 		
 		return "mail/receiveMail";
 	}

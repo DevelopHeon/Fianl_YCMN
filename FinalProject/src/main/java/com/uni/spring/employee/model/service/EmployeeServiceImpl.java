@@ -239,10 +239,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		
 	}
-
-
-
-
+	//사원 마이페이지
+	@Override
+	public Employee selectEmpMypage(int empNo) {
+		return employeeDao.selectEmpMypage(sqlSession, empNo);
+	}
 
 }
 

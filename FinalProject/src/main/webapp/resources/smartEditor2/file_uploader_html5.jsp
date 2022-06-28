@@ -3,9 +3,6 @@
 <%@page import="java.io.*"%>
 <%@page import="java.util.UUID"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="com.uni.common.Attachment, com.uni.common.MyFileRenamePolicy,
- com.oreilly.servlet.MultipartRequest, org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload
- , com.uni.qna.model.service.QnaService, com.uni.qna.model.dto.Qna"%>
 <!DOCTYPE html>
 <html>
 <head>
