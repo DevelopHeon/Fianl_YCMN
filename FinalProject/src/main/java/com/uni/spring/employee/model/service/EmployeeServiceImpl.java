@@ -14,6 +14,7 @@ import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.TimeOff;
 import com.uni.spring.employee.model.dto.TimeOffContent;
 import com.uni.spring.employee.model.dto.WorkingDay;
+import com.uni.spring.hr.model.dto.Hr;
 
 import lombok.RequiredArgsConstructor;
 
@@ -243,6 +244,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Employee selectEmpMypage(int empNo) {
 		return employeeDao.selectEmpMypage(sqlSession, empNo);
+	}
+	//사원 인사정보
+	@Override
+	public Hr selectEmpPersonnel(int empNo) {
+		return employeeDao.selectEmpPersonnel(sqlSession, empNo);
 	}
 
 }

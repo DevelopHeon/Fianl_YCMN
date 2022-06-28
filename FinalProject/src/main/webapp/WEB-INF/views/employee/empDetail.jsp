@@ -79,13 +79,13 @@
 				<tr>
 					<td>${ detailEmp.empPhone }</td>
 				</tr>
+				<c:if test="${!empty detailEmp.empLoc}">
 				<tr>
 					<td>${ detailEmp.empLoc }</td>
 				</tr>
-				<tr>
-					<td><button type="button" class="btn btn-primary" onclick="writeMail();">메일쓰기</button></td>
-				</tr>
+				</c:if>
 			   </table>
+			   <button type="button" class="btn btn-primary" onclick="writeMail();">메일쓰기</button>
               </div>
             </div> 
             <!-- /row -->

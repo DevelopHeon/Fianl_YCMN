@@ -209,7 +209,7 @@ public class MailController {
 		int empNo = loginUser.getEmpNo();
 		//보낸메일함 페이징처리
 		int listCount = mailService.selectSendListCount(empNo);
-		int boardLimit = 5;
+		int boardLimit = 10;
 		int pageLimit = 10;
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		//보낸메일함 리스트(수신,참조,비참까지 다 보이게)

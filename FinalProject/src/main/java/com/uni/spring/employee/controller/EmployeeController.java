@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.Pagination;
@@ -30,6 +29,8 @@ import com.uni.spring.employee.model.dto.TimeOff;
 import com.uni.spring.employee.model.dto.TimeOffContent;
 import com.uni.spring.employee.model.dto.WorkingDay;
 import com.uni.spring.employee.model.service.EmployeeService;
+import com.uni.spring.hr.model.dto.Hr;
+import com.uni.spring.hr.model.service.HrService;
 import com.uni.spring.mail.model.service.MailService;
 
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,7 @@ public class EmployeeController {
 	
 	private final EmployeeService employeeService;
 	private final MailService mailService;
+	private final HrService hrService;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@RequestMapping("main.do")
@@ -109,6 +111,10 @@ public class EmployeeController {
 		//프사 변경
 		Employee empInfo = employeeService.selectEmpMypage(empNo);
 		session.setAttribute("empInfo", empInfo);
+		
+		//인사정보
+		Hr empPersonnel = employeeService.selectEmpPersonnel(empNo);
+		model.addAttribute("empPer", empPersonnel);
 		return "employee/myPage";
 	}
 	
@@ -143,7 +149,8 @@ public class EmployeeController {
 		ArrayList<WorkingDay> working = employeeService.selectWorkingInfo(empNo);
 		
 		model.addAttribute("working", working);
-
+		session.setAttribute("workInfo", working);
+		
 		return "employee/workingInfo";
 	}
 	
@@ -340,7 +347,7 @@ public class EmployeeController {
 		
 		//페이징 처리
 		int listCount = employeeService.selectListCount(empNo);
-		int listLimit = 5;
+		int listLimit = 10;
 		int pageLimit = 10;
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, listLimit);
 		
