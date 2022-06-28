@@ -88,7 +88,7 @@
 		}
 		
 		
-		$("#insertNotice.do").submit();
+		$("#enrollNotice").submit();
 	});
 </script>
 </html>

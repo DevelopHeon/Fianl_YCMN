@@ -279,7 +279,7 @@
               </a>
             <ul class="sub">
               <li><a href="listNotice.do">공지사항</a></li>
-              <li><a href="#">익명게시판</a></li>
+              <li><a href="anoBoardList.do">익명게시판</a></li>
             </ul>
           </li>
           <li class="sub-menu">

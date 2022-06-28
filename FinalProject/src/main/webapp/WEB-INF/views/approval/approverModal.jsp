@@ -93,10 +93,16 @@ function searchEmpList(){
 			}else{
 				$.each(list, function(i, obj){
 					value += "<tr><td><input type='radio' name='chk_approver' class='chk_approver' value="+ obj.empName +"><input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'></td>"
-						   + "<td>"+obj.empName+"</td>"
-						   + "<td>"+obj.posName+"</td>"
-						   + "<td>"+obj.depName+"</td>"
-						   + "<td>"+obj.empNo+"</td></tr>"
+						   + "<td>"+obj.empName+"</td>";
+						   
+						   if(obj.posName == "undefined" || obj.posName == null){
+							   value += "<td>미정</td>"
+							   		  + "<td>미정</td>";
+						   }else{
+							   value += "<td>"+obj.posName+"</td>"
+							   		 + "<td>"+obj.depName+"</td>"
+						   }
+						   value += "<td>"+obj.empNo+"</td></tr>"
 				});
 			}
 			$("#searchEmp").val('');
@@ -122,9 +128,15 @@ function selectDeptEmp(depNo){
 			$.each(list, function(i, obj){
 				deptEmp += "<tr><td><input type='radio' name='chk_approver' class='chk_approver' value="+ obj.empName +"><input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'></td>"
 					   + "<td>"+obj.empName+"</td>"
-					   + "<td>"+obj.posName+"</td>"
-					   + "<td>"+obj.depName+"</td>"
-					   + "<td>"+obj.empNo+"</td></tr>"
+					   
+					   if(obj.posName == "undefined" || obj.posName == null){
+						   deptEmp += "<td>미정</td>"
+						   		  + "<td>미정</td>";
+					   }else{
+						   deptEmp += "<td>"+obj.posName+"</td>"
+						   		 + "<td>"+obj.depName+"</td>"
+					   }
+					   deptEmp += "<td>"+obj.empNo+"</td></tr>"
 			});
 			
 			$("#empList").html(deptEmp);
@@ -162,9 +174,14 @@ function selectDeptEmp(depNo){
 					$.each(list, function(i, obj){
 						value += "<tr><td><input type='radio' name='chk_approver' class='chk_approver' value="+ obj.empName +"><input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'></td>"
 							   + "<td>"+obj.empName+"</td>"
-							   + "<td>"+obj.posName+"</td>"
-							   + "<td>"+obj.depName+"</td>"
-							   + "<td>"+obj.empNo+"</td></tr>"
+							   if(obj.posName == "undefined" || obj.posName == null){
+								   value += "<td>미정</td>"
+								   		  + "<td>미정</td>";
+							   }else{
+								   value += "<td>"+obj.posName+"</td>"
+								   		 + "<td>"+obj.depName+"</td>"
+							   }
+							   value += "<td>"+obj.empNo+"</td></tr>"
 					});
 					
 					// 1,2에 따라서 결재자 추가 버튼 생성

@@ -13,11 +13,12 @@
 	<section id="main-content">
 			<section class="wrapper">
 			<h2 style="margin-left:45%; margin-bottom:7%;"><b>공지사항</b></h2>
-<%-- 			<c:if test='${ empty list }'>
+ 			<c:if test='${ empty list }'>
 				<h4>조회된 공지사항이 없습니다.</h4>
-			</c:if> --%>
-			<!-- 테스트 다 하고 나면 직급이나 관리자만 보이게 변경 -->
-			<a class="btn btn-primary" style="float:right;" href="enrollFormNotice.do">글쓰기</a>
+			</c:if>
+			<c:if test='${ loginUser.depName.equals("총무") }'>
+				<a class="btn btn-primary" style="float:right;" href="enrollFormNotice.do">글쓰기</a>
+			</c:if>
 			<div class="noticeList">
 				<table class="table table-hover" id="noticeList" style="text-align:center;">
 				  <thead>

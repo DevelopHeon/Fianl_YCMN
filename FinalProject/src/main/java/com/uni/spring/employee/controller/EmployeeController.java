@@ -61,6 +61,7 @@ public class EmployeeController {
 		
 		String encPwd = bCryptPasswordEncoder.encode(emp.getEmpPwd());
 		System.out.println("비밀번호 : " + emp.getEmpPwd());
+		
 		emp.setEmpPwd(encPwd);
 		employeeService.insertEmployee(emp);
 		request.getSession().setAttribute("msg", "가입이 완료되었습니다. 관리자 승인이 필요합니다.");
@@ -72,6 +73,7 @@ public class EmployeeController {
 	@RequestMapping("login.do")
 	public String loginEmployee(Employee emp, HttpSession session, Model model) {
 		Employee loginUser = employeeService.loginEmployee(bCryptPasswordEncoder, emp);
+		
 		int empNo = loginUser.getEmpNo();
 		model.addAttribute("loginUser", loginUser);
 		
