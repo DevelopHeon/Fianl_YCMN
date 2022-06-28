@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="CATEGORY" property="category"/>
 		<collection property="Employee" resultMap="EmployeeMap"/>
 	</resultMap>
-		<resultMap type="Employee" id="EmployeeMap">
+	<resultMap type="Employee" id="EmployeeMap">
 		<id column="EMP_NO" property="empNo"/>
 		<result column="EMP_NAME" property="empName"/>
 	</resultMap>

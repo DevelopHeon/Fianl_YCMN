@@ -17,7 +17,7 @@ public class Hr {
 	private Date birthDate;
 	private String gender;
 	private String hireCategory;
-	private int sarary;
+	private String sarary;
 	private String marryStatus;
 	private String miliStatus;
 	private String personnelEval;

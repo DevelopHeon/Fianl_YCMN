@@ -195,4 +195,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectEmpMypage" parameterType="Employee" resultType="Employee">
 		SELECT * FROM EMPLOYEE WHERE EMP_NO = #{empNo}
 	</select>
+	
+	<!-- 사원 인사정보 -->
+	<select id="selectEmpPersonnel" parameterType="Hr" resultType="Hr" >
+		SELECT 
+		    A.HIRE_DATE,
+		    A.BIRTH_DATE,
+		    A.GENDER,
+		    A.HIRE_CATEGORY,
+		    TO_CHAR(A.SARARY, 'L99,999,999') SARARY,
+		    A.MARRY_STATUS,
+		    A.MILI_STATUS,
+		    A.PERSONNEL_EVAL
+		FROM PERSONNEL_CHART A
+		WHERE A.EMP_NO = #{empNo}
+	</select>
 </mapper>

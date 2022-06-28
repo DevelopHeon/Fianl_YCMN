@@ -12,6 +12,7 @@ import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.TimeOff;
 import com.uni.spring.employee.model.dto.TimeOffContent;
 import com.uni.spring.employee.model.dto.WorkingDay;
+import com.uni.spring.hr.model.dto.Hr;
 
 @Repository
 public class EmployeeDao {
@@ -134,6 +135,11 @@ public class EmployeeDao {
 	//사원 마이페이지
 	public Employee selectEmpMypage(SqlSessionTemplate sqlSession, int empNo) {
 		return sqlSession.selectOne("employeeMapper.selectEmpMypage", empNo);
+	}
+	//사원 인사정보
+	public Hr selectEmpPersonnel(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("employeeMapper.selectEmpPersonnel", empNo);
+
 	}
 
 
