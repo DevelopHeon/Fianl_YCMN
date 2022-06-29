@@ -55,11 +55,12 @@
                          	<p class="empImg centered"><img src="resources/empUpload_files/${empInfo.empPfe}" class="img-circle" width="80"></p>
                      	</c:if>
                      	<h3 class="centered">${ sessionScope.loginUser.empName }</h3>
+                     <!-- TABLE로 변경하기 -->
                      <span class="centered"><button type="button" class="btn btn-round btn-default">결재 작성</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-round btn-default">메일 작성</button></span>
                      <br>
                      <span class="centered"><button type="button" class="btn btn-round btn-default">주소록</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-round btn-default">회의 예약</button></span>
                		</div>
-               		
+               		<!-- WORKINGINFO -->
                		<div>
                		<h3>6월 근무 시간</h3>
                		<table class="table centered">
