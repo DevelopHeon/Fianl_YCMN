@@ -27,6 +27,7 @@
 		<typeAlias type="com.uni.spring.reservation.model.dto.Reservation" alias="Reservation"/>
 		<typeAlias type="com.uni.spring.reservation.model.dto.Resources" alias="Resources"/>
 		<typeAlias type="com.uni.spring.anonym.model.dto.AnonymBoard" alias="AnonymBoard"/>
+		<typeAlias type="com.uni.spring.communication.model.dto.Communication" alias="Communication"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="/mappers/employee-mapper.xml"/>
@@ -37,5 +38,6 @@
 		<mapper resource="/mappers/notice-mapper.xml"/>
 		<mapper resource="/mappers/anonymBoard-mapper.xml"/>
 		<mapper resource="/mappers/reserve-mapper.xml"/>
+		<mapper resource="/mappers/communication-mapper.xml"/>
 	</mappers>
 </configuration>

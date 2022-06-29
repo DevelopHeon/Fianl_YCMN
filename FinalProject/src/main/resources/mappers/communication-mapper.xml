@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="communicationMapper">
+	<select id="selectCommList" parameterType="_int" resultType="Communication">
+		SELECT A.COMM_NO, A.DEP_NO, B.EMP_NAME COMM_WRITER,
+		    A.COMM_CONTENT, A.CREATE_DATE, B.EMP_PFE
+		FROM COMMUNICATION A
+		JOIN EMPLOYEE B ON (A.COMM_WRITER = B.EMP_NO)
+		WHERE A.DEP_NO = #{depNo}
+		ORDER BY A.CREATE_DATE DESC
+	</select>
+	<insert id="insertComm" parameterType="Communication">
+		INSERT INTO COMMUNICATION
+		(COMM_NO, DEP_NO, GRPI, COMM_WRITER, COMM_CONTENT, CREATE_DATE)
+		VALUES(SEQ_COMM.NEXTVAL, #{depNo}, DEFAULT, #{commWriter}, #{commContent}, DEFAULT)
+	</insert>
+</mapper>
