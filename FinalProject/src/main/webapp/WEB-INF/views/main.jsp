@@ -28,19 +28,153 @@
   <link href="resources/css/style.css" rel="stylesheet">
   <link href="resources/css/style-responsive.css" rel="stylesheet">
   <script src="resources/lib/chart-master/Chart.js"></script>
+  <!-- 캘린더 -->
+  <script src="lib/zabuto_calendar.js"></script>
+  	<!-- CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<!-- 테마 -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+	<!-- 자바스크립트 -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <style>
 
 </style>
 
 </head>
-<body>
+<body onload="checkMonth();">
 <jsp:include page="common/menubar.jsp"/>
 	<section id="main-content">
 		<section class="wrapper" style="margin-top:10px;">
 			<div class="row">
-				<div class="col-sm-3" style="border:1px solid #d4d9d9; margin-right:5%;">
-				가
-				</div>
+				<div class="col-sm-3" style="border:1px solid #d4d9d9; margin-right:5%; margin-left:2%; width:300px">
+					<div>
+                  		<c:if test="${ empInfo.empPfe eq null}">
+                           <p class="empImg centered"><img src="resources/img/user.png" class="img-circle" width="80"></p>
+                     	</c:if>
+                     	<c:if test="${ !empty empInfo.empPfe }">
+                         	<p class="empImg centered"><img src="resources/empUpload_files/${empInfo.empPfe}" class="img-circle" width="80"></p>
+                     	</c:if>
+                     	<h3 class="centered">${ sessionScope.loginUser.empName }</h3>
+                     <span class="centered"><button type="button" class="btn btn-round btn-default">결재 작성</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-round btn-default">메일 작성</button></span>
+                     <br>
+                     <span class="centered"><button type="button" class="btn btn-round btn-default">주소록</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-round btn-default">회의 예약</button></span>
+               		</div>
+               		
+               		<div>
+               		<h3>6월 근무 시간</h3>
+               		<table class="table centered">
+             		<tr>
+	             	  <td id="thisMonthWork"></td>
+	             	  <td>
+             	  		<div class="progress progress-striped active">
+                			<div id="bar" class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+              			</div>
+              	  		</td>
+             		</tr>
+            		</table> 
+               		</div>
+               		 <!-- CALENDAR-->
+               		 <br>
+		            <div id="calendar" class="mb">
+		              <div class="panel green-panel no-margin">
+		                <div class="panel-body">
+		                  <div id="date-popover" class="popover top" style="cursor: pointer; disadding: block; margin-left: 33%; margin-top: -50px; width: 175px;">
+		                    <div class="arrow"></div>
+		                    <h3 class="popover-title" style="disadding: none;"></h3>
+		                    <div id="date-popover-content" class="popover-content"></div>
+		                  </div>
+		                  <div id="my-calendar"></div>
+		                </div>
+		              </div>
+		            </div>
+		            <!-- / calendar -->
+            	</div>
+            	<!-- 1 of 3 end -->
+            	<script>
+            	//달력 (부트스트랩)
+            	 $(document).ready(function() {
+
+            	      $("#my-calendar").zabuto_calendar({
+            	        action: function() {
+            	          return myDateFunction(this.id, false);
+            	        },
+            	        action_nav: function() {
+            	          return myNavFunction(this.id);
+            	        },
+            	        ajax: {
+            	          url: "show_data.php?action=1",
+            	          modal: true
+            	        },
+            	        legend: [{
+            	            type: "text",
+            	            label: "Special event",
+            	            badge: "00"
+            	          },
+            	          {
+            	            type: "block",
+            	            label: "Regular event",
+            	          }
+            	        ]
+            	      });
+            	    });
+            	
+            	 function checkMonth() {
+            		 
+            		 $.ajax({
+         				url:"mainWorkingInfo.do",
+         				success:function(result){
+         					$("#thisMonthWork").html(result);
+                			//이번달 필요 근무 시간
+                    		    var start = new Date(2022, 5, 1); // 2022-6-1
+                    		    var end = new Date(2022, 5, 30); // 2022-6-30
+
+                    		    var count = 0;
+                    			var mw = result.substring(0, result.indexOf('시'));
+								
+                    			while(true) {  
+                    			    var tempDate = start;
+                    			    if(tempDate.getTime() > end.getTime()) { //종료날짜를 넘어가면  break
+                    			        console.log("count : " + count);
+                    			    	var baseWorking = count * 8 //6월 최소 근무량 (주 40시간 기준)
+                    			
+                    			        break;
+                    			    } else {
+                    			        var tmp = tempDate.getDay();
+                    			        if(tmp == 0 || tmp == 6) {
+                    			            // 주말
+                    			            console.log("주말");
+                    			        } else {
+                    			            // 평일
+                    			            console.log("평일");
+                    			            count++;//평일엔 카운트를 더함  
+                    			        }
+                    			        tempDate.setDate(start.getDate() + 1); 
+                    			    }
+                    			}
+                    			
+                    			$("#baseWork").html(baseWorking + " 시간");
+                    			
+                    			var p = (mw / baseWorking) * 100;//이달 근무 퍼센트
+                    			console.log(p.toFixed(2)); //소수점 둘째자리까지
+                    			$("#bar").html(p.toFixed(2)+"%");
+                    			
+                    			//근무 상태에 보일 퍼센트 바(bar)
+                    			$(document).ready(function(){
+                    				
+                    				document.getElementById("bar").style.width = p.toFixed(2) + "%";
+                    			})
+         				},
+         				error:function(){
+         					console.log("근무시간  통신 실패");
+         				}
+         				
+         			})
+
+
+
+            		}
+            	</script>
+            	
 				<div class="col-sm-4" style="border:1px solid #d4d9d9;">
 					<h4>사내게시판 최신글</h4>
 					<div class="board_comment_tab" id="approvalCommentsTab">
