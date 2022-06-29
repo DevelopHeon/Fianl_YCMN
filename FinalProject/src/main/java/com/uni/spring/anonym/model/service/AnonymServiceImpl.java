@@ -98,5 +98,40 @@ public class AnonymServiceImpl implements AnonymService {
 		return result;
 	}
 
+	@Override
+	public void updateAnoBoard(AnonymBoard anoBoard) {
+		
+		int result = anonymDao.updateAnoBoard(sqlSession, anoBoard);
+		
+		if(result < 0) {
+			throw new CommException("익명게시글 수정 실패");
+		}
+	}
+
+	@Override
+	public void deleteAnoBoard(int anoNo) {
+		
+		int result = anonymDao.deleteAnoBoard(sqlSession, anoNo);
+		
+		if(result < 0) {
+			throw new CommException("익명 게시글 삭제 실패");
+		}
+	}
+
+	@Override
+	public int selectSearchListCount(String search) {
+		return anonymDao.selectSearchListCount(sqlSession, search);
+	}
+
+	@Override
+	public ArrayList<AnonymBoard> selectSearchList(String search, PageInfo pi) {
+		return anonymDao.selectSearchList(sqlSession, search, pi);
+	}
+
+	@Override
+	public ArrayList<AnonymBoard> SelectMainAnoList() {
+		return anonymDao.selectMainAnoList(sqlSession);
+	}
+
 
 }

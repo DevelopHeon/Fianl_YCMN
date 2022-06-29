@@ -15,12 +15,16 @@
 <body>
 <jsp:include page="../common/menubar.jsp"/>
 	<section id="main-content">
-			<section class="wrapper">
+		<section class="wrapper">
 			<h2 style="margin-left:45%; margin-bottom:7%;"><b>익명 게시판</b></h2>
  			<c:if test='${ empty list }'>
 				<h4>조회된 게시글이 없습니다.</h4>
 			</c:if>
 			<div class="anonymList">
+				<div class="searchBar form-inline">
+					<input type="text" id="searchVal" style="margin-left:80%;width:15%;"  class="form-control" placeholder="Search">
+					<button type="button" id="search" style="background-color:#22242a; color:white;" class="btn">검색</button>
+				</div>	
 				<table class="table table-hover" id="anonymList" style="text-align:center;">
 				  <thead>
 				    <tr>
@@ -96,5 +100,12 @@ $(function(){
 		location.href = "detailAnonymBoard.do?anoNo="+anoNo+"&confirmUser="+confirmUser;
 	});
 });
+</script>
+<script>
+	$("#search").click(function(){
+		var searchVal = $("#searchVal").val();
+		
+		location.href = "searchAnoBoard.do?search=" + searchVal;
+	});
 </script>
 </html>

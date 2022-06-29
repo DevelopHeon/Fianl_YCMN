@@ -49,4 +49,44 @@
 		DELETE FROM ANONYM_REPLY
 		WHERE REPLY_NO = #{replyNo}
 	</delete>
+	<update id="updateAnoBoard" parameterType="AnonymBoard">
+		UPDATE ANONYM_BOARD
+		SET ANO_TITLE = #{anoTitle},
+			ANO_CONTENT = #{anoContent}
+		WHERE STATUS = 'Y'
+		AND ANO_NO = #{anoNo}
+	</update>
+	<update id="deleteAnoBoard" parameterType="_int">
+		UPDATE ANONYM_BOARD
+		SET STATUS = 'N'
+		WHERE ANO_NO = #{anoNo}
+	</update>
+	<select id="selectSearchListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM ANONYM_BOARD
+		WHERE STATUS = 'Y'
+        AND ANO_CONTENT LIKE '%'||#{search}||'%'
+        OR  ANO_TITLE LIKE '%'||#{search}||'%'
+	</select>
+	<select id="selectSearchList" parameterType="string" resultType="AnonymBoard">
+		SELECT  ROW_NUMBER() OVER(ORDER BY A.CREATE_DATE DESC) AS ROW_NUM, A.*,
+			(SELECT NVL(COUNT(*), 0) 
+			    FROM ANONYM_REPLY  
+			    WHERE ANONYM_REPLY.REF_NO = A.ANO_NO 
+			    AND ANONYM_REPLY.STATUS = 'Y') REPLY_CNT
+			FROM ANONYM_BOARD A
+			WHERE A.STATUS = 'Y'
+	        AND A.ANO_CONTENT LIKE '%'||#{search}||'%'
+	        OR A.ANO_TITLE LIKE '%'||#{search}||'%'
+	</select>
+	<select id="selectMainAnoList" resultType="AnonymBoard">
+		SELECT   A.*,
+			(SELECT NVL(COUNT(*), 0) 
+			    FROM ANONYM_REPLY  
+			    WHERE ANONYM_REPLY.REF_NO = A.ANO_NO 
+			    AND ANONYM_REPLY.STATUS = 'Y') REPLY_CNT
+		FROM (SELECT * FROM ANONYM_BOARD ORDER BY CREATE_DATE DESC) A
+		WHERE A.STATUS = 'Y'
+        <![CDATA[AND ROWNUM <= 10]]>
+	</select>
 </mapper>

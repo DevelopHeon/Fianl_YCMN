@@ -24,4 +24,14 @@ public interface AnonymService {
 
 	int deleteAnoReply(int replyNo);
 
+	void updateAnoBoard(AnonymBoard anoBoard);
+
+	void deleteAnoBoard(int anoNo);
+
+	int selectSearchListCount(String search);
+
+	ArrayList<AnonymBoard> selectSearchList(String search, PageInfo pi);
+
+	ArrayList<AnonymBoard> SelectMainAnoList();
+
 }
