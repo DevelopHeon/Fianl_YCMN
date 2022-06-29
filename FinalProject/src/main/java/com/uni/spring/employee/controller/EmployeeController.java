@@ -146,11 +146,16 @@ public class EmployeeController {
 		//오늘 정상 출근했는지 업데이트(근무상태:지각)
 		employeeService.updateWorkStatusL(empNo);
 		
+		//근태기록
 		ArrayList<WorkingDay> working = employeeService.selectWorkingInfo(empNo);
-		
 		model.addAttribute("working", working);
-		session.setAttribute("workInfo", working);
 		
+		session.setAttribute("workInfo", working);
+
+		//주차별 근무시간 합계
+		String weekTotal = employeeService.selectWorkingWeekTotal(empNo);
+		
+		model.addAttribute("weekTotal", weekTotal);
 		return "employee/workingInfo";
 	}
 	

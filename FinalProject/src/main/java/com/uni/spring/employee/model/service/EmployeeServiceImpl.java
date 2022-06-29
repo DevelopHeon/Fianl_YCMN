@@ -238,7 +238,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		if(result < 0) {
 			throw new CommException("사원 상태 변경 실패");		
 		}
-		
 	}
 	//사원 마이페이지
 	@Override
@@ -249,6 +248,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Hr selectEmpPersonnel(int empNo) {
 		return employeeDao.selectEmpPersonnel(sqlSession, empNo);
+	}
+	//주차별 근무시간 합계ㄴ
+	@Override
+	public String selectWorkingWeekTotal(int empNo) {
+		return employeeDao.selectWorkingWeekTotal(sqlSession, empNo);
+
 	}
 
 }
