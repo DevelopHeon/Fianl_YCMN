@@ -37,7 +37,18 @@
 	<!-- 자바스크립트 -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <style>
-
+	.table, tr, td{
+		border-style : hidden;
+	}
+	
+	#section1{
+		margin-top : 15px;
+		border-bottom: 3px dashed #D0C9C0;
+	}
+	
+	#section2{
+		border-bottom: 3px dashed #D0C9C0;
+	}
 </style>
 
 </head>
@@ -47,7 +58,7 @@
 		<section class="wrapper" style="margin-top:10px;">
 			<div class="row">
 				<div class="col-sm-3" style="border:1px solid #d4d9d9; margin-right:5%; margin-left:2%; width:300px">
-					<div>
+					<div id="section1">
                   		<c:if test="${ empInfo.empPfe eq null}">
                            <p class="empImg centered"><img src="resources/img/user.png" class="img-circle" width="80"></p>
                      	</c:if>
@@ -56,23 +67,30 @@
                      	</c:if>
                      	<h3 class="centered">${ sessionScope.loginUser.empName }</h3>
                      <!-- TABLE로 변경하기 -->
-                     <span class="centered"><button type="button" class="btn btn-round btn-default">결재 작성</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-round btn-default">메일 작성</button></span>
-                     <br>
-                     <span class="centered"><button type="button" class="btn btn-round btn-default">주소록</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-round btn-default">회의 예약</button></span>
+                     <table class="table centered">
+                     	<tr>
+                     		<td><button type="button" class="btn btn-round btn-default" onclick="location.href='approvalList.do'">결재 작성</button></td>
+                     		<td><button type="button" class="btn btn-round btn-default" onclick="location.href='writeMail.do'">메일 작성</button></td>
+                     	</tr>
+                     	<tr>
+                     		<td><button type="button" class="btn btn-round btn-default" onclick="location.href='empAddress.do'">주소록</button></td>
+                     		<td><button type="button" class="btn btn-round btn-default" onclick="location.href='writeMail.do'">회의 예약</button></td>
+                     	</tr>
+                     </table>
                		</div>
                		<!-- WORKINGINFO -->
-               		<div>
-               		<h3>6월 근무 시간</h3>
-               		<table class="table centered">
-             		<tr>
-	             	  <td id="thisMonthWork"></td>
-	             	  <td>
-             	  		<div class="progress progress-striped active">
-                			<div id="bar" class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-              			</div>
-              	  		</td>
-             		</tr>
-            		</table> 
+               		<div id="section2">
+               		<h3 class="centered">6월 근무 시간</h3>
+               			<table class="table centered">
+             				<tr>
+	             	  			<td id="thisMonthWork"></td>
+	             	  			<td>
+             	  					<div class="progress progress-striped active" style="width:130px">
+                					<div id="bar" class="progress-bar" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+              						</div>
+              	  				</td>
+             				</tr>
+            			</table> 
                		</div>
                		 <!-- CALENDAR-->
                		 <br>
