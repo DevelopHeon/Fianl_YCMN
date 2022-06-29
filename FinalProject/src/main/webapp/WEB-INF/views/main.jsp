@@ -69,12 +69,12 @@
                      <!-- TABLE로 변경하기 -->
                      <table class="table centered">
                      	<tr>
-                     		<td><button type="button" class="btn btn-round btn-default" onclick="location.href='approvalList.do'">결재 작성</button></td>
-                     		<td><button type="button" class="btn btn-round btn-default" onclick="location.href='writeMail.do'">메일 작성</button></td>
+                     		<td><button type="button" class="btn btn-round btn-default" onclick="location.href='approvalList.do'"><i class="fa fa-book"></i> 결재 작성</button></td>
+                     		<td><button type="button" class="btn btn-round btn-default" onclick="location.href='writeMail.do'"><i class="fa fa-envelope-o"></i> 메일 작성</button></td>
                      	</tr>
                      	<tr>
-                     		<td><button type="button" class="btn btn-round btn-default" onclick="location.href='empAddress.do'">주소록</button></td>
-                     		<td><button type="button" class="btn btn-round btn-default" onclick="location.href='writeMail.do'">회의 예약</button></td>
+                     		<td><button type="button" class="btn btn-round btn-default" onclick="location.href='empAddress.do'"><i class="fa fa-address-book"></i> 주소록</button></td>
+                     		<td><button type="button" class="btn btn-round btn-default" onclick="location.href='writeMail.do'"><i class="fa fa-pencil"></i> 회의 예약</button></td>
                      	</tr>
                      </table>
                		</div>
