@@ -19,18 +19,15 @@
 <meta charset="UTF-8">
 <title>myPage</title>
 
-  <!-- Favicons -->
-  <link href="img/favicon.png" rel="icon">
-  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
-
-  <!-- Bootstrap core CSS -->
-  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!--external css-->
-  <link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
-  <!-- Custom styles for this template -->
-  <link href="css/style.css" rel="stylesheet">
-  <link href="css/style-responsive.css" rel="stylesheet">
-  
+	<!-- Favicons -->
+	<link href="resources/img/favicon.png" rel="icon">
+	<link href="resources/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<!-- 테마 -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+	<!-- 자바스크립트 -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <style>
 
  #update {
@@ -39,7 +36,7 @@
 </style>
 </head>
 
-<body onload="checkMonth()">
+<body onload="checkMonth();">
 	<jsp:include page="../common/menubar.jsp"/>	
 <script>
 function checkMonth() {
@@ -52,8 +49,57 @@ function checkMonth() {
 	for(var i = 0; i < month.length; i++){
 		month[i].innerHTML = calendar;
 	}
+
+	//이번달 필요 근무 시간
+    var start = new Date(2022, 5, 1); // 2022-6-1
+    var end = new Date(2022, 5, 30); // 2022-6-30
+
+    var count = 0;
+
+	var thisMonthWork = document.getElementById("thisMonthWork").innerHTML;
+	//var a = thisMonthWork.split('시');
+	//console.log(a);
+	var mw = thisMonthWork.substring(0, thisMonthWork.indexOf('시'))
+
+	while(true) {  
+	    var tempDate = start;
+	    if(tempDate.getTime() > end.getTime()) { //종료날짜를 넘어가면  break
+	        console.log("count : " + count);
+	    	var baseWorking = count * 8 //6월 최소 근무량 (주 40시간 기준)
+	
+	        break;
+	    } else {
+	        var tmp = tempDate.getDay();
+	        if(tmp == 0 || tmp == 6) {
+	            // 주말
+	            console.log("주말");
+	        } else {
+	            // 평일
+	            console.log("평일");
+	            count++;//평일엔 카운트를 더함  
+	        }
+	        tempDate.setDate(start.getDate() + 1); 
+	    }
+	}
+	
+	$("#baseWork").html(baseWorking + " 시간");
+	
+	var p = (mw / baseWorking) * 100;//이달 근무 퍼센트
+	console.log(p.toFixed(2)); //소수점 둘째자리까지
+	$("#bar").html(p.toFixed(2)+"%");
+	
+	//근무 상태에 보일 퍼센트 바(bar)
+	$(document).ready(function(){
+		
+		document.getElementById("bar").style.width = p.toFixed(2) + "%";
+	})
+	
+	//잔여 근무시간
 	
 }
+
+
+
 
 </script>
     <!-- **********************************************************************************************************************************************************
@@ -72,18 +118,23 @@ function checkMonth() {
              <!-- <a id="next"><i class="fa fa-chevron-right centered" style="font-size:25px"></i></a>  -->
              
              </div>
-             <!-- <table>
+              <table class="table centered">
              	<tr>
-             	  <td width="300"><label class="month"></label> 누적 근무</td>
-             	  <td width="300"><label class="month"></label> 잔여 근무</td>
-             	  <td width="300"><label class="month"></label> 연장 근무</td>
+             	  <td width="300"><label class="month"></label> 누적 근무 시간</td>
+             	  <td width="300"><label class="month"></label> 필요 근무 시간</td>
+             	  <td width="300"><label class="month"></label> 근무 상태</td>
              	</tr>
              	<tr>
-             	  <td width="300"></td>
-             	  <td width="300"></td>
-             	  <td width="300"></td>
+             	  <td id="thisMonthWork" width="300">${weekTotal }</td>
+             	  <td id="baseWork" width="300"></td>
+             	  <td width="300">
+             	  	<div class="progress progress-striped active">
+                		<div id="bar" class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+                		</div>
+              		</div>
+              	  </td>
              	</tr>
-             </table> -->
+             </table> 
              
             </div> 
             <!-- /row -->
@@ -120,9 +171,9 @@ function checkMonth() {
            	
               <!-- /panel-body -->
               <div class="panel-body">
-              <%if(format.format(currentTime).equals(prevM) || format.format(currentTime).equals(thisMonth) ) {%>
+              
                 <div class="tab-content">
-                
+
                   <div id="1week" class="tab-pane">
                     <div class="row">
 		             	<table class="table centered">
@@ -281,6 +332,7 @@ function checkMonth() {
 		            <c:forEach items="${working}" var="w">
                     <c:if test="${w.thisWeek eq 5}">
 		             		<tr>
+		             			<td style="display:none">${w.thisWeek }</td>
 		             			<td>${w.today }</td>
 		             			<td>${w.startTime }</td>
 		             			<td>${w.finishTime }</td>
@@ -305,13 +357,12 @@ function checkMonth() {
 		             		</tr>
 		            </c:if> -->
                   	</c:forEach>
-
 		             	</table>
                     </div>
                   	</div>
             </div>
             <!-- /col-lg-12 -->
-            <% } %>
+            
           </div>
           <!-- /row -->
           </div>
@@ -341,6 +392,7 @@ function checkMonth() {
     		})
     		
     	})
+    	
     </script>
     <footer class="site-footer">
       <div class="text-center">
