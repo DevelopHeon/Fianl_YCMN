@@ -42,7 +42,7 @@
         //파일 기본경로
         String dftFilePath = request.getSession().getServletContext().getRealPath("/resources");
         //파일 기본경로 _ 상세경로
-        String filePath = dftFilePath + File.separator + "qna_board_upfiles" + File.separator;
+        String filePath = dftFilePath + File.separator + "mailUpload_upfiles" + File.separator;
         File file = new File(filePath);
         if (!file.exists()) {
             file.mkdirs();
@@ -70,7 +70,7 @@
         // 정보 출력
         sFileInfo += "&bNewLine=true";    
         sFileInfo += "&sFileName=" + filename;    
-        sFileInfo += "&sFileURL=/valueSa/resources/qna_board_upfiles/"+realFileNm;
+        sFileInfo += "&sFileURL=/resources/mailUpload_upfiles/"+realFileNm;
         out.println("sFileInfo : " + sFileInfo);
     }
 	%>

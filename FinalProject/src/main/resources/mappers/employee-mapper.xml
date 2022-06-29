@@ -210,4 +210,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM PERSONNEL_CHART A
 		WHERE A.EMP_NO = #{empNo}
 	</select>
+	
+	<!-- 주차별 근무시간 합계 -->
+	<select id="selectWorkingWeekTotal" parameterType="WorkingDay" resultType="string">
+		  WITH t AS
+		(
+			SELECT
+			SUM(TO_CHAR(TO_TIMESTAMP(SUBSTR(TO_TIMESTAMP(FINISH_TIME,'HH24:MI:SS') - TO_TIMESTAMP(START_TIME,'HH24:MI:SS'),12,8), 'HH24:MI:SS'),'sssss')) wt
+			FROM WORKINGDAY
+			WHERE EMP_NO = #{empNo}
+		)
+		SELECT (ROUND(wt/(60*60)))||'시간'||' ' ||
+		       LPAD(ROUND(MOD((wt/60),60)),2,0)||'분' || ' ' ||
+		       LPAD(ROUND(MOD(wt,60)),2,0)||'초' AS TT
+		       FROM t
+	</select>
 </mapper>

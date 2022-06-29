@@ -61,4 +61,6 @@ public interface EmployeeService {
 
 	Hr selectEmpPersonnel(int empNo);
 
+	String selectWorkingWeekTotal(int empNo);
+
 }
