@@ -153,9 +153,9 @@ public class EmployeeController {
 		session.setAttribute("workInfo", working);
 
 		//주차별 근무시간 합계
-		String weekTotal = employeeService.selectWorkingWeekTotal(empNo);
+		String monthTotal = employeeService.selectWorkingWeekTotal(empNo);
 		
-		model.addAttribute("weekTotal", weekTotal);
+		model.addAttribute("monthTotal", monthTotal);
 		return "employee/workingInfo";
 	}
 	
@@ -380,5 +380,15 @@ public class EmployeeController {
 		employeeService.updateEmpOnOff(loginUser);
 		return "redirect:main.do";
 
+	}
+	//메인_근무상태
+	@ResponseBody
+	@RequestMapping(value="mainWorkingInfo.do", produces = "application/text; charset=utf8")
+	public String mainWorkingInfo(@ModelAttribute("loginUser")Employee emp, Model model) {
+		
+		String monthTotal = employeeService.selectWorkingWeekTotal(emp.getEmpNo());
+
+		model.addAttribute("monthTotal", monthTotal);
+		return monthTotal;
 	}
 }
