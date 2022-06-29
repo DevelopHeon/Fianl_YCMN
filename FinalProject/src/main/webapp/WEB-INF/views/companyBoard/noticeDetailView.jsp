@@ -40,7 +40,7 @@
 					<hr>
 					<br>
 					<div align="center">
-						<button type="button" class="btn btn-secondary btn-lg" onclick="javascript:history.go(-1);"><b>목록으로</b></button>
+						<button type="button" class="btn btn-secondary btn-lg" onclick="location.href='listNotice.do';"><b>목록으로</b></button>
 					</div>
 				</div>
 			</section>

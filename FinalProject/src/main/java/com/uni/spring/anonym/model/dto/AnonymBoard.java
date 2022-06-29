@@ -1,6 +1,7 @@
 package com.uni.spring.anonym.model.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +21,7 @@ public class AnonymBoard {
 	private String anoWriter;
 	private String anoTitle;
 	private String anoContent;
-	private Date createDate;
+	private Timestamp createDate;
 	private int count;
 	private String status;
 	private int category;

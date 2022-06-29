@@ -177,4 +177,14 @@ public class NoticeController {
 		
 		return "redirect:listNotice.do";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="mainListNotice.do", produces="application/json; charset=utf-8")
+	public String selectMainList() {
+		int rownum = 10;
+		
+		ArrayList<Notice> list = noticeService.selectNoticeList(rownum);
+		
+		return new GsonBuilder().setDateFormat("yyyy-MM-dd").create().toJson(list);
+	}
 }

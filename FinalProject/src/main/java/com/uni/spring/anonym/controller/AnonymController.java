@@ -35,7 +35,7 @@ public class AnonymController {
 		
 		int listCount = anonymService.selectListCount();
 		int pageLimit = 10;
-		int boardLimit = 5;
+		int boardLimit = 10;
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
@@ -73,6 +73,35 @@ public class AnonymController {
 		return mv;
 	}
 	
+	@RequestMapping("updateFormAnoBoard.do")
+	public ModelAndView updateFormAnoBoard(int anoNo, ModelAndView mv) {
+		
+		AnonymBoard anoBoard = anonymService.selectAnonymBoard(anoNo, "작성자", bCryptWriterEncoder);
+		
+		mv.addObject("anoBoard", anoBoard).setViewName("companyBoard/AnonymBoardUpdateForm");
+		return mv;
+	}
+	
+	@RequestMapping("updateAnoBoard.do")
+	public ModelAndView updateAnoBoard(AnonymBoard anoBoard, String userId, ModelAndView mv) {
+		
+		log.info("내용 : " +anoBoard.toString());
+		anonymService.updateAnoBoard(anoBoard);
+		
+		mv.addObject("anoNo", anoBoard.getAnoNo()).addObject("confirmUser", userId)
+		.setViewName("redirect:detailAnonymBoard.do");
+		
+		return mv;
+	}
+	
+	@RequestMapping("deleteAnoBoard.do")
+	public String deleteAnoBoard(int anoNo) {
+		
+		anonymService.deleteAnoBoard(anoNo);
+		
+		return "redirect:anoBoardList.do";
+	}
+	
 	@ResponseBody
 	@RequestMapping(value="rlistAnoBoard.do", produces="application/json; charset=utf-8")
 	public String selectReplyList(int anoNo, String confirmUser) {
@@ -102,5 +131,32 @@ public class AnonymController {
 		int result = anonymService.deleteAnoReply(replyNo);
 		
 		return String.valueOf(result);
+	}
+	
+	@RequestMapping("searchAnoBoard.do")
+	public ModelAndView searchAnoBoard(String search, @RequestParam(value="currentPage", required = false, defaultValue = "1")
+	int currentPage, ModelAndView mv) {
+		
+		int listCount = anonymService.selectSearchListCount(search);
+		int pageLimit = 10;
+		int boardLimit = 10;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<AnonymBoard> list = anonymService.selectSearchList(search, pi);
+		
+		mv.addObject("list", list).addObject("pi", pi)
+		.setViewName("companyBoard/AnonymBoardListView");
+		
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="mainAnoList.do", produces="application/json; charset=utf-8")
+	public String SelectMainAnoList() {
+		
+		ArrayList<AnonymBoard> list = anonymService.SelectMainAnoList();
+		
+		return new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create().toJson(list);
 	}
 }

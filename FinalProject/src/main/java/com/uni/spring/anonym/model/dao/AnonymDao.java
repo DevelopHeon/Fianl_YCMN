@@ -48,4 +48,27 @@ public class AnonymDao {
 		return sqlSession.delete("anonymBoardMapper.deleteAnoReply", replyNo);
 	}
 
+	public int updateAnoBoard(SqlSessionTemplate sqlSession, AnonymBoard anoBoard) {
+		return sqlSession.update("anonymBoardMapper.updateAnoBoard", anoBoard);
+	}
+
+	public int deleteAnoBoard(SqlSessionTemplate sqlSession, int anoNo) {
+		return sqlSession.update("anonymBoardMapper.deleteAnoBoard", anoNo);
+	}
+
+	public int selectSearchListCount(SqlSessionTemplate sqlSession, String search) {
+		return sqlSession.selectOne("anonymBoardMapper.selectSearchListCount", search);
+	}
+
+	public ArrayList<AnonymBoard> selectSearchList(SqlSessionTemplate sqlSession, String search, PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("anonymBoardMapper.selectSearchList", search);
+	}
+
+	public ArrayList<AnonymBoard> selectMainAnoList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("anonymBoardMapper.selectMainAnoList");
+	}
+
 }

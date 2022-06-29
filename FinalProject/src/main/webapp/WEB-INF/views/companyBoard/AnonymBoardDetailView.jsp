@@ -26,8 +26,8 @@ tr.space{
 				<b>${ anoBoard.createDate }</b>&nbsp;&nbsp;
 				<small>조회수 : <c:out value="${ anoBoard.count }" /></small>
 				<c:if test="${ anoBoard.anoWriter eq 'Y' }">
-                	<button type="button" style="margin-left:70%;" class="btn btn-primary" onclick="noticeFormSubmit(1);">수정하기</button>
-               		<button type="button" class="btn btn-danger" onclick="noticeFormSubmit(2);">삭제하기</button>
+                	<button type="button" style="margin-left:67%;" class="btn btn-primary" onclick="anoBoardFormSubmit(1);">수정하기</button>
+               		<button type="button" class="btn btn-danger" onclick="anoBoardFormSubmit(2);">삭제하기</button>
 				</c:if>
 				<form id="anoBoardForm" action="" method="post">
 					<input type="hidden" name="anoNo" value="${ anoBoard.anoNo }">
@@ -42,7 +42,7 @@ tr.space{
 				<hr>
 				<br>
 				<div align="center">
-					<button type="button" class="btn btn-secondary btn-lg" onclick="javascript:history.go(-1);"><b>목록으로</b></button>
+					<button type="button" class="btn btn-secondary btn-lg" onclick="location.href='anoBoardList.do';"><b>목록으로</b></button>
 				</div>
 				<div style="background:#f1efef; height:40px; width:100px;">
 					<p class="text-center" style="font-size:1.8rem;">댓글</p>
@@ -69,6 +69,23 @@ tr.space{
 		</section>
 	</section>
 </body>
+<script>
+// 수정, 삭제 스크립트
+	function anoBoardFormSubmit(num){
+		var anoBoardForm = $("#anoBoardForm");
+		
+		if(num == 1){
+			anoBoardForm.attr("action", "updateFormAnoBoard.do");
+		}else if(num ==2){
+			if(confirm("정말 삭제하시겠습니까?")){
+				anoBoardForm.attr("action", "deleteAnoBoard.do");
+			}else{
+				return false;
+			}
+		}
+		anoBoardForm.submit();
+	} 
+</script>
 <script>
 $(function(){
    		selectReplyList();
