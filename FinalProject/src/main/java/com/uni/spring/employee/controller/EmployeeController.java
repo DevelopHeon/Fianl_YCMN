@@ -152,7 +152,7 @@ public class EmployeeController {
 		
 		session.setAttribute("workInfo", working);
 
-		//주차별 근무시간 합계
+		//근무시간 합계
 		String monthTotal = employeeService.selectWorkingWeekTotal(empNo);
 		
 		model.addAttribute("monthTotal", monthTotal);

@@ -19,6 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="Employee" id="EmployeeMap">
 		<id column="EMP_NO" property="empNo"/>
 		<result column="EMP_NAME" property="empName"/>
+		<result column="EMP_PFE" property="empPfe"/>
 	</resultMap>
 	<resultMap type="ReceiveMail" id="ReceiveMailMap">
 		<id column="RECEIVE_NO" property="receiveNo"/>
@@ -75,7 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 받은메일 List -->
 	<select id="selectReceiveList" resultMap="ReceiveMailMap">
-		SELECT A.*, B.EMP_NAME, C.MAIL_TITLE, C.FILE_NAME FROM RECEIVEMAIL A 
+		SELECT A.*, B.EMP_NAME, B.EMP_PFE, C.MAIL_TITLE, C.FILE_NAME FROM RECEIVEMAIL A 
 		LEFT JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
 		LEFT JOIN MAIL C ON A.MAIL_NO = C.MAIL_NO
 		WHERE RECEIVER = #{empNo} AND (A.RECEIVE_STATUS = 'Y' OR A.RECEIVE_STATUS = 'SN')
@@ -103,6 +104,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    A.STATUS,
 		    A.CATEGORY,
 		    B.EMP_NAME,
+		    B.EMP_PFE,
 		    C.RECEIVE_NO,
 		    C.CONFIRM_MAIL FROM MAIL A
 		LEFT JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
