@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
+   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="Dashboard">
@@ -37,6 +37,15 @@
 	<!-- 자바스크립트 -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <style>
+	 div{
+	 	border-radius:10px;
+	 }
+	.myphoto{
+		width:50px;
+	}
+	tr.space{
+		border-bottom:30px solid white;
+	}
 	.table, tr, td{
 		border-style : hidden;
 	}
@@ -54,7 +63,7 @@
 </head>
 <body onload="checkMonth();">
 <jsp:include page="common/menubar.jsp"/>
-	<section id="main-content">
+<section id="main-content">
 		<section class="wrapper" style="margin-top:10px;">
 			<div class="row">
 				<div class="col-sm-3" style="border:1px solid #d4d9d9; margin-right:5%; margin-left:2%; width:300px">
@@ -112,7 +121,6 @@
             	<script>
             	//달력 (부트스트랩)
             	 $(document).ready(function() {
-
             	      $("#my-calendar").zabuto_calendar({
             	        action: function() {
             	          return myDateFunction(this.id, false);
@@ -144,31 +152,30 @@
          				success:function(result){
          					$("#thisMonthWork").html(result);
                 			//이번달 필요 근무 시간
-                    		    var start = new Date(2022, 5, 1); // 2022-6-1
-                    		    var end = new Date(2022, 5, 30); // 2022-6-30
-
-                    		    var count = 0;
+                    		    var start = new Date(2022, 5, 1); // 2022-6-1
+                    		    var end = new Date(2022, 5, 30); // 2022-6-30
+                    		    var count = 0;
                     			var mw = result.substring(0, result.indexOf('시'));
 								
                     			while(true) {  
                     			    var tempDate = start;
-                    			    if(tempDate.getTime() > end.getTime()) { //종료날짜를 넘어가면  break
-                    			        console.log("count : " + count);
+                    			    if(tempDate.getTime() > end.getTime()) { //종료날짜를 넘어가면  break
+                    			        console.log("count : " + count);
                     			    	var baseWorking = count * 8 //6월 최소 근무량 (주 40시간 기준)
                     			
-                    			        break;
-                    			    } else {
-                    			        var tmp = tempDate.getDay();
-                    			        if(tmp == 0 || tmp == 6) {
-                    			            // 주말
-                    			            console.log("주말");
-                    			        } else {
-                    			            // 평일
-                    			            console.log("평일");
-                    			            count++;//평일엔 카운트를 더함  
-                    			        }
-                    			        tempDate.setDate(start.getDate() + 1); 
-                    			    }
+                    			        break;
+                    			    } else {
+                    			        var tmp = tempDate.getDay();
+                    			        if(tmp == 0 || tmp == 6) {
+                    			            // 주말
+                    			            console.log("주말");
+                    			        } else {
+                    			            // 평일
+                    			            console.log("평일");
+                    			            count++;//평일엔 카운트를 더함  
+                    			        }
+                    			        tempDate.setDate(start.getDate() + 1); 
+                    			    }
                     			}
                     			
                     			$("#baseWork").html(baseWorking + " 시간");
@@ -188,94 +195,177 @@
          				}
          				
          			})
-
-
-
             		}
             	</script>
             	
-				<div class="col-sm-4" style="border:1px solid #d4d9d9;">
-					<h4>사내게시판 최신글</h4>
-					<div class="board_comment_tab" id="approvalCommentsTab">
-						<a href="#" id="nList">공지사항</a>
-			        	<a href="#" id="anoList">익명게시판</a>
-					</div>
-					<hr style="opacity:0.4; margin-top:3px;">
-					<table id="boardTable" class="table table-hover">
-						<tbody>
-						
-						</tbody>
-					</table>
-				</div>
-				<div class="col-sm-3" style="border:1px solid #d4d9d9; margin-left:5%;">
+               <div class="col-sm-4" style="border:1px solid #d4d9d9;">
+               <h4>사내게시판 최신글</h4>
+               <div class="board_comment_tab" id="approvalCommentsTab">
+                  <a href="#" id="nList">공지사항</a>
+                    <a href="#" id="anoList">익명게시판</a>
+               </div>
+               <hr style="opacity:0.4; margin-top:3px;">
+               <table id="boardTable" class="table table-hover">
+                  <tbody>
+                  
+                  </tbody>
+               </table>
+            </div>
+            <div class="col-sm-3" style="border:1px solid #d4d9d9; margin-left:5%;">
+            	다
+            </div>
+         </div>
+         <%-- 아랫줄 레이아웃 --%>
+         <div class="row" style="margin-top:3%;">
+         	<div class="col-sm-3" style="border:1px solid #d4d9d9; margin-right:5%; margin-left:2%;">
+         	가
+         	</div>
+         	<div class="col-sm-4" style="border:1px solid #d4d9d9;">
+         		<h4>부서별 소통란</h4>
+         		<div id="newSpeed" class="form-inline" style="margin-bottom:5%;">
+         			<div class="form-group">
+                   		<textarea class="form-control" id="commContent" rows="2" cols="60" style="resize:none;" placeholder="새로운 소식을 알려주세요."></textarea>
+         				<button type="button" id="addComm" class="form-control btn btn-info" style="height:50px;" >게시</button>
+         			</div>
+         		</div>
+         		<br>
+         		<div id="newSpeedlist">
+					<table id="newSpeedTable">
+         				<tbody>
+         				</tbody>
+       				</table>
+         		</div>
+         	</div>
+         </div>
+      </section>
+   </section>         
+</body>
+<script>
+	// 부서별 소통란 조회 및 추가
+	$(function(){
+		selectCommList();
+		
+		// 소통란 글 추가 ajax
+		$(document).on("click", "#addComm", function(){
+			
+			if($("#commContent").val().trim().length != 0){
+				$.ajax({
 					
-				</div>
-				<script>
-				$(function(){
-					selectMainNotice();
-					
-					// a태그 공지사항 클릭시 리스트 불러오기
-					$("#nList").on("click", function(){
-						selectMainNotice();
-					});
-					
-					function selectMainNotice(){
-						$.ajax({
-							url:"mainListNotice.do",
-							success:function(list){
-								var value="<b>공지사항</b>";
-								$.each(list, function(i, obj){
-									value += "<tr onclick='goDetail(1, "+obj.noticeNo+")'><td style='width:68%'>"
-										  +  obj.noticeTitle+"</td>"
-										  +  "<td>"+obj.createDate+"&nbsp;&nbsp;"+obj.noticeWriter+"&nbsp;"+obj.posName+"</td></tr>";
-										  
-								});
-								$("#boardTable tbody").html(value);
-							},error:function(){
-								console.log("공지사항 목록 ajax 통신 실패");
+					url:"comminsert.do",
+					type:"post",
+					data:{
+						depNo:${loginUser.depNo},
+						commWriter:"${loginUser.empNo}",
+						commContent:$("#commContent").val()
+					},
+					success:function(result){
+						if(result > 0){
+							$("#commContent").val("");
+							selectCommList();
+						}else{
+							alert("등록 실패");
+						}
+					},error:function(){
+						console.log("등록 ajax 통신 실패");
+					}
+				});
+			}else{
+				alert("글을 작성하세요");
+			}
+		});
+		
+		function selectCommList(){
+			$.ajax({
+				url:"commList.do",
+				data:{depNo:${loginUser.depNo}},
+				type:"get",
+				success:function(list){
+					var value="";
+					if(list.length < 0){
+						value += "<tr><td>조회된 글이 없습니다.</td></tr>"
+					}else{
+						$.each(list, function(i, obj){
+							if(obj.empPfe == null){
+								value += "<tr>"
+									  +		"<td><img class='myphoto img-circle' src='resources/img/common/basicimg.png'>&nbsp;&nbsp;&nbsp;</td>";
+							}else{
+								value += "<tr>"
+									  +		"<td><img class='myphoto img-circle' src='resources/empUpload_files/"+obj.empPfe+"'>&nbsp;&nbsp;&nbsp;</td>";
 							}
+							
+							value += "<td style='width:85%;'>"+obj.commWriter+"&nbsp;&nbsp;"+obj.createDate+"<br>"
+								  +	 obj.commContent +"</td>"
+								  +	 "<td>&nbsp;<span style='cursor:pointer;' onclick='deleteComm("+obj.commNo+")'><i class='bi bi-x-lg'></i></span></td>"
+								  +  "<tr class='space'></tr>"
 						});
 					}
-				});
-				</script>
-				<script>
-				// 익명게시판 불러오기
-				$("#anoList").on("click", function(){
-					$.ajax({
-						url:"mainAnoList.do",
-						success:function(list){
-							var value="<b>익명게시판</b>";
-							$.each(list, function(i, obj){
-								value += "<tr onclick='goDetail(2, "+obj.anoNo+")'><td style='width:65%'>" + obj.anoTitle;
-								if(obj.replyCnt > 0){
-									value += "&nbsp;[<span style='color:#2c86dc;'>"+obj.replyCnt+"</span>]";
-								}
-								value += "</td>"
-									  +  "<td> 익명 > "+obj.createDate+"</td></tr>";
-							});
-							$("#boardTable tbody").html(value);
-						},error:function(){
-							console.log("메인화면 익명게시판목록 불러오기 실패");
-						}
-					});
-				});
-				</script>
-				<script>
-				// 상세화면 들어가기
-				function goDetail(num, bno){
-					var confirmUser = "${loginUser.empId}";
-					
- 					 if(num === 1){
-						location.href="detailNotice.do?noticeNo="+bno;
-					}else{
-						location.href="detailAnonymBoard.do?anoNo="+bno+"&confirmUser="+confirmUser;
-					}
+					$("#newSpeedTable tbody").html(value);
 				}
-				</script>
-				<div class="col-sm-4">
-				</div>
-			</div>
-		</section>
-	</section>			
-</body>
+			});
+		}
+	});
+
+</script>
+<script>
+	$(function(){
+	   selectMainNotice();
+	   
+	   // a태그 공지사항 클릭시 리스트 불러오기
+	   $("#nList").on("click", function(){
+	      selectMainNotice();
+	   });
+	   
+	   function selectMainNotice(){
+	      $.ajax({
+	         url:"mainListNotice.do",
+	         success:function(list){
+	            var value="<b>공지사항</b>";
+	            $.each(list, function(i, obj){
+	               value += "<tr onclick='goDetail(1, "+obj.noticeNo+")'><td style='width:68%'>"
+	                    +  obj.noticeTitle+"</td>"
+	                    +  "<td>"+obj.createDate+"&nbsp;&nbsp;"+obj.noticeWriter+"&nbsp;"+obj.posName+"</td></tr>";
+	                    
+	            });
+	            $("#boardTable tbody").html(value);
+	         },error:function(){
+	            console.log("공지사항 목록 ajax 통신 실패");
+	         }
+	      });
+	   }
+	});
+</script>
+<script>
+// 익명게시판 불러오기
+	$("#anoList").on("click", function(){
+	   $.ajax({
+	      url:"mainAnoList.do",
+	      success:function(list){
+	         var value="<b>익명게시판</b>";
+	         $.each(list, function(i, obj){
+	            value += "<tr onclick='goDetail(2, "+obj.anoNo+")'><td style='width:65%'>" + obj.anoTitle;
+	            if(obj.replyCnt > 0){
+	               value += "&nbsp;[<span style='color:#2c86dc;'>"+obj.replyCnt+"</span>]";
+	            }
+	            value += "</td>"
+	                 +  "<td> 익명 > "+obj.createDate+"</td></tr>";
+	         });
+	         $("#boardTable tbody").html(value);
+	      },error:function(){
+	         console.log("메인화면 익명게시판목록 불러오기 실패");
+	      }
+	   });
+	});
+</script>
+<script>
+// 상세화면 들어가기
+	function goDetail(num, bno){
+	   var confirmUser = "${loginUser.empId}";
+	   
+	     if(num === 1){
+	      location.href="detailNotice.do?noticeNo="+bno;
+	   }else{
+	      location.href="detailAnonymBoard.do?anoNo="+bno+"&confirmUser="+confirmUser;
+	   }
+	}
+</script>
 </html>
