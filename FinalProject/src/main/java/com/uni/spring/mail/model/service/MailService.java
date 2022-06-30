@@ -40,6 +40,8 @@ public interface MailService {
 
 	void realDelete(int receiveNo);
 
+	ArrayList<ReceiveMail> selectMainMailList(int empNo);
+
 
 
 }
