@@ -108,11 +108,6 @@ public class MailDao {
 		return sqlSession.insert("mailMapper.insertOffMail", mail);
 		
 	}
-	//메인_상단메일리스트
-	public ArrayList<ReceiveMail> selectMainMailList(SqlSessionTemplate sqlSession, int empNo) {
-		return (ArrayList)sqlSession.selectList("mailMapper.selectMainMailList", empNo);
-
-	}
 
 
 }

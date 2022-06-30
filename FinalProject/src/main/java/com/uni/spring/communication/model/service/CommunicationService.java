@@ -10,4 +10,6 @@ public interface CommunicationService {
 
 	int insertComm(Communication comm);
 
+	int deleteComm(int commNo);
+
 }
