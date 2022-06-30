@@ -249,7 +249,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Hr selectEmpPersonnel(int empNo) {
 		return employeeDao.selectEmpPersonnel(sqlSession, empNo);
 	}
-	//주차별 근무시간 합계ㄴ
+	//근무시간 합계
 	@Override
 	public String selectWorkingWeekTotal(int empNo) {
 		return employeeDao.selectWorkingWeekTotal(sqlSession, empNo);
@@ -257,4 +257,3 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 }
-

@@ -47,8 +47,13 @@ public class EmployeeController {
 	
 	@RequestMapping("main.do")
 	public String main(HttpSession session, Model model) {
-
-
+		Employee emp = (Employee)session.getAttribute("loginUser");
+		int empNo = emp.getEmpNo();
+		//메일함에 새로운 메일이 카운팅(세션)
+		//상단메뉴바에서 메일을 확인하면 상단에 여전히 카운팅 감소가 되지 않아 작성
+		int unread = mailService.selectUnreadMail(empNo);
+		session.setAttribute("unread", unread);
+		
 		return "main";
 	}
 	
@@ -152,7 +157,7 @@ public class EmployeeController {
 		
 		session.setAttribute("workInfo", working);
 
-		//주차별 근무시간 합계
+		//근무시간 합계
 		String monthTotal = employeeService.selectWorkingWeekTotal(empNo);
 		
 		model.addAttribute("monthTotal", monthTotal);
