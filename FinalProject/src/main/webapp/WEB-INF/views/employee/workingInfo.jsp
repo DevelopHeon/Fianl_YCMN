@@ -93,8 +93,7 @@ function checkMonth() {
 		
 		document.getElementById("bar").style.width = p.toFixed(2) + "%";
 	})
-	
-	//잔여 근무시간
+
 	
 }
 
@@ -125,7 +124,7 @@ function checkMonth() {
              	  <td width="300"><label class="month"></label> 근무 상태</td>
              	</tr>
              	<tr>
-             	  <td id="thisMonthWork" width="300">${weekTotal }</td>
+             	  <td id="thisMonthWork" width="300">${monthTotal }</td>
              	  <td id="baseWork" width="300"></td>
              	  <td width="300">
              	  	<div class="progress progress-striped active">

@@ -14,4 +14,8 @@
 		(COMM_NO, DEP_NO, GRPI, COMM_WRITER, COMM_CONTENT, CREATE_DATE)
 		VALUES(SEQ_COMM.NEXTVAL, #{depNo}, DEFAULT, #{commWriter}, #{commContent}, DEFAULT)
 	</insert>
+	<delete id="deleteComm" parameterType="_int">
+		DELETE FROM COMMUNICATION
+		WHERE COMM_NO = #{commNo}
+	</delete>
 </mapper>
