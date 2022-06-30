@@ -18,4 +18,8 @@ public class CommunicationDao {
 		return sqlSession.insert("communicationMapper.insertComm", comm);
 	}
 
+	public int deleteComm(SqlSessionTemplate sqlSession, int commNo) {
+		return sqlSession.delete("communicationMapper.deleteComm", commNo);
+	}
+
 }

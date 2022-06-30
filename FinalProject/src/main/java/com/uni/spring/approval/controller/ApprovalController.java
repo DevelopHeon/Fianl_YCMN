@@ -534,8 +534,15 @@ public class ApprovalController {
 			approvalService.deleteAttachment(appNo);
 			deleteFile(fileName, request);
 		}
-		
 		return "redirect:listOutbox.do?userNo="+userNo;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="approvalCnt.do")
+	public String selectMainApprovalCnt(int userNo) {
 		
+		int result = approvalService.selectMainApprovalCnt(userNo);
+		log.info("승인대기:"+result);
+		return String.valueOf(result);
 	}
 }

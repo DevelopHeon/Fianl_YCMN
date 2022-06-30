@@ -35,4 +35,16 @@ public class CommunicationServiceImpl implements CommunicationService {
 		return result;
 	}
 
+	@Override
+	public int deleteComm(int commNo) {
+		
+		int result = communicationDao.deleteComm(sqlSession, commNo);
+		
+		if(result < 0) {
+			throw new CommException("소통 게시글 삭제 실패");
+		}
+		
+		return result;
+	}
+
 }

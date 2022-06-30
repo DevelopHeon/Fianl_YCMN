@@ -408,4 +408,16 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SET STATUS = 'N'
 		WHERE APP_NO = #{appNo}
 	</update>
+	<select id="selectMainApprovalCnt" resultType="_int">
+		SELECT COUNT(*)
+		FROM APPROVAL
+		WHERE
+		<![CDATA[APP_STATUS <> 'R' ]]>
+		AND STATUS = 'Y'
+		AND (FIRST_APPROVAL_DATE IS NULL
+		AND FIRST_APPROVER = #{userNo})
+		OR (FIRST_APPROVAL_DATE IS NOT NULL
+		AND LAST_APPROVAL_DATE IS NULL
+		AND LAST_APPROVER = #{userNo})
+	</select>
 </mapper>

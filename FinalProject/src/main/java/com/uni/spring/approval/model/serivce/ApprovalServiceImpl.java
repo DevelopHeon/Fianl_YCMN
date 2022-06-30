@@ -304,4 +304,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return approvalDao.selectInBoxList(sqlSession, approval, pi);
 	}
 
+	@Override
+	public int selectMainApprovalCnt(int userNo) {
+		return approvalDao.selectMainApprovalCnt(sqlSession, userNo);
+	}
+
 }

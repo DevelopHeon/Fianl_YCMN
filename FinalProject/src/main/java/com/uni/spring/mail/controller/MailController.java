@@ -18,10 +18,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -312,16 +310,12 @@ public class MailController {
 	
 	//받은메일조회(detail)
 	@RequestMapping("detailReceiveMail.do")
-	public String detailReceiveMail(@RequestParam("mno")int receiveNo,
-									@ModelAttribute("loginUser")Employee emp,
-									Model model) {
-		int empNo = emp.getEmpNo();
+	public String detailReceiveMail(@RequestParam("mno")int receiveNo, Model model) {
+		
 		//메일확인
 		ReceiveMail receiveMail = mailService.selectReceiveMail(receiveNo);
+		
 		model.addAttribute("rMail", receiveMail);
-
-		int unread = mailService.selectUnreadMail(empNo);
-		model.addAttribute("unread", unread);
 		return "mail/ReceiveDetailView";
 	}
 	
@@ -364,17 +358,5 @@ public class MailController {
 		mv.addObject("reply", receiveMail).setViewName("mail/writeReply");
 
 		return mv;
-	}
-	
-	//메인_상단메일알림
-	@ResponseBody
-	@RequestMapping("mainMailList.do")
-	public ArrayList<ReceiveMail> mainMailList(Model model, HttpSession session) {
-		Employee emp = (Employee)session.getAttribute("loginUser");
-		int empNo = emp.getEmpNo();
-		
-		ArrayList<ReceiveMail> mailList = mailService.selectMainMailList(empNo);
-		
-		return mailList;
 	}
 }

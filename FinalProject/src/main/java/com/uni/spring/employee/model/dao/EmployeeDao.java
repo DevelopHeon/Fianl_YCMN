@@ -141,7 +141,7 @@ public class EmployeeDao {
 		return sqlSession.selectOne("employeeMapper.selectEmpPersonnel", empNo);
 
 	}
-	//근무시간 합계
+	//주차별 근무시간 합계
 	public String selectWorkingWeekTotal(SqlSessionTemplate sqlSession, int empNo) {
 		return sqlSession.selectOne("employeeMapper.selectWorkingWeekTotal", empNo);
 

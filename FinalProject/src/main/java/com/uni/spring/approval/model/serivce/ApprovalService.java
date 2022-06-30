@@ -76,4 +76,6 @@ public interface ApprovalService {
 
 	ArrayList<Approval> selectInBoxList(Approval approval, PageInfo pi);
 
+	int selectMainApprovalCnt(int userNo);
+
 }

@@ -89,22 +89,65 @@
         <ul class="nav top-menu">
           <!-- inbox dropdown start-->
           <li id="header_inbox_bar" class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" onclick="mailList();">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="views/index.html#">
               <i class="fa fa-envelope-o"></i>
-              <span class="badge bg-theme">${unread }</span>
+              <span class="badge bg-theme">5</span>
               </a>
             <ul class="dropdown-menu extended inbox">
               <div class="notify-arrow notify-arrow-green"></div>
               <li>
-                <p class="green">You have ${unread } new messages</p>
+                <p class="green">You have 5 new messages</p>
               </li>
               <li>
-              	<table id="mainMailList">
-
-                  </table>
+                <a href="views/index.html#">
+                  <span class="photo"><img alt="avatar" src="resources/img/ui-zac.jpg"></span>
+                  <span class="subject">
+                  <span class="from">Zac Snider</span>
+                  <span class="time">Just now</span>
+                  </span>
+                  <span class="message">
+                  Hi mate, how is everything?
+                  </span>
+                  </a>
               </li>
               <li>
-                <a href="receiveMail.do">See all messages</a>
+                <a href="views/index.html#">
+                  <span class="photo"><img alt="avatar" src="resources/img/ui-divya.jpg"></span>
+                  <span class="subject">
+                  <span class="from">Divya Manian</span>
+                  <span class="time">40 mins.</span>
+                  </span>
+                  <span class="message">
+                  Hi, I need your help with this.
+                  </span>
+                  </a>
+              </li>
+              <li>
+                <a href="views/index.html#">
+                  <span class="photo"><img alt="avatar" src="resources/img/ui-danro.jpg"></span>
+                  <span class="subject">
+                  <span class="from">Dan Rogers</span>
+                  <span class="time">2 hrs.</span>
+                  </span>
+                  <span class="message">
+                  Love your new Dashboard.
+                  </span>
+                  </a>
+              </li>
+              <li>
+                <a href="views/index.html#">
+                  <span class="photo"><img alt="avatar" src="resources/img/ui-sherman.jpg"></span>
+                  <span class="subject">
+                  <span class="from">Dj Sherman</span>
+                  <span class="time">4 hrs.</span>
+                  </span>
+                  <span class="message">
+                  Please, answer asap.
+                  </span>
+                  </a>
+              </li>
+              <li>
+                <a href="views/index.html#">See all messages</a>
               </li>
             </ul>
             <script>
@@ -283,7 +326,7 @@
               </a>
             <ul class="sub">
               <li><a href="#">내 예약 현황</a></li>
-              <li><a href="reservMain.do">회의실/비품 예약</a></li>
+              <li><a href="#">회의실/비품 예약</a></li>
               <li><a href="resourceManage.do">회의실/비품 관리</a></li>
             </ul>
           </li>
@@ -392,7 +435,47 @@
     }); */
   </script>
   <script type="application/javascript">
+    $(document).ready(function() {
+      $("#date-popover").popover({
+        html: true,
+        trigger: "manual"
+      });
+      $("#date-popover").hide();
+      $("#date-popover").click(function(e) {
+        $(this).hide();
+      });
 
+      $("#my-calendar").zabuto_calendar({
+        action: function() {
+          return myDateFunction(this.id, false);
+        },
+        action_nav: function() {
+          return myNavFunction(this.id);
+        },
+        ajax: {
+          url: "show_data.php?action=1",
+          modal: true
+        },
+        legend: [{
+            type: "text",
+            label: "Special event",
+            badge: "00"
+          },
+          {
+            type: "block",
+            label: "Regular event",
+          }
+        ]
+      });
+    });
+
+    function myNavFunction(id) {
+      $("#date-popover").hide();
+      var nav = $("#" + id).data("navigation");
+      var to = $("#" + id).data("to");
+      console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
+    }
+    
   /*******상태 표시*******/
   $(function(){
 
@@ -572,7 +655,7 @@
 		  //서버시간 재가동!
 			checkTime(); 
 			alert("퇴근 완료");
-			$("#finishBtn").attr('disabled', true);
+			
 		  }
 		  
 		  var finishTime = now.innerHTML;
