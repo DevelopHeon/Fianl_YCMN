@@ -47,7 +47,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	<!-- 보낸메일List 페이지 수 -->
 	<select id="selectSendListCount" resultType="_int">
-		SELECT COUNT(*) FROM RECEIVEMAIL WHERE EMP_NO = #{empNo}
+		SELECT COUNT(*) 
+		FROM RECEIVEMAIL 
+		WHERE EMP_NO = #{empNo}
 	</select>
 	
 	<!-- 보낸메일 List -->
@@ -55,30 +57,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT A.*, B.EMP_NAME, C.MAIL_TITLE, C.FILE_NAME FROM RECEIVEMAIL A 
 		LEFT JOIN EMPLOYEE B ON A.RECEIVER = B.EMP_NO
 		LEFT JOIN MAIL C ON A.MAIL_NO = C.MAIL_NO
-		WHERE A.EMP_NO = #{empNo} AND (A.RECEIVE_STATUS = 'Y' OR A.RECEIVE_STATUS = 'RN') AND RECEIVER != 0
+		WHERE 
+			A.EMP_NO = #{empNo} AND (A.RECEIVE_STATUS = 'Y' OR A.RECEIVE_STATUS = 'RN') 
+			AND RECEIVER != 0
 		ORDER BY A.MAIL_NO DESC
 	</select>
 	
 	<!-- 휴지통List -->
 	<select id="selectDeleteList" resultMap="ReceiveMailMap">
-		SELECT A.*, B.EMP_NAME, C.MAIL_TITLE, C.FILE_NAME FROM RECEIVEMAIL A 
+		SELECT 
+			A.*, 
+			B.EMP_NAME, 
+			C.MAIL_TITLE, 
+			C.FILE_NAME 
+		FROM RECEIVEMAIL A 
 		LEFT JOIN EMPLOYEE B ON A.RECEIVER = B.EMP_NO
 		LEFT JOIN MAIL C ON A.MAIL_NO = C.MAIL_NO
-		WHERE (A.EMP_NO = #{empNo} OR A.RECEIVER = #{empNo}) AND (A.RECEIVE_STATUS = 'SN' OR A.RECEIVE_STATUS = 'RN')
+		WHERE 
+			(A.EMP_NO = #{empNo} OR A.RECEIVER = #{empNo}) 
+			AND (A.RECEIVE_STATUS = 'SN' OR A.RECEIVE_STATUS = 'RN')
 		ORDER BY A.MAIL_NO DESC
 	</select>
 	
 	<!-- 받은메일List 페이지 수 -->
 	<select id="selectReceiveListCount" resultType="_int">
-		SELECT COUNT(*) FROM RECEIVEMAIL WHERE RECEIVER = #{empNo}
+		SELECT COUNT(*) 
+		FROM RECEIVEMAIL 
+		WHERE RECEIVER = #{empNo}
 	</select>
 	
 	<!-- 받은메일 List -->
 	<select id="selectReceiveList" resultMap="ReceiveMailMap">
-		SELECT A.*, B.EMP_NAME, C.MAIL_TITLE, C.FILE_NAME FROM RECEIVEMAIL A 
+		SELECT 
+			A.*, 
+			B.EMP_NAME, 
+			B.EMP_PFE, 
+			C.MAIL_TITLE, 
+			C.FILE_NAME 
+		FROM RECEIVEMAIL A 
 		LEFT JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
 		LEFT JOIN MAIL C ON A.MAIL_NO = C.MAIL_NO
-		WHERE RECEIVER = #{empNo} AND (A.RECEIVE_STATUS = 'Y' OR A.RECEIVE_STATUS = 'SN')
+		WHERE 
+			RECEIVER = #{empNo} 
+			AND (A.RECEIVE_STATUS = 'Y' OR A.RECEIVE_STATUS = 'SN')
 		ORDER BY A.MAIL_NO DESC
 	</select>
 	
@@ -146,14 +167,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectUnreadMail" resultType="_int">
 		SELECT COUNT(*)
 		FROM RECEIVEMAIL
-		WHERE RECEIVER = #{empNo} AND CONFIRM_MAIL = 0
+		WHERE RECEIVER = #{empNo} 
+		AND CONFIRM_MAIL = 0
 	</select>
 	
 	<!-- 전체 메일 개수 -->
 	<select id="selectTotalMail" resultType="_int">
 		SELECT COUNT(*)
 		FROM RECEIVEMAIL
-		WHERE RECEIVER = #{empNo} AND RECEIVE_STATUS = 'Y'
+		WHERE RECEIVER = #{empNo} 
+		AND RECEIVE_STATUS = 'Y'
 	</select>
 	
 	<!-- 주소록 -> 메일쓰기 -->
@@ -167,19 +190,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateStarMail" parameterType="ReceiveMail">
 		UPDATE RECEIVEMAIL
 		SET STAR_MAIL = 'Y'
-		WHERE RECEIVE_NO = #{receiveNo} AND STAR_MAIL = 'N'
+		WHERE RECEIVE_NO = #{receiveNo} 
+		AND STAR_MAIL = 'N'
 	</update>	
 	
 	<!-- 받은메일 즐겨찾기 off -->
 	<update id="updateOffStarMail" parameterType="ReceiveMail">
 		UPDATE RECEIVEMAIL
 		SET STAR_MAIL = 'N'
-		WHERE RECEIVE_NO = #{receiveNo} AND STAR_MAIL = 'Y'
+		WHERE RECEIVE_NO = #{receiveNo} 
+		AND STAR_MAIL = 'Y'
 	</update>
 	
 	<!-- 휴지통 삭제 -->
 	<delete id="realDelete" parameterType="ReceiveMail">
-		DELETE FROM RECEIVEMAIL
+		DELETE 
+		FROM RECEIVEMAIL
 		WHERE RECEIVE_NO IN (#{receiveNo})
 	</delete>
 	
@@ -187,7 +213,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectOffEmp" resultMap="MailMap">
 		SELECT *
 		FROM
-			(SELECT B.*
+			(SELECT 
+				B.*
 			FROM MAIL A
 			LEFT JOIN EMPLOYEE B ON B.EMP_NO = A.MAIL_TO
 			WHERE B.EMP_ONOFF = 'F' AND MAIL_TO = #{mailTo}
@@ -197,6 +224,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 부재메일 발송 -->
 	<insert id="insertOffMail" parameterType="Mail">
-		INSERT INTO MAIL VALUES(SEQ_MAIL.NEXTVAL, #{mailTo}, '부재중 입니다.', #{empNo}, NULL, NULL, NULL, TO_CHAR(SYSDATE, 'MM/DD HH24:MI'), '현재 부재중 입니다. 긴급한 사항은 연락 부탁드립니다.', DEFAULT, DEFAULT)
+		INSERT INTO MAIL 
+		VALUES(SEQ_MAIL.NEXTVAL, #{mailTo}, '부재중 입니다.', #{empNo}, NULL, NULL, NULL, TO_CHAR(SYSDATE, 'MM/DD HH24:MI'), '현재 부재중 입니다. 긴급한 사항은 연락 부탁드립니다.', DEFAULT, DEFAULT)
 	</insert>
+	
+	<!-- 메인_상단미확인메일리스트 -->
+	<select id="selectMainMailList" resultMap="ReceiveMailMap">
+	SELECT *
+	FROM
+		(SELECT 
+			A.*, 
+			B.EMP_NAME, 
+			B.EMP_PFE, 
+			C.MAIL_TITLE, 
+			C.FILE_NAME 
+		FROM RECEIVEMAIL A 
+		LEFT JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
+		LEFT JOIN MAIL C ON A.MAIL_NO = C.MAIL_NO
+		WHERE 
+			RECEIVER = #{empNo} 
+			AND (A.RECEIVE_STATUS = 'Y' OR A.RECEIVE_STATUS='SN') 
+			AND A.CONFIRM_MAIL = 0
+		ORDER BY A.MAIL_NO DESC)
+	<![CDATA[WHERE ROWNUM <= 4]]>
+	</select>
 </mapper>

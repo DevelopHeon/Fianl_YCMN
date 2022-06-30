@@ -150,6 +150,43 @@
                 <a href="views/index.html#">See all messages</a>
               </li>
             </ul>
+            <script>
+            function mailList(){
+            	$.ajax({
+            		url:"mainMailList.do",
+            		success:function(list){
+            			var result ="";
+            			if(list.length < 0){
+            				result += "<tr><td>새로운 메일이 없습니다.</td></tr>"
+            			}else{
+            				$.each(list, function(i, obj) {
+            					if(obj.employee.empPfe == null){
+            						result += "<tr>"
+    									  +		"<td>"
+    									  +		"<a href='detailReceiveMail.do?mno="+obj.receiveNo+"'>"
+    									  +		"<span class='photo'><img alt='avatar' src='resources/img/user.png' width='20'></span>"
+    							}else{
+    								result += "<tr>"
+    									  +		"<td>"
+    									  +		"<a href='detailReceiveMail.do?mno="+obj.receiveNo+"'>"
+    									  +		"<span class='photo'><img alt='avatar' src='resources/empUpload_files/"+obj.employee.empPfe+"' width='20'></span>"
+    							}
+            					result += "<span class='subject'>"
+           								+ "<span class='from' style='width:30px'>"+ obj.employee.empName +"</span>"
+            							+ "<span class='time'>"+ obj.timestamp + "</span>"
+            							+ "</span>"
+                          				+ "<span class='message'>"+ obj.mail.mailTitle +"</span>"
+                          				+   "</a>"
+                          				+  "</td>"
+                          				+ "</tr>"
+            				})
+            			}
+            			$("#mainMailList").html(result);
+            		}
+            	})
+            } 
+            	
+            </script>
           </li>
           <!-- inbox dropdown end -->
           <!-- notification dropdown start-->
