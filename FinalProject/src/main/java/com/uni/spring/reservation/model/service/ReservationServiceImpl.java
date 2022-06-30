@@ -1,14 +1,12 @@
 package com.uni.spring.reservation.model.service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import com.uni.spring.common.CommException;
 import com.uni.spring.reservation.model.dao.ReservationDao;
-import com.uni.spring.reservation.model.dto.Reservation;
 import com.uni.spring.reservation.model.dto.Resources;
 
 import lombok.RequiredArgsConstructor;
@@ -56,20 +54,6 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public void deleteRsc(Resources rsc) {
 		int result = reservationDao.deleteRsc(sqlSession, rsc);
-		
-		if(result < 0) {
-			throw new CommException();
-		}
-	}
-
-	@Override
-	public List<Reservation> findAll() {
-		return reservationDao.findAll(sqlSession);
-	}
-
-	@Override
-	public void insertReserve(Reservation rez) {
-		int result = reservationDao.insertReserve(sqlSession, rez);
 		
 		if(result < 0) {
 			throw new CommException();

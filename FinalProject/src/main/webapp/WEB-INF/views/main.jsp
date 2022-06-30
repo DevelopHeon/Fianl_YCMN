@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,8 +57,11 @@
 	#section2{
 		border-bottom: 3px dashed #D0C9C0;
 	}
+	#commDiv{
+		position: relative;
+		bottom : 250px;
+	}
 </style>
-
 </head>
 <body onload="checkMonth();">
 <jsp:include page="common/menubar.jsp"/>
@@ -199,7 +201,7 @@
             	</script>
             	
                <div class="col-sm-4" style="border:1px solid #d4d9d9;">
-               <h4>사내게시판 최신글</h4>
+               <h3>사내게시판 최신글</h3>
                <div class="board_comment_tab" id="approvalCommentsTab">
                   <a href="#" id="nList">공지사항</a>
                     <a href="#" id="anoList">익명게시판</a>
@@ -210,18 +212,17 @@
                   
                   </tbody>
                </table>
-            </div>
+               <!-- <hr>
+               <br> -->
+         	</div>
             <div class="col-sm-3" style="border:1px solid #d4d9d9; margin-left:5%;">
             	다
             </div>
          </div>
-         <%-- 아랫줄 레이아웃 --%>
-         <div class="row" style="margin-top:3%;">
-         	<div class="col-sm-3" style="border:1px solid #d4d9d9; margin-right:5%; margin-left:2%;">
-         	가
-         	</div>
-         	<div class="col-sm-4" style="border:1px solid #d4d9d9;">
-         		<h4>부서별 소통란</h4>
+         <div class="row">
+         	<div class="col-sm-3"></div>
+         	<div id="commDiv" class="col-sm-4" style="border:1px solid #d4d9d9;">
+         		<h3>부서별 소통란</h3>
          		<div id="newSpeed" class="form-inline" style="margin-bottom:5%;">
          			<div class="form-group">
                    		<textarea class="form-control" id="commContent" rows="2" cols="60" style="resize:none;" placeholder="새로운 소식을 알려주세요."></textarea>
@@ -229,8 +230,8 @@
          			</div>
          		</div>
          		<br>
-         		<div id="newSpeedlist">
-					<table id="newSpeedTable">
+         		<div id="commListDiv">
+					<table id="commTable">
          				<tbody>
          				</tbody>
        				</table>
@@ -241,16 +242,110 @@
    </section>         
 </body>
 <script>
+	$(function(){
+	   selectMainNotice();
+	   
+	   // a태그 공지사항 클릭시 리스트 불러오기
+	   $("#nList").on("click", function(){
+	      selectMainNotice();
+	   });
+	   
+	   function selectMainNotice(){
+	      $.ajax({
+	         url:"mainListNotice.do",
+	         success:function(list){
+	            var value = "<b>공지사항</b>";
+	            
+	            if(list.length < 0){
+	            	value += "<tr><td><h3>조회된 공지사항이 없습니다.</h3><td></tr>"
+	            }else{
+		            $.each(list, function(i, obj){
+		               value += "<tr onclick='goDetail(1, "+obj.noticeNo+")'><td style='width:68%'>"
+		                    +  obj.noticeTitle+"</td>"
+		                    +  "<td>"+obj.createDate+"&nbsp;&nbsp;"+obj.noticeWriter+"&nbsp;"+obj.posName+"</td></tr>";
+		                    
+		            });
+	            }
+	            $("#boardTable tbody").html(value);
+	         },error:function(){
+	            console.log("공지사항 목록 ajax 통신 실패");
+	         }
+	      });
+	   }
+	});
+</script>
+<script>
+// 익명게시판 불러오기
+	$("#anoList").on("click", function(){
+	   $.ajax({
+	      url:"mainAnoList.do",
+	      success:function(list){
+	         var value="<b>익명게시판</b>";
+	         
+	         if(list.length < 0){
+	        	 value += "<tr><td>조회된 게시글이 없습니다.</td></tr>"
+	         }else{
+		         $.each(list, function(i, obj){
+		            value += "<tr onclick='goDetail(2, "+obj.anoNo+")'><td style='width:65%'>" + obj.anoTitle;
+		            if(obj.replyCnt > 0){
+		               value += "&nbsp;[<span style='color:#2c86dc;'>"+obj.replyCnt+"</span>]";
+		            }
+		            value += "</td>"
+		                 +  "<td> 익명 > "+obj.createDate+"</td></tr>";
+		         });
+	         }
+	         $("#boardTable tbody").html(value);
+	      },error:function(){
+	         console.log("메인화면 익명게시판목록 불러오기 실패");
+	      }
+	   });
+	});
+</script>
+<script>
+// 상세화면 들어가기
+	function goDetail(num, bno){
+	   var confirmUser = "${loginUser.empId}";
+	   
+	     if(num === 1){
+	      location.href="detailNotice.do?noticeNo="+bno;
+	   }else{
+	      location.href="detailAnonymBoard.do?anoNo="+bno+"&confirmUser="+confirmUser;
+	   }
+	}
+</script>
+<script>
 	// 부서별 소통란 조회 및 추가
 	$(function(){
 		selectCommList();
+		
+		$(document).on("click", "#commTable tbody tr span", function(){
+			var commNo = $(this).find('input').val();
+			
+			if(!confirm("선택한 글을 지우시겠습니까?")){
+				return false;
+			}else{
+				$.ajax({
+					url:"commDelete.do",
+					type:"post",
+					data:{commNo:commNo},
+					success:function(result){
+						if(result > 0){
+							selectCommList();
+						}else{
+							alert("소통글 삭제 실패");
+						}
+					},error:function(){
+						console.log("소통 삭제 ajax 통신 실패");
+					}
+				});
+			}
+		});
 		
 		// 소통란 글 추가 ajax
 		$(document).on("click", "#addComm", function(){
 			
 			if($("#commContent").val().trim().length != 0){
 				$.ajax({
-					
 					url:"comminsert.do",
 					type:"post",
 					data:{
@@ -285,87 +380,23 @@
 						value += "<tr><td>조회된 글이 없습니다.</td></tr>"
 					}else{
 						$.each(list, function(i, obj){
+							
 							if(obj.empPfe == null){
-								value += "<tr>"
-									  +		"<td><img class='myphoto img-circle' src='resources/img/common/basicimg.png'>&nbsp;&nbsp;&nbsp;</td>";
+								value +=  "<tr><td><img class='myphoto img-circle' src='resources/img/common/basicimg.png'>&nbsp;&nbsp;&nbsp;</td>";
 							}else{
-								value += "<tr>"
-									  +		"<td><img class='myphoto img-circle' src='resources/empUpload_files/"+obj.empPfe+"'>&nbsp;&nbsp;&nbsp;</td>";
+								value +=  "<tr><td><img class='myphoto img-circle' src='resources/empUpload_files/"+obj.empPfe+"'>&nbsp;&nbsp;&nbsp;</td>";
 							}
 							
 							value += "<td style='width:85%;'>"+obj.commWriter+"&nbsp;&nbsp;"+obj.createDate+"<br>"
 								  +	 obj.commContent +"</td>"
-								  +	 "<td>&nbsp;<span style='cursor:pointer;' onclick='deleteComm("+obj.commNo+")'><i class='bi bi-x-lg'></i></span></td>"
+								  +	 "<td>&nbsp;<span style='cursor:pointer;' class='close'><input type='hidden' value="+obj.commNo+"><i class='bi bi-x-lg'></i></span></td>"
 								  +  "<tr class='space'></tr>"
 						});
 					}
-					$("#newSpeedTable tbody").html(value);
+					$("#commTable tbody").html(value);
 				}
 			});
 		}
 	});
-
-</script>
-<script>
-	$(function(){
-	   selectMainNotice();
-	   
-	   // a태그 공지사항 클릭시 리스트 불러오기
-	   $("#nList").on("click", function(){
-	      selectMainNotice();
-	   });
-	   
-	   function selectMainNotice(){
-	      $.ajax({
-	         url:"mainListNotice.do",
-	         success:function(list){
-	            var value="<b>공지사항</b>";
-	            $.each(list, function(i, obj){
-	               value += "<tr onclick='goDetail(1, "+obj.noticeNo+")'><td style='width:68%'>"
-	                    +  obj.noticeTitle+"</td>"
-	                    +  "<td>"+obj.createDate+"&nbsp;&nbsp;"+obj.noticeWriter+"&nbsp;"+obj.posName+"</td></tr>";
-	                    
-	            });
-	            $("#boardTable tbody").html(value);
-	         },error:function(){
-	            console.log("공지사항 목록 ajax 통신 실패");
-	         }
-	      });
-	   }
-	});
-</script>
-<script>
-// 익명게시판 불러오기
-	$("#anoList").on("click", function(){
-	   $.ajax({
-	      url:"mainAnoList.do",
-	      success:function(list){
-	         var value="<b>익명게시판</b>";
-	         $.each(list, function(i, obj){
-	            value += "<tr onclick='goDetail(2, "+obj.anoNo+")'><td style='width:65%'>" + obj.anoTitle;
-	            if(obj.replyCnt > 0){
-	               value += "&nbsp;[<span style='color:#2c86dc;'>"+obj.replyCnt+"</span>]";
-	            }
-	            value += "</td>"
-	                 +  "<td> 익명 > "+obj.createDate+"</td></tr>";
-	         });
-	         $("#boardTable tbody").html(value);
-	      },error:function(){
-	         console.log("메인화면 익명게시판목록 불러오기 실패");
-	      }
-	   });
-	});
-</script>
-<script>
-// 상세화면 들어가기
-	function goDetail(num, bno){
-	   var confirmUser = "${loginUser.empId}";
-	   
-	     if(num === 1){
-	      location.href="detailNotice.do?noticeNo="+bno;
-	   }else{
-	      location.href="detailAnonymBoard.do?anoNo="+bno+"&confirmUser="+confirmUser;
-	   }
-	}
 </script>
 </html>

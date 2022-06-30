@@ -192,4 +192,8 @@ public class ApprovalDao {
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectInBoxList", approval, rowBounds);
 	}
 
+	public int selectMainApprovalCnt(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("approvalMapper.selectMainApprovalCnt", userNo);
+	}
+
 }

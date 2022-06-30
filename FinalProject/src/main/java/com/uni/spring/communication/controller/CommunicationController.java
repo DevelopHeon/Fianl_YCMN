@@ -43,4 +43,13 @@ public class CommunicationController {
 		
 		return String.valueOf(result);
 	}
+	
+	@ResponseBody
+	@RequestMapping("commDelete.do")
+	public String deleteComm(int commNo) {
+		
+		int result = communicationService.deleteComm(commNo);
+		
+		return String.valueOf(result);
+	}
 }
