@@ -76,7 +76,26 @@
                      	<c:if test="${ !empty empInfo.empPfe }">
                          	<p class="empImg centered"><img src="resources/empUpload_files/${empInfo.empPfe}" class="img-circle" width="80"></p>
                      	</c:if>
-                     	<h3 class="centered">${ sessionScope.loginUser.empName }</h3>
+                     	<h3 class="centered">${ sessionScope.loginUser.empName } ${ sessionScope.loginUser.posName }</h3>
+                     	<div class="approvalCnt" style="margin:5% 0% 5% 15%;"> 
+	                     	<a href="selectInboxList.do?appStatus=W&userNo=${ loginUser.empNo }">결재할 문서</a><span id="appCnt" style="margin-left:30%; margin-bottom:2%; height:25; width:25px;" class="badge bg-info"></span>
+                     	</div>
+                     	<script>
+                     		// 결재 할 문서 개수 불러오기
+                     		$(function(){
+                     			var userNo = ${loginUser.empNo};
+                     			$.ajax({
+                     				url:"approvalCnt.do",
+                     				type:"get",
+                     				data:{userNo:userNo},
+                     				success:function(result){
+                     					$("#appCnt").text(result);
+                     				},error:function(){
+                     					console.log("결재문서 카운트 조회 실패");
+                     				}
+                     			});
+                     		});
+                     	</script>
                      <!-- TABLE로 변경하기 -->
                      <table class="table centered">
                      	<tr>
