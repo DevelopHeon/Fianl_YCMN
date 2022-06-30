@@ -48,13 +48,15 @@
                   <input type="text" name="receiveNo" value="${ rMail.receiveNo}" style="display:none">
                   	<span class="pull-left label label-warning">보낸 사람</span>
                   	<span class="empNo pull-left" style="display:none">&nbsp;&nbsp;${ rMail.empNo}</span>
-                  	          	<c:if test="${ rMail.employee.empPfe eq null}">
-               	<p><img src="resources/img/user.png" class="img-circle" width="50"></p>
-            </c:if>
-            <c:if test="${ !empty rMail.employee.empPfe }">
-                <p><img src="resources/empUpload_files/${rMail.employee.empPfe}"width="50"></p>
-            </c:if>
-                 	<span class="pull-left">&nbsp;&nbsp;${ rMail.employee.empName}</span><br><br>
+                  	<span class="pull-left">
+                  		<c:if test="${ rMail.employee.empPfe eq null}">
+               				<img src="resources/img/user.png" class="img-circle" width="40">
+           				</c:if>
+           				<c:if test="${ !empty rMail.employee.empPfe }">
+               				<img src="resources/empUpload_files/${rMail.employee.empPfe}" class="img-circle" width="40">
+            			</c:if>
+                 		&nbsp;&nbsp;${ rMail.employee.empName}</span>
+                 		<br><br><br>
                     <h2 class="pull-left">${ rMail.mail.mailTitle}</h2>
                   </div>
                   <div class="col-md-4">
