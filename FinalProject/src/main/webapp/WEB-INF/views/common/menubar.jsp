@@ -149,11 +149,8 @@
               <li>
                 <a href="views/index.html#">See all messages</a>
               </li>
-<<<<<<< HEAD
             </ul>
-=======
-            </ul>
->>>>>>> refs/heads/master
+
             <script>
             function mailList(){
             	$.ajax({
