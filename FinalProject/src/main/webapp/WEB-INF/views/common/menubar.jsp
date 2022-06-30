@@ -121,12 +121,12 @@
             						result += "<tr>"
     									  +		"<td>"
     									  +		"<a href='detailReceiveMail.do?mno="+obj.receiveNo+"'>"
-    									  +		"<span class='photo'><img class='img-circle' src='resources/img/user.png' width='25'></span>"
+    									  +		"<span class='photo'><img alt='avatar' src='resources/img/user.png' width='20'></span>"
     							}else{
     								result += "<tr>"
     									  +		"<td>"
     									  +		"<a href='detailReceiveMail.do?mno="+obj.receiveNo+"'>"
-    									  +		"<span class='photo'><img class='img-circle' src='resources/empUpload_files/"+obj.employee.empPfe+"' width='25'></span>"
+    									  +		"<span class='photo'><img alt='avatar' src='resources/empUpload_files/"+obj.employee.empPfe+"' width='20'></span>"
     							}
             					result += "<span class='subject'>"
            								+ "<span class='from' style='width:30px'>"+ obj.employee.empName +"</span>"
