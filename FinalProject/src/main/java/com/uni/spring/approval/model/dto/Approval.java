@@ -4,9 +4,9 @@ import java.sql.Date;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.uni.spring.common.dto.Attachment;
-import com.uni.spring.employee.model.dto.Employee;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,9 +23,11 @@ public class Approval {
 	
 	private int rownum; // 정렬된 글 번호
 	private int appNo; // 전자결재DB 고유번호
+	@NotBlank(message = "기안자 성명은 필수 입력 값입니다.")
 	private String appWriterNo; // 기안자 성명 (or 사번)
 	
 	@NotBlank(message = "제목은 필수 입력 값입니다.")
+	@Size(max=100, message="제목의 길이가 너무 깁니다.")
 	private String appTitle; // 기안서 제목
 	
 	@NotNull(message = "기안일은 필수 입력 값입니다.")

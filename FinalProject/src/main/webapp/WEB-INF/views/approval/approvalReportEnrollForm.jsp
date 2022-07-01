@@ -90,6 +90,7 @@
 								<hr style="width:100%;">
 								<label for="appTitle">제목 : </label>
 									<form:input type="text" class="form-control" path="appTitle" id="appTitle" name="appTitle" style="margin-left:5%; width:35%" placeholder="업무보고서 제목" required="required" />
+								<form:errors style="color:red; margin-left:3%;" path="appTitle"></form:errors>
 								<br>
 								<label for="reportContent">업무 내용 : </label>
 								<form:textarea class="form-control" path="approvalReport.reportContent" name="approvalReport.reportContent" id="reportContent" rows="8" cols="52" style="resize:none; margin-left:2.3%; margin-top:1%;" required="required"></form:textarea>

@@ -420,4 +420,9 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		AND LAST_APPROVAL_DATE IS NULL
 		AND LAST_APPROVER = #{userNo})
 	</select>
+	<select id="lvDateCheck" parameterType="_int" resultType="_int">
+		SELECT TOTAL_NUM
+		FROM TIMEOFF
+		WHERE EMP_NO = #{empNo}
+	</select>
 </mapper>
