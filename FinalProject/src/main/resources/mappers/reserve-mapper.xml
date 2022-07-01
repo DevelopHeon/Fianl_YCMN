@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE 	RSC_NO = #{rscNo}
 	</update>
 	
-	<select id="getReservList" resultType="Reservation">
+	<select id="getRezList" resultType="Reservation">
 		SELECT 	  A.REZ_NO
                 , A.RSC_NO
                 , A.REZ_WRITER
@@ -76,4 +76,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		, TO_DATE(REPLACE(#{endTime},'T',' '),'YYYY-MM-DD HH24:MI:SS')
 		, DEFAULT)
 	</insert>
+	<select id="myRezList" parameterType="_int" resultType="Reservation">
+		SELECT		A.REZ_NO
+					, A.RSC_NO
+					, A.REZ_WRITER
+					, A.REZ_TITLE
+					, TO_CHAR(A.START_TIME, 'YYYY-MM-DD HH24:MI:SS') AS START_TIME
+					, TO_CHAR(A.END_TIME, 'YYYY-MM-DD HH24:MI:SS') AS END_TIME
+					, A.STATUS
+					, B.RSC_NAME
+		FROM		RESERVATION A
+		JOIN    	RESOURCE_ENTERPRISE B ON A.RSC_NO = B.RSC_NO
+		WHERE		REZ_WRITER = #{empNo}
+		ORDER BY	A.START_TIME DESC
+	</select>
+	<update id="returnReserve" parameterType="Resources">
+		UPDATE 	RESERVATION
+		SET		STATUS = 'N'
+		WHERE 	REZ_NO = #{rezNo}
+	</update>
+	<update id="cancleReserve" parameterType="Resources">
+		UPDATE 	RESERVATION
+		SET		STATUS = 'C'
+		WHERE 	REZ_NO = #{rezNo}
+	</update>
 </mapper>
