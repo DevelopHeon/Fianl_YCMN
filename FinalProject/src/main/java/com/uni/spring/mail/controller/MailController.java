@@ -15,9 +15,11 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,6 +51,7 @@ public class MailController {
 	//메일작성폼
 	@RequestMapping("writeMail.do")
 	public String writeMail(@RequestParam(name="eno", required=false)String empNo,
+							@ModelAttribute("mail") Mail mail,
 							HttpSession session,
 							Model model) {
 		//주소록에서 사원에게 메일쓰기를 클릭할때(empDetail, writeMail)
@@ -59,19 +62,24 @@ public class MailController {
 			Employee emp = mailService.selectChoiceMail(Integer.parseInt(empNo));
 			model.addAttribute("emp", emp);
 		}
+		model.addAttribute("mail", mail);
 		
 		return "mail/writeMail";
 	}
 	
 	//메일작성 완
 	@RequestMapping("insertMail.do")
-	public String insertMail(Mail mail,
+	public String insertMail(@ModelAttribute("mail") @Valid Mail mail,
+			 BindingResult result,
 							 HttpSession session,
 							 HttpServletRequest request, 
 							 Model model,
 							 @RequestParam(name="upfile", required=false) MultipartFile file) {
 		//메일 잘 들어오는지 확인
 		System.out.println(mail);
+		if(result.hasErrors()) {
+			return "mail/writeMail";
+		}
 		mail.setMailContent(mail.getMailContent().replaceAll("\n", "<br>"));
 		Attachment attachment = null;
 		if(!file.getOriginalFilename().equals("")) { //첨부파일에 업로드가 되었다면
@@ -86,7 +94,8 @@ public class MailController {
 		
 		mailService.insertMail(mail, attachment);
 		
-		session.setAttribute("msg", "메일 작성 완료");
+		session.setAttribute("msg", "메일이 전송되었습니다.");
+		
 
 		return "mail/writeMail";
 	}

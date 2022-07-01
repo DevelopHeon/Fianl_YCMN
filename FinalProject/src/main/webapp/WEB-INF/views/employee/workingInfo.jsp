@@ -51,9 +51,11 @@ function checkMonth() {
 	}
 
 	//이번달 필요 근무 시간
-    var start = new Date(2022, 5, 1); // 2022-6-1
-    var end = new Date(2022, 5, 30); // 2022-6-30
+    var start = new Date(2022, 6, 1); // 2022-7-1
+    var end = new Date(2022, 6, 31); // 2022-7-31
 
+	var lastDay = new Date(currentDate.getDate());
+	console.log(lastDay)
     var count = 0;
 
 	var thisMonthWork = document.getElementById("thisMonthWork").innerHTML;
@@ -113,7 +115,7 @@ function checkMonth() {
             <!-- /col-md-4 -->
              <div>
              <!-- <a id="prev"><i class="fa fa-chevron-left centered" style="font-size:25px"></i></a> -->
-             <h2 id="thisM" class="centered"><%=format.format(currentTime) %>월</h2>
+             <h2 class="month centered"></h2>
              <!-- <a id="next"><i class="fa fa-chevron-right centered" style="font-size:25px"></i></a>  -->
              
              </div>
@@ -128,8 +130,7 @@ function checkMonth() {
              	  <td id="baseWork" width="300"></td>
              	  <td width="300">
              	  	<div class="progress progress-striped active">
-                		<div id="bar" class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-                		</div>
+                		<div id="bar" class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
               		</div>
               	  </td>
              	</tr>
