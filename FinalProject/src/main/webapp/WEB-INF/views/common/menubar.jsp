@@ -216,10 +216,11 @@
                 <p class="empImg centered"><img src="resources/empUpload_files/${empInfo.empPfe}" class="img-circle" width="80"></p>
             </c:if>
             
-
           <h5 class="centered">${ sessionScope.loginUser.empName }</h5>
           <button type="button" class="workCheck btn btn-primary" data-toggle="modal" data-target="#workcheck" onclick="checkTime(); todayCheck();" >출퇴근 확인</button>
 
+		  <!-- admin일 경우 관리 메뉴 보임 -->
+		  <c:if test="${ sessionScope.loginUser.empId eq 'admin' || sessionScope.loginUser.depName eq '인사부서' }">
           <li class="sub-menu">
             <a href="views/javascript:;">
               <i class="fa fa-book"></i>
@@ -232,6 +233,7 @@
               <li><a href="listEmp.do">임직원 관리</a></li>
             </ul>
           </li>
+          </c:if>
           <li class="sub-menu">
             <a href="views/javascript:;">
               <i class="fa fa-book"></i>
@@ -284,7 +286,9 @@
             <ul class="sub">
               <li><a href="myRezList.do">내 예약 현황</a></li>
               <li><a href="reservMain.do">회의실/비품 예약</a></li>
+              <c:if test="${ sessionScope.loginUser.empId eq 'admin' }"><!-- admin일 경우 자원 관리 메뉴 보임 -->
               <li><a href="resourceManage.do">회의실/비품 관리</a></li>
+              </c:if>
             </ul>
           </li>
           <li class="sub-menu">
@@ -296,6 +300,7 @@
               <li><a href="myPage.do">인사 정보</a></li>
               <li><a href="workingInfo.do">근태 정보</a></li>
               <li><a href="timeOff.do">연차 현황</a></li>
+              <li><a href="#">조직도</a></li>
               <li><a href="empAddress.do">주소록</a></li>
             </ul>
           </li>

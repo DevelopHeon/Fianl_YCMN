@@ -101,13 +101,6 @@ public class ReservationController {
 		reservationService.insertReserve(rez);
         return "redirect:/reservMain.do";
     }
-
-	
-//	// 내 예약 현황 페이지로 이동
-//	@RequestMapping("myRezManage.do")
-//	public String myRezManage() {
-//		return "reservation/myRezManage";
-//	}
 	
 	// 나의 예약 정보 조회
 	@RequestMapping("myRezList.do")
