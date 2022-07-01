@@ -76,7 +76,8 @@
                      	<c:if test="${ !empty empInfo.empPfe }">
                          	<p class="empImg centered"><img src="resources/empUpload_files/${empInfo.empPfe}" class="img-circle" width="80"></p>
                      	</c:if>
-                     	<h3 class="centered">${ sessionScope.loginUser.empName } ${ sessionScope.loginUser.posName }</h3>
+                     	<h3 class="centered">${ sessionScope.loginUser.empName }</h3>
+                     	<h4 class="centered">${ sessionScope.loginUser.posName }</h4>
                      	<div class="approvalCnt" style="margin:5% 0% 5% 15%;"> 
 	                     	<a href="selectInboxList.do?appStatus=W&userNo=${ loginUser.empNo }">결재할 문서</a><span id="appCnt" style="margin-left:30%; margin-bottom:2%; height:25; width:25px;" class="badge bg-info"></span>
                      	</div>

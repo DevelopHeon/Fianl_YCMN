@@ -139,8 +139,15 @@
                         </td>
                         <!-- starMail -->
                     	<td class="inbox-small-cells"><input style="display:none"><i style="font-size:20px" class="star fa fa-star inbox-started"></i></td>
-                        <!-- 이름 -->
-                        <td class="dont-show">${r.employee.empName}</td>
+                        <!-- 프사,이름 -->
+                        <td>
+                        	<c:if test="${ r.employee.empPfe eq null}">
+               					<img src="resources/img/user.png" class="img-circle" width="30">
+           					</c:if>
+				            <c:if test="${ !empty r.employee.empPfe }">
+				                <img src="resources/empUpload_files/${r.employee.empPfe}" class="img-circle" width="30">
+				            </c:if>${r.employee.empName}
+				        </td>
                         <!-- 메일제목 -->
                         <td class="view-message">${r.mail.mailTitle}</td>
                         <!-- 첨부파일 유무 -->

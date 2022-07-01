@@ -4,16 +4,16 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%
-	WorkingDay w = new WorkingDay();
-	
-	Date currentTime = new Date();
-	SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
-	
+   WorkingDay w = new WorkingDay();
+   
+   Date currentTime = new Date();
+   SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
+   
 %>
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
+   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="Dashboard">
@@ -38,40 +38,40 @@
   <script src="resources/lib/chart-master/Chart.js"></script>
 
   <style>
-	#main-content{
-		color:black;
-	}
-	body{ }
-	#approverTable>tbody>tr>td{
-		height:35px;
-	}
-	.workCheck{
-		margin-left:60px;
-	}
-	
-	body{
-		background:white;
-		position:relative;
-	}
- 	.innerOuter{
-	 	position:absolute;
-	 	margin: 80px 0 0 150px;
-	 	background-color : black;
- 		color : #eee;
- 	}
- 	.off{
- 	 	display : none;
- 	}
+   #main-content{
+      color:black;
+   }
+   body{ }
+   #approverTable>tbody>tr>td{
+      height:35px;
+   }
+   .workCheck{
+      margin-left:60px;
+   }
+   
+   body{
+      background:white;
+      position:relative;
+   }
+    .innerOuter{
+       position:absolute;
+       margin: 80px 0 0 150px;
+       background-color : black;
+       color : #eee;
+    }
+    .off{
+        display : none;
+    }
 </style>
 </head>
 
 <body>
-	<c:if test = "${ !empty msg }">
-		<script>
-			alert("${msg}");
-		</script>
-		<c:remove var="msg" scope="session"/>
-	</c:if>
+   <c:if test = "${ !empty msg }">
+      <script>
+         alert("${msg}");
+      </script>
+      <c:remove var="msg" scope="session"/>
+   </c:if>
   <section id="container">
     <!-- **********************************************************************************************************************************************************
         TOP BAR CONTENT & NOTIFICATIONS
@@ -99,7 +99,7 @@
                 <p class="green">You have ${unread } new messages</p>
               </li>
               <li>
-              	<table id="mainMailList">
+                 <table id="mainMailList">
 
                   </table>
               </li>
@@ -109,40 +109,40 @@
             </ul>
             <script>
             function mailList(){
-            	$.ajax({
-            		url:"mainMailList.do",
-            		success:function(list){
-            			var result ="";
-            			if(list.length < 0){
-            				result += "<tr><td>새로운 메일이 없습니다.</td></tr>"
-            			}else{
-            				$.each(list, function(i, obj) {
-            					if(obj.employee.empPfe == null){
-            						result += "<tr>"
-    									  +		"<td>"
-    									  +		"<a href='detailReceiveMail.do?mno="+obj.receiveNo+"'>"
-    									  +		"<span class='photo'><img class='img-circle' src='resources/img/user.png' width='25'></span>"
-    							}else{
-    								result += "<tr>"
-    									  +		"<td>"
-    									  +		"<a href='detailReceiveMail.do?mno="+obj.receiveNo+"'>"
-    									  +		"<span class='photo'><img class='img-circle' src='resources/empUpload_files/"+obj.employee.empPfe+"' width='25'></span>"
-    							}
-            					result += "<span class='subject'>"
-           								+ "<span class='from' style='width:30px'>"+ obj.employee.empName +"</span>"
-            							+ "<span class='time'>"+ obj.timestamp + "</span>"
-            							+ "</span>"
-                          				+ "<span class='message'>"+ obj.mail.mailTitle +"</span>"
-                          				+   "</a>"
-                          				+  "</td>"
-                          				+ "</tr>"
-            				})
-            			}
-            			$("#mainMailList").html(result);
-            		}
-            	})
+               $.ajax({
+                  url:"mainMailList.do",
+                  success:function(list){
+                     var result ="";
+                     if(list.length < 0){
+                        result += "<tr><td>새로운 메일이 없습니다.</td></tr>"
+                     }else{
+                        $.each(list, function(i, obj) {
+                           if(obj.employee.empPfe == null){
+                              result += "<tr>"
+                                 +      "<td>"
+                                 +      "<a href='detailReceiveMail.do?mno="+obj.receiveNo+"'>"
+                                 +      "<span class='photo'><img class='img-circle' src='resources/img/user.png' width='25px'></span>"
+                         }else{
+                            result += "<tr>"
+                                 +      "<td>"
+                                 +      "<a href='detailReceiveMail.do?mno="+obj.receiveNo+"'>"
+                                 +      "<span class='photo'><img class='img-circle' src='resources/empUpload_files/"+obj.employee.empPfe+"' width='25px'></span><br><br>"
+                         }
+                           result += "<span class='subject'>"
+                                   + "<span class='from' style='width:30px'>"+ obj.employee.empName +"</span>"
+                                 + "<span class='time'>"+ obj.timestamp + "</span>"
+                                 + "</span>"
+                                      + "<span class='message'>"+ obj.mail.mailTitle +"</span>"
+                                      +   "</a>"
+                                      +  "</td>"
+                                      + "</tr>"
+                        })
+                     }
+                     $("#mainMailList").html(result);
+                  }
+               })
             } 
-            	
+               
             </script>
           </li>
           <!-- inbox dropdown end -->
@@ -209,8 +209,8 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          	<c:if test="${ empInfo.empPfe eq null}">
-               	<p class="empImg centered"><img src="resources/img/user.png" class="img-circle" width="80"></p>
+             <c:if test="${ empInfo.empPfe eq null}">
+                  <p class="empImg centered"><img src="resources/img/user.png" class="img-circle" width="80"></p>
             </c:if>
             <c:if test="${ !empty empInfo.empPfe }">
                 <p class="empImg centered"><img src="resources/empUpload_files/${empInfo.empPfe}" class="img-circle" width="80"></p>
@@ -248,9 +248,9 @@
             <a href="views/javascript:;">
               <i class="fa fa-envelope"></i>
               <span>메일</span>&nbsp;&nbsp;&nbsp;&nbsp;
-	              <c:if test="${unread ne 0 }" >
-	              <span class="badge bg-success">${unread}</span>
-	              </c:if>
+                 <c:if test="${unread ne 0 }" >
+                 <span class="badge bg-success">${unread}</span>
+                 </c:if>
               </a>
             <ul class="sub">
               <li><a href="writeMail.do">메일 작성</a></li>
@@ -258,6 +258,13 @@
               <li><a href="sendMail.do">보낸 메일함</a></li>
               <li><a href="deleteMail.do">휴지통</a></li>
             </ul>
+          </li>
+          <li class="sub-menu">
+            <a href="schedule.do">
+              <i class="fa fa-book"></i>
+              <span>일정</span>
+            </a>
+         
           </li>
           <li class="sub-menu">
             <a href="views/javascript:;">
@@ -298,21 +305,21 @@
     </aside>
     <!--sidebar end-->
   </section>
-	<div class="content">
-		<br>
-		<br>
-		<div class="innerOuter off">
-   	      <div id="empOnOff">
-           	<label for="empOnOff">상태 </label><br>
-           	<input type="radio" name="empOnOff" value="O" onclick="changeOnOff(1);" <c:if test ="${loginUser.empOnOff eq 'O'}">checked</c:if>><span class="badge bg-success">온라인</span>&nbsp;
-           	<input type="radio" name="empOnOff" value="E" onclick="changeOnOff(2);" <c:if test ="${loginUser.empOnOff eq 'E'}">checked</c:if>><span class="badge bg-primary">자리비움</span>&nbsp;
-           	<input type="radio" name="empOnOff" value="F" onclick="changeOnOff(3);" <c:if test ="${loginUser.empOnOff eq 'F'}">checked</c:if>><span class="badge">오프라인</span>&nbsp;
+   <div class="content">
+      <br>
+      <br>
+      <div class="innerOuter off">
+            <div id="empOnOff">
+              <label for="empOnOff">상태 </label><br>
+              <input type="radio" name="empOnOff" value="O" onclick="changeOnOff(1);" <c:if test ="${loginUser.empOnOff eq 'O'}">checked</c:if>><span class="badge bg-success">온라인</span>&nbsp;
+              <input type="radio" name="empOnOff" value="E" onclick="changeOnOff(2);" <c:if test ="${loginUser.empOnOff eq 'E'}">checked</c:if>><span class="badge bg-primary">자리비움</span>&nbsp;
+              <input type="radio" name="empOnOff" value="F" onclick="changeOnOff(3);" <c:if test ="${loginUser.empOnOff eq 'F'}">checked</c:if>><span class="badge">오프라인</span>&nbsp;
            </div>
-		</div>
-		<br>
-		<br>
-	</div>
-	
+      </div>
+      <br>
+      <br>
+   </div>
+   
   <div class="modal fade" id="workcheck" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
 
@@ -325,23 +332,23 @@
       </div>
       
       <div class="modal-body centered">
-        	<!-- <p>현재 날짜와 시간은 <%= format.format(currentTime) %></p> -->
-        	<h4 id="today" name="today" value="today" class="card-title mb-3 font-weight-bold"></h4>
-        	<p id="clock" name="clock" value="clock" style="font-size:40px"></p>
+           <!-- <p>현재 날짜와 시간은 <%= format.format(currentTime) %></p> -->
+           <h4 id="today" name="today" value="today" class="card-title mb-3 font-weight-bold"></h4>
+           <p id="clock" name="clock" value="clock" style="font-size:40px"></p>
       </div>
       <div class="d-flex" style="font-size: 16px; ">
-		<p class="col-6" style="padding:0px;">출근시간</p>	
-		<p class="col-6 text-right" name="start" id="start"></p>
+      <p class="col-6" style="padding:0px;">출근시간</p>   
+      <p class="col-6 text-right" name="start" id="start"></p>
 
-	  </div>
-	  <div class="d-flex" style="font-size: 16px">
-		<p class="col-6" style="padding:0px;">퇴근시간</p>
-		<p class="col-6 text-right" name="finish" id="finish"></p>
-	  </div>
+     </div>
+     <div class="d-flex" style="font-size: 16px">
+      <p class="col-6" style="padding:0px;">퇴근시간</p>
+      <p class="col-6 text-right" name="finish" id="finish"></p>
+     </div>
       <div class="modal-footer">
-      		<button type="submit" name="status" value="s" id="startBtn" class="btn btn-primary">출근</button>
-      		<button type="submit" name="status" value="f" id="finishBtn" class="btn btn-primary" disabled>퇴근</button>
-        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" name="status" value="s" id="startBtn" class="btn btn-primary">출근</button>
+            <button type="submit" name="status" value="f" id="finishBtn" class="btn btn-primary" disabled>퇴근</button>
+           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -389,43 +396,43 @@
   /*******상태 표시*******/
   $(function(){
 
-	  $(".empImg").click(function(){ //프로필을 클릭하면
-		  if($(".innerOuter").hasClass("off")){ //상태 라디오버튼이 조회됨
-			  $(".innerOuter").removeClass("off");
-		  }else{
-			  $(".innerOuter").addClass("off");
-		  }
-	  })
+     $(".empImg").click(function(){ //프로필을 클릭하면
+        if($(".innerOuter").hasClass("off")){ //상태 라디오버튼이 조회됨
+           $(".innerOuter").removeClass("off");
+        }else{
+           $(".innerOuter").addClass("off");
+        }
+     })
   })
   //상태 변경할때마다 값 받기
    function changeOnOff(num){
-	  if(num == 1){
-		  $('input:radio[name="empOnOff"]:input[value="O"]').prop("checked", true);
-	  }else if(num == 2){
-		  $('input:radio[name="empOnOff"]:input[value="E"]').prop("checked", true);			  
-	  }else{
-		  $('input:radio[name="empOnOff"]:input[value="F"]').prop("checked", true);
-	  }
-	  
-	  var empOnOff = $("input:radio[name='empOnOff']:checked").val();
-	  console.log(empOnOff);
-	  
-	  	$.ajax({
-	  		type:"get",
-			url:"empOnOff.do",
-			data:{empOnOff:empOnOff},
-			success:function(result){
-				console.log(result);
-			},
-			error:function(e){
-			}
-	  	})
-	  }
+     if(num == 1){
+        $('input:radio[name="empOnOff"]:input[value="O"]').prop("checked", true);
+     }else if(num == 2){
+        $('input:radio[name="empOnOff"]:input[value="E"]').prop("checked", true);           
+     }else{
+        $('input:radio[name="empOnOff"]:input[value="F"]').prop("checked", true);
+     }
+     
+     var empOnOff = $("input:radio[name='empOnOff']:checked").val();
+     console.log(empOnOff);
+     
+        $.ajax({
+           type:"get",
+         url:"empOnOff.do",
+         data:{empOnOff:empOnOff},
+         success:function(result){
+            console.log(result);
+         },
+         error:function(e){
+         }
+        })
+     }
   
   /*******출퇴근*******/
   //서버시간 출력
   var date;
-	  
+     
   function checkTime() {
       //현재시간
       var currentDate = new Date();
@@ -441,8 +448,8 @@
       //퇴근시간 체크시 oracle date는 1~9월 앞에 0이 붙음,,이것 때문에 쿼리문에서 에러 오지게남 *퇴근체크
       //모두 String으로 바꾸고 1~9월일 경우 앞에 0을 붙여줌
       function getMonth(){
-    	  var month = currentDate.getMonth()+1;
-    	  return month < 10 ? '0' + month : '' + month;
+         var month = currentDate.getMonth()+1;
+         return month < 10 ? '0' + month : '' + month;
       }
       //oooo년oo월oo일(요일)
       var calendar = currentDate.getFullYear()+"년 " + getMonth() + "월 " + currentDate.getDate() + "일" + " ("+ todayWeek + ")"
@@ -474,38 +481,38 @@
   
   //모달창 새로고침시 출근시간 값이 보이지 않음, 금일 출,퇴근이 체킹되었는지 확인하는 함수
   function todayCheck() {
-		 $.ajax({
-			  url:"startCheck.do",
-			  type:"get",
-			  async: false,
-			  data:{empNo:${loginUser.empNo}},
-			  success:function(result){
-				  if(result != "0"){
-					  start.innerHTML = "금일 출근이 체크되었습니다.";
-					  $("#startBtn").attr('disabled', true);
-					  $("#finishBtn").attr('disabled', false);
-				  }
-			  },
-			  error:function(){
-				  console.log("실패")
-			  }
-		  });
-		 
-		 $.ajax({
-			  url:"finishCheck.do",
-			  type:"get",
-			  async: false,
-			  data:{empNo:${loginUser.empNo}},
-			  success:function(result){
-				  if(result != "0"){
-					  finish.innerHTML = "금일 퇴근이 체크되었습니다.";
-					  $("#finishBtn").attr('disabled', true);
-				  }
-			  },
-			  error:function(){
-			  }
-		  })
-	}
+       $.ajax({
+           url:"startCheck.do",
+           type:"get",
+           async: false,
+           data:{empNo:${loginUser.empNo}},
+           success:function(result){
+              if(result != "0"){
+                 start.innerHTML = "금일 출근이 체크되었습니다.";
+                 $("#startBtn").attr('disabled', true);
+                 $("#finishBtn").attr('disabled', false);
+              }
+           },
+           error:function(){
+              console.log("실패")
+           }
+        });
+       
+       $.ajax({
+           url:"finishCheck.do",
+           type:"get",
+           async: false,
+           data:{empNo:${loginUser.empNo}},
+           success:function(result){
+              if(result != "0"){
+                 finish.innerHTML = "금일 퇴근이 체크되었습니다.";
+                 $("#finishBtn").attr('disabled', true);
+              }
+           },
+           error:function(){
+           }
+        })
+   }
 
   //출,퇴근 시간 체킹
   var start = document.getElementById("start");
@@ -515,84 +522,84 @@
   //출근
    $(function(){
 
-	  $("#startBtn").click(function(){
-		  //출근 시간 체크!
-			clearInterval(date);
-		  //체크한 시간 출근시간 p태그에 반영!
-			start.innerHTML = now.innerHTML;
-		  	console.log(now);
-		  //서버시간 재가동!
-			checkTime();
-		  
-		  $("#startBtn").attr('disabled', true)
-		  alert("출근 완료");
-		  $("#finishBtn").attr('disabled', false)
-		  
-		  var startTime = now.innerHTML;
-		  localStorage.setItem("startTime", startTime)
-		  $.ajax({
-			  url:"workingCheck.do",
-			  type:"get",
-			  async: false,
-			  data:{startTime:startTime,
-				  	empNo:${loginUser.empNo}
-			  },
-			  success:function(result){
-			  },
-			  error:function(){
-			  }
-		  })
+     $("#startBtn").click(function(){
+        //출근 시간 체크!
+         clearInterval(date);
+        //체크한 시간 출근시간 p태그에 반영!
+         start.innerHTML = now.innerHTML;
+           console.log(now);
+        //서버시간 재가동!
+         checkTime();
+        
+        $("#startBtn").attr('disabled', true)
+        alert("출근 완료");
+        $("#finishBtn").attr('disabled', false)
+        
+        var startTime = now.innerHTML;
+        localStorage.setItem("startTime", startTime)
+        $.ajax({
+           url:"workingCheck.do",
+           type:"get",
+           async: false,
+           data:{startTime:startTime,
+                 empNo:${loginUser.empNo}
+           },
+           success:function(result){
+           },
+           error:function(){
+           }
+        })
 
-	  })
-	  
-	  
+     })
+     
+     
   })
   
 //퇴근
   $(function(){
 
-	  $("#finishBtn").click(function(){
-		  console.log(startTime);
-		  
-		  var reCheck = confirm("퇴근 하시겠습니까?");
-		  
-		  if(reCheck){
-		  //퇴근 시간 체크!
-			clearInterval(date);
-		  //체크한 시간 출근시간 p태그에 반영!
-			finish.innerHTML = now.innerHTML;
-		  	console.log(now);
-		  //서버시간 재가동!
-			checkTime(); 
-			alert("퇴근 완료");
-			$("#finishBtn").attr('disabled', true);
-		  }
-		  
-		  var finishTime = now.innerHTML;
-		  console.log(finishTime);
-		  var today = cal.innerHTML;
-		  console.log(today);
-		  var startTime = start.innerHTML;
-		  
-		  console.log(startTime);
-		  $.ajax({
-			  url:"leaveCheck.do",
-			  type:"get",
-			  async: false,
-			  data:{finishTime:finishTime,
-				  	startTime:startTime,
-				  	today:today,
-				  	empNo:${loginUser.empNo}
-			  },
-			  success:function(result){
-			  },
-			  error:function(){
-			  }
-		  })
-		 
-	  })
-	  
-	  
+     $("#finishBtn").click(function(){
+        console.log(startTime);
+        
+        var reCheck = confirm("퇴근 하시겠습니까?");
+        
+        if(reCheck){
+        //퇴근 시간 체크!
+         clearInterval(date);
+        //체크한 시간 출근시간 p태그에 반영!
+         finish.innerHTML = now.innerHTML;
+           console.log(now);
+        //서버시간 재가동!
+         checkTime(); 
+         alert("퇴근 완료");
+         $("#finishBtn").attr('disabled', true);
+        }
+        
+        var finishTime = now.innerHTML;
+        console.log(finishTime);
+        var today = cal.innerHTML;
+        console.log(today);
+        var startTime = start.innerHTML;
+        
+        console.log(startTime);
+        $.ajax({
+           url:"leaveCheck.do",
+           type:"get",
+           async: false,
+           data:{finishTime:finishTime,
+                 startTime:startTime,
+                 today:today,
+                 empNo:${loginUser.empNo}
+           },
+           success:function(result){
+           },
+           error:function(){
+           }
+        })
+       
+     })
+     
+     
  }) 
   
   </script>
