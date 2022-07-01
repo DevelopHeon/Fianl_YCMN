@@ -73,7 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				STATUS LIKE '%'||#{keyword}||'%'
 			</if>
 		</where>
-		ORDER BY 	EMP_NO DESC
+		ORDER BY 	EMP_NAME, EMP_NO
 	</select>
 	<!-- 사원 상세 조회 -->
 	<select id="selectEmployee" parameterType="Employee"
