@@ -14,13 +14,16 @@
 			<button type="button" class="close" data-dismiss="modal">&times;</button>
 		</div>
 		<div class="modal-body">	
-			<h4>개발 &nbsp;<a data-toggle="collapse" data-target="#dept1"><i class="fa fa-plus-square"></i></a></h4>
+			<h4>총무부서 &nbsp;<a data-toggle="collapse" data-target="#dept1"><i class="fa fa-plus-square"></i></a></h4>
 			<div id="dept1" class="collapse"></div>
-			<h4>총무&nbsp;<a data-toggle="collapse" data-target="#dept2"><i class="fa fa-plus-square"></i></a></h4>
+			<h4>인사부서&nbsp;<a data-toggle="collapse" data-target="#dept2"><i class="fa fa-plus-square"></i></a></h4>
 			<div id="dept2" class="collapse"></div>
-			<h4>인사&nbsp;<a data-toggle="collapse" data-target="#dept3"><i class="fa fa-plus-square"></i></a></h4>
+			<h4>개발부서&nbsp;<a data-toggle="collapse" data-target="#dept3"><i class="fa fa-plus-square"></i></a></h4>
 			<div id="dept3" class="collapse"></div>
-			<div id="dept"></div>
+			<h4>영업부서&nbsp;<a data-toggle="collapse" data-target="#dept4"><i class="fa fa-plus-square"></i></a></h4>
+			<div id="dept4" class="collapse"></div>
+			<h4>연구부서&nbsp;<a data-toggle="collapse" data-target="#dept5"><i class="fa fa-plus-square"></i></a></h4>
+			<div id="dept5" class="collapse"></div>
 		</div>
 		<div class="modal-footer" id="modalBtn">
 		</div>
@@ -40,27 +43,32 @@
 						var value2 = "";
 						var value3 = "";
 						var value4 = "";
+						var value5 = "";
 						$.each(list, function(i, obj){
-							if(obj.depName == '개발'){
+							if(obj.depName == '개발부서'){
 								value1 += "<div class='addressList'><input type='radio' name='checkTo' class='checkTo' value="+ obj.empName +">&nbsp;&nbsp;"
 								  +   obj.empName + "/"+ obj.posName
 								  +   "<input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'></div>";
-							}else if(obj.depName == '총무'){
+							}else if(obj.depName == '총무부서'){
 								value2 += "<div class='addressList'><input type='radio' name='checkTo' class='checkTo' value="+ obj.empName +">&nbsp;&nbsp;"
 								  +   obj.empName + "/"+ obj.posName
 								  +   "<input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'></div>";
-							}else if(obj.depName == '인사'){
+							}else if(obj.depName == '인사부서'){
 								value3 += "<div class='addressList'><input type='radio' name='checkTo' class='checkTo' value="+ obj.empName +">&nbsp;&nbsp;"
 								  +   obj.empName + "/"+ obj.posName
 								  +   "<input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'></div>";
-							}else{
+							}else if(obj.depName == '영업부서'){
 								value4 += "<div class='addressList'><input type='radio' name='checkTo' class='checkTo' value="+ obj.empName +">&nbsp;&nbsp;"
+								  +   obj.empName + "/"+ obj.posName
+								  +   "<input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'></div>";
+							}else{
+								value5 += "<div class='addressList'><input type='radio' name='checkTo' class='checkTo' value="+ obj.empName +">&nbsp;&nbsp;"
 								  +   obj.empName + "/"+ obj.posName
 								  +   "<input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'></div>";
 							}
 						});
 						
-						// 1,2에 따라서 결재자 추가 버튼 생성
+						// 1,2,3에 따라 수신, 참조, 비밀참조
 						if(num == 1){
 							insertVal += '<button type="button" onclick="insertApprover(1)" id="addBtn" class="btn btn-primary">추가</button>'
 									  +  '<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>'
@@ -75,7 +83,8 @@
 						$("#dept1").html(value1);
 						$("#dept2").html(value2);
 						$("#dept3").html(value3);
-						$("#dept").html(value4);
+						$("#dept4").html(value4);
+						$("#dept5").html(value5);
 						$("#modalBtn").html(insertVal);
 						
 					},error:function(){
