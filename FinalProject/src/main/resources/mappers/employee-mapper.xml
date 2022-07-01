@@ -259,7 +259,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			SELECT
 			SUM(TO_CHAR(TO_TIMESTAMP(SUBSTR(TO_TIMESTAMP(FINISH_TIME,'HH24:MI:SS') - TO_TIMESTAMP(START_TIME,'HH24:MI:SS'),12,8), 'HH24:MI:SS'),'sssss')) wt
 			FROM WORKINGDAY
-			WHERE EMP_NO = #{empNo}
+			WHERE EMP_NO = #{empNo} AND FINISH_TIME IS NOT NULL
 		)
 		SELECT (ROUND(wt/(60*60)))||'시간'||' ' ||
 		       LPAD(ROUND(MOD((wt/60),60)),2,0)||'분' || ' ' ||

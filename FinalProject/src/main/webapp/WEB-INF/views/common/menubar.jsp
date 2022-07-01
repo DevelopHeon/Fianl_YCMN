@@ -451,8 +451,13 @@
          var month = currentDate.getMonth()+1;
          return month < 10 ? '0' + month : '' + month;
       }
+      //일
+      function getDate(){
+    	  var day = currentDate.getDate();
+          return day < 10 ? '0' + day : '' + day;
+      }
       //oooo년oo월oo일(요일)
-      var calendar = currentDate.getFullYear()+"년 " + getMonth() + "월 " + currentDate.getDate() + "일" + " ("+ todayWeek + ")"
+      var calendar = currentDate.getFullYear()+"년 " + getMonth() + "월 " + getDate() + "일" + " ("+ todayWeek + ")"
       
       var hours = add(currentDate.getHours(), 2);
       var minutes = add(currentDate.getMinutes(), 2);
