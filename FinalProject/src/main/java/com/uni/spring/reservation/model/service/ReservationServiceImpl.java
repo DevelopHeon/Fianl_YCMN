@@ -63,13 +63,36 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public List<Reservation> findAll() {
-		return reservationDao.findAll(sqlSession);
+	public List<Reservation> getRezList() {
+		return reservationDao.getRezList(sqlSession);
 	}
 
 	@Override
 	public void insertReserve(Reservation rez) {
 		int result = reservationDao.insertReserve(sqlSession, rez);
+		
+		if(result < 0) {
+			throw new CommException();
+		}
+	}
+
+	@Override
+	public List<Reservation> myRezList(int empNo) {
+		return reservationDao.myRezList(sqlSession, empNo);
+	}
+
+	@Override
+	public void returnReserve(int rezNo) {
+		int result = reservationDao.returnReserve(sqlSession, rezNo);
+		
+		if(result < 0) {
+			throw new CommException();
+		}
+	}
+
+	@Override
+	public void cancleReserve(int rezNo) {
+		int result = reservationDao.cancleReserve(sqlSession, rezNo);
 		
 		if(result < 0) {
 			throw new CommException();
