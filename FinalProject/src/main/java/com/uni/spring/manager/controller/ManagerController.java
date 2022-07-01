@@ -42,11 +42,13 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Controller
+/* @RequestMapping("/manager") */
 public class ManagerController {
 
 	private final ManagerService ManagerService;
 	
-	// 사원 전체 정보를 리스트로 조회함. 
+	// 인사관리 메인 페이지로 이동
+	// 사원 전체 정보를 리스트로 조회함
 	@RequestMapping("listEmp.do")
 	public String selectList(Model model
 			, @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage
@@ -54,7 +56,6 @@ public class ManagerController {
 			, @RequestParam(value="keyword", required = false, defaultValue = "") String keyword // 검색어
 			, HttpSession session) {
 		Employee loginUser = (Employee)session.getAttribute("loginUser");
-		//if(loginUser.getEmpId().equals("admin")) {
 			
 			// 페이징
 			int listCount = ManagerService.selectListCount(); // 페이징용
@@ -77,14 +78,10 @@ public class ManagerController {
 //		ArrayList<Employee> list2 = ManagerService.selectList(find, keyword, 1);
 			
 			return "manager/empListView";
-		//}else {
-			//return "관리자가 아닙니다.";
-		//}
-		
+			
 	}
 	
 	// UpdateForm으로 이동. 화면에서 eno를 받아서 eno에 해당하는 사원 정보를 불러옴
-	// 후에 관리자만 들어올 수 있는 메뉴로 변경 = 변경하고나서 이 주석 지우기
 	@RequestMapping("updateFormEmp.do")
 	public ModelAndView updateForm(int empNo, ModelAndView mv) {
 		
@@ -105,11 +102,9 @@ public class ManagerController {
 		
 		Hr hr = e.getHr();
 		hr.setEmpNo(e.getEmpNo());
-		System.out.println("hr.toString() : "+hr.toString());
-		System.out.println("e.toString() : "+e.toString());
 
 		ManagerService.updateEmpDetail(e, hr);
-		// 수정한 정보를 Form에 띄워주기 위함
+
 		model.addAttribute("e", ManagerService.selectEmp(e.getEmpNo()));
 		model.addAttribute("getPosList", ManagerService.getPosList());
 		model.addAttribute("getDepList", ManagerService.getDepList());
@@ -118,7 +113,7 @@ public class ManagerController {
 	}
 	
 	// 엑셀 다운로드
-	@RequestMapping(value = "/empExcelDown.do")
+	@RequestMapping("/empExcelDown.do")
 	public void excelDown(HttpServletResponse response) throws Exception {
 	    // 게시판 목록조회
 	    List<Employee> list = ManagerService.selectExcelList();
@@ -251,9 +246,6 @@ public class ManagerController {
 		ArrayList<JobPosition> posList = ManagerService.getPosList();
 		ArrayList<Department> depList = ManagerService.getDepList();
 		
-		System.out.println("직위 조회 :" + posList);
-		System.out.println("부서 조회 :" + depList);
-		
 		model.addAttribute("posList", posList);
 		model.addAttribute("depList", depList);
 		
@@ -290,35 +282,18 @@ public class ManagerController {
 	@RequestMapping("insertPos.do")
 	public String insertJobPosition(JobPosition job, Model model) {
 		ManagerService.insertJobPosition(job);
-		
-		ArrayList<JobPosition> posList = ManagerService.getPosList();
-		ArrayList<Department> depList = ManagerService.getDepList();
-
-		model.addAttribute("posList", posList);
-		model.addAttribute("depList", depList);
-		
-		return "manager/JobManagement";
+		return "redirect:/jobManage.do";
 	}
 	
 	// 직위 수정/삭제
 	@RequestMapping("updatePos.do")
 	public String updateJobPosition(JobPosition job, Model model, String updatePosBtn) {
-		System.out.println("직위 수정");
-		System.out.println("jp : "+job);
-		
 		if(updatePosBtn.equals("update")) {
 			ManagerService.updateJobPosition(job);
 		}else if(updatePosBtn.equals("delete")) {
 			ManagerService.deleteJobPosition(job);
 		}
-		
-		ArrayList<JobPosition> posList = ManagerService.getPosList();
-		ArrayList<Department> depList = ManagerService.getDepList();
-		
-		model.addAttribute("posList", posList);
-		model.addAttribute("depList", depList);
-		
-		return "manager/JobManagement";
+		return "redirect:/jobManage.do";
 	}
 	
 	// 모달창에 선택한 직위 띄워주는 용도
@@ -352,13 +327,7 @@ public class ManagerController {
 
 		ManagerService.insertDepartment(dep);
 		
-		ArrayList<JobPosition> posList = ManagerService.getPosList();
-		ArrayList<Department> depList = ManagerService.getDepList();
-
-		model.addAttribute("posList", posList);
-		model.addAttribute("depList", depList);
-		
-		return "manager/JobManagement";
+		return "redirect:/jobManage.do";
 	}
 	
 	// 부서 수정
@@ -370,12 +339,6 @@ public class ManagerController {
 			ManagerService.deleteDepartment(dep);
 		}
 		
-		ArrayList<JobPosition> posList = ManagerService.getPosList();
-		ArrayList<Department> depList = ManagerService.getDepList();
-		
-		model.addAttribute("posList", posList);
-		model.addAttribute("depList", depList);
-		
-		return "manager/JobManagement";
+		return "redirect:/jobManage.do";
 	}
 }
