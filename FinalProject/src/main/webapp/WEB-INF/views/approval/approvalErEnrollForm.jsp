@@ -98,6 +98,7 @@
 								<form:input path="apperAccount.bankName" type="text" class="form-control" id="bankName" name="apperAccount.bankName" style="margin-left:3.2%;" placeholder="은행명을 입력하세요." required="required" />
 								<label for="erAccountHolder" style="margin-left:20%;">예금주 : </label>
 								<form:input path="apperAccount.erAccountHolder" type="text" class="form-control" id="erAccountHolder" name="apperAccount.erAccountHolder" placeholder="예금주명"  required="required" />
+								<form:errors path="apperAccount.erAccountHolder" />
 								<br>
 								<div class="errorCode">
 									<h4 style="color:red;"><form:errors path="apperAccount.bankName" /></h4>
@@ -105,6 +106,7 @@
 								</div>
 								<label for="accountNumber">계좌번호 : </label>
 								<form:input type="text" path="apperAccount.accountNumber" style="width:25%;" class="form-control" id="accountNumber" name="apperAccount.accountNumber" placeholder="계좌번호를 입력하세요. ('-'미포함)"  required="required" />
+								<form:errors path="apperAccount.accountNumber"/>
 								<label for="erAmount" style="margin-left:7%;">총 지출금액 : </label>
 								<form:input type="number" path="apperAccount.erAmount" class="form-control" id="erAmount" name="apperAccount.erAmount" placeholder="숫자만 입력"  required="required"/>
 								<br>
@@ -230,23 +232,26 @@
 			$(location).attr("href", "main.do");
 		})
 		</script>
-<!-- 		<script>
+		<script>
 		// 결재문서 유효성 검사
 		function approvalErValidate(){
-			var approverCheck1 = $('#firstApprover').text();
-			var approverCheck2 = $('#lastApprover').text();
-			// 결재 승인자 선택 했는지 검사
-			if(approverCheck1.length < 1){
-				alert('최초 승인자를 선택하세요.');
+			
+			var accountCheck = /^[0-9]*$/;
+			var nameCheck = /^[가-힣-a-zA-Z]{2,}$/
+			console.log(accountCheck);
+			
+			if(!(accountCheck.test($("#accountNumber").val()))){
+				alert("계좌번호는 숫자만 입력이 가능합니다.");
 				return false;
-			}else if(approverCheck2.length < 1){
-				alert('최종 승인자를 선택하세요.');
-				return false;
-			}else if(){
-				
 			}
+			
+			if(!(nameCheck.test($("#erAccountHolder").val()))){
+				alert("예금주명은 한글, 영문만 가능합니다.");
+				return false;
+			}
+			return true;
 		}
-		</script> -->
+		</script>
 		<script>
 		// 오늘 날짜 화면에 출력
 		 document.getElementById('appCreateDate').value = new Date().toISOString().substring(0, 10);

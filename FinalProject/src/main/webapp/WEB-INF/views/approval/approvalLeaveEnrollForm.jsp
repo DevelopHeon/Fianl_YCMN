@@ -106,11 +106,60 @@
 								<form:input path="approvalLeave.leaveFinish" class="form-control" type="date" id="leaveFinish" name="approvalLeave.leaveFinish" required="required" />
 							<label for="leaveTotalDate" style="margin-left:5%;">사용 연차일 : </label>
 								<form:input path="approvalLeave.leaveTotalDate" class="form-control" type="text" id="leaveTotalDate" name="approvalLeave.leaveTotalDate" placeholder="사용 연차 일수 작성" required="required" />
+								<div id="checkResult" style="margin-left:43%; font-size:1.3rem"></div>
 							<div class="errorCode" style="margin-left:5%;">
 								<h4 style="color:red;"><form:errors path="approvalLeave.leaveStart" /></h4>
 								<h4 style="color:red;"><form:errors path="approvalLeave.leaveFinish" /></h4>
 								<h4 style="color:red;"><form:errors path="approvalLeave.leaveTotalDate" /></h4>
 							</div>
+							<script>
+								
+								function lvCheckValidate(num){
+									if(num == 0){
+										$("#checkResult").hide();
+										$("#erAppBtn").attr("disabled", true);
+									}else if(num == 1){ // 연차일 모자를 경우
+										$("#checkResult").css("color", "red").text("사용 가능한 연차 일수가 모자랍니다.");
+										$("#checkResult").show();
+										$("#erAppBtn").attr("disabled", true);
+									}else if(num == 2){
+										$("#checkResult").css("color", "green").text("사용 가능한 연차 일수입니다.");
+										$("#checkResult").show();
+										$("#erAppBtn").removeAttr("disabled");
+									}
+								}
+							
+								$(function(){
+									
+									var $leaveInput = $("#leaveTotalDate");
+									
+										
+									$leaveInput.keyup(function(){
+										if($leaveInput.val().length > 0){
+											$.ajax({
+												url:"lvDateCheck.do",
+												data:{
+													empNo:${loginUser.empNo},
+													useNum:$leaveInput.val()
+													},
+												type:"post",
+												success:function(result){
+													if(result < 0){ // 남은 연차가 더 적은경우
+														lvCheckValidate(1);
+													}else if(result >= 0){
+														lvCheckValidate(2);
+													}
+												},error:function(){
+													console.log("연차 개수 체크 ajax 실패");
+												}
+											});
+										}else{
+											lvCheckValidate(0);
+										}
+										
+									});
+								});
+							</script>
 							<br><br>
 							<label for="leaveReason">휴가 사유 : </label>
 								<form:textarea path="approvalLeave.leaveReason" class="form-control" name="approvalLeave.leaveReason" id="leaveReson" rows="10" cols="50" style="resize:none;"></form:textarea>
@@ -124,7 +173,7 @@
 							<input type="file" id="uploadFile" name="uploadFile" class="form-control" style="width:50%; height:3%;">
 						</div>
 						<div class="btns" align="center" style="margin-top:5%;">
-							<button type="submit" id="erAppBtn" class="btn btn-primary btn-lg">결재요청</button>
+							<button type="submit" id="erAppBtn" class="btn btn-primary btn-lg" disabled>결재요청</button>
 							<button type="button" id="close" class="btn btn-danger btn-lg">취소하기</button>
 						</div>
 						</form:form>

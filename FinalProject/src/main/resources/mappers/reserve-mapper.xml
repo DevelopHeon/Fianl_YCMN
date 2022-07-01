@@ -28,9 +28,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 자원 조회/추가/수정/삭제 -->
 	<select id="getRscList" resultType="Resources">
-		SELECT 		* 
-		FROM 		RESOURCE_ENTERPRISE A
-		WHERE		STATUS != 'N'
+        SELECT 		* 
+		FROM 		RESOURCE_ENTERPRISE
+		WHERE		STATUS = 'Y'
+        ORDER BY    RC_NO, RSC_NAME
 	</select>
 	<insert id="insertRsc" parameterType="Resources">
 		INSERT 
@@ -50,4 +51,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET		STATUS = 'N'
 		WHERE 	RSC_NO = #{rscNo}
 	</update>
+	
+	<select id="getReservList" resultType="Reservation">
+		SELECT 	  A.REZ_NO
+                , A.RSC_NO
+                , A.REZ_WRITER
+                , A.REZ_TITLE
+                , A.START_TIME
+                , A.END_TIME
+                , A.STATUS
+                , B.RSC_NAME
+                , C.EMP_NAME
+		FROM	RESERVATION A
+		JOIN    RESOURCE_ENTERPRISE B ON A.RSC_NO = B.RSC_NO
+        JOIN    EMPLOYEE C ON A.REZ_WRITER = C.EMP_NO
+        WHERE	A.STATUS != 'D'
+	</select>
+	<insert id="insertReserve" parameterType="Reservation">
+		INSERT 
+		INTO 	RESERVATION
+				(REZ_NO, RSC_NO, REZ_WRITER, REZ_TITLE, START_TIME, END_TIME, STATUS)
+		VALUES 	(SEQ_RNO.NEXTVAL, #{rscNo}, #{rezWriter}, #{rezTitle}
+		, TO_DATE(REPLACE(#{startTime},'T',' '),'YYYY-MM-DD HH24:MI:SS')
+		, TO_DATE(REPLACE(#{endTime},'T',' '),'YYYY-MM-DD HH24:MI:SS')
+		, DEFAULT)
+	</insert>
 </mapper>

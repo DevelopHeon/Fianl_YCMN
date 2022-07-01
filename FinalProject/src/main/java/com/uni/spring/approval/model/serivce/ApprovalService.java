@@ -78,4 +78,6 @@ public interface ApprovalService {
 
 	int selectMainApprovalCnt(int userNo);
 
+	int lvDateCheck(int empNo);
+
 }
