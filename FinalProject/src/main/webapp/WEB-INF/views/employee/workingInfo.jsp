@@ -146,7 +146,7 @@ function checkMonth() {
               <div class="panel-heading">
               
                 <ul class="nav nav-tabs nav-justified">           
-                  <li class="active">
+                  <li>
                     <a data-toggle="tab" href="#1week">1주차</a>
                   </li>
                   <li>
