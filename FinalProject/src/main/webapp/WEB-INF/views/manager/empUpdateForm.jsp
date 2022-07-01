@@ -90,7 +90,7 @@
 
                   <select name="posNo" id="posNo" class="form-control">
                     <c:if test="${e.posNo == null || e.posNo == 0}">
-                      <option value="0" selected>=========</option>
+                      <option value="0" selected>직위 선택</option>
                     </c:if>
                     <c:forEach items="${ getPosList }" var="pos">
                       <c:choose>
@@ -112,6 +112,9 @@
                 <div class="col-sm-10">
 
                   <select name="depNo" id="depNo" class="form-control">
+                    <c:if test="${e.depNo == null || e.depNo == 0}">
+                      <option value="0" selected>부서 선택</option>
+                    </c:if>
                     <c:forEach items="${ getDepList }" var="dep">
                       <c:choose>
                         <c:when test="${e.depNo == dep.depNo}">
