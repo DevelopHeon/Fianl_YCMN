@@ -282,7 +282,7 @@
               <span>예약</span>
               </a>
             <ul class="sub">
-              <li><a href="#">내 예약 현황</a></li>
+              <li><a href="myRezList.do">내 예약 현황</a></li>
               <li><a href="reservMain.do">회의실/비품 예약</a></li>
               <li><a href="resourceManage.do">회의실/비품 관리</a></li>
             </ul>

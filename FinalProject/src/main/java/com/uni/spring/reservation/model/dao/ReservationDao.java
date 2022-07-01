@@ -21,33 +21,41 @@ public class ReservationDao {
 	public ArrayList getSupplyList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("reserveMapper.getSupplyList");
 	}
-	
 	// 선택한 자원 가져오기
 	public ArrayList getRscList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("reserveMapper.getRscList");
 	}
-	
 	// 자원 추가
 	public int insertRsc(SqlSessionTemplate sqlSession, Resources rsc) {
 		return sqlSession.insert("reserveMapper.insertRsc", rsc);
 	}
-
 	// 자원 수정
 	public int updateRsc(SqlSessionTemplate sqlSession, Resources rsc) {
 		return sqlSession.update("reserveMapper.updateRsc", rsc);
 	}
-
 	// 자원 삭제
 	public int deleteRsc(SqlSessionTemplate sqlSession, Resources rsc) {
 		return sqlSession.update("reserveMapper.deleteRsc", rsc);
 	}
-	public List<Reservation> findAll(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectList("reserveMapper.getReservList");
+	
+	// 예약 목록
+	public List<Reservation> getRezList(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectList("reserveMapper.getRezList");
 	}
+	// 예약 추가
 	public int insertReserve(SqlSessionTemplate sqlSession, Reservation rez) {
 		return sqlSession.insert("reserveMapper.insertReserve", rez);
 	}
-	
-
-
+	// 내 예약 조회
+	public List<Reservation> myRezList(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectList("reserveMapper.myRezList", empNo);
+	}
+	// 예약 반납
+	public int returnReserve(SqlSessionTemplate sqlSession, int rezNo) {
+		return sqlSession.update("reserveMapper.returnReserve", rezNo);
+	}
+	// 예약 취소
+	public int cancleReserve(SqlSessionTemplate sqlSession, int rezNo) {
+		return sqlSession.update("reserveMapper.cancleReserve", rezNo);
+	}
 }

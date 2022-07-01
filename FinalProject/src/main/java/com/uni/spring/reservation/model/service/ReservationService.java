@@ -8,19 +8,25 @@ import com.uni.spring.reservation.model.dto.Resources;
 
 public interface ReservationService {
 
-	ArrayList<Resources> getRoomList();
+	ArrayList<Resources> getRoomList(); // 회의실 조회
 
-	ArrayList<Resources> getSupplyList();
+	ArrayList<Resources> getSupplyList(); // 비품 조회
 
-	ArrayList<Resources> getRscList();
+	ArrayList<Resources> getRscList(); // 자원 조회
 	
-	void insertRsc(Resources rsc);
+	void insertRsc(Resources rsc); // 자원 추가
 
-	void updateRsc(Resources rsc);
+	void updateRsc(Resources rsc); // 자원 수정
 
-	void deleteRsc(Resources rsc);
+	void deleteRsc(Resources rsc); // 자원 삭제
 
-	List<Reservation> findAll();
+	List<Reservation> getRezList(); // 예약 목록 조회
 
-	void insertReserve(Reservation rez);
+	void insertReserve(Reservation rez); // 예약 추가
+
+	List<Reservation> myRezList(int empNo); // 내 예약 조회
+
+	void returnReserve(int rezNo); // 예약 반납
+
+	void cancleReserve(int rezNo); // 예약 취소
 }
