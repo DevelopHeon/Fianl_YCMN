@@ -196,4 +196,8 @@ public class ApprovalDao {
 		return sqlSession.selectOne("approvalMapper.selectMainApprovalCnt", userNo);
 	}
 
+	public int lvDateCheck(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("approvalMapper.lvDateCheck", empNo);
+	}
+
 }

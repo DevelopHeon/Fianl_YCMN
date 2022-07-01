@@ -13,8 +13,6 @@
 		<typeAlias type="com.uni.spring.approval.model.dto.Approval" alias="Approval"/>
 		<typeAlias type="com.uni.spring.employee.model.dto.WorkingDay" alias="WorkingDay"/>
 		<typeAlias type="com.uni.spring.common.dto.Attachment" alias="Attachment"/>
-		<typeAlias type="com.uni.spring.schedule.model.dto.Schedule" alias="Schedule"/>
-		<typeAlias type="com.uni.spring.schedule.model.dto.ScheduleDTO" alias="ScheduleDTO"/>
 		<typeAlias type="com.uni.spring.employee.model.dto.TimeOff" alias="TimeOff"/>
 		<typeAlias type="com.uni.spring.employee.model.dto.TimeOffContent" alias="TimeOffContent"/>
 		<typeAlias type="com.uni.spring.hr.model.dto.Hr" alias="Hr"/>
@@ -32,7 +30,6 @@
 	<mappers>
 		<mapper resource="/mappers/employee-mapper.xml"/>
 		<mapper resource="/mappers/approval-mapper.xml"/>
-		<mapper resource="/mappers/schedule-mapper.xml"/>
 		<mapper resource="/mappers/manager-mapper.xml"/>
 		<mapper resource="/mappers/mail-mapper.xml"/>
 		<mapper resource="/mappers/notice-mapper.xml"/>

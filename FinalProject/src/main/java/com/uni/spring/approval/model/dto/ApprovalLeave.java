@@ -1,10 +1,10 @@
 package com.uni.spring.approval.model.dto;
 
 import java.sql.Date;
-import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +30,7 @@ public class ApprovalLeave {
 	private String leaveReason; //휴가 사용 이유
 	
 	@NotBlank(message="휴가 일수는 필수 입력 값입니다.")
+	@Size(max=2 , message="휴가 일수는 2자리까지만 입력 가능합니다.")
 	private double leaveTotalDate; // 휴가 일수
 	
 	@NotBlank(message="휴가 종류 선택은 필수입니다.")

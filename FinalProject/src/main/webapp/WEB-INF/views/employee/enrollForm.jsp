@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,34 +26,37 @@
         <div class="innerOuter">
             <h2>사원 등록</h2>
             <br>
-            <form id="enrollForm" action="insertEmployee.do" method="post">
+            <form:form id="enrollForm" modelAttribute="employee"
+            action="insertEmployee.do" method="post">
                 <div class="form-group">
                     <label for="empId">* ID :</label>
-                    <input type="text" class="form-control" id="empId" name="empId" placeholder="Please Enter ID" required>
+                    <form:input path="empId" type="text" class="form-control" id="empId" name="empId" placeholder="Please Enter ID" required="required" />
+                    <div style="color:red;"><form:errors path="empId" /></div>
                     <div id="checkResult" style="display:none; font-size:0.8em"></div>
                     <!-- 아이디 중복 검사를 확인하는  div -->
                     <br>
                     
                     <label for="empPwd">* Password :</label>
-                    <input type="password" class="form-control" id="empPwd" name="empPwd" placeholder="Please Enter Password" required><br>
-                    
+                    <form:input path="empPwd" type="password" class="form-control" id="empPwd" name="empPwd" placeholder="Please Enter Password" required="required" /><br>
+                    <div style="color:red;"><form:errors path="empPwd" /></div>
                     <label for="checkPwd">* Password Check :</label>
                     <input type="password" class="form-control" id="checkPwd" placeholder="Please Enter Password" required><br>
                     
                     <label for="empName">* Name :</label>
-                    <input type="text" class="form-control" id="empName" name="empName" placeholder="Please Enter Name" required><br>
-                    
+                    <form:input path="empName" type="text" class="form-control" id="empName" name="empName" placeholder="Please Enter Name" required="required" /><br>
+                    <div style="color:red;"><form:errors path="empName" /></div>
                     <label for="empEmail">* Email :</label>
-                    <input type="email" class="form-control" id="empEmail" name="empEmail" placeholder="Please Enter Email"><br>
-                    
+                    <form:input path="empEmail" type="email" class="form-control" id="empEmail" name="empEmail" placeholder="Please Enter Email" /><br>
+                    <div style="color:red;"><form:errors path="empEmail" /></div>
                     <label for="empPhone">* Phone :</label>
-                    <input type="tel" class="form-control" id="empPhone" name="empPhone" placeholder="Please Enter Phone (-없이)"><br>
-                    
+                    <form:input path="empPhone" type="tel" class="form-control" id="empPhone" name="empPhone" placeholder="Please Enter Phone (-없이)" /><br>
+                    <div style="color:red;"><form:errors path="empPhone" /></div>
                 <div class="btns" align="center">
                     <button type="submit" id="enrollBtn" class="btn btn-primary" disabled>회원가입</button><!-- disabled  중복처리하고나서-->
                     <button type="reset" class="btn btn-danger"> 초기화</button>
                 </div>
-            </form>
+                </div>
+            </form:form>
         </div>
         <br><br>
     </div>

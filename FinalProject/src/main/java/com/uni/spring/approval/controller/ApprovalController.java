@@ -545,4 +545,13 @@ public class ApprovalController {
 		log.info("승인대기:"+result);
 		return String.valueOf(result);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="lvDateCheck.do")
+	public String lvDateCheck(int empNo, int useNum) {
+		int count = approvalService.lvDateCheck(empNo);
+		count = count - useNum;
+		
+		return String.valueOf(count);
+	}
 }

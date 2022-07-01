@@ -89,67 +89,61 @@
         <ul class="nav top-menu">
           <!-- inbox dropdown start-->
           <li id="header_inbox_bar" class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="views/index.html#">
+            <a data-toggle="dropdown" class="dropdown-toggle" onclick="mailList();">
               <i class="fa fa-envelope-o"></i>
-              <span class="badge bg-theme">5</span>
+              <span class="badge bg-theme">${unread }</span>
               </a>
             <ul class="dropdown-menu extended inbox">
               <div class="notify-arrow notify-arrow-green"></div>
               <li>
-                <p class="green">You have 5 new messages</p>
+                <p class="green">You have ${unread } new messages</p>
               </li>
               <li>
-                <a href="views/index.html#">
-                  <span class="photo"><img alt="avatar" src="resources/img/ui-zac.jpg"></span>
-                  <span class="subject">
-                  <span class="from">Zac Snider</span>
-                  <span class="time">Just now</span>
-                  </span>
-                  <span class="message">
-                  Hi mate, how is everything?
-                  </span>
-                  </a>
+              	<table id="mainMailList">
+
+                  </table>
               </li>
               <li>
-                <a href="views/index.html#">
-                  <span class="photo"><img alt="avatar" src="resources/img/ui-divya.jpg"></span>
-                  <span class="subject">
-                  <span class="from">Divya Manian</span>
-                  <span class="time">40 mins.</span>
-                  </span>
-                  <span class="message">
-                  Hi, I need your help with this.
-                  </span>
-                  </a>
-              </li>
-              <li>
-                <a href="views/index.html#">
-                  <span class="photo"><img alt="avatar" src="resources/img/ui-danro.jpg"></span>
-                  <span class="subject">
-                  <span class="from">Dan Rogers</span>
-                  <span class="time">2 hrs.</span>
-                  </span>
-                  <span class="message">
-                  Love your new Dashboard.
-                  </span>
-                  </a>
-              </li>
-              <li>
-                <a href="views/index.html#">
-                  <span class="photo"><img alt="avatar" src="resources/img/ui-sherman.jpg"></span>
-                  <span class="subject">
-                  <span class="from">Dj Sherman</span>
-                  <span class="time">4 hrs.</span>
-                  </span>
-                  <span class="message">
-                  Please, answer asap.
-                  </span>
-                  </a>
-              </li>
-              <li>
-                <a href="views/index.html#">See all messages</a>
+                <a href="receiveMail.do">See all messages</a>
               </li>
             </ul>
+            <script>
+            function mailList(){
+            	$.ajax({
+            		url:"mainMailList.do",
+            		success:function(list){
+            			var result ="";
+            			if(list.length < 0){
+            				result += "<tr><td>새로운 메일이 없습니다.</td></tr>"
+            			}else{
+            				$.each(list, function(i, obj) {
+            					if(obj.employee.empPfe == null){
+            						result += "<tr>"
+    									  +		"<td>"
+    									  +		"<a href='detailReceiveMail.do?mno="+obj.receiveNo+"'>"
+    									  +		"<span class='photo'><img class='img-circle' src='resources/img/user.png' width='25'></span>"
+    							}else{
+    								result += "<tr>"
+    									  +		"<td>"
+    									  +		"<a href='detailReceiveMail.do?mno="+obj.receiveNo+"'>"
+    									  +		"<span class='photo'><img class='img-circle' src='resources/empUpload_files/"+obj.employee.empPfe+"' width='25'></span>"
+    							}
+            					result += "<span class='subject'>"
+           								+ "<span class='from' style='width:30px'>"+ obj.employee.empName +"</span>"
+            							+ "<span class='time'>"+ obj.timestamp + "</span>"
+            							+ "</span>"
+                          				+ "<span class='message'>"+ obj.mail.mailTitle +"</span>"
+                          				+   "</a>"
+                          				+  "</td>"
+                          				+ "</tr>"
+            				})
+            			}
+            			$("#mainMailList").html(result);
+            		}
+            	})
+            } 
+            	
+            </script>
           </li>
           <!-- inbox dropdown end -->
           <!-- notification dropdown start-->
@@ -266,13 +260,6 @@
             </ul>
           </li>
           <li class="sub-menu">
-            <a href="schedule.do">
-              <i class="fa fa-book"></i>
-              <span>일정</span>
-            </a>
-         
-          </li>
-          <li class="sub-menu">
             <a href="views/javascript:;">
               <i class="fa fa-book"></i>
               <span>게시판</span>
@@ -289,7 +276,7 @@
               </a>
             <ul class="sub">
               <li><a href="#">내 예약 현황</a></li>
-              <li><a href="#">회의실/비품 예약</a></li>
+              <li><a href="reservMain.do">회의실/비품 예약</a></li>
               <li><a href="resourceManage.do">회의실/비품 관리</a></li>
             </ul>
           </li>
@@ -398,47 +385,7 @@
     }); */
   </script>
   <script type="application/javascript">
-    $(document).ready(function() {
-      $("#date-popover").popover({
-        html: true,
-        trigger: "manual"
-      });
-      $("#date-popover").hide();
-      $("#date-popover").click(function(e) {
-        $(this).hide();
-      });
 
-      $("#my-calendar").zabuto_calendar({
-        action: function() {
-          return myDateFunction(this.id, false);
-        },
-        action_nav: function() {
-          return myNavFunction(this.id);
-        },
-        ajax: {
-          url: "show_data.php?action=1",
-          modal: true
-        },
-        legend: [{
-            type: "text",
-            label: "Special event",
-            badge: "00"
-          },
-          {
-            type: "block",
-            label: "Regular event",
-          }
-        ]
-      });
-    });
-
-    function myNavFunction(id) {
-      $("#date-popover").hide();
-      var nav = $("#" + id).data("navigation");
-      var to = $("#" + id).data("to");
-      console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
-    }
-    
   /*******상태 표시*******/
   $(function(){
 
@@ -618,7 +565,7 @@
 		  //서버시간 재가동!
 			checkTime(); 
 			alert("퇴근 완료");
-			
+			$("#finishBtn").attr('disabled', true);
 		  }
 		  
 		  var finishTime = now.innerHTML;

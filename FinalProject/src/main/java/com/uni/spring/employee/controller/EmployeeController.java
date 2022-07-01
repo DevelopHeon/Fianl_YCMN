@@ -8,10 +8,12 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,25 +49,34 @@ public class EmployeeController {
 	
 	@RequestMapping("main.do")
 	public String main(HttpSession session, Model model) {
-
-
+		Employee emp = (Employee)session.getAttribute("loginUser");
+		int empNo = emp.getEmpNo();
+		//메일함에 새로운 메일이 카운팅(세션)
+		//상단메뉴바에서 메일을 확인하면 상단에 여전히 카운팅 감소가 되지 않아 작성
+		int unread = mailService.selectUnreadMail(empNo);
+		session.setAttribute("unread", unread);
+		
 		return "main";
 	}
 	
 	@RequestMapping("enrollForm.do")
-	public String enrollForm() {
+	public String enrollForm(@ModelAttribute Employee employee) {
 		return "employee/enrollForm";
 	}
 	
 	// 회원가입
 	@RequestMapping("insertEmployee.do")
-	public String insertEmployee(@ModelAttribute Employee emp, HttpServletRequest request) throws Exception {
+	public String insertEmployee(@Valid Employee employee, BindingResult result, HttpServletRequest request) throws Exception {
 		
-		String encPwd = bCryptPasswordEncoder.encode(emp.getEmpPwd());
-		System.out.println("비밀번호 : " + emp.getEmpPwd());
+		if(result.hasErrors()) {
+			return "employee/enrollForm";
+		}
 		
-		emp.setEmpPwd(encPwd);
-		employeeService.insertEmployee(emp);
+		String encPwd = bCryptPasswordEncoder.encode(employee.getEmpPwd());
+		System.out.println("비밀번호 : " + employee.getEmpPwd());
+		
+		employee.setEmpPwd(encPwd);
+		employeeService.insertEmployee(employee);
 		request.getSession().setAttribute("msg", "가입이 완료되었습니다. 관리자 승인이 필요합니다.");
 		
 		return "redirect:/";
@@ -152,7 +163,7 @@ public class EmployeeController {
 		
 		session.setAttribute("workInfo", working);
 
-		//주차별 근무시간 합계
+		//근무시간 합계
 		String monthTotal = employeeService.selectWorkingWeekTotal(empNo);
 		
 		model.addAttribute("monthTotal", monthTotal);

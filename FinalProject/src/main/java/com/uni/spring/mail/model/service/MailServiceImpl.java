@@ -144,6 +144,12 @@ public class MailServiceImpl implements MailService {
 	public void realDelete(int receiveNo) {
 		mailDao.realDelete(sqlSession, receiveNo);	
 	}
+	
+	//메인_상단메일리스트
+	@Override
+	public ArrayList<ReceiveMail> selectMainMailList(int empNo) {
+		return mailDao.selectMainMailList(sqlSession, empNo);
+	}
 
 
 }

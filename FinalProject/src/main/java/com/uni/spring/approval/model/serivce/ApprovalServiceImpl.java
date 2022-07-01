@@ -309,4 +309,10 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return approvalDao.selectMainApprovalCnt(sqlSession, userNo);
 	}
 
+	@Override
+	public int lvDateCheck(int empNo) {
+		
+		return approvalDao.lvDateCheck(sqlSession, empNo);
+	}
+
 }
