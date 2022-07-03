@@ -85,7 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 근태정보 -->
 	<select id="selectWorkingInfo" parameterType="WorkingDay" resultType="WorkingDay">
 		SELECT * FROM WORKINGDAY
-		WHERE EMP_NO = #{empNo}
+		WHERE EMP_NO = #{empNo} AND SUBSTR(TODAY,4,2) = TO_CHAR(SYSDATE, 'MM')
 		ORDER BY TODAY
 	</select>
 	
@@ -159,7 +159,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM EMPLOYEE A
 		LEFT JOIN JOB_POSITION B ON A.POS_NO = B.POS_NO
 		LEFT JOIN DEPARTMENT C ON A.DEP_NO = C.DEP_NO
-		<![CDATA[WHERE A.STATUS = 'Y' AND A.EMP_NAME LIKE '%'||#{empName}||'%']]>
+		<![CDATA[WHERE A.STATUS = 'Y' AND A.EMP_ID != 'admin' AND A.EMP_NAME LIKE '%'||#{empName}||'%']]>
 	</select>
 	
 	<!-- 프로필 변경 -->
@@ -191,6 +191,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE A.APP_STATUS = 'C' AND (A.TODAY, A.EMP_NO, A.APP_NO) = (SELECT B.APP_CREATE_DATE, B.APP_WRITER_NO, B.APP_NO FROM APPROVAL B WHERE A.APP_NO = B.APP_NO) 
 		AND TOTAL_NUM IS NULL
 	</update>
+	
+	<!-- 결재반려 후 연차내역 업데이트 -->
 	
 	<!-- 잔여연차 -->
 	<update id="updateRemainNum" parameterType="TimeOffContent">

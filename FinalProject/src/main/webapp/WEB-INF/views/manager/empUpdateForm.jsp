@@ -161,7 +161,7 @@
             <div class="row mt">
               <label class="col-sm-2 col-sm-2 control-label">생년월일</label>
               <div class="col-sm-10">
-                <%-- <input type="date" placeholder=" " name="hr.birthDate" value="${ e.hr.birthDate }" class="form-control"> --%>
+                 <input type="date" placeholder=" " name="hr.birthDate" value="${ e.hr.birthDate }" class="form-control"> 
               </div>
             </div>
             <div class="row mt">
@@ -254,7 +254,7 @@
             <div class="row mt">
               <label class="col-sm-2 col-sm-2 control-label">퇴사일</label>
               <div class="col-sm-10">
-                <%-- <input type="date" placeholder=" " name="hr.entDate" value="${ e.hr.entDate }" class="form-control"> --%>
+                 <%-- <input type="date" name="hr.entDate" value="${ e.hr.entDate }" class="form-control"> --%>
               </div>
             </div>
 

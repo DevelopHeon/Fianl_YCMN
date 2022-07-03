@@ -97,7 +97,7 @@ public class MailController {
 		session.setAttribute("msg", "메일이 전송되었습니다.");
 		
 
-		return "mail/writeMail";
+		return "redirect:sendMail.do";
 	}
 	
 	//메일 첨부파일 이미지

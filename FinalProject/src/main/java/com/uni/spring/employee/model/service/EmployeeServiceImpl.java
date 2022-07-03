@@ -220,6 +220,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employeeDao.updateTimeOffNum(sqlSession, empNo);
 			
 		}
+		//int result2 = employeeDao.updateRejectTimeOff(sqlSession);
 
 		return employeeDao.selectTimeOffContent(sqlSession, empNo, pi);
 	}
