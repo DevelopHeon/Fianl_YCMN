@@ -97,7 +97,7 @@ public class ManagerController {
 	
 	// 사원 정보와 인사 기록 수정
 	@RequestMapping("updateEmpDetail.do")
-	public String updateEmpDetail(int empNo, Employee e, Model model){
+	public String updateEmpDetail(int empNo, HttpSession session, Employee e, Model model){
 		log.info("업데이트 시작 !!");
 		
 		Hr hr = e.getHr();
@@ -109,6 +109,7 @@ public class ManagerController {
 		model.addAttribute("getPosList", ManagerService.getPosList());
 		model.addAttribute("getDepList", ManagerService.getDepList());
 		
+		session.setAttribute("msg", e.getEmpName()+"사원의 정보가 변경되었습니다.");
 		return "manager/empUpdateForm";
 	}
 	
