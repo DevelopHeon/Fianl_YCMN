@@ -22,6 +22,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.json.simple.JSONObject;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,58 +38,57 @@ import com.uni.spring.employee.model.dto.JobPosition;
 import com.uni.spring.hr.model.dto.Hr;
 import com.uni.spring.manager.model.dto.Search;
 import com.uni.spring.manager.model.service.ManagerService;
+import com.uni.spring.reservation.controller.ReservationController;
 
+import ch.qos.logback.classic.Logger;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Controller
 /* @RequestMapping("/manager") */
 public class ManagerController {
-
+	private static final Logger log = (Logger) LoggerFactory.getLogger(ManagerController.class);
 	private final ManagerService ManagerService;
 	
 	// 인사관리 메인 페이지로 이동
 	// 사원 전체 정보를 리스트로 조회함
 	@RequestMapping("listEmp.do")
-	public String selectList(Model model
-			, @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage
-			, @RequestParam(value="find", required = false, defaultValue = "empName") String find // 검색 분류
-			, @RequestParam(value="keyword", required = false, defaultValue = "") String keyword // 검색어
+	public String selectList(Model model,
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+			@RequestParam(value = "find", required = false, defaultValue = "empName") String find // 검색 분류
+			, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword // 검색어
 			, HttpSession session) {
-		Employee loginUser = (Employee)session.getAttribute("loginUser");
-			
-			// 페이징
-			int listCount = ManagerService.selectListCount(); // 페이징용
-			System.out.println("listCount : "+listCount);
-			int pageLimit = 10; // 하단 최대 페이지 수
-			int boardLimit = 15; // 한 페이지에 보여질 회원 수
-			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-			
-			// 검색
-			Search search = new Search(find, keyword);
-			System.out.println(search.toString());
-			
-//		ArrayList<Employee> list = ManagerService.selectList(pi, find, keyword);
-//		ArrayList<Employee> list = ManagerService.selectList(pi);
-			ArrayList<Employee> list = ManagerService.selectList(pi, search);
-			
-			model.addAttribute("list", list);
-			model.addAttribute("pi", pi);
-			
-//		ArrayList<Employee> list2 = ManagerService.selectList(find, keyword, 1);
-			
-			return "manager/empListView";
-			
+		
+		Search search = new Search(find, keyword);
+		log.info("search : " + search.toString());
+		
+		// 페이징
+		int listCount = ManagerService.selectListCount(search); // 페이징용
+		log.info("listCount : " + listCount);
+
+		int pageLimit = 10; // 하단 최대 페이지 수
+		int boardLimit = 15; // 한 페이지에 보여질 회원 수
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+
+		// 검색
+		ArrayList<Employee> list = ManagerService.selectList(pi, search);
+
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+
+		return "manager/empListView";
 	}
 	
 	// UpdateForm으로 이동. 화면에서 eno를 받아서 eno에 해당하는 사원 정보를 불러옴
 	@RequestMapping("updateFormEmp.do")
 	public ModelAndView updateForm(int empNo, ModelAndView mv) {
 		
-		System.out.println("조회★★★★★★★★★★★★★★★★");
+		log.info("조회 시작!!");
 		mv.addObject("getPosList", ManagerService.getPosList()); // 직위 정보
 		mv.addObject("getDepList", ManagerService.getDepList()); // 부서 정보
 		mv.addObject("e", ManagerService.selectEmp(empNo));
+		log.info("selectEmp : "+ManagerService.selectEmp(empNo));
 		
 		mv.setViewName("manager/empUpdateForm");
 		
@@ -98,7 +98,7 @@ public class ManagerController {
 	// 사원 정보와 인사 기록 수정
 	@RequestMapping("updateEmpDetail.do")
 	public String updateEmpDetail(int empNo, Employee e, Model model){
-		System.out.println("업데이트★★★★★★★★★★★★★★★★");
+		log.info("업데이트 시작 !!");
 		
 		Hr hr = e.getHr();
 		hr.setEmpNo(e.getEmpNo());
