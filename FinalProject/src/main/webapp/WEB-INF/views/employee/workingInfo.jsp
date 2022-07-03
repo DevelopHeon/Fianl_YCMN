@@ -6,11 +6,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%
 	Date currentTime = new Date();
-	SimpleDateFormat format = new SimpleDateFormat("M");
-	String thisMonth = String.valueOf(currentTime.getMonth()+1);
-	String prevM = String.valueOf(currentTime.getMonth());
-	ArrayList<WorkingDay> workInfo = (ArrayList)session.getAttribute("workInfo");
-
+	SimpleDateFormat format = new SimpleDateFormat("MM");
 %>
 
 <!DOCTYPE html>
@@ -22,6 +18,23 @@
 	<!-- Favicons -->
 	<link href="resources/img/favicon.png" rel="icon">
 	<link href="resources/img/apple-touch-icon.png" rel="apple-touch-icon">
+	  <!-- 부트스트랩 아이콘 CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <!-- Favicons -->
+  <link href="resources/img/favicon.png" rel="icon">
+  <link href="resources/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!--external css-->
+  <link href="resources/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="resources/css/zabuto_calendar.css">
+  <link rel="stylesheet" type="text/css" href="resources/lib/gritter/css/jquery.gritter.css" />
+  <!-- Custom styles for this template -->
+  <link href="resources/css/style.css" rel="stylesheet">
+  <link href="resources/css/style-responsive.css" rel="stylesheet">
+  <script src="resources/lib/chart-master/Chart.js"></script>
+
 	<!-- CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<!-- 테마 -->
@@ -94,7 +107,7 @@ function checkMonth() {
 	$(document).ready(function(){
 		
 		document.getElementById("bar").style.width = p.toFixed(2) + "%";
-	})
+	});
 
 	
 }
@@ -129,8 +142,8 @@ function checkMonth() {
              	  <td id="thisMonthWork" width="300">${monthTotal }</td>
              	  <td id="baseWork" width="300"></td>
              	  <td width="300">
-             	  	<div class="progress progress-striped active">
-                		<div id="bar" class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+             	  	<div class="progress">
+                		<div id="bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
               		</div>
               	  </td>
              	</tr>
