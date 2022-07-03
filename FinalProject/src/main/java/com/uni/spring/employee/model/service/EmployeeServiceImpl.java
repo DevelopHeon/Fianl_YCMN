@@ -213,14 +213,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		//update해줌 -> 승인되었을때 (결재완료:C) 연차내역테이블 업데이트
 		int result = employeeDao.updateTimeOffContent(sqlSession);
+		
+		
 		if(result > 0) {
 			//잔여연차 계산
 			employeeDao.updateRemainNum(sqlSession, empNo);
 			//연차 개수 업데이트
 			employeeDao.updateTimeOffNum(sqlSession, empNo);
 			
+		}else{
+			employeeDao.updateRejectTimeOff(sqlSession);
 		}
-		//int result2 = employeeDao.updateRejectTimeOff(sqlSession);
 
 		return employeeDao.selectTimeOffContent(sqlSession, empNo, pi);
 	}
