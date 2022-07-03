@@ -88,6 +88,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="find.equals('depName')">
 				DEP_NAME LIKE '%'||#{keyword}||'%'
 			</if>
+			<if test="true">
+				AND EMP_ID != 'admin'
+			</if>
 		</where>
 		ORDER BY 	EMP_NAME, EMP_NO
 	</select>

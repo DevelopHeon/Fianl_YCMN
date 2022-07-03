@@ -3,6 +3,7 @@ package com.uni.spring.reservation.model.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.uni.spring.common.dto.PageInfo;
 import com.uni.spring.reservation.model.dto.Reservation;
 import com.uni.spring.reservation.model.dto.Resources;
 
@@ -24,9 +25,11 @@ public interface ReservationService {
 
 	void insertReserve(Reservation rez); // 예약 추가
 
-	List<Reservation> myRezList(int empNo); // 내 예약 조회
+	List<Reservation> myRezList(int empNo, PageInfo pi); // 내 예약 조회
 
 	void returnReserve(int rezNo); // 예약 반납
 
 	void cancleReserve(int rezNo); // 예약 취소
+
+	int selectListCount(int empNo); // 페이징 용
 }

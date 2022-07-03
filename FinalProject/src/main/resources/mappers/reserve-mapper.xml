@@ -4,7 +4,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="reserveMapper">
 
-
 	<!-- 회의실 목록 불러오기 -->
 	<select id="getRoomList" resultType="Resources">
 		<![CDATA[
@@ -76,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		, TO_DATE(REPLACE(#{endTime},'T',' '),'YYYY-MM-DD HH24:MI:SS')
 		, DEFAULT)
 	</insert>
-	<select id="myRezList" parameterType="_int" resultType="Reservation">
+	<select id="myRezList" resultType="Reservation">
 		SELECT		A.REZ_NO
 					, A.RSC_NO
 					, A.REZ_WRITER
@@ -88,7 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM		RESERVATION A
 		JOIN    	RESOURCE_ENTERPRISE B ON A.RSC_NO = B.RSC_NO
 		WHERE		REZ_WRITER = #{empNo}
-		ORDER BY	A.START_TIME DESC
+		ORDER BY	A.REZ_NO DESC
 	</select>
 	<update id="returnReserve" parameterType="Resources">
 		UPDATE 	RESERVATION
@@ -100,4 +99,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET		STATUS = 'C'
 		WHERE 	REZ_NO = #{rezNo}
 	</update>
+	
+	<!-- 페이징 용 -->
+	<select id="selectListCount" parameterType="_int" resultType="_int">
+		SELECT		COUNT(*)
+		FROM		RESERVATION
+		WHERE		REZ_WRITER = #{empNo}
+	</select>
 </mapper>

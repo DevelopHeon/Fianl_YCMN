@@ -14,8 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.uni.spring.common.Pagination;
+import com.uni.spring.common.dto.PageInfo;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.reservation.model.dto.Reservation;
 import com.uni.spring.reservation.model.dto.Resources;
@@ -34,7 +37,7 @@ public class ReservationController {
 		return "reservation/reservationMain";
 	}
 
-	// 예약 조회
+	// 예약 메인 페이지
 	@ResponseBody
 	@GetMapping("reserveList.do")
 	public List<Map<String, Object>> reserveList(HttpSession session) {
@@ -104,13 +107,26 @@ public class ReservationController {
 	
 	// 나의 예약 정보 조회
 	@RequestMapping("myRezList.do")
-	public String myRezList(Model model, HttpSession session) {
+	public String myRezList(Model model
+			, @RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage
+			, HttpSession session) {
+		// 세션 정보 조회
 		Employee loginUser = (Employee)session.getAttribute("loginUser");
 		int empNo = loginUser.getEmpNo();
 		log.info("empNo : "+empNo);
 		
-		List<Reservation> myRezList = reservationService.myRezList(empNo);
+		// 페이징 용
+		int listCount = reservationService.selectListCount(empNo);
+		
+		int pageLimit = 10; // 하단 최대 페이지 수
+		int boardLimit = 15; // 한 페이지에 보여질 예약 수
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		List<Reservation> myRezList = reservationService.myRezList(empNo, pi);
 		model.addAttribute("myRezList", myRezList);
+		model.addAttribute("pi", pi);
+		
 		log.info("myRezList : "+myRezList);
 		
 		return "reservation/myRezManage";
