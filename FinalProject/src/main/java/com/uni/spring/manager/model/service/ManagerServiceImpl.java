@@ -133,8 +133,8 @@ public class ManagerServiceImpl implements ManagerService {
 
 	// 페이징 용
 	@Override
-	public int selectListCount() {
-		return managerDao.selectListCount(sqlSession);
+	public int selectListCount(Search search) {
+		return managerDao.selectListCount(sqlSession, search);
 	}
 
 //	// 사원 검색

@@ -7,16 +7,17 @@
 <head>
   <meta charset="utf-8">
   <title>임직원 관리</title>
+  
 <style>
-table, tr>th{text-align:center;}
+table, tr>th{ text-align:center }
+.table-head{ margin:10px }
+#pagingArea{ margin-left: 40% }
 </style>
 </head>
 
 <body>
 	<jsp:include page="../common/menubar.jsp"/>
-    <!-- **********************************************************************************************************************************************************
-        MAIN CONTENT
-        *********************************************************************************************************************************************************** -->
+	
     <!--main content start-->
     <section id="main-content">
       <section class="wrapper">
@@ -26,44 +27,45 @@ table, tr>th{text-align:center;}
             <div class="content-panel">
               <h4><i class="fa fa-angle-right"></i> 임직원 관리</h4>
               <section id="unseen">
-              <!-- 일괄 삭제를 위한 form -->
-		        <!-- 사원 목록 엑셀 다운로드 -->
-	          <form action="empExcelDown.do" method="get">
-	            <button type="submit">목록 엑셀 다운로드</button>
-	          </form>
+
+	          <div class="table-head" style="float: right">
+              <!-- 검색을 위한 form -->
         	<form>
-        		<select name="find">
+        		<select name="find" class="btn btn-theme01" style="border: 0.5px solid gray">
         			<option ${(param.find == "empNo")?"selected":""} value="empNo">사번</option>
         			<option ${(param.find == "empName")?"selected":""} value="empName">이름</option>
         			<option ${(param.find == "posName")?"selected":""} value="posName">직위</option>
         			<option ${(param.find == "depName")?"selected":""} value="depName">직무</option>
-        			<option ${(param.find == "status")?"selected":""} value="status">상태</option>
         		</select>
+        		
         		<input type="text" name="keyword" value="${param.keyword}"/>
         		<input class="btn btn-search" type="submit" value="검색" />
         	</form>
+        	</div>
         	
+		        <!-- 사원 목록 엑셀 다운로드 -->
+        	<div class="table-head" style="float: right">
+	          <form action="empExcelDown.do" method="get">
+	            <button type="submit" class="btn btn-theme01"><i class="fa fa-download"></i>&nbsp;&nbsp;목록 엑셀 다운로드</button>
+	          </form>
+	          </div>
               <form action="list" method="post">
-              	<input type="submit" class="btn-text btn-default" value="수정(임시)">
-                <table id="empList" class="table table-bordered table-striped table-condensed">
-	                <thead>
+                <table id="empList" class="table table-bordered table-striped table-condensed table-hover">
+	                <thead >
 			          <tr>
-			            <th style="width:3%;"><input type='checkbox' name='empNo' value='selectall' onclick='selectAll(this)'/></th>
-			            <th>사번</th>
-			            <th>이름</th>
-			            <th>아이디(임시)</th>
-			            <th>직위</th>
-			            <th>직무</th>
-			            <th>이메일</th>
-			            <th>전화번호</th>
-			            <th style="width:10%">사내 전화번호(임시)</th>
-			            <th>상태</th>
+			            <th width="5%">사번</th>
+			            <th width="10%">이름</th>
+			            <th width="10%">아이디</th>
+			            <th width="10%">직위</th>
+			            <th width="10%">직무</th>
+			            <th width="15%">이메일</th>
+			            <th width="10%">전화번호</th>
+			            <th width="5%">상태</th>
 			          </tr>
 	                </thead>
  					<tbody>
 						<c:forEach items="${ list }" var="e">
 		                    <tr>
-		                    	<td><input type="checkbox" name="empNo" value="${ e.empNo }"></td>
 		                        <td>${ e.empNo }</td>
 		                        <td id="empName" style="cursor: pointer;">${ e.empName }</td>
 		                        <td>${ e.empId }</td>
@@ -71,26 +73,14 @@ table, tr>th{text-align:center;}
 		                        <td>${ e.depName }</td><!-- 직무 -->
 		                        <td>${ e.empEmail }</td>
 		                        <td>${ e.empPhone }</td>
-		                        <td>${ e.officeTel }</td>
-		                        <%-- <td><fmt:formatNumber value="${e.empPhone}" pattern=“###-####-####” /></td> --%>
 		                        <td>${ e.status }</td>
 		                    </tr>
 	                    </c:forEach>
-	                    <script>
-	                    function selectAll(selectAll)  {
-						  const checkboxes = document.getElementsByName('empNo');
-						  
-						  	checkboxes.forEach((checkbox) => {
-						    checkbox.checked = selectAll.checked;
-						  })
-						}
-	                    </script>
                 	</tbody> 
-                	<tfoot>
-                	</tfoot>
                 </table>
                 </form>
                 	<!-- 페이징 시작 -->
+
             <div id="pagingArea">
                 <ul class="pagination">
                 	<c:choose>
@@ -113,7 +103,6 @@ table, tr>th{text-align:center;}
 	                	</c:choose>
                     </c:forEach>
                     
-                    
                     <c:choose>
                 		<c:when test="${ pi.currentPage ne pi.maxPage }">
                 			<li class="page-item"><a class="page-link" href="listEmp.do?currentPage=${ pi.currentPage+1 }">Next</a></li>
@@ -124,20 +113,18 @@ table, tr>th{text-align:center;}
                 	</c:choose>
                 </ul>
             </div>
+            <!-- 페이징 끝 -->
               </section>
             </div>
             <!-- /content-panel -->
           </div>
           <!-- /col-lg-4 -->
-        </div><!-- /row mt -->
+        </div>
+        <!-- /row mt -->
       </section>
       <!-- /wrapper -->
     </section>
     <!-- /MAIN CONTENT -->
-    <!--main content end-->
-    <!--footer start-->
-
-    <!--footer end-->
 	<script>
 		// update폼으로 이동. eno의 값을 받아가는 스크립트
 		$(function(){

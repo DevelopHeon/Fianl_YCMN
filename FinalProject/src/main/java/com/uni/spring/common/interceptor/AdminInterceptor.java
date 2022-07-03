@@ -32,7 +32,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
 		}else {
 			logger.info("============ AdminInterceptor 동작 - 접근 실패 ===========");
 			logger.info(loginUser.getEmpId() + " 회원이 ["+ request.getRequestURI() + "]의 접근을 시도했습니다!!");
-			
+			response.sendError(404);
 			return false;
 		}
 	}

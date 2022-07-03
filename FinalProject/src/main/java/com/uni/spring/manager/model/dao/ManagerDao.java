@@ -19,7 +19,7 @@ public class ManagerDao {
 	// 사원 정보 전체 불러오기
 	public ArrayList<Employee> selectList(SqlSessionTemplate sqlSession, PageInfo pi, Search search) {
 //		public ArrayList<Employee> selectList(SqlSessionTemplate sqlSession, PageInfo pi, String find, String keyword) {
-		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("managerMapper.employeeList", search, rowBounds);
@@ -86,7 +86,7 @@ public class ManagerDao {
 	//	public ArrayList<Employee> selectList(SqlSessionTemplate sqlSession) {
 //	return (ArrayList)sqlSession.selectList("managerMapper.employeeList");
 	// 페이징 용
-	public int selectListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("managerMapper.selectListCount");
+	public int selectListCount(SqlSessionTemplate sqlSession, Search search) {
+		return sqlSession.selectOne("managerMapper.selectListCount", search);
 	}
 }

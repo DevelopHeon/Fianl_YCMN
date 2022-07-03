@@ -28,6 +28,7 @@
 			<mapping path="/listEmp.do"/>
 			<mapping path="/jobManage.do"/>
 			<mapping path="/updateFormEmp.do"/>
+			<mapping path="/resourceManage.do"/>
 			<beans:bean id="AdminInterceptor" class="com.uni.spring.common.interceptor.AdminInterceptor"/>
 		</interceptor>
 	</interceptors>

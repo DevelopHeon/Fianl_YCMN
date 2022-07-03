@@ -42,6 +42,6 @@ public interface ManagerService {
 
 //	ArrayList<Employee> selectList(String find, String keyword, int i); // 검색기능추가
 
-	int selectListCount(); // 페이징 용
+	int selectListCount(Search search); // 페이징 용
 	
 }

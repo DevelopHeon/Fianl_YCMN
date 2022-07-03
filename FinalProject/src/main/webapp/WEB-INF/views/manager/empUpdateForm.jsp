@@ -1,30 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="Dashboard">
-<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-<title>Dashio - Bootstrap Admin Template</title>
-
-<!-- Favicons -->
-<link href="img/favicon.png" rel="icon">
-<link href="img/apple-touch-icon.png" rel="apple-touch-icon">
-
-<!-- Bootstrap core CSS -->
-<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!--external css-->
-<link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="lib/bootstrap-datepicker/css/datepicker.css" />
-<link rel="stylesheet" type="text/css" href="lib/bootstrap-daterangepicker/daterangepicker.css" />
-<!-- Custom styles for this template -->
-<link href="css/style.css" rel="stylesheet">
-<link href="css/style-responsive.css" rel="stylesheet">
+<title>임직원 관리</title>
 </head>
 
 <body>
@@ -40,14 +21,6 @@
         <div class="col-lg-12">
           <div class="form-panel">
             <h4 class="mb"><i class="fa fa-angle-right"></i> Personal Information</h4>
-			<!-- 프로필 사진 -->
-            <div class="profile-pic">
-              <p><img src="img/ui-sam.jpg" class="img-circle"></p>
-              <p>
-                <button class="btn btn-theme"><i class="fa fa-check"></i> Follow</button>
-                <button class="btn btn-theme02">Add</button>
-              </p>
-            </div>
 
             <!-- 수정 form 시작 ★★★ -->
             <form id="updateForm" class="form-horizontal" method="post" action="updateEmpDetail.do">
@@ -182,13 +155,13 @@
             <div class="row mt">
               <label class="col-sm-2 col-sm-2 control-label">입사일</label>
               <div class="col-sm-10">
-                <!-- <input type="text" placeholder=" " name="hr.hireDate" value="${ e.hr.hireDate }" class="form-control"> -->
+                 <input type="date" placeholder=" " name="hr.hireDate" value="${ e.hr.hireDate }" class="form-control">
               </div>
             </div>
             <div class="row mt">
               <label class="col-sm-2 col-sm-2 control-label">생년월일</label>
               <div class="col-sm-10">
-                <!-- <input type="date" placeholder=" " name="hr.birthDate" value="${ e.hr.birthDate }" class="form-control"> -->
+                <%-- <input type="date" placeholder=" " name="hr.birthDate" value="${ e.hr.birthDate }" class="form-control"> --%>
               </div>
             </div>
             <div class="row mt">
@@ -281,7 +254,7 @@
             <div class="row mt">
               <label class="col-sm-2 col-sm-2 control-label">퇴사일</label>
               <div class="col-sm-10">
-                <!-- <input type="text" placeholder=" " name="hr.entDate" value="${ e.hr.entDate }" class="form-control"> -->
+                <%-- <input type="date" placeholder=" " name="hr.entDate" value="${ e.hr.entDate }" class="form-control"> --%>
               </div>
             </div>
 
@@ -312,26 +285,6 @@
   <!-- /MAIN CONTENT -->
   <!--main content end-->
 </section>
-<!-- js placed at the end of the document so the pages load faster -->
-<script src="lib/jquery/jquery.min.js"></script>
-<script src="lib/bootstrap/js/bootstrap.min.js"></script>
-<script class="include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
-<script src="lib/jquery.scrollTo.min.js"></script>
-<script src="lib/jquery.nicescroll.js" type="text/javascript"></script>
-<!--common script for all pages-->
-<script src="lib/common-scripts.js"></script>
-<!--script for this page-->
-<script src="lib/jquery-ui-1.9.2.custom.min.js"></script>
-<!--custom switch-->
-<script src="lib/bootstrap-switch.js"></script>
-<!--custom tagsinput-->
-<script src="lib/jquery.tagsinput.js"></script>
-<!--custom checkbox & radio-->
-<script type="text/javascript" src="lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="lib/bootstrap-daterangepicker/date.js"></script>
-<script type="text/javascript" src="lib/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script type="text/javascript" src="lib/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
-<script src="lib/form-component.js"></script>
 </body>
 
 </html>
