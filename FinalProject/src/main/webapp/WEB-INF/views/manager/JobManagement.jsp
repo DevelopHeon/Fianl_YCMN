@@ -22,11 +22,6 @@
 
 <body>
 <jsp:include page="../common/menubar.jsp"/>
-<!-- **********************************************************************************************************************************************************
-MAIN CONTENT
-*********************************************************************************************************************************************************** -->
-<!--main content start-->
-
 <section id="main-content">
     <section class="wrapper">
         <h3><i class="fa fa-angle-right"></i> 직위/부서 관리</h3>
@@ -35,15 +30,17 @@ MAIN CONTENT
                 <div class="content-panel">
 
                     <h4><i class="fa fa-angle-right"></i> 직위 관리</h4>
-                    <a data-toggle="modal" data-target="#insertPosModal">직위 추가</a>
-                    <a data-toggle="modal" data-target="#updatePosModal" id="posUpdate">직위 수정/삭제</a>
                     <section id="unseen">
-                        <table border="1" id="posListView">
+                        <div style="width:80%; text-align:right;">
+		                    <a data-toggle="modal" data-target="#insertPosModal">직위 추가</a>&emsp;
+		                    <a data-toggle="modal" data-target="#updatePosModal" id="posUpdate">직위 수정/삭제</a>
+						</div>
+                        <table id="posListView" style="width:80%" class="table table-bordered table-striped table-condensed table-hover">
                             <thead style="background-color:#5F7161;font-weight:bold;color:#FFFFFF;">
                                 <tr>
-                                    <th style="width:30px;"></th>
-                                    <th style="width:70px;">등급</th>
-                                    <th style="width:330px;">직위</th>
+                                    <th width="10%"></th>
+                                    <th width="30%">등급</th>
+                                    <th width="50%">직위</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,7 +54,6 @@ MAIN CONTENT
                             </tbody>
                         </table>
                     </section>
-
 
                     <div class="modal fade" id="insertPosModal">
                         <div class="modal-dialog modal-sm">
@@ -149,15 +145,15 @@ MAIN CONTENT
                         });
                     </script>
                     
-                    
-                    
                     <!-- 부서 관리 시작 -->
-                    <br><br><br>
+                    <br>
                     <h4><i class="fa fa-angle-right"></i> 부서 관리</h4>
-                    <a data-toggle="modal" data-target="#insertDeptModal">부서 추가</a>
-                    <a data-toggle="modal" data-target="#updateDeptModal" id="deptUpdate">부서 수정/삭제</a>
                     <section id="unseen">
-                        <table border="1" id="deptListView">
+                        <div style="width:80%; text-align:right;">
+		                    <a data-toggle="modal" data-target="#insertDeptModal">부서 추가</a>&emsp;
+		                    <a data-toggle="modal" data-target="#updateDeptModal" id="deptUpdate">부서 수정/삭제</a>
+						</div>
+                        <table id="deptListView" style="width:80%" class="table table-bordered table-striped table-condensed table-hover">
                             <thead style="background-color:#5F7161;font-weight:bold;color:#FFFFFF;">
                                 <tr>
                                     <th style="width:30px;"></th>

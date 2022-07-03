@@ -83,9 +83,10 @@ public class ManagerServiceImpl implements ManagerService {
 	// 직위 삭제
 	@Override
 	public void deleteJobPosition(JobPosition job) {
-		int result = managerDao.deleteJobPosition(sqlSession, job);
+		int result1 = managerDao.deleteJobPosition(sqlSession, job);
+		int result2 = managerDao.deleteJobPositionNo(sqlSession, job);
 		
-		if(result < 0) {
+		if(result1 < 0 || result2 < 0) {
 			throw new CommException();
 		}
 	}
@@ -118,9 +119,10 @@ public class ManagerServiceImpl implements ManagerService {
 	// 부서 삭제
 	@Override
 	public void deleteDepartment(Department dep) {
-		int result = managerDao.deleteDepartment(sqlSession, dep);
+		int result1 = managerDao.deleteDepartment(sqlSession, dep);
+		int result2 = managerDao.deleteDepartmentNo(sqlSession, dep);
 		
-		if(result < 0) {
+		if(result1 < 0 || result2 < 0) {
 			throw new CommException();
 		}
 	}
@@ -136,11 +138,5 @@ public class ManagerServiceImpl implements ManagerService {
 	public int selectListCount(Search search) {
 		return managerDao.selectListCount(sqlSession, search);
 	}
-
-//	// 사원 검색
-//	@Override
-//	public ArrayList<Employee> selectList(String find, String keyword, int i) {
-//		return (ArrayList)managerDao.selectList(sqlSession, find, keyword, i);
-//	}
 	
 }

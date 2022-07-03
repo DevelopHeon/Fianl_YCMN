@@ -37,13 +37,13 @@ MAIN CONTENT
                     <jsp:useBean id="date" class="java.util.Date" />
 					<fmt:formatDate var="now" value="${date}" pattern="YYYY-MM-dd HH:mm:ss" />
                     <section id="unseen">
-                        <table border="1" id="RezListView">
+                        <table id="RezListView" class="table table-bordered table-striped table-condensed table-hover">
                             <thead style="background-color:#5F7161;font-weight:bold;color:#FFFFFF;">
                                 <tr>
-						           <th class="col-sm-1">예약 자산</th>
-						           <th class="col-sm-2">예약 명</th>
-						           <th class="col-sm-3">예약 시간</th>
-						           <th class="col-sm-2">반납/취소</th>
+						           <th width="20%">예약 자산</th>
+						           <th width="20%">예약 명</th>
+						           <th width="30%">예약 시간</th>
+						           <th width="10%">반납/취소</th>
                                 </tr>
                             </thead>
                             <tbody>
