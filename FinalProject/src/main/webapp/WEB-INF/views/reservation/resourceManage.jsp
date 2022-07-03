@@ -35,16 +35,18 @@ MAIN CONTENT
                 <div class="content-panel">
 
                     <h4><i class="fa fa-angle-right"></i> 회의실 관리</h4>
-                    <a data-toggle="modal" data-target="#insertRoomModal">회의실 추가</a>
-                    <a data-toggle="modal" data-target="#updateRoomModal" id="RoomUpdate">회의실 수정/삭제</a>
                     <section id="unseen">
-                        <table border="1" id="RoomListView">
+                        <div style="width:80%; text-align:right;">
+		                    <a data-toggle="modal" data-target="#insertRoomModal">회의실 추가</a>&emsp;
+		                    <a data-toggle="modal" data-target="#updateRoomModal" id="RoomUpdate">회의실 수정/삭제</a>
+						</div>
+                        <table id="RoomListView" style="width:80%" class="table table-bordered table-striped table-condensed table-hover">
                             <thead style="background-color:#5F7161;font-weight:bold;color:#FFFFFF;">
                                 <tr>
-						           <th class="col-sm-1"></th>
-						           <th class="col-sm-3">자원 명</th>
-						           <th class="col-sm-2">자원 정보</th>
-						           <th class="col-sm-1">자원 상태</th>
+						           <th width="10%"></th>
+						           <th width="20%">자원 명</th>
+						           <th width="30%">자원 정보</th>
+						           <th width="10%">자원 상태</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -161,16 +163,18 @@ MAIN CONTENT
                     <!-- 비품 관리 시작 -->
                     <br><br><br>
                     <h4><i class="fa fa-angle-right"></i> 비품 관리</h4>
-                    <a data-toggle="modal" data-target="#insertSupplyModal">비품 추가</a>
-                    <a data-toggle="modal" data-target="#updateSupplyModal" id="SupplyUpdate">비품 수정/삭제</a>
                     <section id="unseen">
-                        <table border="1" id="SupplyListView">
+                       	<div style="width:80%; text-align:right;">
+		                    <a data-toggle="modal" data-target="#insertSupplyModal">비품 추가</a>&emsp;
+		                    <a data-toggle="modal" data-target="#updateSupplyModal" id="SupplyUpdate">비품 수정/삭제</a>
+						</div>
+                        <table id="SupplyListView" style="width:80%" class="table table-bordered table-striped table-condensed table-hover">
                             <thead style="background-color:#5F7161;font-weight:bold;color:#FFFFFF;">
                                 <tr>
-						           <th class="col-sm-1"></th>
-						           <th class="col-sm-3">자원 명</th>
-						           <th class="col-sm-2">자원 정보</th>
-						           <th class="col-sm-1">자원 상태</th>
+						           <th width="10%"></th>
+						           <th width="20%">자원 명</th>
+						           <th width="30%">자원 정보</th>
+						           <th width="10%">자원 상태</th>
                                 </tr>
                             </thead>
                             <tbody>

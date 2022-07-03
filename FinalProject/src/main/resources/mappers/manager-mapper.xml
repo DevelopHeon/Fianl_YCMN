@@ -213,6 +213,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET		STATUS = 'N'
 		WHERE 	DEP_NO = #{depNo}
 	</update>
+	<update id="deleteDepartmentNo" parameterType="Department">
+		UPDATE 	EMPLOYEE
+		SET		DEP_NO = '0'
+		WHERE 	DEP_NO = #{depNo}
+	</update>
 	
 	<!-- 부서 추가/수정/삭제 -->
 	<insert id="insertJobPosition" parameterType="JobPosition">
@@ -231,5 +236,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET		STATUS = 'N'
 		WHERE 	POS_NO = #{posNo}
 	</update>
-	
+	<update id="deleteJobPositionNo" parameterType="JobPosition">
+		UPDATE 	EMPLOYEE
+		SET		POS_NO = '0'
+		WHERE 	POS_NO = #{posNo}
+	</update>
 </mapper>

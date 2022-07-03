@@ -57,6 +57,9 @@ public class ManagerDao {
 	public int deleteJobPosition(SqlSessionTemplate sqlSession, JobPosition job) {
 		return sqlSession.update("managerMapper.deleteJobPosition", job);
 	}
+	public int deleteJobPositionNo(SqlSessionTemplate sqlSession, JobPosition job) {
+		return sqlSession.update("managerMapper.deleteJobPositionNo", job);
+	}
 	
 	// 부서 정보 불러오기
 	public ArrayList<Department> getDepList(SqlSessionTemplate sqlSession) {
@@ -74,17 +77,13 @@ public class ManagerDao {
 	public int deleteDepartment(SqlSessionTemplate sqlSession, Department dep) {
 		return sqlSession.update("managerMapper.deleteDepartment", dep);
 	}
-	
+	public int deleteDepartmentNo(SqlSessionTemplate sqlSession, Department dep) {
+		return sqlSession.update("managerMapper.deleteDepartmentNo", dep);
+	}
 	// 엑셀 다운로드
 	public ArrayList<Employee> selectExcelList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("managerMapper.selectExcelList");
 	}
-//	// 검색 용
-//	public ArrayList<Employee> selectList(SqlSessionTemplate sqlSession, String find, String keyword) {
-//		return (ArrayList)sqlSession.selectMap("managerMapper.selectFindEmp", find, keyword);
-//	}
-	//	public ArrayList<Employee> selectList(SqlSessionTemplate sqlSession) {
-//	return (ArrayList)sqlSession.selectList("managerMapper.employeeList");
 	// 페이징 용
 	public int selectListCount(SqlSessionTemplate sqlSession, Search search) {
 		return sqlSession.selectOne("managerMapper.selectListCount", search);
