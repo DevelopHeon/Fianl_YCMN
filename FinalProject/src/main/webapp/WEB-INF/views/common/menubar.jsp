@@ -300,7 +300,7 @@
               <li><a href="myPage.do">인사 정보</a></li>
               <li><a href="workingInfo.do">근태 정보</a></li>
               <li><a href="timeOff.do">연차 현황</a></li>
-              <li><a href="#">조직도</a></li>
+              <li><a href="organizationChart.do">조직도</a></li>
               <li><a href="empAddress.do">주소록</a></li>
             </ul>
           </li>
