@@ -16,7 +16,7 @@
  			<c:if test='${ empty list }'>
 				<h4>조회된 공지사항이 없습니다.</h4>
 			</c:if>
-			<c:if test='${ loginUser.depName.equals("총무") }'>
+			<c:if test='${ loginUser.depName.equals("총무부서") }'>
 				<a class="btn btn-primary" style="float:right;" href="enrollFormNotice.do">글쓰기</a>
 			</c:if>
 			<div class="noticeList">
@@ -62,10 +62,18 @@
 	</section>
 </body>
 <script>
+	$(function(){
+		var row = $('#noticeList tbody tr').length;
+		
+		console.log(row);
+		if(row < 5 ){
+			$("#moreView").hide();
+		}
+	});
+
 	$("#moreView").click(function(){
 		var rownum = $("#noticeList tbody tr").length; // 5개씩 페이징 처리
 		var addMore = rownum + 5;
-		console.log("addMore",addMore);
 		
 		var listHtml = ""; // 담아서 뿌려줄 변수 선언
 		

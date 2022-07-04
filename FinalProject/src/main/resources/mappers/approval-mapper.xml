@@ -111,7 +111,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		AND A.EMP_NAME LIKE '%'||#{empName}||'%'
 		</if>
 		AND A.STATUS = 'Y'
-		ORDER BY A.POS_NO
+		ORDER BY B.POS_GRADE
 	</select>
 	<select id="selectMyApprovalListCnt" parameterType="_int" resultType="_int">
 		SELECT COUNT(*)
