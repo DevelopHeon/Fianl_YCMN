@@ -367,9 +367,9 @@ public class MailController {
 	
 	//받은메일 답장
 	@RequestMapping("writeReplyForm.do")
-	public ModelAndView writeReplyForm(int receiveNo, ModelAndView mv) {
+	public ModelAndView writeReplyForm(@ModelAttribute("mail") Mail mail, int receiveNo, ModelAndView mv) {
 		ReceiveMail receiveMail = mailService.selectReceiveMail(receiveNo);
-
+	
 		mv.addObject("reply", receiveMail).setViewName("mail/writeReply");
 
 		return mv;

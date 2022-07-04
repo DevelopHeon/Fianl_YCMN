@@ -160,16 +160,18 @@ ${loginUser.empPhone}</textarea>
 				});
 		
 	$("#save").click(function() {
-		oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
 		
 		if($("#subject").val() == ""){
 			alert("제목을 입력해주세요");
 			return;
 		}
-		if($("#mailTo").val() == null){
+		if($("#mailTo").text() == ""){
 			alert("수신자를 입력해주세요");
 			return false;
 		}
+		
+		oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+		
 		
 		var contentVal = $("#ir1").val();
 		console.log(contentVal);
