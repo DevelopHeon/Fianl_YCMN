@@ -262,13 +262,6 @@
             </ul>
           </li>
           <li class="sub-menu">
-            <a href="schedule.do">
-              <i class="fa fa-book"></i>
-              <span>일정</span>
-            </a>
-         
-          </li>
-          <li class="sub-menu">
             <a href="views/javascript:;">
               <i class="fa fa-book"></i>
               <span>게시판</span>

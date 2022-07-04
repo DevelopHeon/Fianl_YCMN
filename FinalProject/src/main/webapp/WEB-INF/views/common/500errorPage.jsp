@@ -4,40 +4,25 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="Dashboard">
-<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 <title>Insert title here</title>
-  <!-- Bootstrap core CSS -->
-  <link href="resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!--external css-->
-  <link href="resources/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
-  <!-- Custom styles for this template -->
-  <link href="resources/css/style.css" rel="stylesheet">
-  <link href="resources/css/style-responsive.css" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-6 col-lg-offset-3 p404 centered">
-        <img src="resources/img/500.png" alt="">
-        <h1>ERROR 500</h1>
-        <h3>Ouch!! Something Went Wrong!</h3>
-        <br>
-        <div class="row">
-          <div class="col-md-8 col-md-offset-2">
-            <input type="text" class="form-control" id="form1Name" name="form1Name">
-            <button class="btn btn-theme mt">Search</button>
-          </div>
-        </div>
-        <h5 class="mt">Hey, maybe you will be interested in these pages:</h5>
-        <p><a href="main.do">메인으로 돌아가기</a></p>
-      </div>
-    </div>
-  </div>
-  <!-- js placed at the end of the document so the pages load faster -->
-  <script src="resources/lib/jquery/jquery.min.js"></script>
-  <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
+	<div align="center">	
+		
+		<img src="${ pageContext.servletContext.contextPath }/resources/img/500error.png" width="300">
+		<br><br>
+		<h1 style="font-weight:bold">${ msg }</h1>
+		<h1 style="font-weight:bold">${ ref_form }</h1>
+		<h5 style="color: red;"> ${ requestScope['javax.servlet.error.message'] }</h2>
+		<h5 style="color: red;"> ${ requestScope['javax.servlet.error.request_uri'] }</h2>
+		<a href="main.do">돌아가기</a>
+		<!-- 
+		  - javax.servlet.error.status_code (오류 상태 코드)
+		  - javax.servlet.error.message (오류 메시지)
+		  - javax.servlet.error.request_uri (오류가 발생한 요청 URI)
+		  - javax.servlet.error.exception (발생한 예외처리 내용)
+		  - javax.servlet.error.servelt_name (오류가 발생한 Servlet)
+		 -->
+	</div>
 </body>
 </html>

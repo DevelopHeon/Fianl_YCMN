@@ -5,7 +5,7 @@
 <head>
 <style>
 /* 첨부파일 상자 이미지로 대체 */
-.file_input_textbox {height:29px; width:50%; margin-left:8.4%; margin-top:10px;}
+.file_input_textbox {height:29px; width:50%; margin-top:10px;}
 .file_input_div {position:relative; width:80px; height:36px; overflow:hidden;}
 .file_input_hidden {font-size:29px; position:absolute; right:0px; 
 	top:0px; opacity:0; filter: alpha(opacity=0); 

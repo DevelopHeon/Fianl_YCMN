@@ -9,12 +9,12 @@
 <body>
 	<div align="center">	
 	
-		<img src="${ pageContext.servletContext.contextPath }/resources/img/404.png" width="300">
+		<img src="${ pageContext.servletContext.contextPath }/resources/img/error.png" width="300">
 		<br><br>
 		<h1 style="font-weight:bold">${ msg }</h1>
 		<h1 style="font-weight:bold">${ ref_form }</h1>
 		<h5 style="color: red;"> ${ requestScope['javax.servlet.error.message'] }</h2>
-		<a href="main.do">돌아가기</a>
+		<a href="index.jsp">돌아가기</a>
 		<!-- 
 		  - javax.servlet.error.status_code (오류 상태 코드)
 		  - javax.servlet.error.message (오류 메시지)
