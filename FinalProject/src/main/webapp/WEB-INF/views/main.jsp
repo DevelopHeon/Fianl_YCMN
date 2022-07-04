@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%
+	Date currentTime = new Date();
+	SimpleDateFormat format = new SimpleDateFormat("M"); //M: 7, MM:07
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -111,7 +117,7 @@
                		</div>
                		<!-- WORKINGINFO -->
                		<div id="section2">
-               		<h3 class="centered">6월 근무 시간</h3>
+               		<h3 class="centered"><%=format.format(currentTime) %>월 근무 시간</h3>
                			<table class="table centered">
              				<tr>
 	             	  			<td id="thisMonthWork"></td>
@@ -174,8 +180,8 @@
          				success:function(result){
          					$("#thisMonthWork").html(result);
                 			//이번달 필요 근무 시간
-                    		    var start = new Date(2022, 5, 1); // 2022-6-1
-                    		    var end = new Date(2022, 5, 30); // 2022-6-30
+                    		    var start = new Date(2022, 6, 1); // 2022-7-1
+                    		    var end = new Date(2022, 6, 31); // 2022-7-31
                     		    var count = 0;
                     			var mw = result.substring(0, result.indexOf('시'));
 								

@@ -22,4 +22,14 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.uni.spring" />
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/listEmp.do"/>
+			<mapping path="/jobManage.do"/>
+			<mapping path="/updateFormEmp.do"/>
+			<mapping path="/resourceManage.do"/>
+			<beans:bean id="AdminInterceptor" class="com.uni.spring.common.interceptor.AdminInterceptor"/>
+		</interceptor>
+	</interceptors>
 </beans:beans>

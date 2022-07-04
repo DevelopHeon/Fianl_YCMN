@@ -551,7 +551,7 @@ public class ApprovalController {
 	public String lvDateCheck(int empNo, int useNum) {
 		int count = approvalService.lvDateCheck(empNo);
 		count = count - useNum;
-		
+
 		return String.valueOf(count);
 	}
 }

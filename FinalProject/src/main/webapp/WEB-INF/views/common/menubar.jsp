@@ -216,10 +216,11 @@
                 <p class="empImg centered"><img src="resources/empUpload_files/${empInfo.empPfe}" class="img-circle" width="80"></p>
             </c:if>
             
-
           <h5 class="centered">${ sessionScope.loginUser.empName }</h5>
           <button type="button" class="workCheck btn btn-primary" data-toggle="modal" data-target="#workcheck" onclick="checkTime(); todayCheck();" >출퇴근 확인</button>
 
+		  <!-- admin일 경우 관리 메뉴 보임 -->
+		  <c:if test="${ sessionScope.loginUser.empId eq 'admin' || sessionScope.loginUser.depName eq '인사부서' }">
           <li class="sub-menu">
             <a href="views/javascript:;">
               <i class="fa fa-book"></i>
@@ -232,6 +233,7 @@
               <li><a href="listEmp.do">임직원 관리</a></li>
             </ul>
           </li>
+          </c:if>
           <li class="sub-menu">
             <a href="views/javascript:;">
               <i class="fa fa-book"></i>
@@ -275,9 +277,11 @@
               <span>예약</span>
               </a>
             <ul class="sub">
-              <li><a href="#">내 예약 현황</a></li>
+              <li><a href="myRezList.do">내 예약 현황</a></li>
               <li><a href="reservMain.do">회의실/비품 예약</a></li>
+              <c:if test="${ sessionScope.loginUser.empId eq 'admin' }"><!-- admin일 경우 자원 관리 메뉴 보임 -->
               <li><a href="resourceManage.do">회의실/비품 관리</a></li>
+              </c:if>
             </ul>
           </li>
           <li class="sub-menu">
@@ -289,6 +293,7 @@
               <li><a href="myPage.do">인사 정보</a></li>
               <li><a href="workingInfo.do">근태 정보</a></li>
               <li><a href="timeOff.do">연차 현황</a></li>
+              <li><a href="organizationChart.do">조직도</a></li>
               <li><a href="empAddress.do">주소록</a></li>
             </ul>
           </li>
@@ -444,8 +449,13 @@
          var month = currentDate.getMonth()+1;
          return month < 10 ? '0' + month : '' + month;
       }
+      //일
+      function getDate(){
+    	  var day = currentDate.getDate();
+          return day < 10 ? '0' + day : '' + day;
+      }
       //oooo년oo월oo일(요일)
-      var calendar = currentDate.getFullYear()+"년 " + getMonth() + "월 " + currentDate.getDate() + "일" + " ("+ todayWeek + ")"
+      var calendar = currentDate.getFullYear()+"년 " + getMonth() + "월 " + getDate() + "일" + " ("+ todayWeek + ")"
       
       var hours = add(currentDate.getHours(), 2);
       var minutes = add(currentDate.getMinutes(), 2);

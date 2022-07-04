@@ -57,7 +57,7 @@
 				</table>
              </form>
               <br><br><br>
-              <h3 class="depName1"><i class="fa fa-angle-right"></i> 개발</h3>
+              <h3 class="depName1"><i class="fa fa-angle-right"></i> 총무부서</h3>
               <hr>
               	<div class="updown table-inbox-wrap1">
                 <table class="address table table-border table-hover centered">
@@ -70,33 +70,7 @@
                   </tr>
                 </thead>
               <c:forEach items="${ list }" var="e">
-              <c:if test="${e.depName eq '개발'}"> 
-                <tbody>
-                  <tr>
-	                 <td>${e.empNo }</td>
-                     <td>${ e.empName }</td>
-                     <td id="addressEmpId">${ e.empId}</td>
-                     <td>${ e.posName}</td>
-                  </tr>
-                </tbody>
-              </c:if>
-              </c:forEach>
-              </table>
-              </div>
-              <h3 class="depName2"><i class="fa fa-angle-right"></i> 총무</h3>
-              <hr>
-              	<div class="updown table-inbox-wrap2">
-                <table class="address table table-border table-hover centered">
-                <thead>
-                  <tr>
-                  	<th>사번</th>
-                    <th>이름</th>
-                    <th>아이디</th>
-                    <th>직위</th>
-                  </tr>
-                </thead>
-              <c:forEach items="${ list }" var="e">
-              <c:if test="${e.depName eq '총무'}"> 
+              <c:if test="${e.depName eq '총무부서'}"> 
                 <tbody>
                   <tr>
 	                 <td>${e.empNo }</td>
@@ -110,7 +84,34 @@
               </table>
               </div>
               
-              <h3 class="depName3"><i class="fa fa-angle-right"></i> 인사</h3>
+              <h3 class="depName2"><i class="fa fa-angle-right"></i> 인사부서</h3>
+              <hr>
+              	<div class="updown table-inbox-wrap2">
+                <table class="address table table-border table-hover centered">
+                <thead>
+                  <tr>
+                  	<th>사번</th>
+                    <th>이름</th>
+                    <th>아이디</th>
+                    <th>직위</th>
+                  </tr>
+                </thead>
+              <c:forEach items="${ list }" var="e">
+              <c:if test="${e.depName eq '인사부서'}"> 
+                <tbody>
+                  <tr>
+	                 <td>${e.empNo }</td>
+                     <td>${ e.empName }</td>
+                     <td id="addressEmpId">${ e.empId}</td>
+                     <td>${ e.posName}</td>
+                  </tr>
+                </tbody>
+              </c:if>
+              </c:forEach>
+              </table>
+              </div>
+              
+              <h3 class="depName3"><i class="fa fa-angle-right"></i> 개발부서</h3>
               <hr>
               	<div class="updown table-inbox-wrap3">
                 <table class="address table table-border table-hover centered">
@@ -123,7 +124,7 @@
                   </tr>
                 </thead>
               <c:forEach items="${ list }" var="e">
-              <c:if test="${e.depName eq '인사'}"> 
+              <c:if test="${e.depName eq '개발부서'}"> 
                 <tbody>
                   <tr>
 	                 <td>${e.empNo }</td>
@@ -137,7 +138,7 @@
               </table>
               </div>
 
-              <h3 class="depName4"><i class="fa fa-angle-right"></i> 연수중</h3>
+              <h3 class="depName4"><i class="fa fa-angle-right"></i> 영업부서</h3>
               <hr>
               	<div class="updown table-inbox-wrap4">
                 <table class="address table table-border table-hover centered">
@@ -150,7 +151,7 @@
                   </tr>
                 </thead>
               <c:forEach items="${ list }" var="e">
-              <c:if test="${e.depName eq '연수중'}"> 
+              <c:if test="${e.depName eq '영업부서'}"> 
                 <tbody>
                   <tr>
 	                 <td>${e.empNo }</td>
@@ -163,6 +164,34 @@
               </c:forEach>
               </table>
               </div>
+              
+               <h3 class="depName5"><i class="fa fa-angle-right"></i> 연구부서</h3>
+              <hr>
+              	<div class="updown table-inbox-wrap5">
+                <table class="address table table-border table-hover centered">
+                <thead>
+                  <tr>
+                  	<th>사번</th>
+                    <th>이름</th>
+                    <th>아이디</th>
+                    <th>직위</th>
+                  </tr>
+                </thead>
+              <c:forEach items="${ list }" var="e">
+              <c:if test="${e.depName eq '연구부서'}"> 
+                <tbody>
+                  <tr>
+	                 <td>${e.empNo }</td>
+                     <td>${ e.empName }</td>
+                     <td id="addressEmpId">${ e.empId}</td>
+                     <td>${ e.posName}</td>
+                  </tr>
+                </tbody>
+              </c:if>
+              </c:forEach>
+              </table>
+              </div>
+
           </div>
         </div>
         <!-- row -->
@@ -212,6 +241,16 @@
     			});
     		$(".depName4").on("click",function(){
     			var obj = $(".table-inbox-wrap4");
+
+				if(obj.hasClass("on")){
+					obj.removeClass("on").slideUp();
+       			  }else{
+       				obj.addClass("on").slideDown();
+       			  }
+    			});
+    		
+    		$(".depName5").on("click",function(){
+    			var obj = $(".table-inbox-wrap5");
 
 				if(obj.hasClass("on")){
 					obj.removeClass("on").slideUp();

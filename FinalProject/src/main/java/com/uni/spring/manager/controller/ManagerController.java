@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
@@ -21,6 +22,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.json.simple.JSONObject;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,62 +38,57 @@ import com.uni.spring.employee.model.dto.JobPosition;
 import com.uni.spring.hr.model.dto.Hr;
 import com.uni.spring.manager.model.dto.Search;
 import com.uni.spring.manager.model.service.ManagerService;
+import com.uni.spring.reservation.controller.ReservationController;
 
+import ch.qos.logback.classic.Logger;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Controller
+/* @RequestMapping("/manager") */
 public class ManagerController {
-
+	private static final Logger log = (Logger) LoggerFactory.getLogger(ManagerController.class);
 	private final ManagerService ManagerService;
 	
-	// 인사관리 페이지로 이동
-	@RequestMapping("managerEmp.do")
-	public String managerEmp() {
-		return "manager/empListView";
-	}
-	
-	// 사원 전체 정보를 리스트로 조회함. 
-	// 페이징 처리 들어가야 함. = 변경하고나서 이 주석 지우기
+	// 인사관리 메인 페이지로 이동
+	// 사원 전체 정보를 리스트로 조회함
 	@RequestMapping("listEmp.do")
-	public String selectList(Model model
-			, @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage
-			, @RequestParam(value="find", required = false, defaultValue = "empName") String find // 검색 분류
-			, @RequestParam(value="keyword", required = false, defaultValue = "") String keyword // 검색어
-			) {
+	public String selectList(Model model,
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+			@RequestParam(value = "find", required = false, defaultValue = "empName") String find // 검색 분류
+			, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword // 검색어
+			, HttpSession session) {
+		
+		Search search = new Search(find, keyword);
+		log.info("search : " + search.toString());
 		
 		// 페이징
-		int listCount = ManagerService.selectListCount(); // 페이징용
-		System.out.println("listCount : "+listCount);
+		int listCount = ManagerService.selectListCount(search); // 페이징용
+		log.info("listCount : " + listCount);
+
 		int pageLimit = 10; // 하단 최대 페이지 수
 		int boardLimit = 15; // 한 페이지에 보여질 회원 수
+
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-		
+
 		// 검색
-		Search search = new Search(find, keyword);
-		System.out.println(search.toString());
-		
-//		ArrayList<Employee> list = ManagerService.selectList(pi, find, keyword);
-//		ArrayList<Employee> list = ManagerService.selectList(pi);
 		ArrayList<Employee> list = ManagerService.selectList(pi, search);
-		
+
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
-		
-//		ArrayList<Employee> list2 = ManagerService.selectList(find, keyword, 1);
-		 
+
 		return "manager/empListView";
 	}
 	
 	// UpdateForm으로 이동. 화면에서 eno를 받아서 eno에 해당하는 사원 정보를 불러옴
-	// 후에 관리자만 들어올 수 있는 메뉴로 변경 = 변경하고나서 이 주석 지우기
 	@RequestMapping("updateFormEmp.do")
 	public ModelAndView updateForm(int empNo, ModelAndView mv) {
 		
-		System.out.println("조회★★★★★★★★★★★★★★★★");
+		log.info("조회 시작!!");
 		mv.addObject("getPosList", ManagerService.getPosList()); // 직위 정보
 		mv.addObject("getDepList", ManagerService.getDepList()); // 부서 정보
 		mv.addObject("e", ManagerService.selectEmp(empNo));
+		log.info("selectEmp : "+ManagerService.selectEmp(empNo));
 		
 		mv.setViewName("manager/empUpdateForm");
 		
@@ -100,25 +97,24 @@ public class ManagerController {
 	
 	// 사원 정보와 인사 기록 수정
 	@RequestMapping("updateEmpDetail.do")
-	public String updateEmpDetail(int empNo, Employee e, Model model){
-		System.out.println("업데이트★★★★★★★★★★★★★★★★");
+	public String updateEmpDetail(int empNo, HttpSession session, Employee e, Model model){
+		log.info("업데이트 시작 !!");
 		
 		Hr hr = e.getHr();
 		hr.setEmpNo(e.getEmpNo());
-		System.out.println("hr.toString() : "+hr.toString());
-		System.out.println("e.toString() : "+e.toString());
 
 		ManagerService.updateEmpDetail(e, hr);
-		// 수정한 정보를 Form에 띄워주기 위함
+
 		model.addAttribute("e", ManagerService.selectEmp(e.getEmpNo()));
 		model.addAttribute("getPosList", ManagerService.getPosList());
 		model.addAttribute("getDepList", ManagerService.getDepList());
 		
+		session.setAttribute("msg", e.getEmpName()+"사원의 정보가 변경되었습니다.");
 		return "manager/empUpdateForm";
 	}
 	
 	// 엑셀 다운로드
-	@RequestMapping(value = "/empExcelDown.do")
+	@RequestMapping("/empExcelDown.do")
 	public void excelDown(HttpServletResponse response) throws Exception {
 	    // 게시판 목록조회
 	    List<Employee> list = ManagerService.selectExcelList();
@@ -251,9 +247,6 @@ public class ManagerController {
 		ArrayList<JobPosition> posList = ManagerService.getPosList();
 		ArrayList<Department> depList = ManagerService.getDepList();
 		
-		System.out.println("직위 조회 :" + posList);
-		System.out.println("부서 조회 :" + depList);
-		
 		model.addAttribute("posList", posList);
 		model.addAttribute("depList", depList);
 		
@@ -290,35 +283,18 @@ public class ManagerController {
 	@RequestMapping("insertPos.do")
 	public String insertJobPosition(JobPosition job, Model model) {
 		ManagerService.insertJobPosition(job);
-		
-		ArrayList<JobPosition> posList = ManagerService.getPosList();
-		ArrayList<Department> depList = ManagerService.getDepList();
-
-		model.addAttribute("posList", posList);
-		model.addAttribute("depList", depList);
-		
-		return "manager/JobManagement";
+		return "redirect:/jobManage.do";
 	}
 	
 	// 직위 수정/삭제
 	@RequestMapping("updatePos.do")
 	public String updateJobPosition(JobPosition job, Model model, String updatePosBtn) {
-		System.out.println("직위 수정");
-		System.out.println("jp : "+job);
-		
 		if(updatePosBtn.equals("update")) {
 			ManagerService.updateJobPosition(job);
 		}else if(updatePosBtn.equals("delete")) {
 			ManagerService.deleteJobPosition(job);
 		}
-		
-		ArrayList<JobPosition> posList = ManagerService.getPosList();
-		ArrayList<Department> depList = ManagerService.getDepList();
-		
-		model.addAttribute("posList", posList);
-		model.addAttribute("depList", depList);
-		
-		return "manager/JobManagement";
+		return "redirect:/jobManage.do";
 	}
 	
 	// 모달창에 선택한 직위 띄워주는 용도
@@ -352,13 +328,7 @@ public class ManagerController {
 
 		ManagerService.insertDepartment(dep);
 		
-		ArrayList<JobPosition> posList = ManagerService.getPosList();
-		ArrayList<Department> depList = ManagerService.getDepList();
-
-		model.addAttribute("posList", posList);
-		model.addAttribute("depList", depList);
-		
-		return "manager/JobManagement";
+		return "redirect:/jobManage.do";
 	}
 	
 	// 부서 수정
@@ -370,12 +340,6 @@ public class ManagerController {
 			ManagerService.deleteDepartment(dep);
 		}
 		
-		ArrayList<JobPosition> posList = ManagerService.getPosList();
-		ArrayList<Department> depList = ManagerService.getDepList();
-		
-		model.addAttribute("posList", posList);
-		model.addAttribute("depList", depList);
-		
-		return "manager/JobManagement";
+		return "redirect:/jobManage.do";
 	}
 }

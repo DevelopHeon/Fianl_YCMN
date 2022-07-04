@@ -61,8 +61,8 @@
                   </div>
                   <div class="col-md-4">
                     <div class="compose-btn pull-right">
-                      <a class="btn btn-sm btn-theme"><i class="fa fa-reply"></i> Reply</a>
-                      <button class="btn btn-sm tooltips" data-original-title="Trash" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-trash-o"></i></button>
+                      <a class="btn btn-sm btn-theme" onclick="receiveDetailMail(1);"><i class="fa fa-reply"></i> Reply</a>
+                      <button class="btn btn-sm tooltips" onclick="receiveDetailMail(2);" data-original-title="Trash" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-trash-o"></i></button>
                     </div>
                   </div>
                 </div>

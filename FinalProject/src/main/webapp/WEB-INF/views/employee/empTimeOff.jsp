@@ -87,6 +87,9 @@
 		   			<c:if test="${ list.appStatus eq 'C' }">
 		   			<td>승인</td>
 		   			</c:if>
+		   			<c:if test="${ list.appStatus eq 'R' }">
+		   			<td style="color:red;">반려</td>
+		   			</c:if>
 		   		</tr>
 		   	</c:forEach>
 		   	</c:if>

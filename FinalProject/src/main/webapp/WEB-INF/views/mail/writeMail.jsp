@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%-- 검증 실패시에도 기존 값 유지되도록 form 태그 추가 --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,10 +48,12 @@
 
                 <div class="compose-mail">
                 
-                  <form action="insertMail.do" id="insertMail" role="form-horizontal" method="post" enctype="multipart/form-data">
+                  <form:form action="insertMail.do" id="insertMail" modelAttribute="mail" role="form-horizontal" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                       <label for="subject" class="">제목:</label>
-                      <input type="text" name="mailTitle" tabindex="1" id="subject" class="form-control" required>
+                      <a style="color:red"><form:errors path="mailTitle"></form:errors></a>
+                      <form:input type="text" name="mailTitle" tabindex="1" id="subject" class="form-control" required="required" path="mailTitle"/>
+                      
                     </div>
                     <div class="form-group" style="display:none">
                       <label for="writer" class="">발신인</label>
@@ -93,7 +97,6 @@ ${loginUser.empName} / ${loginUser.posName} / ${loginUser.depName}
 ${loginUser.empPhone}
                       </textarea>
                      </div> -->
-
 							<textarea name="mailContent" id="ir1"
 								style="width: 100%; height: 412px;">
 								
@@ -111,7 +114,7 @@ ${loginUser.empPhone}</textarea>
                       <button id="save" class="btn btn-theme btn-sm"><i class="fa fa-check"></i> 보내기</button>
                       <button type="button" class="goMain btn btn-sm" onclick="goMain();"><i class="fa fa-times"></i> 취소하기</button>
                     </div>
-                  </form>
+                  </form:form>
                 </div>
               </div>
             </section>
@@ -157,16 +160,18 @@ ${loginUser.empPhone}</textarea>
 				});
 		
 	$("#save").click(function() {
-		oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
 		
 		if($("#subject").val() == ""){
 			alert("제목을 입력해주세요");
 			return;
 		}
-		if($("#mailTo").val() == null){
+		if($("#mailTo").text() == ""){
 			alert("수신자를 입력해주세요");
 			return false;
 		}
+		
+		oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+		
 		
 		var contentVal = $("#ir1").val();
 		console.log(contentVal);

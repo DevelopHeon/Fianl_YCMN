@@ -102,6 +102,11 @@ public class EmployeeDao {
 	public int updateTimeOffContent(SqlSessionTemplate sqlSession) {
 		return sqlSession.update("employeeMapper.updateTimeOffContent");
 	}
+	//연차 반려시
+	public int updateRejectTimeOff(SqlSessionTemplate sqlSession) {
+		return sqlSession.update("employeeMapper.updateRejectTimeOff");
+
+	}
 	//잔여연차 업데이트
 	public int updateRemainNum(SqlSessionTemplate sqlSession, int empNo) {
 		return sqlSession.update("employeeMapper.updateRemainNum", empNo);
@@ -146,6 +151,7 @@ public class EmployeeDao {
 		return sqlSession.selectOne("employeeMapper.selectWorkingWeekTotal", empNo);
 
 	}
+
 
 
 
