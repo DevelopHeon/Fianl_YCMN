@@ -26,4 +26,5 @@ public class ReceiveMail {
 	private String receiveStatus; //받은메일상태(Y:정상 N:삭제)
 	private Mail Mail;
 	private Employee Employee;
+
 }
