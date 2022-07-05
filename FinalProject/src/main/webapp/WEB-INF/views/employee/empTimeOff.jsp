@@ -64,16 +64,16 @@
 		   			<td>${list.today }</td>
 		   			<!-- 연차종류 -->
 		   			<c:if test="${ list.timeoffType eq 'L' }">
-		   			<td>연차</td>
+		   				<td>연차</td>
 		   			</c:if>
 				   	<c:if test="${ list.timeoffType eq 'AH' }">
-		   			<td>오전반차</td>
+		   				<td>오전반차</td>
 		   			</c:if>
 		   			<c:if test="${ list.timeoffType eq 'PH' }">
-		   			<td>오후반차</td>
+		   				<td>오후반차</td>
 		   			</c:if>
 		   			<c:if test="${ empty list.timeoffType }">
-		   			<td>미승인</td>
+		   				<td>미승인</td>
 		   			</c:if>
 		   			<!-- 연차사유 -->
 		   			<td>${list.timeoffContent }</td>
@@ -82,20 +82,20 @@
 		   			<td>${list.remainNum }일</td>
 		   			<!-- 연차승인여부 -->
 		   			<c:if test="${ list.appStatus eq 'W' }">
-		   			<td>미승인</td>
+		   				<td>미승인</td>
 		   			</c:if>
 		   			<c:if test="${ list.appStatus eq 'C' }">
-		   			<td>승인</td>
+		   				<td>승인</td>
 		   			</c:if>
 		   			<c:if test="${ list.appStatus eq 'R' }">
-		   			<td style="color:red;">반려</td>
+		   				<td style="color:red;">반려</td>
 		   			</c:if>
 		   		</tr>
 		   	</c:forEach>
 		   	</c:if>
 		   	<c:if test="${ empty timeOffList }">
 		   		<tr>
-		   			<td>사용 연차 내역이 없습니다.</td>
+		   			<td colspan="7">사용 연차 내역이 없습니다.</td>
 		   		</tr>
 		   	</c:if>
 	   	</tbody>
