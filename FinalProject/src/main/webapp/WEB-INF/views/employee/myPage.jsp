@@ -168,6 +168,7 @@
 				</tr>
 			   </table>
 			   <button id="update" type="submit" class="btn btn-primary">수정하기</button>
+		       <button data-toggle="modal" type="button" class="btn btn-info" data-target="#myModal">비밀번호 변경하기 </button>
 			   </div>
               </form>
               <!-- /col-md-4 -->
@@ -234,6 +235,32 @@
     </section>
     <!-- /MAIN CONTENT -->
     <!--main content end-->
+    <!-- modal창 시작 부분 -->
+	<div id="myModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">비밀번호 변경하기</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
+	      <form action="changePwd.do" method="post">
+		      <div class="modal-body">
+		      	<label for="password" class="mr-sm-2">현재 비밀번호</label>
+		      	<input type="password" class="form-control mb-2 mr-sm-2" required placeholder="현재 비밀번호를 입력하세요." name="password">
+                <label for="newPwd" class="mr-sm-2">새 비밀번호</label>
+                <input type="password" class="form-control mb-2 mr-sm-2" required placeholder="새 비밀번호를 입력하세요." id="newPwd" name="newPwd">
+                <label for="newPwdCheck" class="mr-sm-2">새 비밀번호 확인</label>
+                <input type="password" class="form-control mb-2 mr-sm-2" required placeholder="새 비밀번호를 입력하세요." id="newPwdCheck" name="newPwdCheck">
+		      </div>
+		      <div class="modal-footer">
+		      	<button type="submit" class="btn btn-primary">비밀번호 찾기</button>
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+		      </div>
+	      </form>
+	    </div>
+	  </div>
+	</div>
     <!--footer start-->
     <footer class="site-footer">
       <div class="text-center">

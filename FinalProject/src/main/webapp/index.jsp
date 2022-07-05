@@ -37,40 +37,12 @@
 		          <input type="text" name="empId" id="empId" class="form-control" placeholder="아이디" autofocus>
 		          <br>
 		          <input type="password" name="empPwd" id="empPwd" class="form-control" placeholder="비밀번호">
-		            <a href="enrollForm.do">회원가입</a> |
-		            <a href="#" data-toggle="modal" data-target="#myModal">비밀번호 찾기</a>
+		            <a href="enrollForm.do">회원가입</a>
 		          <button id="login" class="btn btn-primary btn-block" type="submit"><i class="fa fa-lock"></i> 로그인 </button>
 		          <hr>
 		        </div>
 		      </form>
 		</div>
-	</div>
-	<br clear="both">
-	
-	<!-- modal창 시작 부분 -->
-	<div id="myModal" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-	
-	    <!-- Modal content-->
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h4 class="modal-title">비밀번호 찾기</h4>
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	      </div>
-	      <form action="findPwd.do" method="post">
-		      <div class="modal-body">
-		      	<label for="findEmpId" class="mr-sm-2">ID : </label>
-		      	<input type="text" class="form-control mb-2 mr-sm-2" required placeholder="아이디를 입력하세요." name="findEmpId">
-                <label for="email" class="mr-sm-2">Email :</label>
-                <input type="email" class="form-control mb-2 mr-sm-2" required placeholder="이메일을 입력하세요." id="email" name="email">
-		      </div>
-		      <div class="modal-footer">
-		      	<button type="submit" class="btn btn-primary">비밀번호 찾기</button>
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-		      </div>
-	      </form>
-	    </div>
-	  </div>
 	</div>
 	<script>
 		// 로그인 아이디, 비밀번호 모두 기입 했을때만 버튼 클릭 가능위해 유효성 검사

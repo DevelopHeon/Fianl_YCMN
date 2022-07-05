@@ -183,14 +183,18 @@ function selectDeptEmp(depNo) {
 }
 </script>
 <script>
+$(function(){
+	selectApprover();
+});
 // 부서목록, 결재자 조회 ajax
-function selectApprover(num, empNo) {
+function selectApprover() {
     $.ajax({
         url: "selectDept.do",
         type: "get",
         success: function (list) {
             var deptList = "";
             $.each(list, function (i, obj) {
+            	console.log("부서목록:"+obj.depName);
                 deptList += "<h4 onclick='selectDeptEmp(" + obj.depNo + ")'>" + obj.depName + "</h4>"
             });
             $("#deptList").html(deptList);

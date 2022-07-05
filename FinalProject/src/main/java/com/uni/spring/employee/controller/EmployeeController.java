@@ -402,4 +402,9 @@ public class EmployeeController {
 		model.addAttribute("monthTotal", monthTotal);
 		return monthTotal;
 	}
+	
+	@RequestMapping("changePwd.do")
+	public String changePwd() {
+		return null;
+	}
 }
