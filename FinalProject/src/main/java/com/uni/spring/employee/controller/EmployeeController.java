@@ -177,6 +177,9 @@ public class EmployeeController {
 							   @RequestParam("startTime") String startTime,
 							   @RequestParam("empNo") int empNo,
 							   Model model) {
+//		Employee loginUser = (Employee)session.getAttribute("loginUser");
+//		int empNo = loginUser.getEmpNo();
+//		w.setEmpNo(empNo);
 		w.setStartTime(startTime);
 		w.setEmpNo(empNo);
 		
@@ -354,8 +357,7 @@ public class EmployeeController {
 	//내 연차조회
 	@RequestMapping("timeOff.do")
 	public String timeOff(@RequestParam(value="currentPage", defaultValue="1")int currentPage,
-						  HttpSession session,
-						  Model model) {
+						  HttpSession session, Model model) {
 		Employee loginUser = (Employee)session.getAttribute("loginUser");
 		int empNo = loginUser.getEmpNo();
 		
@@ -399,5 +401,10 @@ public class EmployeeController {
 
 		model.addAttribute("monthTotal", monthTotal);
 		return monthTotal;
+	}
+	
+	@RequestMapping("changePwd.do")
+	public String changePwd() {
+		return null;
 	}
 }

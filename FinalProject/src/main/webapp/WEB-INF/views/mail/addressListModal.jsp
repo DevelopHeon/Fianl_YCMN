@@ -45,15 +45,15 @@
 						var value4 = "";
 						var value5 = "";
 						$.each(list, function(i, obj){
-							if(obj.depName == '총무부서'){
+							if(obj.depName == '개발부서'){
 								value1 += "<div class='addressList'><input type='radio' name='checkTo' class='checkTo' value="+ obj.empName +">&nbsp;&nbsp;"
 								  +   obj.empName + "/"+ obj.posName
 								  +   "<input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'></div>";
-							}else if(obj.depName == '인사부서'){
+							}else if(obj.depName == '총무부서'){
 								value2 += "<div class='addressList'><input type='radio' name='checkTo' class='checkTo' value="+ obj.empName +">&nbsp;&nbsp;"
 								  +   obj.empName + "/"+ obj.posName
 								  +   "<input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'></div>";
-							}else if(obj.depName == '개발부서'){
+							}else if(obj.depName == '인사부서'){
 								value3 += "<div class='addressList'><input type='radio' name='checkTo' class='checkTo' value="+ obj.empName +">&nbsp;&nbsp;"
 								  +   obj.empName + "/"+ obj.posName
 								  +   "<input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'></div>";

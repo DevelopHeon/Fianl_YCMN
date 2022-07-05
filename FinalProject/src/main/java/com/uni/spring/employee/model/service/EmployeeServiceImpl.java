@@ -222,7 +222,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employeeDao.updateTimeOffNum(sqlSession, empNo);
 			
 		}else{
-			//반려되었을때(반려 :R) 연차내역테이블 업데이트
 			employeeDao.updateRejectTimeOff(sqlSession);
 		}
 

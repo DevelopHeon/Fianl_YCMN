@@ -203,12 +203,12 @@
     <!-- /MAIN CONTENT -->
     <!--main content end-->
     <script>
-    	//해당 사원 detail
+    	
     	$(function(){
     		$(".address>tbody>tr").click(function(){
     			var eno = $(this).children().eq(0).text();
     			console.log(eno); //http://localhost:8099/spring/
-    			window.open("detailEmp.do?eno="+eno, "사원 정보", "width=550, height=300")
+    			window.open("http://localhost:8099/spring/detailEmp.do?eno="+eno, "사원 정보", "width=550, height=300")
     		})
     		
     		

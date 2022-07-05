@@ -14,7 +14,7 @@ import lombok.Setter;
 public class Hr {
 	private int empNo;
 	private Date hireDate;
-	private String birthDate;
+	private Date birthDate;
 	private String gender;
 	private String hireCategory;
 	private String sarary;

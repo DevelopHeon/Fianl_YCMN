@@ -121,7 +121,7 @@
                               result += "<tr>"
                                  +      "<td>"
                                  +      "<a href='detailReceiveMail.do?mno="+obj.receiveNo+"'>"
-                                 +      "<span class='photo'><img class='img-circle' src='resources/img/user.png' width='20px'></span>"
+                                 +      "<span class='photo'><img class='img-circle' src='resources/img/user.png' width='25px'></span>"
                          }else{
                             result += "<tr>"
                                  +      "<td>"
@@ -468,7 +468,7 @@
       date = setTimeout("checkTime()", 1000);
 
       //시,분,초 자리 수 없거나 한자리일때 0붙이기
-      //add(currentDate.gethours(), 2) -> 일의자리가 되거나 없을때(00) 앞에 0을 붙여주도록 return값 재정의
+      //add(currentDate.gethours(), 2) -> 일의자리가 되거나 없을때(00) 앞에 0을 붙여주게 return값 재정의
       function add(time, digit) {
           var zero ="";
           time = time.toString(); //숫자를 문자형으로 바꿔주기
