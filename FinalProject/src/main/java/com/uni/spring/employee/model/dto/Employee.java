@@ -5,6 +5,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.uni.spring.hr.model.dto.Hr;
+import com.uni.spring.reservation.model.dto.Reservation;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -56,6 +57,7 @@ public class Employee {
    private Hr hr;
    private Department department;
    private JobPosition jobPosition;
+   private Reservation Reservation;
    
 	@Override
 	public String toString() {

@@ -73,8 +73,8 @@
                 	</c:if>
 				</tr>
 				<tr>
-					<td>${ detailEmp.posName }</td>
-					<td>${ detailEmp.depName }</td>	
+					<td>${ detailEmp.jobPosition.posName }</td>
+					<td>${ detailEmp.department.depName }</td>	
 				</tr>
 				<tr>
 					<td>${ detailEmp.empPhone }</td>
@@ -92,8 +92,12 @@
           </div>
 		</div>
       </section>
-      <div id="reservation">
+      <br>
+      <div id="reservation" style="width:200px; height:200px; background-color:#ddd;">
       	<p>회의 일정</p>
+      	<c:if test="${!empty detailEmp.reservation.rezTitle}">
+			<p>${ detailEmp.reservation.startTime } ~ ${ detailEmp.reservation.endTime } : ${ detailEmp.reservation.rezTitle }</p>
+		</c:if>
       </div>
       
       <!-- /wrapper -->
