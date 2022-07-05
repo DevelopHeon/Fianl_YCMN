@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<title>익명 게시판</title>
+	<title>익명 게시판 글 작성</title>
 </head>
 <!-- SmartEditor2 라이브러리  --> 
 <script type="text/javascript" src="resources/smartEditor2/js/HuskyEZCreator.js" charset="utf-8"></script>

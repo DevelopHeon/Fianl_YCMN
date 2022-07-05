@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>지출결의서 작성</title>
 <style>
 	.form-group{
 		margin-left:2%;

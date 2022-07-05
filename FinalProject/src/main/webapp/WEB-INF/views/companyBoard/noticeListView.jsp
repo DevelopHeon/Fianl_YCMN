@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>공지사항</title>
 </head>
 <body>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -75,6 +75,7 @@
 		var rownum = $("#noticeList tbody tr").length; // 5개씩 페이징 처리
 		var addMore = rownum + 5;
 		
+		console.log(addMore);
 		var listHtml = ""; // 담아서 뿌려줄 변수 선언
 		
 		$.ajax({
@@ -82,10 +83,10 @@
 			type:"get",
 			data:{rownum:addMore},
 			success:function(list){
-				if(list.length <= addMore){
-					$("#moreView").hide(); // 5개 미만이라면 게시물이 더보기 버튼 삭제
+				console.log(list.length);
+				if(list.length < addMore){
+					$("#moreView").hide();
 				}
-				
 				$.each(list, function(i, obj){
 					listHtml += "<tr><th><input type='hidden' class='number' value="+obj.noticeNo+">"
 							 +  obj.rowNum + "</th>"

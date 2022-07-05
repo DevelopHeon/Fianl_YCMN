@@ -411,13 +411,13 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<select id="selectMainApprovalCnt" resultType="_int">
 		SELECT COUNT(*)
 		FROM APPROVAL
-		WHERE
-		<![CDATA[APP_STATUS <> 'R' ]]>
+		WHERE 1=1
 		AND STATUS = 'Y'
 		AND (FIRST_APPROVAL_DATE IS NULL
 		AND FIRST_APPROVER = #{userNo})
 		OR (FIRST_APPROVAL_DATE IS NOT NULL
 		AND LAST_APPROVAL_DATE IS NULL
+        <![CDATA[AND APP_STATUS <> 'R']]>
 		AND LAST_APPROVER = #{userNo})
 	</select>
 	<select id="lvDateCheck" parameterType="_int" resultType="_int">

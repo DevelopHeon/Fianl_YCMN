@@ -66,10 +66,10 @@
 		margin-top : 15px;
 		border-bottom: 3px dashed #D0C9C0;
 	}
-	
+
 	#commDiv{
 		position: relative;
-		bottom : 250px;
+		bottom : 50px;
 	}
 	td,
 	.fc-toolbar-title {
@@ -93,7 +93,7 @@
                      	<h3 class="centered">${ sessionScope.loginUser.empName }</h3>
                      	<h4 class="centered">${ sessionScope.loginUser.depName } ${ sessionScope.loginUser.posName }</h4>
                      	<div class="approvalCnt" style="margin:5% 0% 5% 15%;"> 
-	                     	<a href="selectInboxList.do?appStatus=W&userNo=${ loginUser.empNo }">결재할 문서</a><span id="appCnt" style="margin-left:30%; margin-bottom:2%; height:25; width:25px;" class="badge bg-info"></span>
+	                     	<a href="listInbox.do?userNo=${ loginUser.empNo }">결재할 문서</a><span id="appCnt" style="margin-left:30%; margin-bottom:2%; height:25; width:25px;" class="badge bg-info"></span>
                      	</div>
                      	<script>
                      		// 결재 할 문서 개수 불러오기
@@ -210,7 +210,7 @@
                <br> -->
          	</div>
 <!-- 예약 달력 시작 -->
-			<div class="col-sm-4" style="border:1px solid #d4d9d9; margin-left:5%;">
+			<div class="col-sm-12 col-md-12 col-lg-4" style="border:1px solid #d4d9d9; margin-left:5%;">
 			    <script>
 			        document.addEventListener('DOMContentLoaded', function () {
 			            $(function () {
@@ -236,6 +236,17 @@
 			                            right: 'dayGridMonth,listWeek'
 			                        },
 			                        contentHeight: 600,
+			                        eventClick: function(info) {
+		                      		  $("#selectRezModal").modal("show");
+		                      	  
+			                      	  $("#rezWriter2").val(info.event._def.extendedProps.empName);
+			                      	  $("#rscName2").val(info.event._def.extendedProps.rscName);
+			                      	  $("#startTime2").val(moment(info.event.start).format('YYYY-MM-DDTHH:mm:ss'));
+			                          $("#endTime2").val(moment(info.event.end).format('YYYY-MM-DDTHH:mm:ss'));
+			                          $("#rezTitle2").val(info.event.title);
+			                            
+			                            info.el.style.borderColor = 'black';
+			                      	  },
 			                        events: data
 			                    });
 			
@@ -260,6 +271,38 @@
 			    </script>
 			
 			    <div id='calendar'></div>
+			    
+			        <div class="modal fade" id="selectRezModal">
+				      <div class="modal-dialog modal-dialog-centered">
+				        <div class="modal-content">
+				          <!-- Modal Header -->
+				          <div class="modal-header">
+				            <h4 class="modal-title">예약 상세 조회</h4>
+				            <button type="button" class="close" data-dismiss="modal">&times;</button>
+				          </div>
+				            <!-- Modal Body -->
+				            <div class="modal-body">
+				              <label for="rezWriter" class="mr-sm-2">예약자 명</label>
+				              <input type="text" class="form-control mb-2 mr-sm-2" id="rezWriter2" name="empName" readonly><br>
+				
+				              <label for="rscNo" class="mr-sm-2">예약 자원</label>
+				              <input type="text" class="form-control mb-2 mr-sm-2" id="rscName2" name="rscNo" value="${rscNo}" readonly><br>
+				
+				              <label for="rezTime" class="mr-sm-2">예약 시간</label><br>
+				              
+				              <input type="datetime-local" class="mb-2 mr-sm-2" id="startTime2" name="startTime" readonly>&emsp;&emsp;~&emsp;&emsp;
+				              <input type="datetime-local" class="mb-2 mr-sm-2" id="endTime2" name="endTime" readonly><br><br>
+				
+				              <label for="rezTitle" class="mr-sm-2">예약 명</label>
+				              <input type="text" class="form-control mb-2 mr-sm-2" id="rezTitle2" name="rezTitle" readonly>
+				            </div>
+				                        <!-- Modal footer -->
+				            <div class="modal-footer">
+				              <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+				            </div>
+				        </div>
+				      </div>
+				    </div>
 			</div>
             <!-- 예약 달력 끝 -->
          </div>

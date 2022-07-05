@@ -52,7 +52,6 @@ public class AnonymServiceImpl implements AnonymService {
 		}else {
 			anonymBoard = anonymDao.selectAnonymBoard(sqlSession, anoNo);
 		}
-		
 		// 암호화된 작성자와 로그인한 유저의 아이디를 비교 같을경우 Y로 변경
 		if(bCryptWriterEncoder.matches(confirmUser, anonymBoard.getAnoWriter())) {
 			anonymBoard.setAnoWriter("Y");

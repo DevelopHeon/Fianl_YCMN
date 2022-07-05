@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>익명 게시판</title>
 <style>
 	table tr{
 		height:10px;

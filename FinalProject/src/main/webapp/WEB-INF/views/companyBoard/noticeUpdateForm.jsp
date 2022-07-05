@@ -13,7 +13,7 @@
 	-ms-filter: alpha(opacity=0); cursor:pointer;}
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>공지사항 수정</title>
 <!-- SmartEditor2 라이브러리  --> 
 <script type="text/javascript" src="resources/smartEditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
