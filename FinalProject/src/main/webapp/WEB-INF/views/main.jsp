@@ -66,13 +66,13 @@
 		margin-top : 15px;
 		border-bottom: 3px dashed #D0C9C0;
 	}
-	
+
 	#section2{
 		border-bottom: 3px dashed #D0C9C0;
 	}
 	#commDiv{
 		position: relative;
-		bottom : 250px;
+		bottom : 50px;
 	}
 	td,
 	.fc-toolbar-title {
@@ -96,7 +96,7 @@
                      	<h3 class="centered">${ sessionScope.loginUser.empName }</h3>
                      	<h4 class="centered">${ sessionScope.loginUser.depName } ${ sessionScope.loginUser.posName }</h4>
                      	<div class="approvalCnt" style="margin:5% 0% 5% 15%;"> 
-	                     	<a href="selectInboxList.do?appStatus=W&userNo=${ loginUser.empNo }">결재할 문서</a><span id="appCnt" style="margin-left:30%; margin-bottom:2%; height:25; width:25px;" class="badge bg-info"></span>
+	                     	<a href="listInbox.do?userNo=${ loginUser.empNo }">결재할 문서</a><span id="appCnt" style="margin-left:30%; margin-bottom:2%; height:25; width:25px;" class="badge bg-info"></span>
                      	</div>
                      	<script>
                      		// 결재 할 문서 개수 불러오기

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>결재문서 상세조회</title>
 </head>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>

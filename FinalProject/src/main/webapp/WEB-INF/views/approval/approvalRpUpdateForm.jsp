@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>업무보고서 수정</title>
 <style>
 	.form-group{
 		margin-left:2%;

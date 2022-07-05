@@ -115,7 +115,7 @@ function searchEmpList(){
 }
 </script>
 <script>
-// 부서별 사원 조회
+// 부서클릭시 부서별사원 조회
 function selectDeptEmp(depNo){
 	
  	 $.ajax({
