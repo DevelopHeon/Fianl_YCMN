@@ -101,12 +101,12 @@ function checkMonth() {
 	
 	var p = (mw / baseWorking) * 100;//이달 근무 퍼센트
 	console.log(p.toFixed(2)); //소수점 둘째자리까지
-	$("#bar").html(p.toFixed(2)+"%");
+	$("#bar2").html(p.toFixed(2)+"%");
 	
 	//근무 상태에 보일 퍼센트 바(bar)
 	$(document).ready(function(){
 		
-		document.getElementById("bar").style.width = p.toFixed(2) + "%";
+		document.getElementById("bar2").style.width = p.toFixed(2) + "%"
 	});
 
 	
@@ -142,8 +142,8 @@ function checkMonth() {
              	  <td id="thisMonthWork" width="300">${monthTotal }</td>
              	  <td id="baseWork" width="300"></td>
              	  <td width="300">
-             	  	<div class="progress">
-                		<div id="bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+             	  	<div class="progress progress-striped active">
+                		<div id="bar2" class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
               		</div>
               	  </td>
              	</tr>
@@ -387,26 +387,6 @@ function checkMonth() {
     <!-- /MAIN CONTENT -->
     <!--main content end-->
     <!--footer start-->
-    <script>
-    	$(function(){
-    		var thisM = document.getElementById("thisM").innerHTML;
-    		var currentDate = new Date();   		
-    		var prevM = (currentDate.getMonth()) +"월"
-    		var nextM = currentDate.getMonth()+2 + "월"
-    		
-    		$("#prev").click(function(){
-    			console.log(thisM);
-    			$("#thisM").html(prevM);
-    		})
-    		
-    		$("#next").click(function(){
-    			console.log(thisM);
-    			$("#thisM").html(nextM);
-    		})
-    		
-    	})
-    	
-    </script>
     <footer class="site-footer">
       <div class="text-center">
         <p>
