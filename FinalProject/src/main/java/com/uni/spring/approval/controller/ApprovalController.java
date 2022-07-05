@@ -73,19 +73,13 @@ public class ApprovalController {
 		return "approval/"+approvalForm;
 	}
 	
-	/*
-	 * 지출결의서 작성메소드 유효성 검사를 위해 @Valid를 추가 error나 BindingResult는 바인딩 받는 객체 바로 다음 선언해
-	 * 주어야 한다. 몰라서 쌩쑈함
-	 */
 	@RequestMapping("insertErApproval.do")
 	public String insertErApproval(@Valid Approval approval, BindingResult result, 
 			ApprovalErs approvalErs, HttpServletRequest request, 
 			@RequestParam(name="uploadFile") MultipartFile file, HttpSession session) {
-		
 		if(result.hasErrors()) {
 			return "approval/approvalErForm";
 		}
-		
 		ArrayList<ApprovalErs> appers = new ArrayList<>();
 		
 		for(int i=0; i<approvalErs.getApprovalErs().size(); i++) {
@@ -242,11 +236,8 @@ public class ApprovalController {
 	@RequestMapping("listInbox.do")
 	public String selectApprovalInboxList(@RequestParam(value="currentPage", required=false, defaultValue="1")
 	int currentPage, int userNo, Model model) {
-		
 		// dto 생성하지 않고 map으로 받아서 화면에 전달
 		Map<String, Object> appStatusCnt = (HashMap<String, Object>)approvalService.appStatusCnt(userNo);
-		
-		log.info("맵으로 출력"+appStatusCnt.toString());
 		
 		int listCount = approvalService.selectApprovalInboxListCnt(userNo);
 		PageInfo pi = getPage(listCount, currentPage);
@@ -323,16 +314,14 @@ public class ApprovalController {
 	//전자결재 문서 상세 조회 페이지 전환
 	@RequestMapping("detailApproval.do")
 	public String selectApproval(int appNo, String appKinds, Model model) {
-		
 		ApprovalMap appMap = approvalService.selectApproval(appNo, appKinds);
-		// 지출증빙 내역은 여러개일 수도 있으므로 list타입으로 반환해준다.
 		String viewName = "";
-		// 첨부파일 조회 따로, 같이 join 해주려 했는데 실패함..
+		
 		Attachment at = approvalService.selectAppAttachment(appNo);
 		appMap.setAttachment(at);
 		
 		if(appKinds.equals("2")) {
-			// 여러개의 증빙내역 배열로 받아서 model 객체에 담아준다.
+			// 지출증빙 내역은 여러개일 수도 있으므로 list타입으로 반환
 			ArrayList<ApprovalErs> appErs = approvalService.selectAppErs(appNo);
 			model.addAttribute("list", appErs);
 			viewName = "/approvalErDetailView";
@@ -467,7 +456,6 @@ public class ApprovalController {
 		}
 		approval.getApperAccount().setAppNo(approval.getAppNo());
 		
-		// 지출결의서는 기존에 첨부파일이 무조건 있으므로 새로운 첨부파일이 들어올 경우에만 삭제 진행
 		Attachment attachment = null;
 		if(!file.getOriginalFilename().equals("")) {
 			attachment = saveFile(file, request);
@@ -476,7 +464,6 @@ public class ApprovalController {
 				attachment.setEmpNo(approval.getAppWriterNo());
 				attachment.setRefNo(approval.getAppNo());
 			}
-			
 			deleteFile(approval.getAttachment().getChangeName(), request);
 		}
 		approvalService.updateApprovalEr(approval, appers, attachment);

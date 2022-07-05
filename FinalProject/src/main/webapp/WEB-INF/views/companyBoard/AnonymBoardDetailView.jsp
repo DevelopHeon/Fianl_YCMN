@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>익명게시판 상세조회</title>
 <style>
 .myphoto{
 	width:40px;

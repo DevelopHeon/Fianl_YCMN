@@ -15,7 +15,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>개발웍스</title>
 </head>
 <body>
 	<c:if test = "${ !empty msg }">
