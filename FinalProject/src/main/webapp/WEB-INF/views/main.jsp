@@ -27,20 +27,27 @@
   <link href="resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!--external css-->
   <link href="resources/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
-  <link rel="stylesheet" type="text/css" href="resources/css/zabuto_calendar.css">
   <link rel="stylesheet" type="text/css" href="resources/lib/gritter/css/jquery.gritter.css" />
   <!-- Custom styles for this template -->
   <link href="resources/css/style.css" rel="stylesheet">
   <link href="resources/css/style-responsive.css" rel="stylesheet">
   <script src="resources/lib/chart-master/Chart.js"></script>
-  <!-- 캘린더 -->
-  <script src="lib/zabuto_calendar.js"></script>
   	<!-- CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<!-- 테마 -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 	<!-- 자바스크립트 -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<!-- jquery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- fullcalendar CDN -->
+<link href='https://cdn.jsdelivr.net/combine/npm/fullcalendar@5.11.0/main.min.css,npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/combine/npm/fullcalendar@5.11.0/main.min.js,npm/fullcalendar@5.11.0'></script>
+<!-- fullcalendar 언어 CDN -->
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales-all.min.js'></script>
+<!-- moment.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
+
 <style>
 	 div{
 	 	border-radius:10px;
@@ -66,6 +73,10 @@
 	#commDiv{
 		position: relative;
 		bottom : 250px;
+	}
+	td,
+	.fc-toolbar-title {
+	  color: black;
 	}
 </style>
 </head>
@@ -129,50 +140,10 @@
              				</tr>
             			</table> 
                		</div>
-               		 <!-- CALENDAR-->
-               		 <br>
-		            <div id="calendar" class="mb">
-		              <div class="panel green-panel no-margin">
-		                <div class="panel-body">
-		                  <div id="date-popover" class="popover top" style="cursor: pointer; disadding: block; margin-left: 33%; margin-top: -50px; width: 175px;">
-		                    <div class="arrow"></div>
-		                    <h3 class="popover-title" style="disadding: none;"></h3>
-		                    <div id="date-popover-content" class="popover-content"></div>
-		                  </div>
-		                  <div id="my-calendar"></div>
-		                </div>
-		              </div>
-		            </div>
-		            <!-- / calendar -->
+
             	</div>
             	<!-- 1 of 3 end -->
             	<script>
-            	//달력 (부트스트랩)
-            	 $(document).ready(function() {
-            	      $("#my-calendar").zabuto_calendar({
-            	        action: function() {
-            	          return myDateFunction(this.id, false);
-            	        },
-            	        action_nav: function() {
-            	          return myNavFunction(this.id);
-            	        },
-            	        ajax: {
-            	          url: "show_data.php?action=1",
-            	          modal: true
-            	        },
-            	        legend: [{
-            	            type: "text",
-            	            label: "Special event",
-            	            badge: "00"
-            	          },
-            	          {
-            	            type: "block",
-            	            label: "Regular event",
-            	          }
-            	        ]
-            	      });
-            	    });
-            	
             	 function checkMonth() {
             		 
             		 $.ajax({
@@ -241,9 +212,59 @@
                <!-- <hr>
                <br> -->
          	</div>
-            <div class="col-sm-3" style="border:1px solid #d4d9d9; margin-left:5%;">
-            	다
-            </div>
+<!-- 예약 달력 시작 -->
+			<div class="col-sm-4" style="border:1px solid #d4d9d9; margin-left:5%;">
+			    <script>
+			        document.addEventListener('DOMContentLoaded', function () {
+			            $(function () {
+			                var request = $.ajax({
+			                    url: "reserveList.do", // 변경하기
+			                    method: "GET",
+			                    dataType: "json"
+			                });
+			
+			                request.done(function (data) {
+			
+			                    console.log(data); // log 로 데이터 찍어주기.
+			                    var now = new Date();
+			                    var calendarEl = document.getElementById('calendar');
+			                    var calendar = new FullCalendar.Calendar(calendarEl, {
+			
+			                        initialDate: now, // 오늘 날짜 기준
+			                        initialView: 'dayGridMonth',
+			                        locale: 'ko',
+			                        headerToolbar: {
+			                            left: 'prev,next today',
+			                            center: 'title',
+			                            right: 'dayGridMonth,listWeek'
+			                        },
+			                        contentHeight: 600,
+			                        events: data
+			                    });
+			
+			                    calendar.render();
+			                });
+			
+			                request.fail(function (jqXHR, textStatus) {
+			                    alert("Request failed: " + textStatus);
+			                });
+			            });
+			
+			        });
+			    </script>
+			    <script>
+			        document.addEventListener('DOMContentLoaded', function () {
+			            var calendarEl = document.getElementById('calendar');
+			            var calendar = new FullCalendar.Calendar(calendarEl, {
+			                initialView: 'dayGridMonth'
+			            });
+			            calendar.render();
+			        });
+			    </script>
+			
+			    <div id='calendar'></div>
+			</div>
+            <!-- 예약 달력 끝 -->
          </div>
          <div class="row">
          	<div class="col-sm-3"></div>
