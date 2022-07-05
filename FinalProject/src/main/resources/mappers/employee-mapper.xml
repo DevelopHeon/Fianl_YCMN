@@ -91,7 +91,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE 
 			START_TIME > TO_CHAR(TO_DATE('09:01:00', 'HH24:MI:SS'),'HH24:MI:SS')
 			AND TODAY NOT IN
-				(SELECT TO_CHAR(C.LEAVE_START, 'YY/MM/DD') FROM APPROVAL B JOIN APP_LEAVE C ON B.APP_NO = C.APP_NO WHERE APP_WRITER_NO = #{empNo})
+				(SELECT 
+					TO_CHAR(C.LEAVE_START, 'YY/MM/DD')
+				 FROM APPROVAL B 
+				 JOIN APP_LEAVE C ON B.APP_NO = C.APP_NO 
+				 WHERE APP_WRITER_NO = #{empNo})
 	</update>
 	
 	<!-- 퇴근체크 -->
@@ -281,7 +285,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE A.EMP_NO = #{empNo}
 	</select>
 	
-	<!-- 주차별 근무시간 합계 -->
+	<!-- 근무시간 합계 -->
 	<select id="selectWorkingWeekTotal" parameterType="WorkingDay" resultType="string">
 		  WITH t AS
 		(
