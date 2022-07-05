@@ -184,11 +184,7 @@ function selectDeptEmp(depNo) {
 </script>
 <script>
 $(function(){
-<<<<<<< HEAD
-	selectApprover();
-=======
    selectApprover();
->>>>>>> refs/heads/master
 });
 // 부서목록, 결재자 조회 ajax
 function selectApprover() {

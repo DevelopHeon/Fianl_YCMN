@@ -52,6 +52,8 @@ public class Employee {
    private int depNo;
    private String posName;
    private String depName;
+   private String newPwd;
+   private String newPwdCheck;
    
    private Hr hr;
    private Department department;

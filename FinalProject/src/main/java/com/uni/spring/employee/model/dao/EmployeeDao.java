@@ -152,6 +152,14 @@ public class EmployeeDao {
 
 	}
 
+	public String selectOriginPwd(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("employeeMapper.selectOriginPwd", empNo);
+	}
+
+	public int updateEmpPwd(SqlSessionTemplate sqlSession, Employee employee) {
+		return sqlSession.update("employeeMapper.updateEmpPwd", employee);
+	}
+
 
 
 

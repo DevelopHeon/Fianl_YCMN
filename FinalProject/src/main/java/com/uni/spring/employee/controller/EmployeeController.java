@@ -5,11 +5,13 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.uni.spring.approval.controller.ApprovalController;
 import com.uni.spring.common.CommException;
 import com.uni.spring.common.Pagination;
 import com.uni.spring.common.dto.Attachment;
@@ -35,6 +38,7 @@ import com.uni.spring.hr.model.dto.Hr;
 import com.uni.spring.hr.model.service.HrService;
 import com.uni.spring.mail.model.service.MailService;
 
+import ch.qos.logback.classic.Logger;
 import lombok.RequiredArgsConstructor;
 
 @SessionAttributes("loginUser")
@@ -46,6 +50,7 @@ public class EmployeeController {
 	private final MailService mailService;
 	private final HrService hrService;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private static final Logger log=(Logger) LoggerFactory.getLogger(EmployeeController.class);
 	
 	@RequestMapping("main.do")
 	public String main(HttpSession session, Model model) {
@@ -177,9 +182,6 @@ public class EmployeeController {
 							   @RequestParam("startTime") String startTime,
 							   @RequestParam("empNo") int empNo,
 							   Model model) {
-//		Employee loginUser = (Employee)session.getAttribute("loginUser");
-//		int empNo = loginUser.getEmpNo();
-//		w.setEmpNo(empNo);
 		w.setStartTime(startTime);
 		w.setEmpNo(empNo);
 		
@@ -357,7 +359,8 @@ public class EmployeeController {
 	//내 연차조회
 	@RequestMapping("timeOff.do")
 	public String timeOff(@RequestParam(value="currentPage", defaultValue="1")int currentPage,
-						  HttpSession session, Model model) {
+						  HttpSession session,
+						  Model model) {
 		Employee loginUser = (Employee)session.getAttribute("loginUser");
 		int empNo = loginUser.getEmpNo();
 		
@@ -403,8 +406,22 @@ public class EmployeeController {
 		return monthTotal;
 	}
 	
+	// 비밀번호 변경 메소드
 	@RequestMapping("changePwd.do")
-	public String changePwd() {
-		return null;
+	public String changePwd(Employee employee, Model model, HttpSession session) {
+		
+		String originPwd = employeeService.selectOriginPwd(employee.getEmpNo());
+		log.info("기존 비밀번호 : " + originPwd);
+		// 현재 비밀번호가 일치하지 않으면 예외 발생
+		if(!bCryptPasswordEncoder.matches(employee.getEmpPwd(), originPwd)) {
+			throw new CommException("현재 비밀번호가 일치하지 않습니다.");
+		}
+		
+		// 위 if구문 타지 않으면 비밀번호 update
+		String encNewPwd = bCryptPasswordEncoder.encode(employee.getNewPwd());
+		employee.setNewPwd(encNewPwd);
+		employeeService.updateEmpPwd(employee);
+		session.setAttribute("msg", "비밀번호 변경이 완료되었습니다.");
+		return "main";
 	}
 }

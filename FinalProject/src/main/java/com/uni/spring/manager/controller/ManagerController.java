@@ -109,7 +109,7 @@ public class ManagerController {
 		model.addAttribute("getPosList", ManagerService.getPosList());
 		model.addAttribute("getDepList", ManagerService.getDepList());
 		
-		session.setAttribute("msg", e.getEmpName()+"사원의 정보가 변경되었습니다.");
+		session.setAttribute("msg", e.getEmpName()+" 사원의 인사기록이 수정되었습니다.");
 		return "manager/empUpdateForm";
 	}
 	

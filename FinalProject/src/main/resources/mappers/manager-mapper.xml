@@ -139,21 +139,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE 	EMP_NO = #{empNo}
 	</update>
 
-	<!-- <![CDATA[ ]]> -->
-	<update id="updateHr" parameterType="Hr">
-		UPDATE 	PERSONNEL_CHART
-		SET 	HIRE_DATE = #{hireDate},
-				BIRTH_DATE = #{birthDate},
-				GENDER = #{gender},
-				HIRE_CATEGORY = #{hireCategory},
-				SARARY = #{sarary},
-				MARRY_STATUS = #{marryStatus},
-				MILI_STATUS = #{miliStatus},
-				PERSONNEL_EVAL = #{personnelEval},
-				ENT_DATE = #{entDate},
-				ENT_CON = #{entCon}
-		WHERE 	EMP_NO = #{empNo}
-	</update>
 	<select id="selectEmpHr" parameterType="Hr"
 		resultMap="HrResultMap">
 		SELECT 	EMP_NO,
@@ -172,8 +157,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<update id="updateEmpHr" parameterType="Hr">
 		UPDATE 	PERSONNEL_CHART
-		SET 	HIRE_DATE = #{hireDate},
-				<if test="birthDate != null">
+		SET 	<if test="birthDate != null">
 				BIRTH_DATE = #{birthDate},
 				</if>
 				GENDER = #{gender},
