@@ -252,15 +252,6 @@
                 </div>
               </div>
 
-
-              <div class="row mt">
-                <label class="col-sm-2 col-sm-2 control-label">퇴사일</label>
-                <div class="col-sm-5">
-                  <%-- <input type="date" placeholder=" " name="hr.entDate" value="${ e.hr.entDate }" class="form-control"> --%>
-                </div>
-
-              </div>
-
               <div class="row mt">
                 <label class="col-sm-2 col-sm-2 control-label">퇴사 사유</label>
                 <div class="col-sm-5">

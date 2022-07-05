@@ -63,4 +63,8 @@ public interface EmployeeService {
 
 	String selectWorkingWeekTotal(int empNo);
 
+	String selectOriginPwd(int empNo);
+
+	void updateEmpPwd(Employee employee);
+
 }

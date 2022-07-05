@@ -222,6 +222,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employeeDao.updateTimeOffNum(sqlSession, empNo);
 			
 		}else{
+			//반려되었을때(반려 :R) 연차내역테이블 업데이트
 			employeeDao.updateRejectTimeOff(sqlSession);
 		}
 
@@ -258,6 +259,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public String selectWorkingWeekTotal(int empNo) {
 		return employeeDao.selectWorkingWeekTotal(sqlSession, empNo);
 
+	}
+
+	@Override
+	public String selectOriginPwd(int empNo) {
+		
+		return employeeDao.selectOriginPwd(sqlSession, empNo);
+	}
+
+	@Override
+	public void updateEmpPwd(Employee employee) {
+		int result = employeeDao.updateEmpPwd(sqlSession, employee);
+		
+		if(result < 0) {
+			throw new CommException("비밀번호 변경에 실패하였습니다.");
+		}
 	}
 
 }
