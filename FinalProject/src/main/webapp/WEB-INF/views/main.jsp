@@ -67,9 +67,6 @@
 		border-bottom: 3px dashed #D0C9C0;
 	}
 	
-	#section2{
-		border-bottom: 3px dashed #D0C9C0;
-	}
 	#commDiv{
 		position: relative;
 		bottom : 250px;
