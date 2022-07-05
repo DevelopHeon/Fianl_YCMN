@@ -88,4 +88,7 @@ public class ManagerDao {
 	public int selectListCount(SqlSessionTemplate sqlSession, Search search) {
 		return sqlSession.selectOne("managerMapper.selectListCount", search);
 	}
+	public ArrayList getChartList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("managerMapper.getChartList");
+	}
 }

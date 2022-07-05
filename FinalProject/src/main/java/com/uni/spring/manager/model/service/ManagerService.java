@@ -9,6 +9,7 @@ import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.JobPosition;
 import com.uni.spring.hr.model.dto.Hr;
+import com.uni.spring.manager.model.dto.Product;
 import com.uni.spring.manager.model.dto.Search;
 
 public interface ManagerService {
@@ -43,5 +44,7 @@ public interface ManagerService {
 //	ArrayList<Employee> selectList(String find, String keyword, int i); // 검색기능추가
 
 	int selectListCount(Search search); // 페이징 용
+
+	ArrayList<Product> getChartList();
 	
 }

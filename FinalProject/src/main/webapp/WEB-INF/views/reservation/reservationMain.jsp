@@ -6,7 +6,7 @@
 
 <head>
 <meta charset='utf-8' />
-<title>개발웍스  - 회의실/비품 예약</title>
+<title>회의실/비품 예약</title>
 <!-- 화면 해상도에 따라 글자 크기 대응(모바일 대응) -->
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <!-- jquery CDN -->
@@ -44,26 +44,27 @@
           },
           navLinks: true,
           themeSystem: 'bootstrap',
-          //minTime: '08:00:00',
-          //maxTime: '22:00:00',
           selectable: true,
           select: function (obj) { // 캘린더에서 드래그로 이벤트를 생성
             $("#insertRezModal").modal("show");
-            getRscList();
+            getRscList(); // 예약할 자원 목록
             console.log(obj);
 
             $("#startTime").val(moment(obj.start).format('YYYY-MM-DDTHH:mm:ss'));
             $("#endTime").val(moment(obj.end).format('YYYY-MM-DDTHH:mm:ss'));
 
           },
-          editable: true,
-          droppable: true, // this allows things to be dropped onto the calendar
-          drop: function (arg) {
-            // is the "remove after drop" checkbox checked?
-            if (document.getElementById('drop-remove').checked) {
-              // if so, remove the element from the "Draggable Events" list
-              arg.draggedEl.parentNode.removeChild(arg.draggedEl);
-            }
+          eventClick: function (info) {
+            console.log(info);
+            $("#selectRezModal").modal("show");
+
+            $("#rezWriter2").val(info.event._def.extendedProps.empName);
+            $("#rscName2").val(info.event._def.extendedProps.rscName);
+            $("#startTime2").val(moment(info.event.start).format('YYYY-MM-DDTHH:mm:ss'));
+            $("#endTime2").val(moment(info.event.end).format('YYYY-MM-DDTHH:mm:ss'));
+            $("#rezTitle2").val(info.event.title);
+
+            info.el.style.borderColor = 'black';
           },
           events: data
         });
@@ -99,6 +100,8 @@
       }
     });
   }
+
+
 </script>
 <style>
   td,
@@ -135,6 +138,9 @@
 <section id="main-content">
   <section class="wrapper" style="margin:0">
     <h3><i class="fa fa-angle-right"></i> 회의실/비품 예약</h3>
+        <div class="row mt">
+      <div class="col-lg-12">
+        <div class="content-panel">
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         var calendarEl = document.getElementById('calendar');
@@ -146,7 +152,11 @@
     </script>
 
     <div id='calendar'></div>
-
+    </div>
+    </div>
+    </div>
+  </section>
+</section>
     <!-- 일정 추가 모달 -->
     <div class="modal fade" id="insertRezModal">
       <div class="modal-dialog modal-dialog-centered">
@@ -184,8 +194,40 @@
         </div>
       </div>
     </div>
-  </section>
-</section>
+
+    <div class="modal fade" id="selectRezModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">예약 상세 조회</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <!-- Modal Body -->
+          <div class="modal-body">
+            <label for="rezWriter" class="mr-sm-2">예약자 명</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" id="rezWriter2" name="empName" readonly><br>
+
+            <label for="rscNo" class="mr-sm-2">예약 자원</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" id="rscName2" name="rscNo" value="${rscNo}" readonly><br>
+
+            <label for="rezTime" class="mr-sm-2">예약 시간</label><br>
+
+            <input type="datetime-local" class="mb-2 mr-sm-2" id="startTime2" name="startTime" readonly>&emsp;&emsp;~&emsp;&emsp;
+            <input type="datetime-local" class="mb-2 mr-sm-2" id="endTime2" name="endTime" readonly><br><br>
+
+            <label for="rezTitle" class="mr-sm-2">예약 명</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" id="rezTitle2" name="rezTitle" readonly>
+          </div>
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
 </body>
 
 </html>

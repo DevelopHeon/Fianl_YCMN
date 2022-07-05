@@ -13,6 +13,7 @@ import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.JobPosition;
 import com.uni.spring.hr.model.dto.Hr;
 import com.uni.spring.manager.model.dao.ManagerDao;
+import com.uni.spring.manager.model.dto.Product;
 import com.uni.spring.manager.model.dto.Search;
 
 import lombok.RequiredArgsConstructor;
@@ -137,6 +138,11 @@ public class ManagerServiceImpl implements ManagerService {
 	@Override
 	public int selectListCount(Search search) {
 		return managerDao.selectListCount(sqlSession, search);
+	}
+
+	@Override
+	public ArrayList<Product> getChartList() {
+		return (ArrayList)managerDao.getChartList(sqlSession);
 	}
 	
 }

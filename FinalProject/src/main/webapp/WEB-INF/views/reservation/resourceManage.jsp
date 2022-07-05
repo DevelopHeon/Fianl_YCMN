@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="utf-8">
-<title>개발웍스- 회의실/비품 관리</title>
+<title>회의실/비품 관리</title>
 
 <style>
   table,
