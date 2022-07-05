@@ -4,6 +4,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="employeeMapper">
 
+	<resultMap type="Reservation" id="ReservationMap">
+		<result column="REZ_TITLE" property="rezTitle"/>
+		<result column="START_TIME" property="startTime"/>
+		<result column="END_TIME" property="endTime"/>
+	</resultMap>
+	
+	<resultMap type="jobPosition" id="JobPositionMap">
+		<result column="POS_NAME" property="posName"/>
+	</resultMap>
+	
+	<resultMap type="department" id="DepartmentMap">
+		<result column="DEP_NAME" property="depName"/>
+	</resultMap>
+	<resultMap type="Employee" id="EmployeeMap">
+		<id column="EMP_NO" property="empNo"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="EMP_ID" property="empId"/>
+		<result column="EMP_EMAIL" property="empEmail"/>
+		<result column="OFFICE_TEL" property="officeTel"/>
+		<result column="EMP_PHONE" property="empPhone"/>
+		<result column="EMP_LOC" property="empLoc"/>
+		<result column="EMP_PFE" property="empPfe"/>
+		<result column="EMP_ONOFF" property="empOnOff"/>
+		<collection property="department" resultMap="DepartmentMap"/>
+		<collection property="jobPosition" resultMap="JobPositionMap"/>
+		<collection property="Reservation" resultMap="ReservationMap"/>
+	</resultMap>
+	
 	<select id="loginEmployee" parameterType="Employee" resultType="Employee">
 		SELECT A.*,
 		       B.DEP_NAME,
@@ -129,18 +157,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 주소록_사원정보 -->
-	<select id="selectDetailEmp" parameterType="Employee" resultType="Employee" >
-		SELECT 
-			A.EMP_NO, 
-			A.EMP_NAME, 
-			A.EMP_ID, 
-			A.EMP_PHONE, 
-			A.EMP_LOC, 
-			A.EMP_PFE, 
-			A.EMP_ONOFF, 
-			NVL(B.POS_NAME,'연수생') POS_NAME,
-			NVL(C.DEP_NAME,'연수중') DEP_NAME,
-			D.START_TIME, D.END_TIME, D.REZ_TITLE
+	<select id="selectDetailEmp" parameterType="Employee" resultMap="EmployeeMap" >
+		SELECT A.EMP_NO, A.EMP_NAME, A.EMP_ID, A.EMP_PHONE, A.EMP_LOC, A.EMP_PFE, A.EMP_ONOFF, 
+		B.POS_NAME, C.DEP_NAME, 
+		TO_CHAR(D.START_TIME, 'HH24:MI') START_TIME, TO_CHAR(D.END_TIME, 'HH24:MI') END_TIME, D.REZ_TITLE
 		FROM EMPLOYEE A
 		LEFT JOIN JOB_POSITION B ON A.POS_NO = B.POS_NO
 		LEFT JOIN DEPARTMENT C ON A.DEP_NO = C.DEP_NO
