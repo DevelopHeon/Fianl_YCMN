@@ -220,16 +220,15 @@
           <button type="button" class="workCheck btn btn-primary" data-toggle="modal" data-target="#workcheck" onclick="checkTime(); todayCheck();" >출퇴근 확인</button>
 
 		  <!-- admin일 경우 관리 메뉴 보임 -->
-		  <c:if test="${ sessionScope.loginUser.empId eq 'admin' || sessionScope.loginUser.depName eq '인사부서' }">
+		  <c:if test="${ sessionScope.loginUser.empId eq 'admin' }">
           <li class="sub-menu">
             <a href="views/javascript:;">
               <i class="fa fa-book"></i>
               <span>인사관리</span>
               </a>
             <ul class="sub">
-              <li><a href="#">근무통계</a></li>
+              <li><a href="enterpriseChart.do">근무통계</a></li>
               <li><a href="jobManage.do">직위/직무관리</a></li>
-              <li><a href="#">조직도</a></li>
               <li><a href="listEmp.do">임직원 관리</a></li>
             </ul>
           </li>
