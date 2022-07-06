@@ -103,8 +103,8 @@ public class EmployeeDao {
 		return sqlSession.update("employeeMapper.updateTimeOffContent");
 	}
 	//연차 반려시
-	public int updateRejectTimeOff(SqlSessionTemplate sqlSession) {
-		return sqlSession.update("employeeMapper.updateRejectTimeOff");
+	public int updateRejectTimeOff(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.update("employeeMapper.updateRejectTimeOff", empNo);
 
 	}
 	//잔여연차 업데이트
