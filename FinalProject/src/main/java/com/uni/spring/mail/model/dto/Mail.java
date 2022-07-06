@@ -28,6 +28,7 @@ public class Mail {
 	private String mailRef; //참조인
 	private String mailSec; //비밀참조인
 	private String fileName; //파일명
+	private String changeName; // 파일 수정명
 	private String timestamp; //작성날짜
 	
 	@Size(max=1000, message="*내용은 최대 1000자 이내로 작성 가능*")

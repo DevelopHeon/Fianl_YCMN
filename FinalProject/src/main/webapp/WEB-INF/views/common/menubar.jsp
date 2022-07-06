@@ -145,51 +145,6 @@
                
             </script>
           </li>
-          <!-- inbox dropdown end -->
-          <!-- notification dropdown start-->
-          <li id="header_notification_bar" class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="views/index.html#">
-              <i class="fa fa-bell-o"></i>
-              <span class="badge bg-warning">7</span>
-              </a>
-            <ul class="dropdown-menu extended notification">
-              <div class="notify-arrow notify-arrow-yellow"></div>
-              <li>
-                <p class="yellow">You have 7 new notifications</p>
-              </li>
-              <li>
-                <a href="views/index.html#">
-                  <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                  Server Overloaded.
-                  <span class="small italic">4 mins.</span>
-                  </a>
-              </li>
-              <li>
-                <a href="views/index.html#">
-                  <span class="label label-warning"><i class="fa fa-bell"></i></span>
-                  Memory #2 Not Responding.
-                  <span class="small italic">30 mins.</span>
-                  </a>
-              </li>
-              <li>
-                <a href="views/index.html#">
-                  <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                  Disk Space Reached 85%.
-                  <span class="small italic">2 hrs.</span>
-                  </a>
-              </li>
-              <li>
-                <a href="views/index.html#">
-                  <span class="label label-success"><i class="fa fa-plus"></i></span>
-                  New User Registered.
-                  <span class="small italic">3 hrs.</span>
-                  </a>
-              </li>
-              <li>
-                <a href="views/index.html#">See all notifications</a>
-              </li>
-            </ul>
-          </li>
           <!-- notification dropdown end -->
         </ul>
         <!--  notification end -->
@@ -235,7 +190,20 @@
           </c:if>
           <li class="sub-menu">
             <a href="views/javascript:;">
-              <i class="fa fa-book"></i>
+              <i class="fa fa-folder-open"></i>
+              <span>인사/근태</span>
+              </a>
+            <ul class="sub">
+              <li><a href="myPage.do">내 인사정보</a></li>
+              <li><a href="workingInfo.do">내 근태 현황</a></li>
+              <li><a href="timeOff.do">내 연차 내역</a></li>
+              <li><a href="organizationChart.do">조직도</a></li>
+              <li><a href="empAddress.do">주소록</a></li>
+            </ul>
+          </li>
+          <li class="sub-menu">
+            <a href="views/javascript:;">
+              <i class="bi bi-pencil-square"></i>
               <span>결재</span>
               </a>
             <ul class="sub">
@@ -262,7 +230,7 @@
           </li>
           <li class="sub-menu">
             <a href="views/javascript:;">
-              <i class="fa fa-book"></i>
+              <i class="bi bi-card-list"></i>
               <span>게시판</span>
               </a>
             <ul class="sub">
@@ -272,7 +240,7 @@
           </li>
           <li class="sub-menu">
             <a href="views/javascript:;">
-              <i class="fa fa-book"></i>
+              <i class="bi bi-calendar-event"></i>
               <span>예약</span>
               </a>
             <ul class="sub">
@@ -281,19 +249,6 @@
               <c:if test="${ sessionScope.loginUser.empId eq 'admin' }"><!-- admin일 경우 자원 관리 메뉴 보임 -->
               <li><a href="resourceManage.do">회의실/비품 관리</a></li>
               </c:if>
-            </ul>
-          </li>
-          <li class="sub-menu">
-            <a href="views/javascript:;">
-              <i class="fa fa-book"></i>
-              <span>인사/근태</span>
-              </a>
-            <ul class="sub">
-              <li><a href="myPage.do">인사 정보</a></li>
-              <li><a href="workingInfo.do">근태 정보</a></li>
-              <li><a href="timeOff.do">연차 현황</a></li>
-              <li><a href="organizationChart.do">조직도</a></li>
-              <li><a href="empAddress.do">주소록</a></li>
             </ul>
           </li>
         </ul>

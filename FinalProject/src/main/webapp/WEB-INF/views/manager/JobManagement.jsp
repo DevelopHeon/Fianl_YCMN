@@ -99,21 +99,35 @@
       <form action="insertPos.do" method="post">
         <!-- Modal Body -->
         <div class="modal-body">
-          <label for="posGrade" class="mr-sm-2">등급</label>
-          <input type="number" class="form-control mb-2 mr-sm-2" placeholder="등급을 입력하세요." id="posGrade" name="posGrade"> <br>
-          <label for="posName" class="mr-sm-2">추가할 직위 명</label>
-          <input type="text" class="form-control mb-2 mr-sm-2" placeholder="직위 명을 입력하세요." id="posName" name="posName">
+          <label for="posGrade1" class="mr-sm-2">등급</label>
+          <input type="number" class="form-control mb-2 mr-sm-2" placeholder="등급을 입력하세요." id="posGrade1" name="posGrade"> <br>
+          <label for="posName1" class="mr-sm-2">추가할 직위 명</label>
+          <input type="text" class="form-control mb-2 mr-sm-2" placeholder="직위 명을 입력하세요." id="posName1" name="posName">
         </div>
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">추가</button>
+          <button type="submit" id="jobAddBtn" class="btn btn-primary">추가</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
         </div>
       </form>
     </div>
   </div>
 </div>
-
+<script>
+	$('#jobAddBtn').on('click', function(){
+		
+		if($('#posGrade1').val() == ""){	
+			alert("직위 등급을 입력하세요.");
+			$('#posGrade1').focus();
+			return false;
+		}else if($('#posName1').val() == ""){
+			alert("직위 명을 입력하세요");
+			$('#posName1').focus();
+			return false;
+		}
+		return true;
+	});
+</script>
 
 <div class="modal fade" id="updatePosModal">
   <div class="modal-dialog modal-sm">
@@ -192,14 +206,23 @@
         </div>
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">추가</button>
+          <button type="submit" id="deptAddBtn" class="btn btn-primary">추가</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
         </div>
       </form>
     </div>
   </div>
 </div>
-
+<script>
+	$('#deptAddBtn').click(function(){
+		if($('#depName').val() == ""){
+			alert("부서명을 입력하세요.");
+			$('#depName').focus();
+			return false;
+		}
+		return true;
+	});
+</script>
 
 <!-- 부서 수정 -->
 <div class="modal fade" id="updateDeptModal">

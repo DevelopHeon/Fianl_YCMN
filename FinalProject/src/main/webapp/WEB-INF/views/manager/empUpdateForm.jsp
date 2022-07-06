@@ -272,20 +272,22 @@
         </div>
       </form>
       <!-- /row -->
-      <script type="text/javascript">
-        let posNo = $('select[name="posNo"]').val();
-        let depNo = $('select[name="depNo"]').val();
-        console.log(posNo);
-        console.log(depNo);
+      <script>
         $('#submitBtn').click(function () {
+            var posNo = $('select[name="posNo"]').val();
+            var depNo = $('select[name="depNo"]').val();
+            
           if (posNo == null || posNo == 0) {
             alert('직위를 설정해 주세요');
             $('select[name="posNo"]').focus();
+            return false;
           } else if (depNo == null || depNo == 0) {
             alert('부서를 설정해 주세요');
             $('select[name="depNo"]').focus();
+            return false;
           }
-        })
+          return true;
+        });
       </script>
     </section>
     <!-- /wrapper -->

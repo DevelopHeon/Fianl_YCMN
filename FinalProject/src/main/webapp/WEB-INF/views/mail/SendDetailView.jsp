@@ -21,7 +21,7 @@
 </head>
 
 <body>
-	<jsp:include page="../common/menubar.jsp"/>	
+   <jsp:include page="../common/menubar.jsp"/>   
 
   <section id="container">
  
@@ -38,7 +38,7 @@
             <section class="panel">
               <header class="panel-heading wht-bg">
                 <h4 class="gen-case">
-                    	보낸 메일 확인
+                       보낸 메일 확인
                   </h4>
               </header>
               <div class="panel-body ">
@@ -51,7 +51,7 @@
                 <!-- 발신자 기준 조회 가능한 목록 : 수신, 참조, 비밀참조자  -->
                 <div class="mail-sender">
                   <div class="row">
-                  	<div class="col-md-8">
+                     <div class="col-md-8">
                       <span class="label label-primary">수신</span>
                       <span>${sMail.mail.mailTo}</span>
                     </div>
@@ -59,13 +59,13 @@
                       <p class="date">${sMail.timestamp }</p>
                     </div>
                     
-                  	<c:if test="${!empty sMail.mail.mailRef}">
+                     <c:if test="${!empty sMail.mail.mailRef}">
                     <div class="col-md-8">
                       <span class="label label-success">참조</span>
                       <span>${sMail.mail.mailRef}</span>
                     </div>
                     </c:if>
-					<c:if test="${!empty sMail.mail.mailSec}">
+               <c:if test="${!empty sMail.mail.mailSec}">
                     <div class="col-md-8">
                       <span class="label label-default">비밀참조</span>
                       <span>${sMail.mail.mailSec}</span>
@@ -80,18 +80,8 @@
                 <div class="attachment-mail">
                   <p>
                     <span><i class="fa fa-paperclip"></i> 1 attachment — </span>
-                    <a href="resources/mailUpload_files/${sMail.mail.fileName}" download="${ sMail.mail.fileName }">${ sMail.mail.fileName }</a>
+                    <a href="resources/mailUpload_files/${sMail.mail.changeName}" download="${ sMail.mail.changeName }">${ sMail.mail.fileName }</a>
                   </p>
-                  <ul>
-                    <li>
-                      <a class="atch-thumb" href="resources/mailUpload_files/${sMail.mail.fileName}" download="${ sMail.mail.fileName }">
-                        <img src="resources/mailUpload_files/${sMail.mail.fileName}">
-                        </a>
-                      <a class="name">
-                        ${sMail.mail.fileName}
-                        </a>
-                    </li>
-                  </ul>
                 </div>
                 </c:if>
                 <div class="compose-btn pull-left">

@@ -92,7 +92,7 @@
 							<hr>
 							<p style="color:red;">* 반차의 경우 기간 및 일시는 같은 날로 체크하세요.</p>
 							<span style="font-size:1.5rem;">휴가 종류 :</span>
-							<form:select path="approvalLeave.leaveCategory" name="approvalLeave.leaveCategory" class="form-control" style="margin-left:2.8%;" required="required">
+							<form:select path="approvalLeave.leaveCategory" name="approvalLeave.leaveCategory" class="form-control" id="selectItem" onchange="changeItem();" style="margin-left:2.8%;" required="required">
 								<option value="L">연차</option>
 								<option value="AH">오전 반차</option>
 								<option value="PH">오후 반차</option>
@@ -112,6 +112,17 @@
 								<h4 style="color:red;"><form:errors path="approvalLeave.leaveFinish" /></h4>
 								<h4 style="color:red;"><form:errors path="approvalLeave.leaveTotalDate" /></h4>
 							</div>
+							<script>
+								function changeItem(){
+									var item = $('#selectItem').val();
+									
+									if(item == 'FE'){
+										$("#erAppBtn").removeAttr("disabled");
+									}else{
+										$("#erAppBtn").attr("disabled", true);
+									}
+								}
+							</script>
 							<script>
 								
 								function lvCheckValidate(num){

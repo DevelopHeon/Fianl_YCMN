@@ -97,6 +97,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<select id="selectDeptList" resultType="Department">
 		SELECT *
 		FROM DEPARTMENT
+		WHERE STATUS = 'Y'
 	</select>
 	<select id="selectApproverList" parameterType="Employee" resultType="Employee">
 		SELECT A.EMP_NO, A.EMP_NAME, A.POS_NO, B.POS_NAME, C.DEP_NAME
@@ -111,6 +112,8 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		AND A.EMP_NAME LIKE '%'||#{empName}||'%'
 		</if>
 		AND A.STATUS = 'Y'
+		AND C.STATUS = 'Y'
+		AND B.STATUS = 'Y'
 		ORDER BY B.POS_GRADE
 	</select>
 	<select id="selectMyApprovalListCnt" parameterType="_int" resultType="_int">

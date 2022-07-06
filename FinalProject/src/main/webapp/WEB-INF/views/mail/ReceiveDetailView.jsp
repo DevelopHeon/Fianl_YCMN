@@ -93,7 +93,7 @@
                 <div class="attachment-mail">
                   <p>
                     <span><i class="fa fa-paperclip"></i> 1 attachment — </span>
-                    <a href="resources/mailUpload_files/${rMail.mail.fileName}" download="${ rMail.mail.fileName }">${ rMail.mail.fileName }</a>
+                    <a href="resources/mailUpload_files/${rMail.mail.changeName}" download="${ rMail.mail.changeName }">${ rMail.mail.fileName }</a>
                   </p>
                   <ul>
                     <li>

@@ -32,6 +32,7 @@
                     <label for="empId">* ID :</label>
                     <form:input path="empId" type="text" class="form-control" id="empId" name="empId" placeholder="Please Enter ID" required="required" />
                     <div style="color:red;"><form:errors path="empId" /></div>
+                    <div style="font-size:0.8em; color:#007bff;">아이디는 최소 5자리 이상 입력해주세요.</div>
                     <div id="checkResult" style="display:none; font-size:0.8em"></div>
                     <!-- 아이디 중복 검사를 확인하는  div -->
                     <br>
