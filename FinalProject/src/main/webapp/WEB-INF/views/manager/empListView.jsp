@@ -46,8 +46,8 @@
                   <option ${(param.find=="depName" )?"selected":""} value="depName">직무</option>
                 </select>
 
-                <input type="text" name="keyword" value="${param.keyword}" />
-                <input class="btn btn-primary" type="submit" value="검색" />
+                <input type="text" name="keyword" id="searchInput" value="${param.keyword}" />
+                <input class="btn btn-primary" id="searchButton" type="submit" value="검색" />
               </form>
             </div>
 
@@ -139,6 +139,15 @@
     $("#empList tbody tr #empName").click(function () {
       location.href = "updateFormEmp.do?empNo=" + $(this).prev().text();
     });
+  });
+  
+  $("#searchButton").click(function(){
+	 var search = $('#searchInput').val();
+	 
+	 if(search == ""){
+		 alert("검색 내용을 입력하세요.");
+		 return false;
+	 }
   });
 </script>
 </body>

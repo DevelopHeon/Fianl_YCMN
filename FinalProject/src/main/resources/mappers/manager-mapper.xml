@@ -45,7 +45,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 전체 사원 수 -->
 	<select id="selectListCount" resultType="_int">
 		SELECT		COUNT(*)
-		FROM		EMPLOYEE
+		FROM		EMPLOYEE A
+		LEFT JOIN 	JOB_POSITION B ON (A.POS_NO = B.POS_NO)
+		LEFT JOIN 	DEPARTMENT C ON(A.DEP_NO = C.DEP_NO)
 		<where>
 			<if test="find.equals('empNo')">
 				EMP_NO LIKE '%'||#{keyword}||'%'
@@ -54,10 +56,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				EMP_NAME LIKE '%'||#{keyword}||'%'
 			</if>
 			<if test="find.equals('posName')">
-				POS_NAME LIKE '%'||#{keyword}||'%'
+				B.POS_NAME LIKE '%'||#{keyword}||'%'
 			</if>
 			<if test="find.equals('depName')">
-				DEP_NAME LIKE '%'||#{keyword}||'%'
+				C.DEP_NAME LIKE '%'||#{keyword}||'%'
 			</if>
 		</where>
 	</select>
@@ -83,10 +85,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				EMP_NAME LIKE '%'||#{keyword}||'%'
 			</if>
 			<if test="find.equals('posName')">
-				POS_NAME LIKE '%'||#{keyword}||'%'
+				B.POS_NAME LIKE '%'||#{keyword}||'%'
 			</if>
 			<if test="find.equals('depName')">
-				DEP_NAME LIKE '%'||#{keyword}||'%'
+				C.DEP_NAME LIKE '%'||#{keyword}||'%'
 			</if>
 			<if test="true">
 				AND EMP_ID != 'admin'

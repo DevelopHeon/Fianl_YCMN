@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="MAIL_REF" property="mailRef"/>
 		<result column="MAIL_SEC" property="mailSec"/>
 		<result column="FILE_NAME" property="fileName"/>
+		<result column="CHANGE_NAME" property="changeName"/>
 		<result column="MAIL_CONTENT" property="mailContent"/>
 		<result column="STATUS" property="status"/>
 		<result column="CATEGORY" property="category"/>
@@ -37,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insertAttachment" parameterType="Attachment">
 		INSERT INTO ATTACHMENT
-		VALUES(SEQ_ANO.NEXTVAL, #{empNo}, NULL, 7, #{originName}, #{changeName}, #{filePath}, DEFAULT, DEFAULT)
+		VALUES(SEQ_ANO.NEXTVAL, #{empNo}, SEQ_MAIL.CURRVAL, 7, #{originName}, #{changeName}, #{filePath}, DEFAULT, DEFAULT)
 	</insert>
 	
 	<insert id="insertMail" parameterType="Mail">
@@ -106,10 +107,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    B.EMP_NAME,
 		    B.EMP_PFE,
 		    C.RECEIVE_NO,
+            D.CHANGE_NAME,
 		    C.CONFIRM_MAIL FROM MAIL A
 		LEFT JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
 		JOIN RECEIVEMAIL C ON A.MAIL_NO = C.MAIL_NO
-		WHERE C.RECEIVE_NO = #{receiveNo}
+        LEFT JOIN ATTACHMENT D ON C.MAIL_NO = D.REF_NO
+		WHERE C.RECEIVE_NO = #{reciveNo}
+        AND A.CATEGORY = 7
 	</select>
 	
 	<!-- 받은메일  삭제 -->
@@ -129,12 +133,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    (SELECT B.EMP_NAME FROM EMPLOYEE B WHERE A.MAIL_REF = B.EMP_NO) MAIL_REF,
 	    (SELECT B.EMP_NAME FROM EMPLOYEE B WHERE A.MAIL_SEC = B.EMP_NO) MAIL_SEC,
 	    A.FILE_NAME,
+        B.CHANGE_NAME,
 	    A.TIMESTAMP,
 	    A.MAIL_CONTENT,
 	    A.STATUS,
 	    A.CATEGORY
     FROM MAIL A
+    LEFT JOIN ATTACHMENT B ON (A.MAIL_NO = B.REF_NO)
 	WHERE A.MAIL_NO = #{mailNo}
+    AND A.CATEGORY = 7
 	</select>
 	
 	<!-- 보낸메일 삭제 -->

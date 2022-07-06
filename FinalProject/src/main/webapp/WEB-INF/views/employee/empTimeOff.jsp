@@ -72,6 +72,9 @@
 		   			<c:if test="${ list.timeoffType eq 'PH' }">
 		   				<td>오후반차</td>
 		   			</c:if>
+		   			<c:if test="${ list.timeoffType eq 'FE' }">
+		   				<td>경조사</td>
+		   			</c:if>
 		   			<c:if test="${ empty list.timeoffType }">
 		   				<td>미승인</td>
 		   			</c:if>

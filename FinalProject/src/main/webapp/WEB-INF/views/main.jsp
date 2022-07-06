@@ -85,10 +85,10 @@
 				<div class="col-sm-3" style="border:1px solid #d4d9d9; margin-right:5%; margin-left:2%; width:300px">
 					<div id="section1">
                   		<c:if test="${ empInfo.empPfe eq null}">
-                           <p class="empImg centered"><img src="resources/img/user.png" class="img-circle" width="80"></p>
+                           <p class="centered"><img src="resources/img/user.png" class="img-circle" width="80"></p>
                      	</c:if>
                      	<c:if test="${ !empty empInfo.empPfe }">
-                         	<p class="empImg centered"><img src="resources/empUpload_files/${empInfo.empPfe}" class="img-circle" width="80"></p>
+                         	<p class="centered"><img src="resources/empUpload_files/${empInfo.empPfe}" class="img-circle" width="80"></p>
                      	</c:if>
                      	<h3 class="centered">${ sessionScope.loginUser.empName }</h3>
                      	<h4 class="centered">${ sessionScope.loginUser.depName } ${ sessionScope.loginUser.posName }</h4>
@@ -119,7 +119,7 @@
                      	</tr>
                      	<tr>
                      		<td><button type="button" class="btn btn-round btn-default" onclick="location.href='empAddress.do'"><i class="fa fa-address-book"></i> 주소록</button></td>
-                     		<td><button type="button" class="btn btn-round btn-default" onclick="location.href='writeMail.do'"><i class="fa fa-pencil"></i> 회의 예약</button></td>
+                     		<td><button type="button" class="btn btn-round btn-default" onclick="location.href='reservMain.do'"><i class="fa fa-pencil"></i> 회의 예약</button></td>
                      	</tr>
                      </table>
                		</div>
