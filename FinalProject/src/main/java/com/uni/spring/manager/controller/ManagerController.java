@@ -21,6 +21,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -36,9 +37,9 @@ import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.JobPosition;
 import com.uni.spring.hr.model.dto.Hr;
+import com.uni.spring.manager.model.dto.Product;
 import com.uni.spring.manager.model.dto.Search;
 import com.uni.spring.manager.model.service.ManagerService;
-import com.uni.spring.reservation.controller.ReservationController;
 
 import ch.qos.logback.classic.Logger;
 import lombok.RequiredArgsConstructor;
@@ -235,6 +236,42 @@ public class ManagerController {
 	    wb.close();
 	}
 	
+	// 통계 페이지로 이동
+    @RequestMapping("enterpriseChart.do")
+    public String enterpriseChart() {
+        return "manager/enterpriseChart";
+    }
+    
+	@ResponseBody
+	@RequestMapping("Chart1.do")
+	public JSONArray enterpriseChart12() {
+		ArrayList<Product> rscList = ManagerService.getChartList();
+		System.out.println("rscList asd"+rscList); 
+        JSONArray jsonArr = new JSONArray();
+        
+        for (Product p : rscList) {
+        	JSONObject jsonObj = new JSONObject();
+			jsonObj.put("name", p.getName());
+			jsonObj.put("value", p.getValue());
+			jsonArr.add(jsonObj);
+		}
+		System.out.println("jsonArr : "+jsonArr);
+		return jsonArr;
+	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 	// 조직도 페이지로 이동
     @RequestMapping("organizationChart.do")
     public String organizationChart() {

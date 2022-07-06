@@ -70,18 +70,21 @@ public class MailController {
 	//메일작성 완
 	@RequestMapping("insertMail.do")
 	public String insertMail(@ModelAttribute("mail") @Valid Mail mail,
-			 BindingResult result,
+			                 BindingResult result,
 							 HttpSession session,
 							 HttpServletRequest request, 
 							 Model model,
 							 @RequestParam(name="upfile", required=false) MultipartFile file) {
 		//메일 잘 들어오는지 확인
 		System.out.println(mail);
+		//유효성 검사. 에러 있을 경우 작성한 내용이 날아가지 않고 다시 리턴
 		if(result.hasErrors()) {
 			return "mail/writeMail";
 		}
 		mail.setMailContent(mail.getMailContent().replaceAll("\n", "<br>"));
+		
 		Attachment attachment = null;
+		
 		if(!file.getOriginalFilename().equals("")) { //첨부파일에 업로드가 되었다면
 			//attachment에 파일을 저장
 			attachment = saveFile(file, request);
@@ -95,8 +98,6 @@ public class MailController {
 		mailService.insertMail(mail, attachment);
 		
 		session.setAttribute("msg", "메일이 전송되었습니다.");
-		
-
 		return "redirect:sendMail.do";
 	}
 	
@@ -251,6 +252,8 @@ public class MailController {
 		int boardLimit = 10;
 		int pageLimit = 10;
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		model.addAttribute("pi", pi);
+
 		//받은메일함 리스트
 		ArrayList<ReceiveMail> receiveList = mailService.selectReceiveList(empNo, pi);
 		
@@ -258,10 +261,9 @@ public class MailController {
 		int total = mailService.selectTotalMail(empNo);
 	
 		model.addAttribute("receiveList", receiveList);
-		model.addAttribute("pi", pi);
 		model.addAttribute("total", total);
+		//미확인 메일 수
 		int unread = mailService.selectUnreadMail(empNo);
-		
 		model.addAttribute("unread", unread);
 		
 		return "mail/receiveMail";
@@ -348,8 +350,7 @@ public class MailController {
 	public String starMail(@RequestParam("starM")int receiveNo, Model model) {
 		
 		mailService.updateStarMail(receiveNo);
-		
-		//model.addAttribute("starMail", starMail);
+
 		return "redirect:receiveMail.do";
 	}
 

@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="utf-8">
-<title>개발웍스 - 직위/부서 관리</title>
+<title>직위/부서 관리</title>
 
 <style>
   table,
@@ -38,9 +38,9 @@
             <table id="posListView" style="width:80%" class="table table-bordered table-striped table-condensed table-hover">
               <thead style="background-color:#5F7161;font-weight:bold;color:#FFFFFF;">
                 <tr>
-                  <th width="10%"></th>
-                  <th width="30%">등급</th>
-                  <th width="50%">직위</th>
+                  <th width="5%"></th>
+                  <th width="35%">등급</th>
+                  <th width="60%">직위</th>
                 </tr>
               </thead>
               <tbody>
@@ -64,8 +64,8 @@
             <table id="deptListView" style="width:80%" class="table table-bordered table-striped table-condensed table-hover">
               <thead style="background-color:#5F7161;font-weight:bold;color:#FFFFFF;">
                 <tr>
-                  <th style="width:30px;"></th>
-                  <th style="width:400px;">부서</th>
+                  <th style="width:5%;"></th>
+                  <th style="width:95%;">부서</th>
                 </tr>
               </thead>
               <tbody>

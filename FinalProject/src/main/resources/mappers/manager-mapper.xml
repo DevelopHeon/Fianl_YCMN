@@ -228,4 +228,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET		POS_NO = '0'
 		WHERE 	POS_NO = #{posNo}
 	</update>
+	
+	<!-- 차트 용 -->
+	<select id="getChartList" resultType="Product">
+		SELECT 		NVL(B.DEP_NAME, '부서 미정') as "NAME"
+		    		, COUNT(*) as "VALUE"
+		FROM 		EMPLOYEE A
+		LEFT JOIN 	DEPARTMENT B ON A.DEP_NO = B.DEP_NO
+		GROUP BY 	B.DEP_NAME
+	</select>
 </mapper>

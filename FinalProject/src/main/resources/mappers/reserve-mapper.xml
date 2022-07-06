@@ -64,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM	RESERVATION A
 		JOIN    RESOURCE_ENTERPRISE B ON A.RSC_NO = B.RSC_NO
         JOIN    EMPLOYEE C ON A.REZ_WRITER = C.EMP_NO
-        WHERE	A.STATUS != 'D'
+        WHERE	A.STATUS != 'C'
 	</select>
 	<insert id="insertReserve" parameterType="Reservation">
 		INSERT 

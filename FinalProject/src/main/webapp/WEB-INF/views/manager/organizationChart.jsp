@@ -3,7 +3,7 @@
 <html>
 
 <head>
-<title>개발웍스 - 조직도</title>
+<title>조직도 조회</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js"></script>
@@ -26,7 +26,7 @@
         <div class="row mt">
             <div class="col-lg-3 col-md-4 col-sm-12">
                 <div class="col-lg-12">
-                    <div class="content-panel" style="height:780px">
+                    <div class="content-panel" style="min-height:780px">
                         <div class="container-fluid">
                             <div class="col-sm-10" style="color:#4ea4cd;">
                                 <h3 onclick='selectDeptEmp(0)'><i class="fa fa-plus-square" data-toggle="collapse" href="#deptList" aria-expanded="false" aria-controls="collapseExample"></i>&nbsp;&nbsp;개발웍스 </h3>
@@ -39,7 +39,7 @@
 
             <div class="col-lg-9 col-md-8 col-sm-12">
                 <div class="col-lg-12">
-                    <div class="content-panel" style="height:780px">
+                    <div class="content-panel" style="min-height:780px">
                         <div class="container-fluid">
 
                             <div id="approver">
