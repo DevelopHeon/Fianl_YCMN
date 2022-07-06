@@ -24,6 +24,8 @@
 			<div id="dept4" class="collapse"></div>
 			<h4>연구부서&nbsp;<a data-toggle="collapse" data-target="#dept5"><i class="fa fa-plus-square"></i></a></h4>
 			<div id="dept5" class="collapse"></div>
+			<h4>연수중&nbsp;<a data-toggle="collapse" data-target="#dept6"><i class="fa fa-plus-square"></i></a></h4>
+			<div id="dept6" class="collapse"></div>
 		</div>
 		<div class="modal-footer" id="modalBtn">
 		</div>
@@ -44,6 +46,7 @@
 						var value3 = "";
 						var value4 = "";
 						var value5 = "";
+						var value6 = "";
 						$.each(list, function(i, obj){
 							if(obj.depName == '총무부서'){
 								value1 += "<div class='addressList'><input type='radio' name='checkTo' class='checkTo' value="+ obj.empName +">&nbsp;&nbsp;"
@@ -61,9 +64,13 @@
 								value4 += "<div class='addressList'><input type='radio' name='checkTo' class='checkTo' value="+ obj.empName +">&nbsp;&nbsp;"
 								  +   obj.empName + "/"+ obj.posName
 								  +   "<input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'></div>";
-							}else{
+							}else if(obj.depName == '연구부서'){
 								value5 += "<div class='addressList'><input type='radio' name='checkTo' class='checkTo' value="+ obj.empName +">&nbsp;&nbsp;"
 								  +   obj.empName + "/"+ obj.posName
+								  +   "<input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'></div>";
+							}else{
+								value6 += "<div class='addressList'><input type='radio' name='checkTo' class='checkTo' value="+ obj.empName +">&nbsp;&nbsp;"
+								  +   obj.empName + "/ 연수생"
 								  +   "<input type='hidden' class='form-control' value="+ obj.empNo +" name='empNo'></div>";
 							}
 						});
@@ -85,6 +92,7 @@
 						$("#dept3").html(value3);
 						$("#dept4").html(value4);
 						$("#dept5").html(value5);
+						$("#dept6").html(value6);
 						$("#modalBtn").html(insertVal);
 						
 					},error:function(){
