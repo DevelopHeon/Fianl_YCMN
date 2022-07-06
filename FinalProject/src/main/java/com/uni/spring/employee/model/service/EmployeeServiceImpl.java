@@ -212,21 +212,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public  ArrayList<TimeOffContent> selectTimeOffContent(int empNo, PageInfo pi) {
 		
 		//update해줌 -> 승인되었을때 (결재완료:C) 연차내역테이블 업데이트
-		int result = employeeDao.updateTimeOffContent(sqlSession);
-		
-		
-		if(result > 0) {
-			//잔여연차 계산
-			employeeDao.updateRemainNum(sqlSession, empNo);
-			//연차 개수 업데이트
-			employeeDao.updateTimeOffNum(sqlSession, empNo);
-			
-		}else{
-			//반려되었을때(반려 :R) 연차내역테이블 업데이트
-			employeeDao.updateRejectTimeOff(sqlSession);
-		}
+	      int result = employeeDao.updateTimeOffContent(sqlSession);
+	     
+	      if(result > 0) {
+	         //잔여연차 계산
+	         employeeDao.updateRemainNum(sqlSession, empNo);
+	         //연차 개수 업데이트
+	         employeeDao.updateTimeOffNum(sqlSession, empNo);
+	         
+	      }else{
+	         //반려되었을때(반려 :R) 연차내역테이블 업데이트
+	         employeeDao.updateRejectTimeOff(sqlSession, empNo);
+	      }
 
-		return employeeDao.selectTimeOffContent(sqlSession, empNo, pi);
+	      return employeeDao.selectTimeOffContent(sqlSession, empNo, pi);
+
+		
 	}
 
 	//현재 연차 페이지 수?
