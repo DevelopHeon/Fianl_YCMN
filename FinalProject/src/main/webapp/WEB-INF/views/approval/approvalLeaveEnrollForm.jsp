@@ -34,7 +34,8 @@
 					<hr>
 					<div class="row">
 						<!-- 전자결재 양식 시작 -->
-						<form:form action="insertLeaveApproval.do" method="post" 
+						<form:form action="insertLeaveApproval.do" method="post"
+						onsubmit="return approvalLvValidate();"
 						class="form-inline" modelAttribute="approval" enctype="multipart/form-data">
 							<div class="form-group" style="line-height:2em;">
 								<label for="depName">부서명 : </label>
@@ -118,8 +119,11 @@
 									
 									if(item == 'FE'){
 										$("#erAppBtn").removeAttr("disabled");
+										$('#leaveTotalDate').attr('readonly', true);
+										$('#leaveTotalDate').val('0.0');
 									}else{
 										$("#erAppBtn").attr("disabled", true);
+										$('#leaveTotalDate').removeAttr('readonly');
 									}
 								}
 							</script>
@@ -141,10 +145,8 @@
 								}
 							
 								$(function(){
-									
 									var $leaveInput = $("#leaveTotalDate");
 									
-										
 									$leaveInput.keyup(function(){
 										if($leaveInput.val().length > 0){
 											$.ajax({
@@ -193,6 +195,14 @@
 			</section>
 		</section>
 		<script>
+			function approvalLvValidate(){
+				var leaveTotalDate = /^[0-9]*$/;
+				if(!(leaveTotalDate.test($("#leaveTotalDate").val()))){
+					alert("총 휴가일수는 숫자만 입력이 가능합니다.");
+					return false;
+				}
+				return true;
+			}
 			// close 클릭시 이전화면으로 이동
 			$("#close").click(function(){
 				$(location).attr("href", "main.do");
