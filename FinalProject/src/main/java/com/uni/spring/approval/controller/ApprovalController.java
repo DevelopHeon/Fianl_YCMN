@@ -236,7 +236,7 @@ public class ApprovalController {
 	@RequestMapping("listInbox.do")
 	public String selectApprovalInboxList(@RequestParam(value="currentPage", required=false, defaultValue="1")
 	int currentPage, int userNo, Model model) {
-		// dto 생성하지 않고 map으로 받아서 화면에 전달
+		
 		Map<String, Object> appStatusCnt = (HashMap<String, Object>)approvalService.appStatusCnt(userNo);
 		
 		int listCount = approvalService.selectApprovalInboxListCnt(userNo);
@@ -355,12 +355,11 @@ public class ApprovalController {
 	
 	// 반려 처리 메소드
 	@RequestMapping("insertRejecter.do")
-	public ModelAndView insertRejecter(Approval approval, ModelAndView mv) {
+	public ModelAndView insertRejecter(Approval approval, int userNo, ModelAndView mv) {
 		
 		approvalService.insertRejecter(approval);
 		
-		mv.addObject("appNo", approval.getAppNo()).addObject("appKinds", approval.getAppKinds()).
-		setViewName("redirect:detailApproval.do");
+		mv.addObject("userNo", userNo).setViewName("redirect:listInbox.do");
 		return mv;
 	}
 	

@@ -17,7 +17,7 @@
 				<form action="" method="post" id="rejectForm" class="form-inline">
 					<input type="hidden" name="rejecter" value="${ loginUser.empName }" />
 					<input type="hidden" name="appNo" value="${ appMap.approval.appNo }"/>
-					<input type="hidden" name="appKinds" value="${ appMap.approval.appKinds }"/>
+					<input type="hidden" name="userNo" value="${ loginUser.empNo }"/>
 					<input type="hidden" id="first" name="firstApprovalDate" value="${ appMap.approval.firstApprovalDate }"/>
 					<input type="hidden" name="lastApprovalDate" value="${ appMap.approval.lastApprovalDate }"/>
 					<h4><b>* 반려 사유를 작성해주세요.</b></h4>
