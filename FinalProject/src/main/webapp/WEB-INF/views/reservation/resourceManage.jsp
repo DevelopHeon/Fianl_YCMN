@@ -46,6 +46,11 @@
                 </tr>
               </thead>
               <tbody>
+              <c:if test="${ empty roomList }">
+					<tr>
+						<td colspan="4">추가된 자원이 없습니다.</td>
+					</tr>
+				</c:if>
                 <c:forEach items="${ roomList }" var="Room">
                   <tr>
                     <td><input type="radio" name="rscNo1" value="${ Room.rscNo }"></td>
@@ -76,6 +81,11 @@
                 </tr>
               </thead>
               <tbody>
+                <c:if test="${ empty supplyList }">
+					<tr>
+						<td colspan="4">추가된 자원이 없습니다.</td>
+					</tr>
+				</c:if>
                 <c:forEach items="${ supplyList }" var="supply">
                   <tr>
                     <td><input type="radio" name="rscNo2" value="${ supply.rscNo }"></td>
