@@ -263,9 +263,15 @@
       <div class="innerOuter off">
             <div id="empOnOff">
               <label for="empOnOff">상태 </label><br>
-              <input type="radio" name="empOnOff" value="O" onclick="changeOnOff(1);" <c:if test ="${loginUser.empOnOff eq 'O'}">checked</c:if>><span class="badge bg-success">온라인</span>&nbsp;
-              <input type="radio" name="empOnOff" value="E" onclick="changeOnOff(2);" <c:if test ="${loginUser.empOnOff eq 'E'}">checked</c:if>><span class="badge bg-primary">자리비움</span>&nbsp;
-              <input type="radio" name="empOnOff" value="F" onclick="changeOnOff(3);" <c:if test ="${loginUser.empOnOff eq 'F'}">checked</c:if>><span class="badge">오프라인</span>&nbsp;
+              	<div>
+              		<input type="radio" name="empOnOff" value="O" onclick="changeOnOff(1);" <c:if test ="${loginUser.empOnOff eq 'O'}">checked</c:if>><p class="badge bg-success">온라인</p>
+			  	</div>
+			  	<div>
+             		<input type="radio" name="empOnOff" value="E" onclick="changeOnOff(2);" <c:if test ="${loginUser.empOnOff eq 'E'}">checked</c:if>><p class="badge bg-primary">자리비움</p>&nbsp;
+			  	</div>
+			  	<div>	
+              		<input type="radio" name="empOnOff" value="F" onclick="changeOnOff(3);" <c:if test ="${loginUser.empOnOff eq 'F'}">checked</c:if>><p class="badge">오프라인</p>&nbsp;
+           	  	</div>
            </div>
       </div>
       <br>
