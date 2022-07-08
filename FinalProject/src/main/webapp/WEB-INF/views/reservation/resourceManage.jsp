@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -112,9 +111,11 @@
         <div class="modal-body">
           <input type="hidden" id="rcNo" name="rcNo" value="1">
           <label for="rscName" class="mr-sm-2">회의실 명</label>
-          <input type="text" class="form-control mb-2 mr-sm-2" placeholder="회의실 명을 입력하세요. (예시-A동 123호실)" id="rscName" name="rscName"><br>
+          <input type="text" class="form-control mb-2 mr-sm-2" placeholder="회의실 명을 입력하세요. (예시-A동 123호실)" id="rscName" name="rscName"
+          pattern=".{1,15}" title="회의실 명은 필수 입력값입니다. 15자 이내로 작성해주세요." required><br>
           <label for="rscEtc" class="mr-sm-2">회의실 정보</label>
-          <input type="text" class="form-control mb-2 mr-sm-2" placeholder="회의실 정보를 입력하세요." id="rscEtc" name="rscEtc">
+          <input type="text" class="form-control mb-2 mr-sm-2" placeholder="회의실 정보를 입력하세요." id="rscEtc" name="rscEtc"
+          pattern=".{1,15}" title="15자 이내로 작성해주세요.">
         </div>
         <!-- Modal footer -->
         <div class="modal-footer">
@@ -139,11 +140,12 @@
         <div class="modal-body">
           <input type="hidden" class="form-control mb-2 mr-sm-2" id="rscNo1" name="rscNo" readonly>
           <label for="rscName" class="mr-sm-2">회의실 명</label>
-          <input type="text" class="form-control mb-2 mr-sm-2" id="rscName1" name="rscName"><br>
+          <input type="text" class="form-control mb-2 mr-sm-2" id="rscName1" name="rscName" 
+          pattern=".{1,15}" title="회의 명은 필수 입력값입니다. 15자 이내로 작성해주세요." required><br>
           <label for="rscEtc" class="mr-sm-2">회의실 정보</label>
-          <input type="text" class="form-control mb-2 mr-sm-2" id="rscEtc1" name="rscEtc"><br>
+          <input type="text" class="form-control mb-2 mr-sm-2" id="rscEtc1" name="rscEtc"
+          pattern=".{1,15}" title="15자 이내로 작성해주세요."><br>
           <label for="status" class="mr-sm-2">회의실 상태</label><br>
-          <!-- <input type="text" class="form-control mb-2 mr-sm-2" placeholder="회의실 정보를 입력하세요." id="status1" name="status"><br> -->
           <select id="status1" name="status" class="form-control mb-2 mr-sm-2">
             <option value="Y" <c:if test="${status eq 'Y'}">selected</c:if> >사용 가능</option>
             <option value="S" <c:if test="${status eq 'S'}">selected</c:if> >사용 중지</option>
@@ -204,9 +206,11 @@
         <div class="modal-body">
           <input type="hidden" id="rcNo" name="rcNo" value="2">
           <label for="rscName" class="mr-sm-2">비품 명</label>
-          <input type="text" class="form-control mb-2 mr-sm-2" placeholder="비품 명을 입력하세요." id="rscName" name="rscName"><br>
+          <input type="text" class="form-control mb-2 mr-sm-2" placeholder="비품 명을 입력하세요." id="rscName" name="rscName" 
+          pattern=".{1,15}" title="비품 명은 필수 입력값입니다. 15자 이내로 작성해주세요." required><br>
           <label for="rscEtc" class="mr-sm-2">비품 정보</label>
-          <input type="text" class="form-control mb-2 mr-sm-2" placeholder="비품 정보를 입력하세요." id="rscEtc" name="rscEtc">
+          <input type="text" class="form-control mb-2 mr-sm-2" placeholder="비품 정보를 입력하세요." id="rscEtc" name="rscEtc"
+          pattern=".{1,15}" title="15자 이내로 작성해주세요.">
         </div>
         <!-- Modal footer -->
         <div class="modal-footer">
@@ -231,9 +235,11 @@
         <div class="modal-body">
           <input type="hidden" class="form-control mb-2 mr-sm-2" id="rscNo2" name="rscNo" readonly>
           <label for="rscName" class="mr-sm-2">비품 명</label>
-          <input type="text" class="form-control mb-2 mr-sm-2" id="rscName2" name="rscName"><br>
+          <input type="text" class="form-control mb-2 mr-sm-2" id="rscName2" name="rscName" 
+          pattern=".{1,15}" title="비품 명은 필수 입력값입니다. 15자 이내로 작성해주세요." required><br>
           <label for="rscEtc" class="mr-sm-2">비품 정보</label>
-          <input type="text" class="form-control mb-2 mr-sm-2" id="rscEtc2" name="rscEtc"><br>
+          <input type="text" class="form-control mb-2 mr-sm-2" id="rscEtc2" name="rscEtc"
+          pattern=".{1,15}" title="15자 이내로 작성해주세요."><br>
           <label for="status" class="mr-sm-2">비품 상태</label><br>
           <select id="status2" name="status" class="form-control mb-2 mr-sm-2">
             <option value="Y" <c:if test="${status eq 'Y'}">selected</c:if> >사용 가능</option>

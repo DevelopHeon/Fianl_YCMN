@@ -106,4 +106,8 @@ public class ReservationServiceImpl implements ReservationService {
 			throw new CommException();
 		}
 	}
+	@Override
+	public int rscListCount() {
+		return reservationDao.rscListCount(sqlSession);
+	}
 }
