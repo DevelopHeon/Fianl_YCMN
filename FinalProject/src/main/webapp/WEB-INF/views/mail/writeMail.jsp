@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>mail</title>
+<title>메일작성</title>
 
   <!-- Favicons -->
   <link href="img/favicon.png" rel="icon">

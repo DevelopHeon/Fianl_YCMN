@@ -13,7 +13,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>myPage</title>
+<title>내 근태현황</title>
 
 	<!-- Favicons -->
 	<link href="resources/img/favicon.png" rel="icon">

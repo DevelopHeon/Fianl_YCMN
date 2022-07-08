@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>mail</title>
+<title>메일 답장</title>
 
   <!-- Favicons -->
   <link href="img/favicon.png" rel="icon">

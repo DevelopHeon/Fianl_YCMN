@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Dashio - Bootstrap Admin Template</title>
+<title>받은메일</title>
 
   <!-- Favicons -->
   <link href="img/favicon.png" rel="icon">

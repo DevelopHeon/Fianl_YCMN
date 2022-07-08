@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>사원 추가</title>
 </head>
 <body>
 	<div class="modal-dialog modal-sm">

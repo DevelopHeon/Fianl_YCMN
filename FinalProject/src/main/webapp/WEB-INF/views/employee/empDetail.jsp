@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>주소록</title>
+<title>주소록_사원상세</title>
 
   <!-- Favicons -->
   <link href="img/favicon.png" rel="icon">
