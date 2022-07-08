@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <jsp:useBean id="date" class="java.util.Date" />
-<fmt:formatDate var="nowTime" value="${date}" pattern="YYYY-MM-dd'T'HH:mm:ss" />
+<fmt:formatDate var="nowTime" value="${date}" pattern="YYYY-MM-dd'T'HH:mm" />
 <!DOCTYPE html>
 <html>
 
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
           allDaySlot: false,
           select: function (obj) { // 캘린더에서 드래그로 이벤트를 생성
             if ("${ listCount }" == 0){
-              alert('예약할 자원이 없습니다. \n 관리자가 예약할 자원을 추가한 후 이용해 주세요.');
+              alert('예약할 자원이 없습니다.\n관리자가 예약할 자원을 추가한 후 이용해 주세요.');
             }else if ("${ listCount }" != 0 && obj.start < now){
               alert('현재 날짜보다 이전으로 예약할 수 없습니다.');
             }else if ("${ listCount }" != 0 && obj.start > now){

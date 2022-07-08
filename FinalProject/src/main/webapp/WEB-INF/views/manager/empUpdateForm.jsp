@@ -55,13 +55,15 @@
               <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label">이메일</label>
                 <div class="col-sm-5">
-                  <input type="email" name="empEmail" value="${ e.empEmail }" pattern="^[a-zA-Z0-9]{1}[a-zA-Z0-9\-_]+@[a-z0-9]{1}[a-z0-9\-]+[a-z0-9]{1}\.(([a-z]{1}[a-z.]+[a-z]{1}[a-z]+)|([a-z]+))$" title="예시) aaa@aa.aa 형식으로 작성해주세요." class="form-control">
+                  <input type="email" name="empEmail" value="${ e.empEmail }" 
+                  pattern="^[a-zA-Z0-9]{1}[a-zA-Z0-9\-_]+@[a-z0-9]{1}[a-z0-9\-]+[a-z0-9]{1}\.(([a-z]{1}[a-z.]+[a-z]{1}[a-z]+)|([a-z]+))$" title="예시) aaa@aaa.aa 형식으로 작성해주세요." class="form-control">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label">휴대폰</label>
                 <div class="col-sm-5">
-                  <input type="text" name="empPhone" value="${ e.empPhone }" pattern="^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$" title="예시) 01012345678 형식으로 작성해주세요." maxLength='11' class="form-control">
+                  <input type="text" name="empPhone" value="${ e.empPhone }" 
+                  pattern="^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$" title="예시) 01012345678 형식으로 작성해주세요." maxLength='11' class="form-control">
                 </div>
               </div>
               <div class="form-group">
@@ -112,13 +114,14 @@
               <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label">내선 번호</label>
                 <div class="col-sm-5">
-                  <input type="text" placeholder=" " name="officeTel" value="${ e.officeTel }" class="form-control">
+                  <input type="text" placeholder="내선 번호를 입력해 주세요." name="officeTel" value="${ e.officeTel }" 
+                  pattern="^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$" title="예시) 01012345678 형식으로 작성해주세요." maxLength='11' class="form-control">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label">위치</label>
                 <div class="col-sm-5">
-                  <input type="text" placeholder=" " name="empLoc" pattern=".{0,15}" title="15자 이내로 작성해주세요." value="${ e.empLoc }" class="form-control">
+                  <input type="text" placeholder="사무실 위치를 입력해 주세요." name="empLoc" pattern=".{0,15}" title="15자 이내로 작성해주세요." value="${ e.empLoc }" class="form-control">
                 </div>
               </div>
 
@@ -196,13 +199,13 @@
               <div class="row mt">
                 <label class="col-sm-2 col-sm-2 control-label">채용 구분</label>
                 <div class="col-sm-5">
-                  <input type="text" placeholder=" " name="hr.hireCategory" pattern=".{0,10}" title="10자 이내로 작성해주세요." value="${ e.hr.hireCategory }" class="form-control">
+                  <input type="text" placeholder="채용 구분을 입력해 주세요." name="hr.hireCategory" pattern=".{0,10}" title="10자 이내로 작성해주세요." value="${ e.hr.hireCategory }" class="form-control">
                 </div>
               </div>
               <div class="row mt">
                 <label class="col-sm-2 col-sm-2 control-label">급여 구분</label>
                 <div class="col-sm-5">
-                  <input type="number" placeholder=" " min="0" max="9999999999" name="hr.sarary" value="${ e.hr.sarary }" class="form-control">
+                  <input type="number" placeholder="급여 구분을 입력해 주세요." min="0" max="9999999999" name="hr.sarary" value="${ e.hr.sarary }" class="form-control">
                 </div>
               </div>
 
@@ -250,14 +253,14 @@
               <div class="row mt">
                 <label class="col-sm-2 col-sm-2 control-label">인사 평가</label>
                 <div class="col-sm-5">
-                  <input type="text" placeholder=" " name="hr.personnelEval" pattern=".{0,3}" title="3자 이내로 작성해주세요." value="${ e.hr.personnelEval }" class="form-control">
+                  <input type="text" placeholder="인사 평가를 입력해 주세요." name="hr.personnelEval" pattern=".{0,3}" title="3자 이내로 작성해주세요." value="${ e.hr.personnelEval }" class="form-control">
                 </div>
               </div>
 
               <div class="row mt">
                 <label class="col-sm-2 col-sm-2 control-label">퇴사 사유</label>
                 <div class="col-sm-5">
-                  <input type="text" placeholder=" " name="hr.entCon" pattern=".{0,15}" title="15자 이내로 작성해주세요." value="${ e.hr.entCon }" class="form-control">
+                  <input type="text" placeholder="퇴사 사유를 입력해 주세요." name="hr.entCon" pattern=".{0,15}" title="15자 이내로 작성해주세요." value="${ e.hr.entCon }" class="form-control">
                 </div>
               </div>
 

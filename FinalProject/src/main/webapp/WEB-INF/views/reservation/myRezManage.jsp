@@ -48,13 +48,18 @@
               </thead>
 
               <tbody>
+              	<c:if test="${ empty myRezList }">
+					<tr>
+						<td colspan="4">추가된 예약이 없습니다.</td>
+					</tr>
+				</c:if>
                 <c:forEach items="${ myRezList }" var="rez">
                   <fmt:parseDate var="rezTime" value="${rez.startTime}" pattern="YYYY-MM-dd HH:mm:ss" />
                   <tr>
-                    <td id="rscName" class="${ rez.rscName }">${ rez.rscName }</td>
-                    <td id="rezTitle" class="${ rez.rezTitle }">${ rez.rezTitle }</td>
+                    <td id="rscName">${ rez.rscName }</td>
+                    <td id="rezTitle">${ rez.rezTitle }</td>
                     <td id="rezTimee">${ rez.startTime } ~ ${ rez.endTime }</td>
-                    <td id="status" class="${ rez.status }">
+                    <td id="status">
                       <form action="myRezManage.do" method="post">
                         <!-- 반납/취소 -->
                         <input type="hidden" id="rezNo" name="rezNo" value="${ rez.rezNo }">

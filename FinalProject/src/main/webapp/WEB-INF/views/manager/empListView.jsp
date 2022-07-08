@@ -72,16 +72,23 @@
                   </tr>
                 </thead>
                 <tbody>
+				<c:if test="${ empty list }">
+					<tr>
+						<td colspan="8">추가된 임직원이 없습니다.</td>
+					</tr>
+				</c:if>
                   <c:forEach items="${ list }" var="e">
                     <tr>
-                      <td>${ e.empNo }</td>
-                      <td id="empName" style="cursor: pointer;">${ e.empName }</td>
-                      <td>${ e.empId }</td>
-                      <td>${ e.posName }</td><!-- 직위 -->
-                      <td>${ e.depName }</td><!-- 직무 -->
-                      <td>${ e.empEmail }</td>
-                      <td>${ e.empPhone }</td>
-                      <td>${ e.status }</td>
+						<c:if test="${ !empty list }">
+	                      <td>${ e.empNo }</td>
+	                      <td id="empName" style="cursor: pointer;">${ e.empName }</td>
+	                      <td>${ e.empId }</td>
+	                      <td>${ e.posName }</td><!-- 직위 -->
+	                      <td>${ e.depName }</td><!-- 직무 -->
+	                      <td>${ e.empEmail }</td>
+	                      <td>${ e.empPhone }</td>
+	                      <td>${ e.status }</td>
+                      </c:if>
                     </tr>
                   </c:forEach>
                 </tbody>

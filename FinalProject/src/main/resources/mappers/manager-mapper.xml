@@ -183,6 +183,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM 		EMPLOYEE A
 		LEFT JOIN 	JOB_POSITION B ON (A.POS_NO = B.POS_NO)
 		LEFT JOIN 	DEPARTMENT C ON(A.DEP_NO = C.DEP_NO)
+		WHERE		A.EMP_ID != 'admin'
 		ORDER BY 	EMP_NO ASC
 	</select>
 	
