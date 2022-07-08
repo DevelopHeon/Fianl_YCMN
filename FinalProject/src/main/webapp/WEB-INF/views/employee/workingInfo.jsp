@@ -15,14 +15,8 @@
 <meta charset="UTF-8">
 <title>내 근태현황</title>
 
-	<!-- Favicons -->
-	<link href="resources/img/favicon.png" rel="icon">
-	<link href="resources/img/apple-touch-icon.png" rel="apple-touch-icon">
 	  <!-- 부트스트랩 아이콘 CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-  <!-- Favicons -->
-  <link href="resources/img/favicon.png" rel="icon">
-  <link href="resources/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Bootstrap core CSS -->
   <link href="resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
