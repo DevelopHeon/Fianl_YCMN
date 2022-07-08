@@ -40,7 +40,7 @@ public class Employee {
    private String officeTel;
    
    @NotBlank(message="전화번호는 필수 입력 값입니다.")
-   @Size(max=30, message="전화번호는 30자 이내만 가능합니다.")
+   @Size(max=20, message="전화번호는 20자 이내만 가능합니다.")
    @Pattern(regexp="^[0-9]*$", message="전화번호는 숫자만 입력이 가능합니다.")
    private String empPhone;
    

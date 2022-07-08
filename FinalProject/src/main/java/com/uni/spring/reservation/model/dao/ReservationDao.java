@@ -67,4 +67,7 @@ public class ReservationDao {
 	public int cancleReserve(SqlSessionTemplate sqlSession, int rezNo) {
 		return sqlSession.update("reserveMapper.cancleReserve", rezNo);
 	}
+	public int rscListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("reserveMapper.rscListCount");
+	}
 }

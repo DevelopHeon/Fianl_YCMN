@@ -33,7 +33,10 @@ public class ReservationController {
 	private final ReservationService reservationService;
 	// 예약 메인 페이지로 이동
 	@RequestMapping("reservMain.do")
-	public String reservMain() {
+	public String reservMain(Model model) {
+		int listCount = reservationService.rscListCount();
+		log.info("예약 자원 수 : "+listCount);
+		model.addAttribute("listCount", listCount);
 		return "reservation/reservationMain";
 	}
 

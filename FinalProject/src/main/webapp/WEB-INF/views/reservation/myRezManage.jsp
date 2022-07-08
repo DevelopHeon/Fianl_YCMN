@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<jsp:useBean id="date" class="java.util.Date" />
+<fmt:formatDate var="now" value="${date}" pattern="YYYY-MM-dd HH:mm:ss" />
 <!DOCTYPE html>
 <html>
 
@@ -26,9 +28,6 @@
 
 <body>
 <jsp:include page="../common/menubar.jsp" />
-
-<jsp:useBean id="date" class="java.util.Date" />
-<fmt:formatDate var="now" value="${date}" pattern="YYYY-MM-dd HH:mm:ss" />
 <section id="main-content">
   <section class="wrapper" style="margin:0">
     <h3><i class="fa fa-angle-right"></i> 내 예약 관리</h3>
