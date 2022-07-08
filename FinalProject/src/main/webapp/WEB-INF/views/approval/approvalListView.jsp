@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>결재 신청</title>
+  <link rel="icon" type="image/png" href="resources/img/favicon.ico">
 </head>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>
