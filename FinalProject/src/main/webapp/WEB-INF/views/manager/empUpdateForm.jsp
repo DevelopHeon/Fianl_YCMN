@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<jsp:useBean id="date" class="java.util.Date" />
+<fmt:formatDate var="now" value="${date}" pattern="YYYY-MM-dd" />
 <!DOCTYPE html>
 <html>
 
@@ -41,7 +43,7 @@
               <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label">이름</label>
                 <div class="col-sm-5">
-                  <input type="text" name="empName" value="${ e.empName }" class="form-control">
+                  <input type="text" name="empName" value="${ e.empName }" pattern=".{1,6}" required title="이름은 필수 입력값입니다. 6자 이내로 작성해주세요." class="form-control">
                 </div>
               </div>
               <div class="form-group">
@@ -53,13 +55,13 @@
               <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label">이메일</label>
                 <div class="col-sm-5">
-                  <input type="email" name="empEmail" value="${ e.empEmail }" class="form-control">
+                  <input type="email" name="empEmail" value="${ e.empEmail }" pattern="^[a-zA-Z0-9]{1}[a-zA-Z0-9\-_]+@[a-z0-9]{1}[a-z0-9\-]+[a-z0-9]{1}\.(([a-z]{1}[a-z.]+[a-z]{1}[a-z]+)|([a-z]+))$" title="예시) aaa@aa.aa 형식으로 작성해주세요." class="form-control">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label">휴대폰</label>
                 <div class="col-sm-5">
-                  <input type="text" name="empPhone" value="${ e.empPhone }" maxLength='11' class="form-control">
+                  <input type="text" name="empPhone" value="${ e.empPhone }" pattern="^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$" title="예시) 01012345678 형식으로 작성해주세요." maxLength='11' class="form-control">
                 </div>
               </div>
               <div class="form-group">
@@ -116,7 +118,7 @@
               <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label">위치</label>
                 <div class="col-sm-5">
-                  <input type="text" placeholder=" " name="empLoc" value="${ e.empLoc }" class="form-control">
+                  <input type="text" placeholder=" " name="empLoc" pattern=".{0,15}" title="15자 이내로 작성해주세요." value="${ e.empLoc }" class="form-control">
                 </div>
               </div>
 
@@ -124,11 +126,11 @@
                 <label class="col-sm-2 col-sm-2 control-label">직원 상태</label>
                 <div class="col-sm-5">
 
-                  <input type="radio" name="status" id="statusYes" value="Y"><label for="Yes">&nbsp;정상</label>
+                  <input type="radio" name="status" id="statusYes" value="Y"><label for="statusYes">&nbsp;정상</label>
                   &emsp;&emsp;
-                  <input type="radio" name="status" id="statusNo" value="N"><label for="No">&nbsp;대기</label>
+                  <input type="radio" name="status" id="statusNo" value="N"><label for="statusNo">&nbsp;대기</label>
                   &emsp;&emsp;
-                  <input type="radio" name="status" id="statusStop" value="S"><label for="Stop">&nbsp;중지</label>
+                  <input type="radio" name="status" id="statusStop" value="S"><label for="statusStop">&nbsp;중지</label>
                   &emsp;&emsp;
                   <script>
                     /* 상태 값에 따라 checked 옵션 설정 */
@@ -159,14 +161,14 @@
               <div class="row mt">
                 <label class="col-sm-2 col-sm-2 control-label">입사일</label>
                 <div class="col-sm-5">
-                  <input type="date" placeholder=" " name="hr.hireDate" value="${ e.hr.hireDate }" class="form-control">
+                  <input type="date" placeholder=" " name="hr.hireDate" value="${ e.hr.hireDate }" class="form-control" readonly>
                 </div>
               </div>
 
               <div class="row mt">
                 <label class="col-sm-2 col-sm-2 control-label">생년월일</label>
                 <div class="col-sm-5">
-                  <input type="date" placeholder=" " name="hr.birthDate" value="${ e.hr.birthDate }" class="form-control">
+                  <input type="date" placeholder=" " name="hr.birthDate" value="${ e.hr.birthDate }" min="1900-01-01" max="${now}" class="form-control">
                 </div>
 
               </div>
@@ -194,13 +196,13 @@
               <div class="row mt">
                 <label class="col-sm-2 col-sm-2 control-label">채용 구분</label>
                 <div class="col-sm-5">
-                  <input type="text" placeholder=" " name="hr.hireCategory" value="${ e.hr.hireCategory }" class="form-control">
+                  <input type="text" placeholder=" " name="hr.hireCategory" pattern=".{0,10}" title="10자 이내로 작성해주세요." value="${ e.hr.hireCategory }" class="form-control">
                 </div>
               </div>
               <div class="row mt">
                 <label class="col-sm-2 col-sm-2 control-label">급여 구분</label>
                 <div class="col-sm-5">
-                  <input type="text" placeholder=" " name="hr.sarary" value="${ e.hr.sarary }" class="form-control">
+                  <input type="number" placeholder=" " min="0" max="9999999999" name="hr.sarary" value="${ e.hr.sarary }" class="form-control">
                 </div>
               </div>
 
@@ -248,14 +250,14 @@
               <div class="row mt">
                 <label class="col-sm-2 col-sm-2 control-label">인사 평가</label>
                 <div class="col-sm-5">
-                  <input type="text" placeholder=" " name="hr.personnelEval" value="${ e.hr.personnelEval }" class="form-control">
+                  <input type="text" placeholder=" " name="hr.personnelEval" pattern=".{0,3}" title="3자 이내로 작성해주세요." value="${ e.hr.personnelEval }" class="form-control">
                 </div>
               </div>
 
               <div class="row mt">
                 <label class="col-sm-2 col-sm-2 control-label">퇴사 사유</label>
                 <div class="col-sm-5">
-                  <input type="text" placeholder=" " name="hr.entCon" value="${ e.hr.entCon }" class="form-control">
+                  <input type="text" placeholder=" " name="hr.entCon" pattern=".{0,15}" title="15자 이내로 작성해주세요." value="${ e.hr.entCon }" class="form-control">
                 </div>
               </div>
 
@@ -273,21 +275,21 @@
       </form>
       <!-- /row -->
       <script>
-        $('#submitBtn').click(function () {
-            var posNo = $('select[name="posNo"]').val();
-            var depNo = $('select[name="depNo"]').val();
-            
-          if (posNo == null || posNo == 0) {
-            alert('직위를 설정해 주세요');
-            $('select[name="posNo"]').focus();
-            return false;
-          } else if (depNo == null || depNo == 0) {
-            alert('부서를 설정해 주세요');
-            $('select[name="depNo"]').focus();
-            return false;
-          }
-          return true;
-        });
+		$('#submitBtn').click(function () {
+		    var posNo = $('select[name="posNo"]').val();
+		    var depNo = $('select[name="depNo"]').val();
+		    
+		  if (posNo == null || posNo == 0) {
+		    alert('직위를 설정해 주세요');
+		    $('select[name="posNo"]').focus();
+		    return false;
+		  } else if (depNo == null || depNo == 0) {
+		    alert('부서를 설정해 주세요');
+		    $('select[name="depNo"]').focus();
+		    return false;
+		  }
+		  return true;
+		});
       </script>
     </section>
     <!-- /wrapper -->

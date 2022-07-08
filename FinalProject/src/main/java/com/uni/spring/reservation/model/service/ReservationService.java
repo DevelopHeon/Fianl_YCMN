@@ -32,4 +32,6 @@ public interface ReservationService {
 	void cancleReserve(int rezNo); // 예약 취소
 
 	int selectListCount(int empNo); // 페이징 용
+
+	int rscListCount(); // 자원 수
 }

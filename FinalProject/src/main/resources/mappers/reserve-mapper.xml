@@ -106,4 +106,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM		RESERVATION
 		WHERE		REZ_WRITER = #{empNo}
 	</select>
+	<!-- 자원 수 -->
+	<select id="rscListCount" resultType="_int">
+		SELECT		COUNT(*)
+		FROM		RESOURCE_ENTERPRISE
+		WHERE		STATUS = 'Y'
+	</select>
 </mapper>
