@@ -196,7 +196,7 @@
 		</section>
 		<script>
 			function approvalLvValidate(){
-				var leaveTotalDate = /^[0-9]*$/;
+				var leaveTotalDate = /^[0-9].*$/;
 				if(!(leaveTotalDate.test($("#leaveTotalDate").val()))){
 					alert("총 휴가일수는 숫자만 입력이 가능합니다.");
 					return false;
