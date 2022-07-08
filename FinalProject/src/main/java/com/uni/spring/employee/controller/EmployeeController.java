@@ -370,16 +370,18 @@ public class EmployeeController {
 		int pageLimit = 10;
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, listLimit);
 		
-		//연차개수 조회
-		TimeOff timeOff = employeeService.selectTimeOff(empNo);
-		
 		// 연차내역 조회
 		//연차내역 조회하면서 승인된 결재가 있으면 쿼리(update)
 		ArrayList<TimeOffContent> timeOffList = employeeService.selectTimeOffContent(empNo, pi);
 		
+		//연차개수 조회
+		TimeOff timeOff = employeeService.selectTimeOff(empNo);
+		
 		model.addAttribute("timeOff", timeOff); //연차개수
 		model.addAttribute("timeOffList", timeOffList);//연차내역
 		model.addAttribute("pi", pi);//페이징
+		
+
 		
 		return "employee/empTimeOff";
 	}
