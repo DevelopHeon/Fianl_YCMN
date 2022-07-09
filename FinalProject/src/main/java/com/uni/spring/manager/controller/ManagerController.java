@@ -37,7 +37,7 @@ import com.uni.spring.employee.model.dto.Department;
 import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.JobPosition;
 import com.uni.spring.hr.model.dto.Hr;
-import com.uni.spring.manager.model.dto.Product;
+import com.uni.spring.manager.model.dto.ChartData;
 import com.uni.spring.manager.model.dto.Search;
 import com.uni.spring.manager.model.service.ManagerService;
 
@@ -46,7 +46,6 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Controller
-/* @RequestMapping("/manager") */
 public class ManagerController {
 	private static final Logger log = (Logger) LoggerFactory.getLogger(ManagerController.class);
 	private final ManagerService ManagerService;
@@ -54,9 +53,9 @@ public class ManagerController {
 	// 인사관리 메인 페이지로 이동
 	// 사원 전체 정보를 리스트로 조회함
 	@RequestMapping("listEmp.do")
-	public String selectList(Model model,
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
-			@RequestParam(value = "find", required = false, defaultValue = "empName") String find // 검색 분류
+	public String selectList(Model model
+			, @RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage
+			, @RequestParam(value = "find", required = false, defaultValue = "empName") String find // 검색 분류
 			, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword // 검색어
 			, HttpSession session) {
 		
@@ -238,18 +237,28 @@ public class ManagerController {
 	
 	// 통계 페이지로 이동
     @RequestMapping("enterpriseChart.do")
-    public String enterpriseChart() {
+    public String enterpriseChart(Model model) {
+    	
+    	String empCount = ManagerService.getEmpCount(); // 총 인원수
+    	String workingTime = ManagerService.getEmpWorkingtime(); // 이번달 출근 시간
+    	
+    	log.info("empCount : "+empCount);
+    	log.info("workingTime : "+workingTime);
+    	
+    	model.addAttribute("empCount", empCount);
+    	model.addAttribute("workingTime", workingTime);
+    	
         return "manager/enterpriseChart";
     }
     
+    // 부서별 인원수 차트
 	@ResponseBody
 	@RequestMapping("Chart1.do")
 	public JSONArray enterpriseChart12() {
-		ArrayList<Product> rscList = ManagerService.getChartList();
-		System.out.println("rscList asd"+rscList); 
-        JSONArray jsonArr = new JSONArray();
+		ArrayList<ChartData> chartList = ManagerService.getDeptList();
+		JSONArray jsonArr = new JSONArray();
         
-        for (Product p : rscList) {
+        for (ChartData p : chartList) {
         	JSONObject jsonObj = new JSONObject();
 			jsonObj.put("name", p.getName());
 			jsonObj.put("value", p.getValue());
@@ -258,19 +267,40 @@ public class ManagerController {
 		System.out.println("jsonArr : "+jsonArr);
 		return jsonArr;
 	}
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+	
+	// 이번 달 결재 사용량 차트
+	@ResponseBody
+	@RequestMapping("Chart2.do")
+	public JSONArray enterpriseChart2() {
+		ArrayList<ChartData> chartList = ManagerService.chartApprovalList();
+        JSONArray jsonArr = new JSONArray();
+        
+        for (ChartData p : chartList) {
+        	JSONObject jsonObj = new JSONObject();
+			jsonObj.put("name", p.getName());
+			jsonObj.put("value", p.getValue());
+			jsonArr.add(jsonObj);
+		}
+		System.out.println("jsonArr : "+jsonArr);
+		return jsonArr;
+	}
+	
+	// 직급 별 급여 평균 차트
+	@ResponseBody
+	@RequestMapping("Chart3.do")
+	public JSONArray Chart3() {
+		ArrayList<ChartData> chartList = ManagerService.posSararyAVGList();
+        JSONArray jsonArr = new JSONArray();
+        
+        for (ChartData p : chartList) {
+        	JSONObject jsonObj = new JSONObject();
+			jsonObj.put("name", p.getName());
+			jsonObj.put("value", p.getValue());
+			jsonArr.add(jsonObj);
+		}
+		System.out.println("jsonArr : "+jsonArr);
+		return jsonArr;
+	}
     
 	// 조직도 페이지로 이동
     @RequestMapping("organizationChart.do")
@@ -293,9 +323,8 @@ public class ManagerController {
 	// 모달창에 선택한 직위 띄워주는 용도
 	@ResponseBody
 	@RequestMapping(value="selectPos.do")
-	public JSONObject selectPos1(int posNo){
+	public JSONObject selectPos(int posNo){
 		ArrayList<JobPosition> posList = ManagerService.getPosList();
-		
 		System.out.println("selectPos.do > posNo : "+posNo);
 		
 		JobPosition selectPos = null;
