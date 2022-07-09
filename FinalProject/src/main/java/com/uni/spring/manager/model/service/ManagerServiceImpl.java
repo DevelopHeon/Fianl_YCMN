@@ -13,7 +13,7 @@ import com.uni.spring.employee.model.dto.Employee;
 import com.uni.spring.employee.model.dto.JobPosition;
 import com.uni.spring.hr.model.dto.Hr;
 import com.uni.spring.manager.model.dao.ManagerDao;
-import com.uni.spring.manager.model.dto.Product;
+import com.uni.spring.manager.model.dto.ChartData;
 import com.uni.spring.manager.model.dto.Search;
 
 import lombok.RequiredArgsConstructor;
@@ -141,8 +141,28 @@ public class ManagerServiceImpl implements ManagerService {
 	}
 
 	@Override
-	public ArrayList<Product> getChartList() {
-		return (ArrayList)managerDao.getChartList(sqlSession);
+	public ArrayList<ChartData> getDeptList() {
+		return (ArrayList)managerDao.getDeptList(sqlSession);
+	}
+
+	@Override
+	public ArrayList<ChartData> chartApprovalList() {
+		return (ArrayList)managerDao.chartApprovalList(sqlSession);
+	}
+
+	@Override
+	public ArrayList<ChartData> posSararyAVGList() {
+		return (ArrayList)managerDao.posSararyAVGList(sqlSession);
+	}
+
+	@Override
+	public String getEmpCount() {
+		return managerDao.getEmpCount(sqlSession);
+	}
+
+	@Override
+	public String getEmpWorkingtime() {
+		return managerDao.getEmpWorkingtime(sqlSession);
 	}
 	
 }
