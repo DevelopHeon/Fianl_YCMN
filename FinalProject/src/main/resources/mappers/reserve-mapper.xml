@@ -112,4 +112,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM		RESOURCE_ENTERPRISE
 		WHERE		STATUS = 'Y'
 	</select>
+	<!-- 자원 예약 가능 여부 -->
+	<select id="rscCheck" parameterType="HashMap" resultType="_int">
+	<![CDATA[  
+		SELECT COUNT(REZ_NO)
+  		FROM RESERVATION
+ 		WHERE RSC_NO = #{rscNo} AND STATUS = 'Y'
+   		AND TO_CHAR(END_TIME, 'YYYY-MM-DD HH24:MI:SS') > REPLACE(#{startTime},'T',' ')
+   		AND TO_CHAR(START_TIME, 'YYYY-MM-DD HH24:MI:SS') < REPLACE(#{endTime},'T',' ')
+		]]> 
+	</select>
 </mapper>

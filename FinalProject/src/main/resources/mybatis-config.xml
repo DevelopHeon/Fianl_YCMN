@@ -26,7 +26,7 @@
 		<typeAlias type="com.uni.spring.reservation.model.dto.Resources" alias="Resources"/>
 		<typeAlias type="com.uni.spring.anonym.model.dto.AnonymBoard" alias="AnonymBoard"/>
 		<typeAlias type="com.uni.spring.communication.model.dto.Communication" alias="Communication"/>
-		<typeAlias type="com.uni.spring.manager.model.dto.Product" alias="Product"/>
+		<typeAlias type="com.uni.spring.manager.model.dto.ChartData" alias="ChartData"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="/mappers/employee-mapper.xml"/>

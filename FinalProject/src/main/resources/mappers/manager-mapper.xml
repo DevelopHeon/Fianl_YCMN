@@ -231,13 +231,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET		POS_NO = '0'
 		WHERE 	POS_NO = #{posNo}
 	</update>
-	
-	<!-- 차트 용 -->
-	<select id="getChartList" resultType="Product">
+	<!-- 차트 시작!! -->
+	<!-- 부서별 인원수 -->
+	<select id="getDeptList" resultType="ChartData">
 		SELECT 		NVL(B.DEP_NAME, '부서 미정') as "NAME"
 		    		, COUNT(*) as "VALUE"
 		FROM 		EMPLOYEE A
 		LEFT JOIN 	DEPARTMENT B ON A.DEP_NO = B.DEP_NO
 		GROUP BY 	B.DEP_NAME
 	</select>
+	<!-- 이번 달 결재 사용량 -->
+	<select id="chartApprovalList" resultType="ChartData">
+	    SELECT 
+        CASE WHEN APP_KINDS ='2' THEN '지출결의서'
+             WHEN APP_KINDS ='3' THEN '휴가신청서'
+             WHEN app_KINDS ='4' THEN '업무보고서'
+        END AS NAME
+        , COUNT(*) VALUE FROM APPROVAL
+        WHERE EXTRACT(MONTH FROM SYSDATE) = EXTRACT(MONTH FROM LAST_APPROVAL_DATE)
+        GROUP BY APP_KINDS
+	</select>
+	<!-- 직급 별 급여 평균 -->
+	<select id="posSararyAVG" resultType="ChartData">
+	  SELECT 	NVL(C.POS_NAME,'부서 미정') NAME, NVL(ROUND(AVG(B.SARARY)), 0) VALUE
+	  FROM 		EMPLOYEE A
+	  LEFT JOIN PERSONNEL_CHART B ON A.EMP_NO = B.EMP_NO 
+	  LEFT JOIN JOB_POSITION C ON A.POS_NO = C.POS_NO
+	  GROUP BY 	C.POS_NAME
+	</select>
+	<!-- 회사 총 인원수 -->
+	<select id="getEmpCount" resultType="string">
+		SELECT 	COUNT(*) 
+		FROM 	EMPLOYEE
+		WHERE 	STATUS = 'Y'
+	</select>
+	<!-- 이번 달 출근 시간 통계 -->
+	<select id="getEmpWorkingtime" resultType="string">
+		SELECT 	(ROUND(SUM(TO_NUMBER(TO_CHAR(TO_TIMESTAMP(WORK_HOUR, 'hh24:mi:ss'),'sssss')))/(60*60)))||'시간'||' ' ||
+				LPAD(ROUND(MOD((SUM(TO_NUMBER(TO_CHAR(TO_TIMESTAMP(WORK_HOUR, 'hh24:mi:ss'),'sssss')))/60),60)),2,0)||'분' || ' ' ||
+				LPAD(ROUND(MOD(SUM(TO_NUMBER(TO_CHAR(TO_TIMESTAMP(WORK_HOUR, 'hh24:mi:ss'),'sssss'))),60)),2,0)||'초' AS VALUE
+		FROM 	WORKINGDAY
+        WHERE   EXTRACT(MONTH FROM TO_DATE(TODAY)) = EXTRACT(MONTH FROM SYSDATE)
+	</select>
+	<!-- 차트 끝!! -->
 </mapper>
