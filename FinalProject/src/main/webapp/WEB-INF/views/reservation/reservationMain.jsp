@@ -113,6 +113,60 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   }
+  
+  
+  function rscCheckValidate(num){ 
+      if(num == 0){
+         $("#checkResult").hide();
+         $("#rezAddBtn").attr("disabled", true);
+      }else if(num == 1){
+         $("#checkResult").css("color", "red").text("예약이 된 자원입니다. 사용이 불가능합니다.");
+         $("#checkResult").show();
+         $("#rezAddBtn").attr("disabled", true);
+      }else if(num == 2){
+         $("#checkResult").css("color", "green").text("사용 가능한 자원입니다. ");
+         $("#checkResult").show();
+         $("#rezAddBtn").removeAttr("disabled");
+      }
+   }
+  $(function(){
+  /* $('#rscNo').click(function () { */
+      var $rscInput = $("#insertRezModal select[name='rscNo']"); // 아이디 입력하는 input 요소
+      console.log($rscInput);
+      console.log($rscInput.val());
+      var endTime = $("#startTime");
+   		var startTime = $("#endTime");
+      $rscInput.click(function(){
+         
+         // 아이디는 최소 5글자 ~ 
+         //if($rscInput.val().length >= 1){ // 5글자 이상되었을 때 본격적으로 중복체크
+              $.ajax({
+                 url:"rscCheck.do",
+                 data:{rscNo:$rscInput.val(),
+                	 endTime:endTime.val(),
+                	 startTime:startTime.val()},
+                 type:"post",
+                 success:function(result){
+                   	console.log($rscInput.val());
+			   		console.log(endTime.val());
+			   		console.log(startTime.val());
+			   		console.log(result);
+			   		
+                    if(result > 0){ // 예약 중인 자원
+                       rscCheckValidate(1);
+                    }else{
+                       rscCheckValidate(2);
+                    }
+                 },error:function(){
+                	 console.log($rscInput.val());
+                	 console.log("자원 체크용 ajax 통신 실패");
+                 }
+              });
+         //}else{
+            //rscCheckValidate(0);
+         //}
+      });
+   });
 </script>
 <style>
   td,
@@ -189,7 +243,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
           <label for="rscNo" class="mr-sm-2">예약 자원</label>
           <select name="rscNo" id="rscNo" class="form-control">
-          </select><br>
+          </select>
+          <div id="checkResult" style="display:none; font-size:0.8em"></div>
+          <br>
 
           <label for="rezTime" class="mr-sm-2">예약 시간</label><br>
           <input type="datetime-local" class="mb-2 mr-sm-2" id="startTime" min="${ nowTime }" name="startTime">&emsp;&emsp;~&emsp;&emsp;
