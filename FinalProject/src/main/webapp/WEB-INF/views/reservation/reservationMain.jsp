@@ -24,7 +24,7 @@
 <!-- moment.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function () {
     $(function () {
       var request = $.ajax({
         url: "reserveList.do", // 변경하기
@@ -53,11 +53,11 @@ document.addEventListener('DOMContentLoaded', function () {
           slotMaxTime: "22:00", // 최대 시간
           allDaySlot: false,
           select: function (obj) { // 캘린더에서 드래그로 이벤트를 생성
-            if ("${ listCount }" == 0){
+            if ("${ listCount }" == 0) {
               alert('예약할 자원이 없습니다.\n관리자가 예약할 자원을 추가한 후 이용해 주세요.');
-            }else if ("${ listCount }" != 0 && obj.start < now){
+            } else if ("${ listCount }" != 0 && obj.start < now) {
               alert('현재 날짜보다 이전으로 예약할 수 없습니다.');
-            }else if ("${ listCount }" != 0 && obj.start > now){
+            } else if ("${ listCount }" != 0 && obj.start > now) {
               $("#insertRezModal").modal("show");
               getRscList(); // 예약할 자원 목록
               //console.log(obj);
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
           events: data
         });
 
-      calendar.render();
+        calendar.render();
       });
 
       request.fail(function (jqXHR, textStatus) {
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
 
-    });
+  });
 
   //모달에 자원 목록 출력
   function getRscList() {
@@ -113,60 +113,48 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   }
-  
-  
-  function rscCheckValidate(num){ 
-      if(num == 0){
-         $("#checkResult").hide();
-         $("#rezAddBtn").attr("disabled", true);
-      }else if(num == 1){
-         $("#checkResult").css("color", "red").text("예약이 된 자원입니다. 사용이 불가능합니다.");
-         $("#checkResult").show();
-         $("#rezAddBtn").attr("disabled", true);
-      }else if(num == 2){
-         $("#checkResult").css("color", "green").text("사용 가능한 자원입니다. ");
-         $("#checkResult").show();
-         $("#rezAddBtn").removeAttr("disabled");
-      }
-   }
-  $(function(){
-  /* $('#rscNo').click(function () { */
-      var $rscInput = $("#insertRezModal select[name='rscNo']"); // 아이디 입력하는 input 요소
-      console.log($rscInput);
-      console.log($rscInput.val());
-      var endTime = $("#startTime");
-   		var startTime = $("#endTime");
-      $rscInput.click(function(){
-         
-         // 아이디는 최소 5글자 ~ 
-         //if($rscInput.val().length >= 1){ // 5글자 이상되었을 때 본격적으로 중복체크
-              $.ajax({
-                 url:"rscCheck.do",
-                 data:{rscNo:$rscInput.val(),
-                	 endTime:endTime.val(),
-                	 startTime:startTime.val()},
-                 type:"post",
-                 success:function(result){
-                   	console.log($rscInput.val());
-			   		console.log(endTime.val());
-			   		console.log(startTime.val());
-			   		console.log(result);
-			   		
-                    if(result > 0){ // 예약 중인 자원
-                       rscCheckValidate(1);
-                    }else{
-                       rscCheckValidate(2);
-                    }
-                 },error:function(){
-                	 console.log($rscInput.val());
-                	 console.log("자원 체크용 ajax 통신 실패");
-                 }
-              });
-         //}else{
-            //rscCheckValidate(0);
-         //}
+
+	//자원 예약 체크
+  function rscCheckValidate(num) {
+    if (num == 1) {
+      $("#checkResult").css("color", "red").text("예약이 된 자원입니다. 사용이 불가능합니다.");
+      $("#checkResult").show();
+      $("#rezAddBtn").attr("disabled", true);
+    } else if (num == 2) {
+      $("#checkResult").css("color", "green").text("사용 가능한 자원입니다. ");
+      $("#checkResult").show();
+      $("#rezAddBtn").removeAttr("disabled");
+    }
+  }
+	// 자원 예약 체크
+  $(function () {
+    var $rscInput = $("#insertRezModal select[name='rscNo']");
+    console.log($rscInput);
+    console.log($rscInput.val());
+    var endTime = $("#startTime");
+    var startTime = $("#endTime");
+    $rscInput.click(function () {
+      $.ajax({
+        url: "rscCheck.do",
+        data: {
+          rscNo: $rscInput.val(),
+          endTime: endTime.val(),
+          startTime: startTime.val()
+        },
+        type: "post",
+        success: function (result) {
+          if (result > 0) { // 예약 중인 자원
+            rscCheckValidate(1);
+          } else {
+            rscCheckValidate(2);
+          }
+        }, error: function () {
+          console.log($rscInput.val());
+          console.log("자원 체크용 ajax 통신 실패");
+        }
       });
-   });
+    });
+  });
 </script>
 <style>
   td,
@@ -308,4 +296,5 @@ document.addEventListener('DOMContentLoaded', function () {
 </div>
 
 </body>
+
 </html>
