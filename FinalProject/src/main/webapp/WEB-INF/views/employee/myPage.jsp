@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>내 인사 정보</title>
-
+<link rel="icon" type="image/png" href="resources/img/favicon.ico">
 
 <style>
 

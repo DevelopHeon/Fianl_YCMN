@@ -14,20 +14,13 @@
 <head>
 <meta charset="UTF-8">
 <title>내 근태현황</title>
-
+<link rel="icon" type="image/png" href="resources/img/favicon.ico">
 	  <!-- 부트스트랩 아이콘 CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
   <!-- Bootstrap core CSS -->
   <link href="resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!--external css-->
-  <link href="resources/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
-  <link rel="stylesheet" type="text/css" href="resources/css/zabuto_calendar.css">
-  <link rel="stylesheet" type="text/css" href="resources/lib/gritter/css/jquery.gritter.css" />
-  <!-- Custom styles for this template -->
-  <link href="resources/css/style.css" rel="stylesheet">
-  <link href="resources/css/style-responsive.css" rel="stylesheet">
-  <script src="resources/lib/chart-master/Chart.js"></script>
+
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -74,7 +67,7 @@ function checkMonth() {
 	    var tempDate = start;
 	    if(tempDate.getTime() > end.getTime()) { //종료날짜를 넘어가면  break
 	        console.log("count : " + count);
-	    	var baseWorking = count * 8 //6월 최소 근무량 (주 40시간 기준)
+	    	var baseWorking = count * 9 //7월 최소 근무량 (주 40시간 기준(점심시간포함))
 	
 	        break;
 	    } else {
@@ -380,17 +373,6 @@ function checkMonth() {
     </section>
     <!-- /MAIN CONTENT -->
     <!--main content end-->
-  </section>
-  <!-- js placed at the end of the document so the pages load faster -->
-  <script src="lib/jquery/jquery.min.js"></script>
-  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
-  <script class="include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
-  <script src="lib/jquery.scrollTo.min.js"></script>
-  <script src="lib/jquery.nicescroll.js" type="text/javascript"></script>
-  <!--common script for all pages-->
-  <script src="lib/common-scripts.js"></script>
-  <!--script for this page-->
-  <!-- MAP SCRIPT - ALL CONFIGURATION IS PLACED HERE - VIEW OUR DOCUMENTATION FOR FURTHER INFORMATION -->
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASm3CwaK9qtcZEWYa-iQwHaGi3gcosAJc&sensor=false"></script>
+
 </body>
 </html>

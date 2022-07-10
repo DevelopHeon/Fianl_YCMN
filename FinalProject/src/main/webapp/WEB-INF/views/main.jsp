@@ -155,7 +155,7 @@
                     			    var tempDate = start;
                     			    if(tempDate.getTime() > end.getTime()) { //종료날짜를 넘어가면  break
                     			        console.log("count : " + count);
-                    			    	var baseWorking = count * 8 //6월 최소 근무량 (주 40시간 기준)
+                    			    	var baseWorking = count * 9 //7월 최소 근무량 (주 40시간 기준)
                     			
                     			        break;
                     			    } else {
