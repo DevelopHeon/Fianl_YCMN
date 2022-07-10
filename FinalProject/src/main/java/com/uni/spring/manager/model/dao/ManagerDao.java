@@ -18,6 +18,7 @@ public class ManagerDao {
 
 	// 사원 정보 전체 불러오기
 	public ArrayList<Employee> selectList(SqlSessionTemplate sqlSession, PageInfo pi, Search search) {
+//		public ArrayList<Employee> selectList(SqlSessionTemplate sqlSession, PageInfo pi, String find, String keyword) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
@@ -87,22 +88,7 @@ public class ManagerDao {
 	public int selectListCount(SqlSessionTemplate sqlSession, Search search) {
 		return sqlSession.selectOne("managerMapper.selectListCount", search);
 	}
-	// 차트
-	public ArrayList getDeptList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("managerMapper.getDeptList");
-	}
-	
-	public ArrayList chartApprovalList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("managerMapper.chartApprovalList");
-	}
-	
-	public ArrayList posSararyAVGList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("managerMapper.posSararyAVG");
-	}
-	public String getEmpCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("managerMapper.getEmpCount");
-	}
-	public String getEmpWorkingtime(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("managerMapper.getEmpWorkingtime");
+	public ArrayList getChartList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("managerMapper.getChartList");
 	}
 }
