@@ -132,10 +132,13 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 - 수정 버튼 클릭시 수정화면으로 전환
 - 입력 값들 유효성 검사
 
-### 메일 - 작성
-![image](https://user-images.githubusercontent.com/87063007/178264917-b46d8781-4b1b-4718-9232-eb3c3e795144.png)
+### 메일 - 보내기, 답장하기
+<p align="center">
+<img src="https://user-images.githubusercontent.com/87063007/178264917-b46d8781-4b1b-4718-9232-eb3c3e795144.png" width="44%" />
+<img src="https://user-images.githubusercontent.com/87063007/178266279-ae9ed8cc-3ad9-4239-9cce-65129e7b5c24.png" width="44%" />
+</p>
 - SmartEditor을 이용한 메일 작성
-- 수신자, 참조자, 비밀참조자 추가 
+- 수신자, 참조자, 비밀참조자 추가
 
 ### 받은메일함, 보낸메일함
 <p align="center">
