@@ -45,26 +45,27 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 ![image](https://user-images.githubusercontent.com/87063007/178254079-1f601b02-c618-4576-ac52-4a945e268ced.png)
 
 ## 6. 프로그램 실제 화면
-- 로그인 페이지
 ![image](https://user-images.githubusercontent.com/87063007/178254599-aa6e29d3-3440-43df-9295-def85fd0793e.png)
+- 로그인 페이지
 
-- 회원가입
 ![image](https://user-images.githubusercontent.com/87063007/178254783-abc8c2e5-a4c0-421c-bea3-f6f1af887b15.png)
+- 회원가입
 - 아이디 중복확인 이후 회원가입 가능
 - 입력 값들의 유효성 검사
 - 관리자가 승인 해주어야 로그인 가능
 - 비밀번호 Spring security로 암호화 처리  
  
-- 개발웍스 홈
 ![localhost_8084_spring_login do (1)](https://user-images.githubusercontent.com/87063007/178255563-d153729c-a610-4209-82f3-2896ecdd5203.png)
-
-- 사원 마이페이지
+- 개발웍스 홈
 ![image](https://user-images.githubusercontent.com/87063007/178255793-9f7cf349-d4df-4226-9748-eca3f2aaccd2.png)
+- 사원 마이페이지
 - 프로필 사진 변경
 - 인사정보는 관리자가 입력 가능  
-- 비밀번호 변경
 ![image](https://user-images.githubusercontent.com/87063007/178256025-99138dab-48b9-4a06-94b0-8e86ad45c209.png)
+- 비밀번호 변경
 - 비밀번호는 Spring security로 암호화 되어있으므로 matches로 비교 후 변경 가능
 - 입력한 값들 유효성 검사 (현재 비밀번호란 암호화 와 같은지, 새 비밀번호와 비밀번호 확인이 같은 값인지)  
 
-- 
+![image](https://user-images.githubusercontent.com/87063007/178257296-a19b0d92-ffcb-49ad-b891-09b28bcecccc.png)
+- 내 근태 현황
+
