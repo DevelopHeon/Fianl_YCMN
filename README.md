@@ -81,4 +81,10 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 ### 전자결재 - 휴가 신청서
 ![localhost_8084_spring_approvalEnrollForm do_ano=1 (1)](https://user-images.githubusercontent.com/87063007/178260235-8b49d9c5-41d6-42a5-98ea-14c1f43c894d.png)
 - 남은 연차 Ajax로 비교 후 사용 가능 일차일 경우에만 결재 요청 가능
-- 입력 값들 
+- 입력 값들 유효성 검사
+
+### 전자결재 - 결재자 추가
+![image](https://user-images.githubusercontent.com/87063007/178260456-87c4b761-058a-4195-8333-60834b4175bd.png)
+- 같은 결재자 추가 안되도록 유효성 검사
+- 부서 클릭시 같은 부서인 사원들 목록 출력
+- 이름을 통한 
