@@ -72,3 +72,6 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 ### 내 연차 내역
 ![image](https://user-images.githubusercontent.com/87063007/178258388-78e5ad3e-0694-4abe-9cd2-34e674f90ea3.png)
 - 전자결재 승인 상태 완료일 경우 연차 내역에 추가
+
+### 주소록
+![image](https://user-images.githubusercontent.com/87063007/178259621-abd057e6-77c1-4fb9-94f0-bf8594b9396c.png)
