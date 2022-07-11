@@ -22,15 +22,15 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 ## 4. 개발 환경
 |제목|내용|
 |---|---|
-|프로그래밍 언어|	Java Open JDK 11, JavaScript|
-|마크업 언어|	HTML5, CSS3|
-|개발 툴|	이클립스 STS, Oracle SQL Developer|
-|서버 구축|	Apache Tomcat 9.0.60|
-|DBMS|	Oracle Database 11g Express Edition|
-|협업 툴|	Notion|
-|프레임 워크|	Mybatis, Spring Framework(5.2.9.RELEASE), BootStrap|
-|형상관리|	GitHub|
-|라이브러리|	jquery-3.6.0, slf4j-api-1.7.30,|
+|**프로그래밍 언어**|	Java Open JDK 11, JavaScript|
+|**마크업 언어**|	HTML5, CSS3|
+|**개발 툴**|	이클립스 STS, Oracle SQL Developer|
+|**서버 구축**|	Apache Tomcat 9.0.60|
+|**DBMS**|	Oracle Database 11g Express Edition|
+|**협업 툴**|	Notion|
+|**프레임 워크**|	Mybatis, Spring Framework(5.2.9.RELEASE), BootStrap|
+|**형상관리**|	GitHub|
+|**라이브러리**|	jquery-3.6.0, slf4j-api-1.7.30,|
 ||aspectjrt-1.9.6, jstl-1.2, jsp-api-2.1, |
 ||servlet-api-2.5, ojdbc6-11.2.0.4,|
 ||spring-jdbc, mybatis-3.5.6, |
