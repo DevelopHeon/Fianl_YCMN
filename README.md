@@ -106,7 +106,7 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 <p align="center">
 <img src="https://user-images.githubusercontent.com/87063007/178262604-3ce601bd-d795-42fc-a15d-7542f5279c87.png" width="32%" />
 <img src="https://user-images.githubusercontent.com/87063007/178262692-f0db2b74-701a-4773-acc3-13456f121b8a.png" width="32%" />
-<img src="https://user-images.githubusercontent.com/87063007/178262767-1601666a-f300-44db-a2de-6460a0edda31.png"" width="32%" />
+<img src="https://user-images.githubusercontent.com/87063007/178262767-1601666a-f300-44db-a2de-6460a0edda31.png" width="32%" />
 </p>
                                                                                                                              
 - 결재 대기일 경우에만 문서 수정 가능
@@ -121,3 +121,13 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 
 - 반려 클릭시 반려 사유 작성 모달창 생성
 - 반려를 작성할 경우 상태 반려로 변경 및 jstl if문 태그로 숨겨놓았던 반려 사유란 
+
+### 전자결재 - 수정
+<p align="center">
+<img src="https://user-images.githubusercontent.com/87063007/178264299-3b195fd0-9242-4710-9d72-a69527e31e60.png" width="32%" />
+<img src="https://user-images.githubusercontent.com/87063007/178264387-96c1ecf5-b78b-4e5e-a420-b7a760f1d61e.png" width="32%" />
+<img src="https://user-images.githubusercontent.com/87063007/178264482-0ca40d91-2f0e-447d-8a4b-3a72d92527ff.png" width="32%" />
+</p>
+
+- 수정 버튼 클릭시 수정화면으로 전환
+- 입력 값들 
