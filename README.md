@@ -62,8 +62,9 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 ![image](https://user-images.githubusercontent.com/87063007/178255793-9f7cf349-d4df-4226-9748-eca3f2aaccd2.png)
 - 프로필 사진 변경
 - 인사정보는 관리자가 입력 가능  
-
 - 비밀번호 변경
 ![image](https://user-images.githubusercontent.com/87063007/178256025-99138dab-48b9-4a06-94b0-8e86ad45c209.png)
 - 비밀번호는 Spring security로 암호화 되어있으므로 matches로 비교 후 변경 가능
-- 입력한 값들 유효성 검사 (현재 비밀번호란 암호화 와 같은지, 새 비밀번호와 비밀번호 확인이 같은 값인지)
+- 입력한 값들 유효성 검사 (현재 비밀번호란 암호화 와 같은지, 새 비밀번호와 비밀번호 확인이 같은 값인지)  
+
+- 
