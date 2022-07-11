@@ -112,3 +112,12 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 - 결재 대기일 경우에만 문서 수정 가능
 - 의견 기능 구현
 - 결재 승인자가 본인 차례일 경우에만 
+
+### 전자결재 - 반려
+<p align="center">
+<img src="https://user-images.githubusercontent.com/87063007/178263580-2b420608-c46e-407d-9659-f87aff763c2d.png" width="48%" />
+<img src="https://user-images.githubusercontent.com/87063007/178263685-e2d03dc0-b070-4e1f-83c5-7c4492851568.png" width="48%" />
+</p>
+
+- 반려 클릭시 반려 사유 작성 모달창 생성
+- 반려를 작성할 경우 상태 반려로 변경 및 jstl if문 태그로 숨겨놓았던 반려 사유란 
