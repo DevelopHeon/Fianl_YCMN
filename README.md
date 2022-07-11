@@ -136,3 +136,10 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 ![image](https://user-images.githubusercontent.com/87063007/178264917-b46d8781-4b1b-4718-9232-eb3c3e795144.png)
 - SmartEditor을 이용한 메일 작성
 - 수신자, 참조자, 비밀참조자 추가 
+
+### 받은메일함, 보낸메일함
+<p align="center">
+<img src="https://user-images.githubusercontent.com/87063007/178265522-e6f1015a-a189-49fe-852f-5e1c3e4c7560.png" width="43%" />
+<img src="https://user-images.githubusercontent.com/87063007/178265607-85f57e06-0223-4196-b09a-9d16115bad3e.png" width="43%" />
+</p>
+- 중요도 추가 기능
