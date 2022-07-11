@@ -46,3 +46,7 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 
 ## 6. 프로그램 실제 화면
 - 로그인 페이지
+![image](https://user-images.githubusercontent.com/87063007/178254599-aa6e29d3-3440-43df-9295-def85fd0793e.png)
+
+- 회원가입
+
