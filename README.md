@@ -146,3 +146,7 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 <img src="https://user-images.githubusercontent.com/87063007/178265607-85f57e06-0223-4196-b09a-9d16115bad3e.png" width="43%" />
 </p>
 - 중요도 추가 기능
+
+### 공지사항 목록
+![image](https://user-images.githubusercontent.com/87063007/178266653-26e951dc-de53-435a-ad03-73bfcbc8d7d2.png)
+- 더보기 페이징 처리
