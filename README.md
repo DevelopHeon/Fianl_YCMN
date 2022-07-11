@@ -83,8 +83,13 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 - 남은 연차 Ajax로 비교 후 사용 가능 일차일 경우에만 결재 요청 가능
 - 입력 값들 유효성 검사
 
+### 전자결재 - 지출결의서
+![localhost_8084_spring_approvalEnrollForm do_ano=2 (1)](https://user-images.githubusercontent.com/87063007/178260945-122ebfc9-dedc-4242-8382-32a6c339386b.png)
+- 지출 증빙 최대 5개까지 추가 가능
+- 입력 값들 유효성 검사
+
 ### 전자결재 - 결재자 추가
 ![image](https://user-images.githubusercontent.com/87063007/178260456-87c4b761-058a-4195-8333-60834b4175bd.png)
 - 같은 결재자 추가 안되도록 유효성 검사
 - 부서 클릭시 같은 부서인 사원들 목록 출력
-- 이름을 통한 
+- 이름을 통한 검색 조회
