@@ -20,6 +20,7 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 - 예약 기능 (회의실 및 비품 예약 관리)
 
 ## 4. 개발 환경
+|---|---|---|
 |프로그래밍 언어|	Java Open JDK 11, JavaScript|
 |마크업 언어|	HTML5, CSS3|
 |개발 툴|	이클립스 STS, Oracle SQL Developer|
