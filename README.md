@@ -76,4 +76,9 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 ### 주소록
 ![image](https://user-images.githubusercontent.com/87063007/178259621-abd057e6-77c1-4fb9-94f0-bf8594b9396c.png)
 - 검색을 통한 사원 조회
-- 사원 클릭시 메일 쓰기 
+- 사원 클릭시 메일 쓰기
+
+### 전자결재 - 휴가 신청서
+![localhost_8084_spring_approvalEnrollForm do_ano=1 (1)](https://user-images.githubusercontent.com/87063007/178260235-8b49d9c5-41d6-42a5-98ea-14c1f43c894d.png)
+- 남은 연차 Ajax로 비교 후 사용 가능 일차일 경우에만 결재 요청 가능
+- 입력 값들 
