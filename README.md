@@ -57,9 +57,11 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 - 비밀번호 Spring security로 암호화 처리  
  <hr />
 - 개발웍스 홈
+
 ![localhost_8084_spring_login do (1)](https://user-images.githubusercontent.com/87063007/178255563-d153729c-a610-4209-82f3-2896ecdd5203.png)
 <hr />
 - 사원 마이페이지
+
 ![image](https://user-images.githubusercontent.com/87063007/178255793-9f7cf349-d4df-4226-9748-eca3f2aaccd2.png)
 
 - 프로필 사진 변경
@@ -72,12 +74,15 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 - 입력한 값들 유효성 검사 (현재 비밀번호란 암호화 와 같은지, 새 비밀번호와 비밀번호 확인이 같은 값인지)  
 <hr />
 - 내 근태 현황
+
+
 ![image](https://user-images.githubusercontent.com/87063007/178257296-a19b0d92-ffcb-49ad-b891-09b28bcecccc.png)
 
 - 주차별 근태 현황 조회
 - 월간 근무 상태 조회
 <hr />
 - 내 연차 내역
+
 ![image](https://user-images.githubusercontent.com/87063007/178258388-78e5ad3e-0694-4abe-9cd2-34e674f90ea3.png)
 
 - 전자결재 승인 상태 완료일 경우 연차 내역에 추가
