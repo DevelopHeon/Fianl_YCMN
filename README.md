@@ -52,6 +52,12 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 ![image](https://user-images.githubusercontent.com/87063007/178254783-abc8c2e5-a4c0-421c-bea3-f6f1af887b15.png)
 - 아이디 중복확인 이후 회원가입 가능
 - 입력 값들의 유효성 검사
+- 관리자가 승인 해주
 
 - 개발웍스 홈
 ![localhost_8084_spring_login do (1)](https://user-images.githubusercontent.com/87063007/178255563-d153729c-a610-4209-82f3-2896ecdd5203.png)
+
+- 사원 마이페이지
+![image](https://user-images.githubusercontent.com/87063007/178255793-9f7cf349-d4df-4226-9748-eca3f2aaccd2.png)
+- 프로필 사진 변경
+- 인사정보는 관리자가 입력 가능
