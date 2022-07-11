@@ -95,6 +95,7 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 - 이름을 통한 검색 조회
 
 ### 전자결재 - 상신함, 수신함
-<img src="https://user-images.githubusercontent.com/87063007/178261297-9c833764-5fb6-4905-b764-7438d4657874.png" width="300" />
-<img src="https://user-images.githubusercontent.com/87063007/178261386-dac10e15-9d6e-414c-97f2-f79e9a9ab633.png" width="300" />
-
+<center>
+<img src="https://user-images.githubusercontent.com/87063007/178261297-9c833764-5fb6-4905-b764-7438d4657874.png" width="50%" />
+<img src="https://user-images.githubusercontent.com/87063007/178261386-dac10e15-9d6e-414c-97f2-f79e9a9ab633.png" width="50%" />
+</center>
