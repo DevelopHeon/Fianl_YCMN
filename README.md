@@ -157,3 +157,5 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 <img src="https://user-images.githubusercontent.com/87063007/178267070-5f752f77-56c3-4e6e-b98f-d94b6b0d8cc7.png" width="33%" />
 <img src="https://user-images.githubusercontent.com/87063007/178267209-760402ae-b776-48ce-a54e-949a729baf93.png" width="33%" />
 </p>
+- SmartEditor을 이용한 공지사항 작성 및 수정
+- 상세조회 시 조회수 증가
