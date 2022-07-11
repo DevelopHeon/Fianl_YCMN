@@ -44,3 +44,5 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 ## 5. ERD 다이어그램
 ![image](https://user-images.githubusercontent.com/87063007/178254079-1f601b02-c618-4576-ac52-4a945e268ced.png)
 
+## 6. 프로그램 실제 화면
+- 로그인 페이지
