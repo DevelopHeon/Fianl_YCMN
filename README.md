@@ -30,13 +30,13 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 |협업 툴|	Notion|
 |프레임 워크|	Mybatis, Spring Framework(5.2.9.RELEASE), BootStrap|
 |형상관리|	GitHub|
-|라이브러리|	jquery-3.6.0, slf4j-api-1.7.30, 
-aspectjrt-1.9.6, jstl-1.2, jsp-api-2.1, 
-servlet-api-2.5, ojdbc6-11.2.0.4,
-spring-jdbc, mybatis-3.5.6, 
-commons-dbcp-1.4,lombok-1.18.12, spring-security-core-5.2.9, 
-aspectjweaver-1.9.6, log4jdbc-remix-0.2.7,
-logback-classic-1.2.9, gson-2.8.6,
-commons-fileupload-1.3.3,
-commons-io-2.6, validation-api-1.1.0.Final,
-hibernate-validator-6.2.0.Final, standard1.1.2, json-simple-1.1.1, poi-4.1.2|
+|라이브러리|	jquery-3.6.0, slf4j-api-1.7.30,|
+||aspectjrt-1.9.6, jstl-1.2, jsp-api-2.1, |
+||servlet-api-2.5, ojdbc6-11.2.0.4,|
+||spring-jdbc, mybatis-3.5.6, |
+||commons-dbcp-1.4,lombok-1.18.12, spring-security-core-5.2.9, |
+||aspectjweaver-1.9.6, log4jdbc-remix-0.2.7,|
+||logback-classic-1.2.9, gson-2.8.6,|
+||commons-fileupload-1.3.3,|
+||commons-io-2.6, validation-api-1.1.0.Final,|
+||hibernate-validator-6.2.0.Final, standard1.1.2, json-simple-1.1.1, poi-4.1.2|
