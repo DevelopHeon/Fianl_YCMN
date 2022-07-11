@@ -137,6 +137,7 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 <img src="https://user-images.githubusercontent.com/87063007/178264917-b46d8781-4b1b-4718-9232-eb3c3e795144.png" width="44%" />
 <img src="https://user-images.githubusercontent.com/87063007/178266279-ae9ed8cc-3ad9-4239-9cce-65129e7b5c24.png" width="44%" />
 </p>
+
 - SmartEditor을 이용한 메일 작성
 - 수신자, 참조자, 비밀참조자 추가
 
@@ -145,10 +146,12 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 <img src="https://user-images.githubusercontent.com/87063007/178265522-e6f1015a-a189-49fe-852f-5e1c3e4c7560.png" width="43%" />
 <img src="https://user-images.githubusercontent.com/87063007/178265607-85f57e06-0223-4196-b09a-9d16115bad3e.png" width="43%" />
 </p>
+
 - 중요도 추가 기능
 
 ### 공지사항 목록
 ![image](https://user-images.githubusercontent.com/87063007/178266653-26e951dc-de53-435a-ad03-73bfcbc8d7d2.png)
+
 - 더보기 페이징 처리
 
 ### 공지사항 상세조회, 작성, 수정
@@ -157,6 +160,7 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 <img src="https://user-images.githubusercontent.com/87063007/178267070-5f752f77-56c3-4e6e-b98f-d94b6b0d8cc7.png" width="33%" />
 <img src="https://user-images.githubusercontent.com/87063007/178267209-760402ae-b776-48ce-a54e-949a729baf93.png" width="33%" />
 </p>
+
 - SmartEditor을 이용한 공지사항 작성 및 수정
 - 상세조회 시 조회수 증가
 
@@ -167,6 +171,7 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 <img src="https://user-images.githubusercontent.com/87063007/178267951-5034b7d3-2497-49f4-a6f9-4457c80a0245.png" width="24%" />
 <img src="https://user-images.githubusercontent.com/87063007/178268234-1429fd37-f48c-4f35-b25c-45843efa3acd.png" width="24%" />
 </p>
+
 - 익명성 보장을 위해 작성시 작성자 암호화 처리
 - 댓글 기능도 마찬가지로 암호화
 - 본인이 작성한 글, 댓글 matches를 이용하여 일치할경우에만 수정,삭제 가능
