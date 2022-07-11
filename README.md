@@ -99,11 +99,16 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 <img src="https://user-images.githubusercontent.com/87063007/178261297-9c833764-5fb6-4905-b764-7438d4657874.png" width="45%" />
 <img src="https://user-images.githubusercontent.com/87063007/178261386-dac10e15-9d6e-414c-97f2-f79e9a9ab633.png" width="45%" />
 </p>
+
 - 수신함, 상신함 결재 상태별 문서 조회
 
 ### 결재 상신문서 조회
 <p align="center">
 <img src="https://user-images.githubusercontent.com/87063007/178262604-3ce601bd-d795-42fc-a15d-7542f5279c87.png" width="32%" />
 <img src="https://user-images.githubusercontent.com/87063007/178262692-f0db2b74-701a-4773-acc3-13456f121b8a.png" width="32%" />
-<img src=https://user-images.githubusercontent.com/87063007/178262767-1601666a-f300-44db-a2de-6460a0edda31.png"" width="32%" />
+<img src="https://user-images.githubusercontent.com/87063007/178262767-1601666a-f300-44db-a2de-6460a0edda31.png"" width="32%" />
 </p>
+                                                                                                                             
+- 결재 대기일 경우에만 문서 수정 가능
+- 의견 기능 구현
+- 결재 승인자가 본인 차례일 경우에만 
