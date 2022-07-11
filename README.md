@@ -75,3 +75,5 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 
 ### 주소록
 ![image](https://user-images.githubusercontent.com/87063007/178259621-abd057e6-77c1-4fb9-94f0-bf8594b9396c.png)
+- 검색을 통한 사원 조회
+- 사원 클릭시 메일 쓰기 
