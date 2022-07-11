@@ -2,7 +2,6 @@ package com.uni.spring.reservation.model.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.uni.spring.common.dto.PageInfo;
 import com.uni.spring.reservation.model.dto.Reservation;
@@ -35,6 +34,4 @@ public interface ReservationService {
 	int selectListCount(int empNo); // 페이징 용
 
 	int rscListCount(); // 자원 수
-
-	int rscCheck(Map<String, String> map); // 예약 가능 체크
 }

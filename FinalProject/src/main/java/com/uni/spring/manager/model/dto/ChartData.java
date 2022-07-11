@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ChartData {
+public class ChartData{
 	private String name;
 	private int value;
 }
