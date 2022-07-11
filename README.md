@@ -159,3 +159,14 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 </p>
 - SmartEditor을 이용한 공지사항 작성 및 수정
 - 상세조회 시 조회수 증가
+
+### 익명게시판 - 조회, 작성, 수정
+<p align="cneter">
+<img src="https://user-images.githubusercontent.com/87063007/178267771-96b2fa4c-a3ba-45a4-859d-2cb08c628245.png" width="24%" />
+<img src="https://user-images.githubusercontent.com/87063007/178268355-3363d4d7-83a7-41f7-82e2-933285e73522.png" width="24%" />
+<img src="https://user-images.githubusercontent.com/87063007/178267951-5034b7d3-2497-49f4-a6f9-4457c80a0245.png" width="24%" />
+<img src="https://user-images.githubusercontent.com/87063007/178268234-1429fd37-f48c-4f35-b25c-45843efa3acd.png" width="24%" />
+</p>
+- 익명성 보장을 위해 작성시 작성자 암호화 처리
+- 댓글 기능도 마찬가지로 암호화
+- 본인이 작성한 글, 댓글 matches를 이용하여 일치할경우에만 수정,삭제 가능
