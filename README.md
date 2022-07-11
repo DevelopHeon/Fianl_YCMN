@@ -49,4 +49,6 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 ![image](https://user-images.githubusercontent.com/87063007/178254599-aa6e29d3-3440-43df-9295-def85fd0793e.png)
 
 - 회원가입
-
+![image](https://user-images.githubusercontent.com/87063007/178254783-abc8c2e5-a4c0-421c-bea3-f6f1af887b15.png)
+1. 아이디 중복확인 이후 회원가입 가능
+2. 입력 값들의 
