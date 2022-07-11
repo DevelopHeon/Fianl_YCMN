@@ -75,5 +75,5 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 - 월간 근무 상태 조회
 <hr />
 - 내 연차 내역
-
+![image](https://user-images.githubusercontent.com/87063007/178258388-78e5ad3e-0694-4abe-9cd2-34e674f90ea3.png)
 - 전자결재 승인 상태 완료일 경우 연차 내역에 추가
