@@ -182,3 +182,6 @@ KH정보교육원 4조 파이널 프로젝트 그룹웨어 사이트입니다.
 <img src="https://user-images.githubusercontent.com/87063007/178269346-3fe28e3e-f665-4ad9-81ac-077b0310f5ec.png" width="33%" />
 <img src="https://user-images.githubusercontent.com/87063007/178269692-ed6fdd88-c1b3-42c7-99bb-483bcd782b9b.png" width="33%" />
 </p>
+
+- 관리자 계정으로 자원 생성 수정 삭제
+- Fullcalrender API를 사용하여 스케쥴 수정 및 관리
