@@ -8,11 +8,6 @@
 <meta charset="UTF-8">
 <title>보낸메일함</title>
 
-
-  <!-- Bootstrap core CSS -->
-  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-
 </head>
 
 <body>
@@ -168,6 +163,8 @@
 	
 
 </script>
+
+  </section>
 
 </body>
 </html>

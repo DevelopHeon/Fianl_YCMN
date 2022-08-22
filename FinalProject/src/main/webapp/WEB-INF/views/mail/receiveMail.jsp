@@ -7,10 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>받은메일함</title>
-<link rel="icon" type="image/png" href="resources/img/favicon.ico">
-  <!-- Bootstrap core CSS -->
-  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
 
   <style>
   	.on { visibility: visible; }
@@ -267,6 +263,7 @@
 		
 	})
 </script>
+
   </section>
 
 </body>

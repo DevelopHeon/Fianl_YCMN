@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.collections4.map.HashedMap;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.LoggerFactory;
@@ -108,23 +107,6 @@ public class ReservationController {
 		reservationService.insertReserve(rez);
         return "redirect:/reservMain.do";
     }
-	
-	// 자원 가능 여부 체크
-	@ResponseBody
-	@RequestMapping("rscCheck.do")
-	public String rscCheck(String rscNo
-			, @RequestParam(value = "startTime") String endTime
-			, @RequestParam(value = "endTime") String startTime) {
-		Map<String, String> map = new HashedMap<String, String>();
-		map.put("rscNo", rscNo);
-		map.put("startTime", startTime);
-		map.put("endTime", endTime);
-
-		int result = reservationService.rscCheck(map);
-		
-		log.info("result : "+result);
-		return String.valueOf(result);
-	}
 	
 	// 나의 예약 정보 조회
 	@RequestMapping("myRezList.do")

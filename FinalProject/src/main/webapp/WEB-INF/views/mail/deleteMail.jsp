@@ -7,10 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>휴지통</title>
-
-
-  <!-- Bootstrap core CSS -->
-  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -140,6 +136,8 @@
 	
 
 </script>
+
+  </section>
 
 </body>
 </html>

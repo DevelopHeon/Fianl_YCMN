@@ -2,7 +2,6 @@ package com.uni.spring.reservation.model.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
@@ -110,16 +109,5 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public int rscListCount() {
 		return reservationDao.rscListCount(sqlSession);
-	}
-	
-	@Override
-	public int rscCheck(Map<String, String> map) {
-		int result = reservationDao.rscCheck(sqlSession, map);
-		
-		if(result < 0) {
-			throw new CommException("자원 체크 실패");
-		}
-		
-		return result;
 	}
 }

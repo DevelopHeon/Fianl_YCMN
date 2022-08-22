@@ -7,9 +7,6 @@
 <meta charset="UTF-8">
 <title>받은메일</title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
 </head>
 
 <body>

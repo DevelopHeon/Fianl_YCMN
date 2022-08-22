@@ -474,8 +474,15 @@
 							
 							value += "<td style='width:85%;'>"+obj.commWriter+"&nbsp;&nbsp;"+obj.createDate+"<br>"
 								  +	 obj.commContent +"</td>"
-								  +	 "<td>&nbsp;<span style='cursor:pointer; margin-bottom:45px;' class='close'><input type='hidden' value="+obj.commNo+"><i class='bi bi-x-lg'></i></span></td>"
-								  +  "</tr>"  
+								  
+							  if("${loginUser.empName}" == obj.commWriter){
+			  						value += "<td>&nbsp;<span style='cursor:pointer; margin-bottom:45px;' class='close'><input type='hidden' value="+obj.commNo+"><i class='bi bi-x-lg'></i></span></td>";
+			  						
+			  					}else{
+			  						value += "<td></td>";
+			  					}
+								  
+								 value +=  "</tr>";
 						});
 					}
 					$("#commTable tbody").html(value);
