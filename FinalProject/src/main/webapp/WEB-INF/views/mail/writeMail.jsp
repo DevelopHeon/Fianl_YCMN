@@ -157,10 +157,7 @@ ${loginUser.empPhone}</textarea>
 			alert("제목을 입력해주세요");
 			return;
 		}
-		if($("#mailTo").text() == ""){
-			alert("수신자를 입력해주세요");
-			return false;
-		}
+
 		
 		oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
 		
